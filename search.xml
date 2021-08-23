@@ -4,11 +4,11 @@
   
     
     <entry>
-      <title>springboot study</title>
+      <title>springboot study-JpaSpecificationExecutor</title>
       <link href="/2021/08/23/springboot-study/"/>
       <url>/2021/08/23/springboot-study/</url>
       
-        <content type="html"><![CDATA[]]></content>
+        <content type="html"><![CDATA[<h1 id="JpaSpecificationExecutor接口"><a href="#JpaSpecificationExecutor接口" class="headerlink" title="JpaSpecificationExecutor接口"></a>JpaSpecificationExecutor接口</h1><h4 id="实习项目中继承JpaSpecificationExecutor只实现了一个简单的-Spring-Data-Jpa同样提供了类似Hibernated-的Criteria的查询方式，要使用这种方式只要继承JpaSpecificationExecutor"><a href="#实习项目中继承JpaSpecificationExecutor只实现了一个简单的-Spring-Data-Jpa同样提供了类似Hibernated-的Criteria的查询方式，要使用这种方式只要继承JpaSpecificationExecutor" class="headerlink" title="实习项目中继承JpaSpecificationExecutor只实现了一个简单的 Spring Data Jpa同样提供了类似Hibernated 的Criteria的查询方式，要使用这种方式只要继承JpaSpecificationExecutor,"></a>实习项目中继承JpaSpecificationExecutor只实现了一个简单的 Spring Data Jpa同样提供了类似Hibernated 的Criteria的查询方式，要使用这种方式只要继承JpaSpecificationExecutor,</h4>]]></content>
       
       
       <categories>
@@ -22,7 +22,9 @@
       
         <tags>
             
-            <tag> springboot jpa JpaSpecificationExecutor使用 </tag>
+            <tag> springboot </tag>
+            
+            <tag> jpa JpaSpecificationExecutor使用 </tag>
             
         </tags>
       
