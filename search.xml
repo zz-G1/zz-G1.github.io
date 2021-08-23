@@ -4,6 +4,60 @@
   
     
     <entry>
+      <title>springboot study</title>
+      <link href="/2021/08/23/springboot-study/"/>
+      <url>/2021/08/23/springboot-study/</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+      
+      <categories>
+          
+          <category> Java进阶 </category>
+          
+          <category> spring boot学习 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> springboot jpa JpaSpecificationExecutor使用 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>threadlocal study</title>
+      <link href="/2021/08/23/threadlocal-study/"/>
+      <url>/2021/08/23/threadlocal-study/</url>
+      
+        <content type="html"><![CDATA[<h2 id="深度解析"><a href="#深度解析" class="headerlink" title="深度解析"></a>深度解析</h2><h2 id="ThreadLocal代码"><a href="#ThreadLocal代码" class="headerlink" title="ThreadLocal代码"></a>ThreadLocal代码</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadLocalTest</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> List&lt;String&gt; messages = Lists.newArrayList();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> ThreadLocal&lt;ThreadLocalTest&gt; holder = ThreadLocal.withInitial(ThreadLocalTest::<span class="keyword">new</span>);</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(String message)</span> </span>&#123;</span><br><span class="line">        holder.get().messages.add(message);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;String&gt; <span class="title">clear</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        List&lt;String&gt; messages = holder.get().messages;</span><br><span class="line">        holder.remove();</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;size: &quot;</span> + holder.get().messages.size());</span><br><span class="line">        <span class="keyword">return</span> messages;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        ThreadLocalTest.add(<span class="string">&quot;红豆沙面包&quot;</span>);</span><br><span class="line">        System.out.println(holder.get().messages);</span><br><span class="line">        ThreadLocalTest.clear();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>RESULT:</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[红豆沙面包]</span><br><span class="line">size: <span class="number">0</span></span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> Java进阶 </category>
+          
+          <category> 线程 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 线程(原创：一枝花算不算浪漫) </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Hello World</title>
       <link href="/2021/08/20/hello-world/"/>
       <url>/2021/08/20/hello-world/</url>
