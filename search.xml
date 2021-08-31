@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>equals和==</title>
+      <link href="/2021/08/31/equals%E5%92%8C/"/>
+      <url>/2021/08/31/equals%E5%92%8C/</url>
+      
+        <content type="html"><![CDATA[<h1><span id="equals和">equals和==</span></h1><p><strong>很简单：</strong></p><p>​             equals在比较字符串常量时比较的是内容，对于非字符串对象是比较指向对象所否相同；</p><p>​             ==比较的是内存首地址，因为在String中对equals方法进行了重写，而在object中没有，equals和==所比较的都是所在内存的首地址</p><p><strong>注意：</strong>比较基本类型只可用==，比较基本类型的包装类型时可以用equals，比较的是内容</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Javase </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> equlas和== </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>堆和栈(壹)</title>
       <link href="/2021/08/31/%E5%A0%86%E5%92%8C%E6%A0%88-%E5%A3%B9/"/>
       <url>/2021/08/31/%E5%A0%86%E5%92%8C%E6%A0%88-%E5%A3%B9/</url>
