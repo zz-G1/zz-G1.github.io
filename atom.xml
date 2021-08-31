@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2021-08-29T13:14:24.575Z</updated>
+  <updated>2021-08-31T06:28:53.935Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>堆和栈(壹)</title>
+    <link href="http://example.com/2021/08/31/%E5%A0%86%E5%92%8C%E6%A0%88-%E5%A3%B9/"/>
+    <id>http://example.com/2021/08/31/%E5%A0%86%E5%92%8C%E6%A0%88-%E5%A3%B9/</id>
+    <published>2021-08-31T01:54:07.000Z</published>
+    <updated>2021-08-31T06:28:53.935Z</updated>
+    
+    <content type="html"><![CDATA[<h1><span id="堆和栈的区别">堆和栈的区别😍</span></h1><p>看过上面的博文自己来总结一下：</p><p><strong>什么是局部变量：</strong>定义在函数中的变量、定义在函数中的参数上的变量、定义在for循环内部的变量</p><table><thead><tr><th align="center"></th><th align="center">栈</th><th align="center">堆</th></tr></thead><tbody><tr><td align="center">存放</td><td align="center">函数中定义的基本类型变量，局部变量，对象的引用变量</td><td align="center">new创建的对象和数组</td></tr><tr><td align="center">垃圾回收</td><td align="center">数数据一执行完毕，变量会立即释放，节约内存空间</td><td align="center">堆内存中的实体不再被指向时，JVM启动垃圾回收机制，自动清除（Java的优点）</td></tr><tr><td align="center"></td><td align="center"></td><td align="center">其中所有实体都有内存地址值，实体用来封装数据，都有默认初始值</td></tr></tbody></table><h2><span id="使用6个例子来加深理解">使用6个例子来加深理解：</span></h2><h3><span id="壹">壹：</span></h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">main()</span><br><span class="line">　　<span class="keyword">int</span> x=<span class="number">1</span>;</span><br><span class="line">show ()</span><br><span class="line">　　<span class="keyword">int</span> x=<span class="number">2</span></span><br></pre></td></tr></table></figure><p>main函数和show函数内都定义了x变量，jvm在栈内分配空间，两者互不影响</p><p><strong>详细过程</strong>：</p><p>1—主函数为入口jvm先执行，在栈内存开辟空间，存放int类型变量x,同时赋值1；</p><p>2—接下来执行show函数，在栈内存中开辟新空间，存放int类型变量x，同时赋值2；</p><p>3—show()执行完毕，变量X立即释放，空间消失。但是main函数空间依然存在，不收影响。</p><p><img src="/2021/08/31/%E5%A0%86%E5%92%8C%E6%A0%88-%E5%A3%B9/image-20210831104241503.png"></p><h3><span id="贰">贰：</span></h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">main()</span><br><span class="line">    <span class="keyword">int</span>[] x=<span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">3</span>];</span><br><span class="line">    x[<span class="number">0</span>]=<span class="number">20</span>;</span><br><span class="line">  </span><br></pre></td></tr></table></figure><p><strong>详细过程</strong>:</p><p>1—老样子，main为入口，jvm在栈内存中开辟一个空间存放x变量（局部变量）   同时在堆内存中也开辟一个空间，用来x指向的int数组。此时所有元素均为赋值但是都有默认初始值；</p><p>2—-执行x[0]=20</p><p>​       即将在堆内存中将20赋给第一个数组元素，到现在为止，数组的三个元素分别为20，0，0；</p><img src="/2021/08/31/%E5%A0%86%E5%92%8C%E6%A0%88-%E5%A3%B9/image-20210831105527840.png" alt="image-20210831105527840"><h3><span id="叁">叁：</span></h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">main()</span><br><span class="line">　　<span class="keyword">int</span>[] x=<span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">3</span>];</span><br><span class="line">　　x[<span class="number">0</span>]=<span class="number">20</span></span><br><span class="line">　　x=<span class="keyword">null</span>;</span><br></pre></td></tr></table></figure><p><strong>详细过程</strong>:</p><p>1-2与上相同</p><p>3—执行x=null</p><p>​      null表示空值，即X的引用数组内存地址0x0045被删除了，在栈内引用不了了。同时，由于堆中的数组不再被X使用，被jvm视为垃圾，启动垃圾回收机制，不定时自定删除。</p><p><img src="/2021/08/31/%E5%A0%86%E5%92%8C%E6%A0%88-%E5%A3%B9/image-20210831110142264.png" alt="image-20210831110142264"></p><h3><span id="肆">肆：</span></h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">main()</span><br><span class="line">　　<span class="keyword">int</span>[] x=<span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">3</span>];</span><br><span class="line">　　<span class="keyword">int</span>[] y=x;</span><br><span class="line">　　y[<span class="number">1</span>]=<span class="number">100</span></span><br><span class="line">　　x=<span class="keyword">null</span></span><br></pre></td></tr></table></figure><p><strong>详细过程</strong>:</p><p> 1—与贰的第一步相同</p><p> 2—执行int [] y=x;</p><p>​      在栈内新开内存存放y变量，同时将0x0045赋给y，所以y也指向了堆内存中的同一个数组</p><p> 3—执行y[1]=100</p><p>​       即在堆中将100赋给[1]这个数组元素，现在数组中的元素值为0，100，0；</p><p> 4—执行x=null</p><p>​       则变量x不再指向栈内存中的数组。但是y仍然指向数组，所以数组不消失</p><p><img src="/2021/08/31/%E5%A0%86%E5%92%8C%E6%A0%88-%E5%A3%B9/image-20210831141750764.png" alt="image-20210831141750764"></p><h3><span id="伍">伍：</span></h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Car c=<span class="keyword">new</span> Car;</span><br><span class="line">c.color=<span class="string">&quot;bule&quot;</span>;</span><br><span class="line">Car c1=<span class="keyword">new</span> Car;</span><br><span class="line">c1.num=<span class="number">5</span></span><br></pre></td></tr></table></figure><p>都引用new Car,但两个不同的对象会产生两个不同的实体</p><p><img src="/2021/08/31/%E5%A0%86%E5%92%8C%E6%A0%88-%E5%A3%B9/Blog\source_posts\堆和栈-壹\image-20210831142206084.png" alt="image-20210831142206084"></p><h3><span id="陆">陆：</span></h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Car c=<span class="keyword">new</span> Car;</span><br><span class="line">c.color=<span class="string">&quot;green&quot;</span>;</span><br><span class="line">Car c1=c;</span><br><span class="line">c1.num=<span class="number">5</span></span><br></pre></td></tr></table></figure><p>c1=c，相当于复制一份对象，两个对象在堆中的内存地址一样，指向同一个实体，修改一个两个对象的属性都修改。</p><p><img src="/2021/08/31/%E5%A0%86%E5%92%8C%E6%A0%88-%E5%A3%B9/image-20210831111340998.png" alt="image-20210831111340998"></p><p>想宝贝的第好几天👩‍❤️‍💋‍👩👯‍♂️👩🏼‍🤝‍👩🏻</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1&gt;&lt;span id=&quot;堆和栈的区别&quot;&gt;堆和栈的区别😍&lt;/span&gt;&lt;/h1&gt;&lt;p&gt;看过上面的博文自己来总结一下：&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;什么是局部变量：&lt;/strong&gt;定义在函数中的变量、定义在函数中的参数上的变量、定义在for循环内部的变量&lt;/p&gt;
+&lt;tabl</summary>
+      
+    
+    
+    
+    <category term="javase" scheme="http://example.com/categories/javase/"/>
+    
+    
+    <category term="堆和栈的区别" scheme="http://example.com/tags/%E5%A0%86%E5%92%8C%E6%A0%88%E7%9A%84%E5%8C%BA%E5%88%AB/"/>
+    
+  </entry>
   
   <entry>
     <title>lambda表达式</title>
