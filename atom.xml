@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>茅草屋</title>
+  <title>香饽饽</title>
   
-  <subtitle>Welcome!</subtitle>
+  <subtitle>欢迎观察一只Java小白的成长之路！</subtitle>
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
