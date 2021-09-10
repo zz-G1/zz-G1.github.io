@@ -195,6 +195,92 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/10/post%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C%E7%B1%BB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Gzz">
+      <meta itemprop="description" content="只要开始就不算晚">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="香饽饽">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/09/10/post%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C%E7%B1%BB/" class="post-title-link" itemprop="url">原子操作类</a>
+        </h2>
+
+        <div class="post-meta">
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-09-10 11:58:53 / 修改时间：18:50:25" itemprop="dateCreated datePublished" datetime="2021-09-10T11:58:53+08:00">2021-09-10</time>
+            </span>
+
+          
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+              <span>1.7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1><span id="原子操作类atomicinteger">原子操作类AtomicInteger</span></h1><p>在使用Java爬取网站图片时，遇到多线程下载图片，需显示下载到第几张图片问题，于是使用了原子操作类AtomicInteger，可以保证操作具有原子性</p>
+<h2><span id="例一">例一</span></h2><p>创建两个线程，分别将全局变量i进行加1</p>
+<p>每个线程执行5000次（次数少了正确率比较高🤣，5000都是重复执行好几次之后才出现不理想结果）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">D</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> m = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line"><span class="comment">//        CountDownLatch cdl = new CountDownLatch(2);</span></span><br><span class="line"></span><br><span class="line">        Thread t1 = <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">5000</span>; j++) &#123;</span><br><span class="line">                    m++;</span><br><span class="line">                    System.out.println(<span class="string">&quot;1:&quot;</span>+m);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="comment">//cdl.countDown();</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        Thread t2 = <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">5000</span>; j++) &#123;</span><br><span class="line">                    m++;</span><br><span class="line">                    System.out.println(<span class="string">&quot;2:&quot;</span>+m);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="comment">//cdl.countDown();</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        t1.start();</span><br><span class="line">        t2.start();</span><br><span class="line"></span><br><span class="line">        <span class="comment">//cdl.await();</span></span><br><span class="line">        System.out.println(<span class="string">&quot;result=&quot;</span> + m);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2021/09/10/post%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C%E7%B1%BB/image-20210910184257578.png" alt="image-20210910184257578"></p>
+<p>由此可以看出m变量没有加锁(synchronized)，。但是synchronized过于沉重。于是我们可以考虑使用原子操作类<strong>AtomicInteger</strong>来实现。</p>
+<h2><span id="例二">例二</span></h2><p>使用<strong>AtomicInteger</strong> 中的<strong>incrementAndGet</strong> 函数来进行自增操作，代替直接使用**i++**来进行自增，保证了操作的原子性。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.concurrent.atomic.AtomicInteger;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">D</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> m = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line"><span class="comment">//        CountDownLatch cdl = new CountDownLatch(2);</span></span><br><span class="line">          AtomicInteger i=<span class="keyword">new</span> AtomicInteger(<span class="number">0</span>);</span><br><span class="line">        Thread t1 = <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">5000</span>; j++) &#123;</span><br><span class="line">                    i.incrementAndGet();</span><br><span class="line">                    System.out.println(<span class="string">&quot;1:&quot;</span>+i);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="comment">//cdl.countDown();</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        Thread t2 = <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">5000</span>; j++) &#123;</span><br><span class="line">                    i.incrementAndGet();</span><br><span class="line">                    System.out.println(<span class="string">&quot;2:&quot;</span>+i);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="comment">//cdl.countDown();</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        t1.start();</span><br><span class="line">        t2.start();</span><br><span class="line"></span><br><span class="line">        <span class="comment">//cdl.await();</span></span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2021/09/10/post%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C%E7%B1%BB/image-20210910184723295.png" alt="image-20210910184723295"></p>
+<p>现在无论执行多少次，结果永远是10000</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/08/post-WithWut/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1159,141 +1245,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/24/%E5%88%9D%E8%AF%86JPA/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Gzz">
-      <meta itemprop="description" content="只要开始就不算晚">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="香饽饽">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/08/24/%E5%88%9D%E8%AF%86JPA/" class="post-title-link" itemprop="url">初识JPA</a>
-        </h2>
-
-        <div class="post-meta">
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-08-24 15:39:08" itemprop="dateCreated datePublished" datetime="2021-08-24T15:39:08+08:00">2021-08-24</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-08-25 09:45:59" itemprop="dateModified" datetime="2021-08-25T09:45:59+08:00">2021-08-25</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java%E8%BF%9B%E9%98%B6/" itemprop="url" rel="index"><span itemprop="name">Java进阶</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java%E8%BF%9B%E9%98%B6/spring-boot%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">spring boot学习</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java%E8%BF%9B%E9%98%B6/spring-boot%E5%AD%A6%E4%B9%A0/JPA/" itemprop="url" rel="index"><span itemprop="name">JPA</span></a>
-                </span>
-            </span>
-
-          
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-              <span>7.3k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-              <span>7 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1><span id="springdatajpa">SpringDataJPA</span></h1><p>[TOC]</p>
-<p>是springdata项目下的一个模块</p>
-<p>使用：定义接口并集成spring Data JPA中所提供的接口即可</p>
-<hr>
-<h3><span id="接口继承结构">接口继承结构👀</span></h3><p><img src="/2021/08/24/%E5%88%9D%E8%AF%86JPA/jpa1.png" alt="jpa1"></p>
-<h3><span id="入门案例">入门案例</span></h3><p> 通过jpaRepoistry接口实现一个简单操作</p>
-<h4><span id="1创建maven项目">1.创建maven项目</span></h4><h4><span id="2添加相关依赖">2.添加相关依赖</span></h4><p>​     基础依赖+额外依赖（hibernate JPA+SpringDataJPA）</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependencies&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;org.springframework&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;spring-context&lt;/artifactId&gt;</span><br><span class="line">        &lt;version&gt;<span class="number">4.3</span><span class="number">.21</span>.RELEASE&lt;/version&gt;</span><br><span class="line">    &lt;/dependency&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;org.aspectj&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;aspectjweaver&lt;/artifactId&gt;</span><br><span class="line">        &lt;version&gt;<span class="number">1.6</span><span class="number">.8</span>.RELEASE&lt;/version&gt;</span><br><span class="line">    &lt;/dependency&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;com.mchange&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;c3p0&lt;/artifactId&gt;</span><br><span class="line">        &lt;version&gt;<span class="number">0.9</span><span class="number">.5</span><span class="number">.3</span>&lt;/version&gt;</span><br><span class="line">    &lt;/dependency&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;org.hibernate&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;hibernate-core&lt;/artifactId&gt;</span><br><span class="line">        &lt;version&gt;<span class="number">5.0</span><span class="number">.7</span>.Final&lt;/version&gt;</span><br><span class="line">    &lt;/dependency&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;org.springframework&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;spring-orm&lt;/artifactId&gt;</span><br><span class="line">        &lt;version&gt;<span class="number">4.3</span><span class="number">.21</span>.RELEASE&lt;/version&gt;</span><br><span class="line">    &lt;/dependency&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;mysql&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;</span><br><span class="line">        &lt;version&gt;<span class="number">5.1</span><span class="number">.32</span>&lt;/version&gt;</span><br><span class="line">    &lt;/dependency&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;junit&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;junit&lt;/artifactId&gt;</span><br><span class="line">        &lt;version&gt;<span class="number">4.12</span>&lt;/version&gt;</span><br><span class="line">    &lt;/dependency&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;org.springframework&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;spring-test&lt;/artifactId&gt;</span><br><span class="line">        &lt;version&gt;<span class="number">4.3</span><span class="number">.21</span>.RELEASE&lt;/version&gt;</span><br><span class="line">    &lt;/dependency&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;org.hibernate&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;hibernate-entitymanager&lt;/artifactId&gt;</span><br><span class="line">        &lt;version&gt;<span class="number">5.0</span><span class="number">.7</span>.Final&lt;/version&gt;</span><br><span class="line">    &lt;/dependency&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;org.springframework.data&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;spring-data-jpa&lt;/artifactId&gt;</span><br><span class="line">        &lt;version&gt;<span class="number">1.9</span><span class="number">.0</span>.RELEASE&lt;/version&gt;</span><br><span class="line">    &lt;/dependency&gt;</span><br><span class="line">&lt;/dependencies&gt;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<h4><span id="3添加配置文件">3.添加配置文件</span></h4><p>  数据库配置文件+spring配置文件（application.xml）( •̀ ω •́ )✧</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">jdbc.url=jdbc:mysql:<span class="comment">//localhost:3306/ssm?characterEncoding=utf-8</span></span><br><span class="line">jdbc.driver.class=com.mysql.jdbc.Driver</span><br><span class="line">jdbc.username=root</span><br><span class="line">jdbc.password=<span class="number">123456</span></span><br></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span>?&gt;</span><br><span class="line">&lt;beans xmlns=<span class="string">&quot;http://www.springframework.org/schema/beans&quot;</span></span><br><span class="line">	xmlns:xsi=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span> xmlns:context=<span class="string">&quot;http://www.springframework.org/schema/context&quot;</span></span><br><span class="line">	xmlns:aop=<span class="string">&quot;http://www.springframework.org/schema/aop&quot;</span> xmlns:tx=<span class="string">&quot;http://www.springframework.org/schema/tx&quot;</span></span><br><span class="line">	   xmlns:jpa=<span class="string">&quot;http://www.springframework.org/schema/data/jpa&quot;</span></span><br><span class="line">	xsi:schemaLocation=<span class="string">&quot;http://www.springframework.org/schema/beans </span></span><br><span class="line"><span class="string">	http://www.springframework.org/schema/beans/spring-beans.xsd</span></span><br><span class="line"><span class="string">	http://www.springframework.org/schema/context</span></span><br><span class="line"><span class="string">	http://www.springframework.org/schema/context/spring-context.xsd</span></span><br><span class="line"><span class="string">	http://www.springframework.org/schema/aop</span></span><br><span class="line"><span class="string">	http://www.springframework.org/schema/aop/spring-aop.xsd</span></span><br><span class="line"><span class="string">	http://www.springframework.org/schema/data/jpa</span></span><br><span class="line"><span class="string">	http://www.springframework.org/schema/data/jpa/spring-jpa.xsd</span></span><br><span class="line"><span class="string">	http://www.springframework.org/schema/tx </span></span><br><span class="line"><span class="string">	http://www.springframework.org/schema/tx/spring-tx.xsd&quot;</span>&gt;</span><br><span class="line">	</span><br><span class="line">	&lt;!-- 配置读取properties文件的工具类 --&gt;</span><br><span class="line">	&lt;context:property-placeholder location=<span class="string">&quot;classpath:jdbc.properties&quot;</span>/&gt;</span><br><span class="line">	</span><br><span class="line">	&lt;!-- 配置c3p0数据库连接池 --&gt;</span><br><span class="line">	&lt;bean id=<span class="string">&quot;dataSource&quot;</span> <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;com.mchange.v2.c3p0.ComboPooledDataSource&quot;</span>&gt;</span><br><span class="line">		&lt;property name=<span class="string">&quot;jdbcUrl&quot;</span> value=<span class="string">&quot;$&#123;jdbc.url&#125;&quot;</span>/&gt;</span><br><span class="line">		&lt;property name=<span class="string">&quot;driverClass&quot;</span> value=<span class="string">&quot;$&#123;jdbc.driver.class&#125;&quot;</span>/&gt;</span><br><span class="line">		&lt;property name=<span class="string">&quot;user&quot;</span> value=<span class="string">&quot;$&#123;jdbc.username&#125;&quot;</span>/&gt;</span><br><span class="line">		&lt;property name=<span class="string">&quot;password&quot;</span> value=<span class="string">&quot;$&#123;jdbc.password&#125;&quot;</span>/&gt;</span><br><span class="line">	&lt;/bean&gt;</span><br><span class="line"></span><br><span class="line">	&lt;!-- Spring 整合 JPA 配置 EntityManagerFactory--&gt;</span><br><span class="line">	&lt;bean id=<span class="string">&quot;entityManagerFactory&quot;</span></span><br><span class="line">		  <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean&quot;</span>&gt;</span><br><span class="line">		&lt;property name=<span class="string">&quot;dataSource&quot;</span> ref=<span class="string">&quot;dataSource&quot;</span>/&gt;</span><br><span class="line">		&lt;property name=<span class="string">&quot;jpaVendorAdapter&quot;</span>&gt;</span><br><span class="line">			&lt;bean <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter&quot;</span>&gt;</span><br><span class="line">				&lt;!-- hibernate 相关的属性的注入 --&gt;</span><br><span class="line">				&lt;!-- 配置数据库类型 --&gt;</span><br><span class="line">				&lt;property name=<span class="string">&quot;database&quot;</span> value=<span class="string">&quot;MYSQL&quot;</span>/&gt;</span><br><span class="line">				&lt;!-- 正向工程 自动创建表 --&gt;</span><br><span class="line">				&lt;property name=<span class="string">&quot;generateDdl&quot;</span> value=<span class="string">&quot;true&quot;</span>/&gt;</span><br><span class="line">				&lt;!-- 显示执行的 SQL --&gt;</span><br><span class="line">				&lt;property name=<span class="string">&quot;showSql&quot;</span> value=<span class="string">&quot;true&quot;</span>/&gt;</span><br><span class="line">			&lt;/bean&gt;</span><br><span class="line">		&lt;/property&gt;</span><br><span class="line">		&lt;!-- 扫描实体的包 --&gt;</span><br><span class="line">		&lt;property name=<span class="string">&quot;packagesToScan&quot;</span>&gt;</span><br><span class="line">			&lt;list&gt;</span><br><span class="line">				&lt;value&gt;com.dpb.pojo&lt;/value&gt;</span><br><span class="line">			&lt;/list&gt;</span><br><span class="line">		&lt;/property&gt;</span><br><span class="line">	&lt;/bean&gt;</span><br><span class="line">	&lt;!-- 配置 Hibernate 的事务管理器 --&gt;</span><br><span class="line">	&lt;bean id=<span class="string">&quot;transactionManager&quot;</span></span><br><span class="line">		  <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;org.springframework.orm.jpa.JpaTransactionManager&quot;</span>&gt;</span><br><span class="line">		&lt;property name=<span class="string">&quot;entityManagerFactory&quot;</span></span><br><span class="line">				  ref=<span class="string">&quot;entityManagerFactory&quot;</span>/&gt;</span><br><span class="line">	&lt;/bean&gt;</span><br><span class="line">	</span><br><span class="line">	&lt;!-- 配置开启注解事务处理 --&gt;</span><br><span class="line">	&lt;tx:annotation-driven transaction-manager=<span class="string">&quot;transactionManager&quot;</span>/&gt;</span><br><span class="line">	</span><br><span class="line">	&lt;!-- 配置springIOC的注解扫描 --&gt;</span><br><span class="line">	&lt;context:component-scan base-<span class="keyword">package</span>=<span class="string">&quot;com.dpb&quot;</span>/&gt;</span><br><span class="line"></span><br><span class="line">	&lt;!-- Spring Data JPA 的配置 --&gt;</span><br><span class="line">	&lt;!-- base-<span class="keyword">package</span>：扫描 dao 接口所在的包 --&gt;</span><br><span class="line">	&lt;jpa:repositories base-<span class="keyword">package</span>=<span class="string">&quot;com.dpb.dao&quot;</span>/&gt;</span><br><span class="line">&lt;/beans&gt;</span><br></pre></td></tr></table></figure>
-
-
-
-<h4><span id="4创建pojo类user和dao接口">4.创建pojo类User和Dao接口</span></h4><h6><span id="开发中modelentity和pojo的区别"></span></h6><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.zz.pojo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.persistence.*;</span><br><span class="line"><span class="keyword">import</span> java.io.Serializable;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@program</span>: spring-hibernate-jpa</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@description</span>: Users的Pojo对象</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span>: zz</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@create</span>: 2021-08-24</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@Entity</span></span><br><span class="line"><span class="meta">@Table(name=&quot;users&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Users</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Id</span></span><br><span class="line">    <span class="meta">@GeneratedValue(strategy= GenerationType.IDENTITY)</span><span class="comment">//strategy=GenerationType.IDENTITY 自增长</span></span><br><span class="line">    <span class="meta">@Column(name=&quot;userid&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> Integer userid;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Column(name=&quot;username&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> String username;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Column(name=&quot;userage&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> Integer userage;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Integer <span class="title">getUserid</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> userid;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setUserid</span><span class="params">(Integer userid)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.userid = userid;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getUsername</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> username;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setUsername</span><span class="params">(String username)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.username = username;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Integer <span class="title">getUserage</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> userage;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setUserage</span><span class="params">(Integer userage)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.userage = userage;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;Users [userid=&quot;</span> + userid + <span class="string">&quot;, username=&quot;</span> + username + <span class="string">&quot;, userage=&quot;</span> + userage + <span class="string">&quot;]&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * SpringDataJPA 实现JpaRepository</span></span><br><span class="line"><span class="comment"> * 泛型 第一个参数是对应的Pojo类型</span></span><br><span class="line"><span class="comment"> *      第二个参数是注解的包装类型(将实体类型和实体类的id类型作为类型参数)</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">UserDao</span> <span class="keyword">extends</span> <span class="title">JpaRepository</span>&lt;<span class="title">Users</span>,<span class="title">Integer</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<h4><span id="5测试">5.测试</span></h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@program</span>: spring-data-jpa</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@description</span>: 测试</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span>: zz</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@create</span>: 2021-08-24</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@RunWith(SpringJUnit4ClassRunner.class)</span></span><br><span class="line"><span class="meta">@ContextConfiguration(&quot;classpath:applicationContext.xml&quot;)</span><span class="comment">//取当前项目路径中的主配置文件</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestDemo</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> UserDao usersDao;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 添加用户</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="meta">@Transactional</span><span class="comment">// 在测试类对于事务提交方式默认的是回滚。</span></span><br><span class="line">    <span class="meta">@Rollback(false)</span><span class="comment">//取消自动回滚</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testInsertUsers</span><span class="params">()</span></span>&#123;</span><br><span class="line">        Users users = <span class="keyword">new</span> Users();</span><br><span class="line">        users.setUserage(<span class="number">20</span>);</span><br><span class="line">        users.setUsername(<span class="string">&quot;张三-jpa&quot;</span>);</span><br><span class="line">        <span class="keyword">this</span>.usersDao.save(users);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h4><span id="运行结果">运行结果：</span></h4><p><img src="/2021/08/24/%E5%88%9D%E8%AF%86JPA/image-20210824172908751.png" alt="image-20210824172908751"></p>
-<h5><span id="注意要先创建ssm数据库在idea中完成对数据库的连接"><strong>注意:<strong>💥💥💥💥💥：</strong>要先创建ssm数据库，在idea中完成对数据库的连接</strong>💢💢💢💢💢</span></h5><hr>
-
-      
-    </div>
-
-    
-    
-    
-
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1365,7 +1316,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-count">14</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1378,7 +1329,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1444,18 +1395,18 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">28k</span>
+    <span title="站点总字数">30k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">26 分钟</span>
+    <span title="站点阅读时长">27 分钟</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共6.9k字</span>
+  <span class="post-count">博客全站共7.3k字</span>
 </div>
 
     <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
