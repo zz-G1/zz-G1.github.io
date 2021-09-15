@@ -195,6 +195,182 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/26/Spring-AOP%E5%92%8CIOC%E9%97%AE%E9%A2%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Gzz">
+      <meta itemprop="description" content="只要开始就不算晚">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="香饽饽">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/08/26/Spring-AOP%E5%92%8CIOC%E9%97%AE%E9%A2%98/" class="post-title-link" itemprop="url">Spring AOP和IOC问题</a>
+        </h2>
+
+        <div class="post-meta">
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-08-26 11:15:52 / 修改时间：13:42:05" itemprop="dateCreated datePublished" datetime="2021-08-26T11:15:52+08:00">2021-08-26</time>
+            </span>
+
+          
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+              <span>640</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3><span id="ioc">IOC</span></h3><h4><span id="first">First</span></h4><p>IOC(<strong>Inversion of Control</strong>) 即控制反转，<strong>注意</strong>：不是技术，而是一种设计思想🎆🎆🎆🎆🎆</p>
+<p><strong>Ioc意味着将你设计好的对象交给容器控制</strong></p>
+<p><strong>容器</strong>：IoC 容器控制了对象；</p>
+<p><strong>控制什么</strong>：主要控制了外部资源获取（不只是对象包括比如文件等），不用自己new了</p>
+<p><strong>正转</strong>：自己直接在对象内部通过new进行创建对象，是程序主动去创建依赖对象</p>
+<p><strong>反转</strong>：则是由容器来帮忙创建及注入依赖对象</p>
+<p><strong>控制什么反转了</strong>：依赖对象的获取</p>
+<p>传统程序设计如图：是主动创建对象然后再组合</p>
+<p><img src="/2021/08/26/Spring-AOP%E5%92%8CIOC%E9%97%AE%E9%A2%98/261421378318292.jpg" alt="261421378318292"></p>
+<p>有了IOC/DI容器后：客户端就不用去主动创建对象</p>
+<p><img src="/2021/08/26/Spring-AOP%E5%92%8CIOC%E9%97%AE%E9%A2%98/%E4%B8%8B%E8%BD%BD.png" alt="下载"></p>
+<p>其实从另一层面来说 IOC也达到的松耦合的效果</p>
+<p>🎞 <strong>面向对象设计法则之一—— 好莱坞法则：“别找我们，我们找你</strong></p>
+<p><strong>DI</strong>（Dependency Injection）依赖注入 ：由容器将某个依赖关系（example：用户类依赖用户信息类）动态地注入到组件中，目的并非为组件增加什么功能，而是提升组件重用地频率，并为系统搭建一个灵活可拓展的平台，有了依赖注入机制，我们只需进行简单的配置即可。</p>
+<p>理解DI的关键是：“谁依赖谁，为什么需要依赖，谁注入谁，注入了什么”</p>
+<ul>
+<li>谁依赖谁：应用程序依赖IOC容器</li>
+<li>为什么需要依赖：应用程序需要IOC容器来提供对象需要的外部资源</li>
+<li>谁注入谁：IOC注入应用程序某个对象，应用程序依赖的某个对象</li>
+<li>注入了什么：注入某个对象需要的外部资源（包括对象，资源，常量数据）</li>
+</ul>
+<h5><span id="ioc和di的关系">IOC和DI的关系</span></h5><p><strong>是同一个概念的不同角度描述</strong></p>
+<p>相对IoC 而言，依赖注入明确描述了<strong>被注入对象依赖IoC容器配置依赖对象</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/26/Swaager%E4%BC%A0%E5%85%A5%E5%8F%82%E6%95%B0%E9%97%AE%E9%A2%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Gzz">
+      <meta itemprop="description" content="只要开始就不算晚">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="香饽饽">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/08/26/Swaager%E4%BC%A0%E5%85%A5%E5%8F%82%E6%95%B0%E9%97%AE%E9%A2%98/" class="post-title-link" itemprop="url">Swaager传入参数问题</a>
+        </h2>
+
+        <div class="post-meta">
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-08-26 10:31:18 / 修改时间：10:34:39" itemprop="dateCreated datePublished" datetime="2021-08-26T10:31:18+08:00">2021-08-26</time>
+            </span>
+
+          
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+              <span>869</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3><span id="swaager配置时">Swaager配置时</span></h3><p>要注意<strong>RequestMapping</strong>属性 （comsumes）本次传入参数点击<strong>excute</strong>报红却不可执行 改变了datatype也不行</p>
+<p>看了响应头原来是 <strong>content-type: application/json</strong> 在<strong>RequestMapping</strong>中配置<strong>consumes</strong>指定数据请求的格式为<strong>application/json</strong>格式，把<strong>consumes</strong>属性去掉就好</p>
+<p><img src="/2021/08/26/Swaager%E4%BC%A0%E5%85%A5%E5%8F%82%E6%95%B0%E9%97%AE%E9%A2%98/image-20210826103240523.png" alt="image-20210826103240523"></p>
+<h5><span id="request-mapping属性">Request Mapping属性</span></h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target(&#123;ElementType.METHOD, ElementType.TYPE&#125;)</span> <span class="comment">// 可以在方法和类的声明中使用</span></span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span></span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Mapping</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> RequestMapping &#123;</span><br><span class="line"></span><br><span class="line">    <span class="function">String <span class="title">name</span><span class="params">()</span> <span class="keyword">default</span> &quot;&quot;</span>;<span class="comment">// 指定映射的名称</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@AliasFor(&quot;path&quot;)</span></span><br><span class="line">    String[] value() <span class="keyword">default</span> &#123;&#125;; <span class="comment">// 指定请求路径的地址</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@AliasFor(&quot;value&quot;)</span></span><br><span class="line">    String[] path() <span class="keyword">default</span> &#123;&#125;; <span class="comment">// 指定请求路径的地址</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// 指定请求的方式，是一个RequsetMethod数组，可以配置多个方法</span></span><br><span class="line">    RequestMethod[] method() <span class="keyword">default</span> &#123;&#125;;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// 指定参数的类型</span></span><br><span class="line">    String[] params() <span class="keyword">default</span> &#123;&#125;;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// 指定请求头内容</span></span><br><span class="line">    String[] headers() <span class="keyword">default</span> &#123;&#125;;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// 指定数据请求的格式</span></span><br><span class="line">    String[] consumes() <span class="keyword">default</span> &#123;&#125;;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// 指定返回的内容类型</span></span><br><span class="line">    String[] produces() <span class="keyword">default</span> &#123;&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/24/%E5%88%9D%E8%AF%86JPA/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -842,20 +1018,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-count">16</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">11</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-count">16</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -921,18 +1097,18 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">30k</span>
+    <span title="站点总字数">36k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">27 分钟</span>
+    <span title="站点阅读时长">33 分钟</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共7.3k字</span>
+  <span class="post-count">博客全站共9.1k字</span>
 </div>
 
     <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
