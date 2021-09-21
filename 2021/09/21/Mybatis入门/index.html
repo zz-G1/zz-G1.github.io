@@ -30,8 +30,10 @@
 <meta property="og:description" content="mybatis入门笔记第一个项目搭建流程 搭建实验数据库  导入mybatis相关jar包 12345678910&lt;dependency&gt;            &lt;groupId&gt;mysql&lt;&#x2F;groupId&gt;            &lt;artifactId&gt;mysql-connector-java&lt;&#x2F;artifactId&gt;">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/2021/09/21/Mybatis%E5%85%A5%E9%97%A8/image-20210921140953500.png">
+<meta property="og:image" content="http://example.com/2021/09/21/Mybatis%E5%85%A5%E9%97%A8/image-20210921210742855.png">
+<meta property="og:image" content="http://example.com/2021/09/21/Mybatis%E5%85%A5%E9%97%A8/image-20210921212535801.png">
 <meta property="article:published_time" content="2021-09-21T05:36:49.000Z">
-<meta property="article:modified_time" content="2021-09-21T06:10:03.600Z">
+<meta property="article:modified_time" content="2021-09-21T13:25:44.406Z">
 <meta property="article:author" content="Gzz">
 <meta property="article:tag" content="mybatis">
 <meta name="twitter:card" content="summary">
@@ -227,7 +229,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-09-21 13:36:49 / 修改时间：14:10:03" itemprop="dateCreated datePublished" datetime="2021-09-21T13:36:49+08:00">2021-09-21</time>
+              <time title="创建时间：2021-09-21 13:36:49 / 修改时间：21:25:44" itemprop="dateCreated datePublished" datetime="2021-09-21T13:36:49+08:00">2021-09-21</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -251,7 +253,7 @@
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
               </span>
-              <span>4k</span>
+              <span>4.6k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -300,6 +302,22 @@
 
 <p>8.结果</p>
 <p><img src="/2021/09/21/Mybatis%E5%85%A5%E9%97%A8/image-20210921140953500.png" alt="image-20210921140953500"></p>
+<p>增删改需要提交事务：sqlsession.commit()</p>
+<h2><span id="万能map">万能Map</span></h2><p>假设实体类，或数据库中的表，字段或参数过多时，应当使用map</p>
+<p>步骤：🎇🎇🎇🎇</p>
+<p> 1.在接口中添加方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">updateUser</span><span class="params">(Map&lt;String, Object&gt; map)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>2.在mapper.xml中添加</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;update id=<span class="string">&quot;updateUser&quot;</span> parameterType=<span class="string">&quot;map&quot;</span>&gt;</span><br><span class="line">        update mybatis.user set name=#&#123;uname&#125;, pwd=#&#123;pwds&#125; where id=#&#123;id&#125;</span><br><span class="line">&lt;/update&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2021/09/21/Mybatis%E5%85%A5%E9%97%A8/image-20210921210742855.png" alt="image-20210921210742855"></p>
+<p>用map作为参数的好处就是便利，箭头所指元素捷克在定义map时自己定义，而参数为User实体类时，这些参数皆需要和在定义实体类时一样</p>
+<p>3.测试</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;String, Object&gt; map=<span class="keyword">new</span> HashMap&lt;String, Object&gt;();</span><br><span class="line"></span><br><span class="line">       map.put(<span class="string">&quot;id&quot;</span>,<span class="number">1</span>);</span><br><span class="line">       map.put(<span class="string">&quot;uname&quot;</span>,<span class="string">&quot;sadsada&quot;</span>);</span><br><span class="line">       map.put(<span class="string">&quot;pwds&quot;</span>,<span class="number">4646464</span>);</span><br><span class="line">       System.out.println(u.updateUser(map));</span><br></pre></td></tr></table></figure>
+
+<p>成功！</p>
+<h2><span id="模糊查询">模糊查询</span></h2><p><img src="/2021/09/21/Mybatis%E5%85%A5%E9%97%A8/image-20210921212535801.png" alt="image-20210921212535801"></p>
 
     </div>
 
@@ -441,7 +459,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">mybatis入门笔记</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.1.</span> <span class="nav-text">第一个项目搭建流程</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">mybatis入门笔记</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.1.</span> <span class="nav-text">第一个项目搭建流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.2.</span> <span class="nav-text">万能Map</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.3.</span> <span class="nav-text">模糊查询</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -536,7 +554,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">48k</span>
+    <span title="站点总字数">49k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
@@ -547,7 +565,7 @@
   </div>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共11.6k字</span>
+  <span class="post-count">博客全站共11.8k字</span>
 </div>
 
     <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
