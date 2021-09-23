@@ -36,8 +36,10 @@
 <meta property="og:image" content="http://example.com/2021/09/21/Mybatis%E5%85%A5%E9%97%A8/image-20210922185902309.png">
 <meta property="og:image" content="http://example.com/2021/09/21/Mybatis%E5%85%A5%E9%97%A8/Blog/source_posts/Mybatis入门/image-20210922195302374.png">
 <meta property="og:image" content="http://example.com/2021/09/21/Mybatis%E5%85%A5%E9%97%A8/640">
+<meta property="og:image" content="http://example.com/2021/09/21/Mybatis%E5%85%A5%E9%97%A8/image-20210923213727143.png">
+<meta property="og:image" content="http://example.com/2021/09/21/Mybatis%E5%85%A5%E9%97%A8/image-20210923213749558.png">
 <meta property="article:published_time" content="2021-09-21T05:36:49.000Z">
-<meta property="article:modified_time" content="2021-09-22T13:15:55.879Z">
+<meta property="article:modified_time" content="2021-09-23T14:07:03.890Z">
 <meta property="article:author" content="Gzz">
 <meta property="article:tag" content="mybatis">
 <meta name="twitter:card" content="summary">
@@ -239,7 +241,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-09-22 21:15:55" itemprop="dateModified" datetime="2021-09-22T21:15:55+08:00">2021-09-22</time>
+                <time title="修改时间：2021-09-23 22:07:03" itemprop="dateModified" datetime="2021-09-23T22:07:03+08:00">2021-09-23</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -263,13 +265,13 @@
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
               </span>
-              <span>8k</span>
+              <span>9.3k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
-              <span>7 分钟</span>
+              <span>8 分钟</span>
             </span>
 
         </div>
@@ -365,7 +367,7 @@
 
 <p><img src="/2021/09/21/Mybatis%E5%85%A5%E9%97%A8/Blog\source_posts\Mybatis入门\image-20210922195302374.png" alt="image-20210922195302374"></p>
 <h2><span id="mybatis详细的执行流程">Mybatis详细的执行流程</span></h2><p><img src="/2021/09/21/Mybatis%E5%85%A5%E9%97%A8/640" alt="图片"></p>
-<h1><span id="使用注解开发">使用注解开发</span></h1><p>【注意点：增删改一定记得对事务的处理】</p>
+<h2><span id="使用注解开发">使用注解开发</span></h2><p>【注意点：增删改一定记得对事务的处理】</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">//获取sqlsesion连接</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> SqlSession <span class="title">getSqlSession</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> sqlSessionFactory.openSession(<span class="keyword">true</span>);</span><br><span class="line">    &#125;<span class="comment">//事务自动提交</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <blockquote>
@@ -377,6 +379,18 @@
 <li><p>${} 的作用是直接进行字符串替换</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO user (name) VALUES (&#x27;$&#123;name&#125;&#x27;);</span><br><span class="line">INSERT INTO user (name) VALUES (&#x27;kuangshen&#x27;);</span><br></pre></td></tr></table></figure></li>
 </ul>
+<h2><span id="多对一处理">多对一处理</span></h2><p><img src="/2021/09/21/Mybatis%E5%85%A5%E9%97%A8/image-20210923213727143.png" alt="image-20210923213727143"></p>
+<p><img src="/2021/09/21/Mybatis%E5%85%A5%E9%97%A8/image-20210923213749558.png" alt="image-20210923213749558"></p>
+<p>创建两张表：Student，Teacher</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//获取所有学生及对应老师的信息</span></span><br><span class="line">    <span class="function">List&lt;Student&gt; <span class="title">getStudents</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>mapper.xml文件编写</p>
+<p>按查询嵌套处理</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;select id=<span class="string">&quot;getStudents&quot;</span> resultMap=<span class="string">&quot;StudentTeacher&quot;</span>&gt;</span><br><span class="line">        select * from student</span><br><span class="line">    &lt;/select&gt;</span><br><span class="line">    &lt;resultMap id=<span class="string">&quot;StudentTeacher&quot;</span> type=<span class="string">&quot;com.zz.pojo.Student&quot;</span>&gt;</span><br><span class="line">        &lt;!--association关联属性 property属性名 javaType属性类型 column在多的一方的表中的列名--&gt;</span><br><span class="line">        &lt;association property=<span class="string">&quot;teacher&quot;</span>  column=<span class="string">&quot;tid&quot;</span> javaType=<span class="string">&quot;com.zz.pojo.Teacher&quot;</span> select=<span class="string">&quot;getTeacher&quot;</span>/&gt;</span><br><span class="line">    &lt;/resultMap&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &lt;select id=<span class="string">&quot;getTeacher&quot;</span> resultType=<span class="string">&quot;com.zz.pojo.Teacher&quot;</span>&gt;</span><br><span class="line">        select * from teacher where id= #&#123;id&#125;</span><br><span class="line">    &lt;/select&gt;</span><br></pre></td></tr></table></figure>
+
+<p>按结果嵌套处理</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;select id=<span class="string">&quot;getStudents2&quot;</span> resultMap=<span class="string">&quot;StudentTeacher2&quot;</span> &gt;</span><br><span class="line">       select s.id sid, s.name sname , t.name tname</span><br><span class="line">       from student s,teacher t</span><br><span class="line">       where s.tid = t.id</span><br><span class="line">   &lt;/select&gt;</span><br><span class="line"></span><br><span class="line">   &lt;resultMap id=<span class="string">&quot;StudentTeacher2&quot;</span> type=<span class="string">&quot;com.zz.pojo.Student&quot;</span>&gt;</span><br><span class="line">       &lt;id property=<span class="string">&quot;id&quot;</span> column=<span class="string">&quot;sid&quot;</span>/&gt;</span><br><span class="line">       &lt;result property=<span class="string">&quot;name&quot;</span> column=<span class="string">&quot;sname&quot;</span>/&gt;</span><br><span class="line">       &lt;!--关联对象property 关联对象在Student实体类中的属性--&gt;</span><br><span class="line">       &lt;association property=<span class="string">&quot;teacher&quot;</span> javaType=<span class="string">&quot;com.zz.pojo.Teacher&quot;</span>&gt;</span><br><span class="line">           &lt;result property=<span class="string">&quot;name&quot;</span> column=<span class="string">&quot;tname&quot;</span>/&gt;</span><br><span class="line">       &lt;/association&gt;</span><br><span class="line">   &lt;/resultMap&gt;</span><br></pre></td></tr></table></figure>
+
 
     </div>
 
@@ -518,7 +532,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">mybatis入门笔记</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.1.</span> <span class="nav-text">第一个项目搭建流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.2.</span> <span class="nav-text">万能Map</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.3.</span> <span class="nav-text">模糊查询</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.4.</span> <span class="nav-text">结果集映射</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.5.</span> <span class="nav-text">日志</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.5.1.</span> <span class="nav-text">Log4j</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.6.</span> <span class="nav-text">分页</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.6.1.</span> <span class="nav-text">limit实现分页</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.7.</span> <span class="nav-text">Mybatis详细的执行流程</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">使用注解开发</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">mybatis入门笔记</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.1.</span> <span class="nav-text">第一个项目搭建流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.2.</span> <span class="nav-text">万能Map</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.3.</span> <span class="nav-text">模糊查询</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.4.</span> <span class="nav-text">结果集映射</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.5.</span> <span class="nav-text">日志</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.5.1.</span> <span class="nav-text">Log4j</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.6.</span> <span class="nav-text">分页</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.6.1.</span> <span class="nav-text">limit实现分页</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.7.</span> <span class="nav-text">Mybatis详细的执行流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.8.</span> <span class="nav-text">使用注解开发</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.9.</span> <span class="nav-text">多对一处理</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -613,18 +627,18 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">52k</span>
+    <span title="站点总字数">53k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">47 分钟</span>
+    <span title="站点阅读时长">49 分钟</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共12.7k字</span>
+  <span class="post-count">博客全站共13k字</span>
 </div>
 
     <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
