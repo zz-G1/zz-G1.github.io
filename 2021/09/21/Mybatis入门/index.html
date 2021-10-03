@@ -38,8 +38,11 @@
 <meta property="og:image" content="http://example.com/2021/09/21/Mybatis%E5%85%A5%E9%97%A8/640">
 <meta property="og:image" content="http://example.com/2021/09/21/Mybatis%E5%85%A5%E9%97%A8/image-20210923213727143.png">
 <meta property="og:image" content="http://example.com/2021/09/21/Mybatis%E5%85%A5%E9%97%A8/image-20210923213749558.png">
+<meta property="og:image" content="http://example.com/2021/09/21/Mybatis%E5%85%A5%E9%97%A8/image-20210924195725942.png">
+<meta property="og:image" content="http://example.com/2021/09/21/Mybatis%E5%85%A5%E9%97%A8/image-20210924203651727.png">
+<meta property="og:image" content="http://example.com/2021/09/21/Mybatis%E5%85%A5%E9%97%A8/image-20210924203701534.png">
 <meta property="article:published_time" content="2021-09-21T05:36:49.000Z">
-<meta property="article:modified_time" content="2021-09-23T14:07:03.890Z">
+<meta property="article:modified_time" content="2021-09-24T12:58:27.872Z">
 <meta property="article:author" content="Gzz">
 <meta property="article:tag" content="mybatis">
 <meta name="twitter:card" content="summary">
@@ -241,7 +244,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-09-23 22:07:03" itemprop="dateModified" datetime="2021-09-23T22:07:03+08:00">2021-09-23</time>
+                <time title="修改时间：2021-09-24 20:58:27" itemprop="dateModified" datetime="2021-09-24T20:58:27+08:00">2021-09-24</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -265,13 +268,13 @@
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
               </span>
-              <span>9.3k</span>
+              <span>15k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
-              <span>8 分钟</span>
+              <span>13 分钟</span>
             </span>
 
         </div>
@@ -386,10 +389,126 @@
 
 <p>mapper.xml文件编写</p>
 <p>按查询嵌套处理</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;select id=<span class="string">&quot;getStudents&quot;</span> resultMap=<span class="string">&quot;StudentTeacher&quot;</span>&gt;</span><br><span class="line">        select * from student</span><br><span class="line">    &lt;/select&gt;</span><br><span class="line">    &lt;resultMap id=<span class="string">&quot;StudentTeacher&quot;</span> type=<span class="string">&quot;com.zz.pojo.Student&quot;</span>&gt;</span><br><span class="line">        &lt;!--association关联属性 property属性名 javaType属性类型 column在多的一方的表中的列名--&gt;</span><br><span class="line">        &lt;association property=<span class="string">&quot;teacher&quot;</span>  column=<span class="string">&quot;tid&quot;</span> javaType=<span class="string">&quot;com.zz.pojo.Teacher&quot;</span> select=<span class="string">&quot;getTeacher&quot;</span>/&gt;</span><br><span class="line">    &lt;/resultMap&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &lt;select id=<span class="string">&quot;getTeacher&quot;</span> resultType=<span class="string">&quot;com.zz.pojo.Teacher&quot;</span>&gt;</span><br><span class="line">        select * from teacher where id= #&#123;id&#125;</span><br><span class="line">    &lt;/select&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">&lt;</span><span class="keyword">select</span> id<span class="operator">=</span>&quot;getStudents&quot; resultMap<span class="operator">=</span>&quot;StudentTeacher&quot;<span class="operator">&gt;</span></span><br><span class="line">        <span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> student</span><br><span class="line">    <span class="operator">&lt;</span><span class="operator">/</span><span class="keyword">select</span><span class="operator">&gt;</span></span><br><span class="line">    <span class="operator">&lt;</span>resultMap id<span class="operator">=</span>&quot;StudentTeacher&quot; type<span class="operator">=</span>&quot;com.zz.pojo.Student&quot;<span class="operator">&gt;</span></span><br><span class="line">        <span class="operator">&lt;</span><span class="operator">!</span><span class="comment">--association关联属性 property属性名 javaType属性类型 column在多的一方的表中的列名--&gt;</span></span><br><span class="line">        <span class="operator">&lt;</span>association property<span class="operator">=</span>&quot;teacher&quot;  <span class="keyword">column</span><span class="operator">=</span>&quot;tid&quot; javaType<span class="operator">=</span>&quot;com.zz.pojo.Teacher&quot; <span class="keyword">select</span><span class="operator">=</span>&quot;getTeacher&quot;<span class="operator">/</span><span class="operator">&gt;</span></span><br><span class="line">    <span class="operator">&lt;</span><span class="operator">/</span>resultMap<span class="operator">&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="operator">&lt;</span><span class="keyword">select</span> id<span class="operator">=</span>&quot;getTeacher&quot; resultType<span class="operator">=</span>&quot;com.zz.pojo.Teacher&quot;<span class="operator">&gt;</span></span><br><span class="line">        <span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> teacher <span class="keyword">where</span> id<span class="operator">=</span> #&#123;id&#125;</span><br><span class="line">    <span class="operator">&lt;</span><span class="operator">/</span><span class="keyword">select</span><span class="operator">&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>按结果嵌套处理</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;select id=<span class="string">&quot;getStudents2&quot;</span> resultMap=<span class="string">&quot;StudentTeacher2&quot;</span> &gt;</span><br><span class="line">       select s.id sid, s.name sname , t.name tname</span><br><span class="line">       from student s,teacher t</span><br><span class="line">       where s.tid = t.id</span><br><span class="line">   &lt;/select&gt;</span><br><span class="line"></span><br><span class="line">   &lt;resultMap id=<span class="string">&quot;StudentTeacher2&quot;</span> type=<span class="string">&quot;com.zz.pojo.Student&quot;</span>&gt;</span><br><span class="line">       &lt;id property=<span class="string">&quot;id&quot;</span> column=<span class="string">&quot;sid&quot;</span>/&gt;</span><br><span class="line">       &lt;result property=<span class="string">&quot;name&quot;</span> column=<span class="string">&quot;sname&quot;</span>/&gt;</span><br><span class="line">       &lt;!--关联对象property 关联对象在Student实体类中的属性--&gt;</span><br><span class="line">       &lt;association property=<span class="string">&quot;teacher&quot;</span> javaType=<span class="string">&quot;com.zz.pojo.Teacher&quot;</span>&gt;</span><br><span class="line">           &lt;result property=<span class="string">&quot;name&quot;</span> column=<span class="string">&quot;tname&quot;</span>/&gt;</span><br><span class="line">       &lt;/association&gt;</span><br><span class="line">   &lt;/resultMap&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">&lt;</span><span class="keyword">select</span> id<span class="operator">=</span>&quot;getStudents2&quot; resultMap<span class="operator">=</span>&quot;StudentTeacher2&quot; <span class="operator">&gt;</span></span><br><span class="line">       <span class="keyword">select</span> s.id sid, s.name sname , t.name tname</span><br><span class="line">       <span class="keyword">from</span> student s,teacher t</span><br><span class="line">       <span class="keyword">where</span> s.tid <span class="operator">=</span> t.id</span><br><span class="line">   <span class="operator">&lt;</span><span class="operator">/</span><span class="keyword">select</span><span class="operator">&gt;</span></span><br><span class="line"></span><br><span class="line">   <span class="operator">&lt;</span>resultMap id<span class="operator">=</span>&quot;StudentTeacher2&quot; type<span class="operator">=</span>&quot;com.zz.pojo.Student&quot;<span class="operator">&gt;</span></span><br><span class="line">       <span class="operator">&lt;</span>id property<span class="operator">=</span>&quot;id&quot; <span class="keyword">column</span><span class="operator">=</span>&quot;sid&quot;<span class="operator">/</span><span class="operator">&gt;</span></span><br><span class="line">       <span class="operator">&lt;</span><span class="keyword">result</span> property<span class="operator">=</span>&quot;name&quot; <span class="keyword">column</span><span class="operator">=</span>&quot;sname&quot;<span class="operator">/</span><span class="operator">&gt;</span></span><br><span class="line">       <span class="operator">&lt;</span><span class="operator">!</span><span class="comment">--关联对象property 关联对象在Student实体类中的属性--&gt;</span></span><br><span class="line">       <span class="operator">&lt;</span>association property<span class="operator">=</span>&quot;teacher&quot; javaType<span class="operator">=</span>&quot;com.zz.pojo.Teacher&quot;<span class="operator">&gt;</span></span><br><span class="line">           <span class="operator">&lt;</span><span class="keyword">result</span> property<span class="operator">=</span>&quot;name&quot; <span class="keyword">column</span><span class="operator">=</span>&quot;tname&quot;<span class="operator">/</span><span class="operator">&gt;</span></span><br><span class="line">       <span class="operator">&lt;</span><span class="operator">/</span>association<span class="operator">&gt;</span></span><br><span class="line">   <span class="operator">&lt;</span><span class="operator">/</span>resultMap<span class="operator">&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2><span id="一对多处理">一对多处理</span></h2><p><strong>按结果嵌套处理</strong></p>
+<p>Teacher</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Teacher</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> id;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="comment">//一个老师多个学生</span></span><br><span class="line">    <span class="keyword">private</span> List&lt;Student&gt; students;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>TeacherMapper.xml</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">&lt;</span><span class="operator">!</span><span class="comment">--</span></span><br><span class="line">    思路:</span><br><span class="line">        <span class="number">1.</span> 从学生表和老师表中查出学生id，学生姓名，老师姓名</span><br><span class="line">        <span class="number">2.</span> 对查询出来的操作做结果集映射</span><br><span class="line">            <span class="number">1.</span> 集合的话，使用collection！</span><br><span class="line">                JavaType和ofType都是用来指定对象类型的</span><br><span class="line">                JavaType是用来指定pojo中属性的类型</span><br><span class="line">                ofType指定的是映射到list集合属性中pojo的类型。</span><br><span class="line">    <span class="comment">--&gt;</span></span><br><span class="line">    <span class="operator">&lt;</span><span class="keyword">select</span> id<span class="operator">=</span>&quot;getTeacher&quot; resultMap<span class="operator">=</span>&quot;TeacherStudent&quot;<span class="operator">&gt;</span></span><br><span class="line">        <span class="keyword">select</span> s.id sid, s.name sname , t.name tname, t.id tid</span><br><span class="line">        <span class="keyword">from</span> student s,teacher t</span><br><span class="line">        <span class="keyword">where</span> s.tid <span class="operator">=</span> t.id <span class="keyword">and</span> t.id<span class="operator">=</span>#&#123;id&#125;</span><br><span class="line">    <span class="operator">&lt;</span><span class="operator">/</span><span class="keyword">select</span><span class="operator">&gt;</span></span><br><span class="line">    <span class="operator">&lt;</span>resultMap id<span class="operator">=</span>&quot;TeacherStudent&quot; type<span class="operator">=</span>&quot;Teacher&quot;<span class="operator">&gt;</span></span><br><span class="line">        <span class="operator">&lt;</span><span class="keyword">result</span>  property<span class="operator">=</span>&quot;name&quot; <span class="keyword">column</span><span class="operator">=</span>&quot;tname&quot;<span class="operator">/</span><span class="operator">&gt;</span></span><br><span class="line">        <span class="operator">&lt;</span>collection property<span class="operator">=</span>&quot;students&quot; ofType<span class="operator">=</span>&quot;Student&quot;<span class="operator">&gt;</span></span><br><span class="line">            <span class="operator">&lt;</span><span class="keyword">result</span> property<span class="operator">=</span>&quot;id&quot; <span class="keyword">column</span><span class="operator">=</span>&quot;sid&quot; <span class="operator">/</span><span class="operator">&gt;</span></span><br><span class="line">            <span class="operator">&lt;</span><span class="keyword">result</span> property<span class="operator">=</span>&quot;name&quot; <span class="keyword">column</span><span class="operator">=</span>&quot;sname&quot; <span class="operator">/</span><span class="operator">&gt;</span></span><br><span class="line">            <span class="operator">&lt;</span><span class="keyword">result</span> property<span class="operator">=</span>&quot;tid&quot; <span class="keyword">column</span><span class="operator">=</span>&quot;tid&quot; <span class="operator">/</span><span class="operator">&gt;</span></span><br><span class="line">        <span class="operator">&lt;</span><span class="operator">/</span>collection<span class="operator">&gt;</span></span><br><span class="line">    <span class="operator">&lt;</span><span class="operator">/</span>resultMap<span class="operator">&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>按查询嵌套处理</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">&lt;</span><span class="keyword">select</span> id<span class="operator">=</span>&quot;getTeacher2&quot; resultMap<span class="operator">=</span>&quot;TeacherStudent2&quot;<span class="operator">&gt;</span></span><br><span class="line">        <span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> teacher <span class="keyword">where</span> id<span class="operator">=</span>#&#123;id&#125;</span><br><span class="line">    <span class="operator">&lt;</span><span class="operator">/</span><span class="keyword">select</span><span class="operator">&gt;</span></span><br><span class="line">    <span class="operator">&lt;</span><span class="operator">!</span><span class="comment">--column是一对多的外键 , 写的是一的主键的列名--&gt;</span></span><br><span class="line">    <span class="operator">&lt;</span>resultMap id<span class="operator">=</span>&quot;TeacherStudent2&quot; type<span class="operator">=</span>&quot;Teacher&quot;<span class="operator">&gt;</span></span><br><span class="line">        <span class="operator">&lt;</span>collection property<span class="operator">=</span>&quot;students&quot; javaType<span class="operator">=</span>&quot;ArrayList&quot; ofType<span class="operator">=</span>&quot;Student&quot; <span class="keyword">column</span><span class="operator">=</span>&quot;id&quot; <span class="keyword">select</span><span class="operator">=</span>&quot;getStudentByTeacherId&quot;<span class="operator">/</span><span class="operator">&gt;</span></span><br><span class="line">    <span class="operator">&lt;</span><span class="operator">/</span>resultMap<span class="operator">&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="operator">&lt;</span><span class="keyword">select</span> id<span class="operator">=</span>&quot;getStudentByTeacherId&quot; resultType<span class="operator">=</span>&quot;Student&quot;<span class="operator">&gt;</span></span><br><span class="line">        <span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> student <span class="keyword">where</span> tid<span class="operator">=</span>#&#123;id&#125;</span><br><span class="line">    <span class="operator">&lt;</span><span class="operator">/</span><span class="keyword">select</span><span class="operator">&gt;</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>小结</p>
+</blockquote>
+<p>1、关联-association</p>
+<p>2、集合-collection</p>
+<p>3、所以association是用于一对一和多对一，而collection是用于一对多的关系</p>
+<p>4、JavaType和ofType都是用来指定对象类型的</p>
+<ul>
+<li>JavaType是用来指定pojo中属性的类型</li>
+<li>ofType指定的是映射到list集合属性中pojo的类型。</li>
+</ul>
+<h2><span id="动态sql">动态SQL</span></h2><blockquote>
+<p>if 语句</p>
+</blockquote>
+<p><strong>需求：根据作者名字和博客名字来查询博客！如果作者名字为空，那么只根据博客名字查询，反之，则根据作者名来查询</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">&lt;</span><span class="operator">!</span><span class="comment">--需求1：</span></span><br><span class="line">根据作者名字和博客名字来查询博客！</span><br><span class="line">如果作者名字为空，那么只根据博客名字查询，反之，则根据作者名来查询</span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> blog <span class="keyword">where</span> title <span class="operator">=</span> #&#123;title&#125; <span class="keyword">and</span> author <span class="operator">=</span> #&#123;author&#125;</span><br><span class="line"><span class="comment">--&gt;</span></span><br><span class="line"><span class="operator">&lt;</span><span class="keyword">select</span> id<span class="operator">=</span>&quot;queryBlogIf&quot; parameterType<span class="operator">=</span>&quot;map&quot; resultType<span class="operator">=</span>&quot;blog&quot;<span class="operator">&gt;</span></span><br><span class="line">  <span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> blog <span class="keyword">where</span></span><br><span class="line">   <span class="operator">&lt;</span>if test<span class="operator">=</span>&quot;title != null&quot;<span class="operator">&gt;</span></span><br><span class="line">      title <span class="operator">=</span> #&#123;title&#125;</span><br><span class="line">   <span class="operator">&lt;</span><span class="operator">/</span>if<span class="operator">&gt;</span></span><br><span class="line">   <span class="operator">&lt;</span>if test<span class="operator">=</span>&quot;author != null&quot;<span class="operator">&gt;</span></span><br><span class="line">      <span class="keyword">and</span> author <span class="operator">=</span> #&#123;author&#125;</span><br><span class="line">   <span class="operator">&lt;</span><span class="operator">/</span>if<span class="operator">&gt;</span></span><br><span class="line"><span class="operator">&lt;</span><span class="operator">/</span><span class="keyword">select</span><span class="operator">&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>如果title为空的话，sql语句为错误语句，那就用到where</p>
+<blockquote>
+<p>Where</p>
+</blockquote>
+<p>修改上面的SQL语句；</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">&lt;</span><span class="keyword">select</span> id<span class="operator">=</span>&quot;queryBlogIf&quot; parameterType<span class="operator">=</span>&quot;map&quot; resultType<span class="operator">=</span>&quot;blog&quot;<span class="operator">&gt;</span></span><br><span class="line">  <span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> blog</span><br><span class="line">   <span class="operator">&lt;</span><span class="keyword">where</span><span class="operator">&gt;</span></span><br><span class="line">       <span class="operator">&lt;</span>if test<span class="operator">=</span>&quot;title != null&quot;<span class="operator">&gt;</span></span><br><span class="line">          title <span class="operator">=</span> #&#123;title&#125;</span><br><span class="line">       <span class="operator">&lt;</span><span class="operator">/</span>if<span class="operator">&gt;</span></span><br><span class="line">       <span class="operator">&lt;</span>if test<span class="operator">=</span>&quot;author != null&quot;<span class="operator">&gt;</span></span><br><span class="line">          <span class="keyword">and</span> author <span class="operator">=</span> #&#123;author&#125;</span><br><span class="line">       <span class="operator">&lt;</span><span class="operator">/</span>if<span class="operator">&gt;</span></span><br><span class="line">   <span class="operator">&lt;</span><span class="operator">/</span><span class="keyword">where</span><span class="operator">&gt;</span></span><br><span class="line"><span class="operator">&lt;</span><span class="operator">/</span><span class="keyword">select</span><span class="operator">&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>这个“where”标签会知道如果它包含的标签中有返回值的话，它就插入一个‘where’。此外，如果标签返回的内容是以AND 或OR 开头的，则它会剔除掉。</p>
+<blockquote>
+<p>Set</p>
+</blockquote>
+<p>1、编写接口方法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int updateBlog(Map map);</span><br></pre></td></tr></table></figure>
+
+<p>2、sql配置文件</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">&lt;</span><span class="operator">!</span><span class="comment">--注意set是用的逗号隔开--&gt;</span></span><br><span class="line"><span class="operator">&lt;</span>update id<span class="operator">=</span>&quot;updateBlog&quot; parameterType<span class="operator">=</span>&quot;map&quot;<span class="operator">&gt;</span></span><br><span class="line">  update blog</span><br><span class="line">     <span class="operator">&lt;</span><span class="keyword">set</span><span class="operator">&gt;</span></span><br><span class="line">         <span class="operator">&lt;</span>if test<span class="operator">=</span>&quot;title != null&quot;<span class="operator">&gt;</span></span><br><span class="line">            title <span class="operator">=</span> #&#123;title&#125;,</span><br><span class="line">         <span class="operator">&lt;</span><span class="operator">/</span>if<span class="operator">&gt;</span></span><br><span class="line">         <span class="operator">&lt;</span>if test<span class="operator">=</span>&quot;author != null&quot;<span class="operator">&gt;</span></span><br><span class="line">            author <span class="operator">=</span> #&#123;author&#125;</span><br><span class="line">         <span class="operator">&lt;</span><span class="operator">/</span>if<span class="operator">&gt;</span></span><br><span class="line">     <span class="operator">&lt;</span><span class="operator">/</span><span class="keyword">set</span><span class="operator">&gt;</span></span><br><span class="line">  <span class="keyword">where</span> id <span class="operator">=</span> #&#123;id&#125;;</span><br><span class="line"><span class="operator">&lt;</span><span class="operator">/</span>update<span class="operator">&gt;</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>choose语句</p>
+</blockquote>
+<p>有时候，我们不想用到所有的查询条件，只想选择其中的一个，查询条件有一个满足即可，使用 choose 标签可以解决此类问题</p>
+<p>1、编写接口方法</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List<span class="operator">&lt;</span>Blog<span class="operator">&gt;</span> queryBlogChoose(Map map);</span><br></pre></td></tr></table></figure>
+
+<p>2、sql配置文件</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">&lt;</span><span class="keyword">select</span> id<span class="operator">=</span>&quot;queryBlogChoose&quot; parameterType<span class="operator">=</span>&quot;map&quot; resultType<span class="operator">=</span>&quot;blog&quot;<span class="operator">&gt;</span></span><br><span class="line">  <span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> blog</span><br><span class="line">   <span class="operator">&lt;</span><span class="keyword">where</span><span class="operator">&gt;</span></span><br><span class="line">       <span class="operator">&lt;</span>choose<span class="operator">&gt;</span></span><br><span class="line">           <span class="operator">&lt;</span><span class="keyword">when</span> test<span class="operator">=</span>&quot;title != null&quot;<span class="operator">&gt;</span></span><br><span class="line">                title <span class="operator">=</span> #&#123;title&#125;</span><br><span class="line">           <span class="operator">&lt;</span><span class="operator">/</span><span class="keyword">when</span><span class="operator">&gt;</span></span><br><span class="line">           <span class="operator">&lt;</span><span class="keyword">when</span> test<span class="operator">=</span>&quot;author != null&quot;<span class="operator">&gt;</span></span><br><span class="line">              <span class="keyword">and</span> author <span class="operator">=</span> #&#123;author&#125;</span><br><span class="line">           <span class="operator">&lt;</span><span class="operator">/</span><span class="keyword">when</span><span class="operator">&gt;</span></span><br><span class="line">           <span class="operator">&lt;</span>otherwise<span class="operator">&gt;</span></span><br><span class="line">              <span class="keyword">and</span> views <span class="operator">=</span> #&#123;views&#125;</span><br><span class="line">           <span class="operator">&lt;</span><span class="operator">/</span>otherwise<span class="operator">&gt;</span></span><br><span class="line">       <span class="operator">&lt;</span><span class="operator">/</span>choose<span class="operator">&gt;</span></span><br><span class="line">   <span class="operator">&lt;</span><span class="operator">/</span><span class="keyword">where</span><span class="operator">&gt;</span></span><br><span class="line"><span class="operator">&lt;</span><span class="operator">/</span><span class="keyword">select</span><span class="operator">&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>3、测试类</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">@Test</span></span><br><span class="line">public void testQueryBlogChoose()&#123;</span><br><span class="line">   SqlSession session <span class="operator">=</span> MybatisUtils.getSession();</span><br><span class="line">   BlogMapper mapper <span class="operator">=</span> session.getMapper(BlogMapper.class);</span><br><span class="line"></span><br><span class="line">   HashMap<span class="operator">&lt;</span>String, Object<span class="operator">&gt;</span> map <span class="operator">=</span> <span class="keyword">new</span> HashMap<span class="operator">&lt;</span>String, Object<span class="operator">&gt;</span>();</span><br><span class="line">   map.put(&quot;title&quot;,&quot;Java如此简单&quot;);</span><br><span class="line">   map.put(&quot;author&quot;,&quot;狂神说&quot;);</span><br><span class="line">   map.put(&quot;views&quot;,<span class="number">9999</span>);</span><br><span class="line">   List<span class="operator">&lt;</span>Blog<span class="operator">&gt;</span> blogs <span class="operator">=</span> mapper.queryBlogChoose(map);</span><br><span class="line"></span><br><span class="line">   System.out.println(blogs);</span><br><span class="line"></span><br><span class="line">   session.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如只查询阅览量为9999的书籍则改成<img src="/2021/09/21/Mybatis%E5%85%A5%E9%97%A8/image-20210924195725942.png" alt="image-20210924195725942"></p>
+<blockquote>
+<p>SQL片段</p>
+</blockquote>
+<p>可能某个 sql 语句我们用的特别多，为了增加代码的重用性，简化代码，将这些代码抽取出来，然后使用时直接调用。</p>
+<p><strong>提取SQL片段：</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">&lt;</span><span class="keyword">sql</span> id<span class="operator">=</span>&quot;if-title-author&quot;<span class="operator">&gt;</span></span><br><span class="line">   <span class="operator">&lt;</span>if test<span class="operator">=</span>&quot;title != null&quot;<span class="operator">&gt;</span></span><br><span class="line">      title <span class="operator">=</span> #&#123;title&#125;</span><br><span class="line">   <span class="operator">&lt;</span><span class="operator">/</span>if<span class="operator">&gt;</span></span><br><span class="line">   <span class="operator">&lt;</span>if test<span class="operator">=</span>&quot;author != null&quot;<span class="operator">&gt;</span></span><br><span class="line">      <span class="keyword">and</span> author <span class="operator">=</span> #&#123;author&#125;</span><br><span class="line">   <span class="operator">&lt;</span><span class="operator">/</span>if<span class="operator">&gt;</span></span><br><span class="line"><span class="operator">&lt;</span><span class="operator">/</span><span class="keyword">sql</span><span class="operator">&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>引用SQL片段：</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">&lt;</span><span class="keyword">select</span> id<span class="operator">=</span>&quot;queryBlogIf&quot; parameterType<span class="operator">=</span>&quot;map&quot; resultType<span class="operator">=</span>&quot;blog&quot;<span class="operator">&gt;</span></span><br><span class="line">  <span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> blog</span><br><span class="line">   <span class="operator">&lt;</span><span class="keyword">where</span><span class="operator">&gt;</span></span><br><span class="line">       <span class="operator">&lt;</span><span class="operator">!</span><span class="comment">-- 引用 sql 片段，如果refid 指定的不在本文件中，那么需要在前面加上 namespace --&gt;</span></span><br><span class="line">       <span class="operator">&lt;</span>include refid<span class="operator">=</span>&quot;if-title-author&quot;<span class="operator">&gt;</span><span class="operator">&lt;</span><span class="operator">/</span>include<span class="operator">&gt;</span></span><br><span class="line">       <span class="operator">&lt;</span><span class="operator">!</span><span class="comment">-- 在这里还可以引用其他的 sql 片段 --&gt;</span></span><br><span class="line">   <span class="operator">&lt;</span><span class="operator">/</span><span class="keyword">where</span><span class="operator">&gt;</span></span><br><span class="line"><span class="operator">&lt;</span><span class="operator">/</span><span class="keyword">select</span><span class="operator">&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>注意：</p>
+<p>①、最好基于 单表来定义 sql 片段，提高片段的可重用性</p>
+<p>②、在 sql 片段中不要包括 where</p>
+<h2><span id="缓存">缓存</span></h2><p>一级缓存：也叫本地缓存：</p>
+<ul>
+<li>与数据库同一次会话期间查询到的数据会放在本地缓存中。</li>
+<li>以后如果需要获取相同的数据，直接从缓存中拿，没必须再去查询数据库；</li>
+</ul>
+<p>例如：Sqlsession </p>
+<p>体验：测试在一个session中查询两次相同记录，第二次直接从缓存访问，不去访问数据库</p>
+<p><img src="/2021/09/21/Mybatis%E5%85%A5%E9%97%A8/image-20210924203651727.png" alt="image-20210924203651727"></p>
+<p><img src="/2021/09/21/Mybatis%E5%85%A5%E9%97%A8/image-20210924203701534.png" alt="image-20210924203701534"></p>
+<p>一级缓存失效的四种情况:</p>
+<p>1、sqlSession不同</p>
+<p>2、sqlSession相同，查询条件不同</p>
+<p>3、sqlSession相同，两次查询之间执行了增删改操作！</p>
+<p>4、sqlSession相同，手动清除一级缓存</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">session.clearCache();<span class="comment">//手动清除缓存</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>一级缓存就是一个map</strong></p>
+<blockquote>
+<p>二级缓存</p>
+</blockquote>
+<ul>
+<li><p>二级缓存也叫全局缓存，一级缓存作用域太低了，所以诞生了二级缓存</p>
+</li>
+<li><p>基于namespace级别的缓存，一个名称空间，对应一个二级缓存；</p>
+</li>
+<li><p>工作机制</p>
+</li>
+<li><ul>
+<li>一个会话查询一条数据，这个数据就会被放在当前会话的一级缓存中；</li>
+<li>如果当前会话关闭了，这个会话对应的一级缓存就没了；但是我们想要的是，会话关闭了，一级缓存中的数据被保存到二级缓存中；</li>
+<li>新的会话查询信息，就可以从二级缓存中获取内容；</li>
+<li>不同的mapper查出的数据会放在自己对应的缓存（map）中；</li>
+</ul>
+</li>
+</ul>
+<p>简单地来说：二级缓存就是为了想从缓存中查询一级缓存中没有的东西（个人理解）</p>
+<blockquote>
+<p>使用步骤</p>
+</blockquote>
+<p>1、开启全局缓存 【mybatis-config.xml】</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;setting name=<span class="string">&quot;cacheEnabled&quot;</span> value=<span class="string">&quot;true&quot;</span>/&gt;</span><br></pre></td></tr></table></figure>
+
+<p>2、去每个mapper.xml中配置使用二级缓存，这个配置非常简单；【xxxMapper.xml】</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;cache/&gt;</span><br></pre></td></tr></table></figure>
 
 
     </div>
@@ -473,7 +592,10 @@
     <a href="/2021/09/18/%E6%8B%A6%E6%88%AA%E5%99%A8%E4%B8%8E%E8%BF%87%E6%BB%A4%E5%99%A8/" rel="prev" title="拦截器与过滤器">
       <i class="fa fa-chevron-left"></i> 拦截器与过滤器
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2021/09/26/Spring-boot%E9%9A%8F%E8%AE%B0/" rel="next" title="Spring boot随记">
+      Spring boot随记 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -532,7 +654,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">mybatis入门笔记</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.1.</span> <span class="nav-text">第一个项目搭建流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.2.</span> <span class="nav-text">万能Map</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.3.</span> <span class="nav-text">模糊查询</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.4.</span> <span class="nav-text">结果集映射</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.5.</span> <span class="nav-text">日志</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.5.1.</span> <span class="nav-text">Log4j</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.6.</span> <span class="nav-text">分页</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.6.1.</span> <span class="nav-text">limit实现分页</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.7.</span> <span class="nav-text">Mybatis详细的执行流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.8.</span> <span class="nav-text">使用注解开发</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.9.</span> <span class="nav-text">多对一处理</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">mybatis入门笔记</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.1.</span> <span class="nav-text">第一个项目搭建流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.2.</span> <span class="nav-text">万能Map</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.3.</span> <span class="nav-text">模糊查询</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.4.</span> <span class="nav-text">结果集映射</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.5.</span> <span class="nav-text">日志</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.5.1.</span> <span class="nav-text">Log4j</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.6.</span> <span class="nav-text">分页</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.6.1.</span> <span class="nav-text">limit实现分页</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.7.</span> <span class="nav-text">Mybatis详细的执行流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.8.</span> <span class="nav-text">使用注解开发</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.9.</span> <span class="nav-text">多对一处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.10.</span> <span class="nav-text">一对多处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.11.</span> <span class="nav-text">动态SQL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.12.</span> <span class="nav-text">缓存</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -548,20 +670,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-count">21</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-count">21</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -627,18 +749,18 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">53k</span>
+    <span title="站点总字数">66k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">49 分钟</span>
+    <span title="站点阅读时长">1:01</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共13k字</span>
+  <span class="post-count">博客全站共16.7k字</span>
 </div>
 
     <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
