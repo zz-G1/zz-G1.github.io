@@ -311,7 +311,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-10-09 22:43:37" itemprop="dateModified" datetime="2021-10-09T22:43:37+08:00">2021-10-09</time>
+                <time title="修改时间：2021-10-10 20:31:14" itemprop="dateModified" datetime="2021-10-10T20:31:14+08:00">2021-10-10</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -328,13 +328,13 @@
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
               </span>
-              <span>8.6k</span>
+              <span>12k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
-              <span>8 分钟</span>
+              <span>11 分钟</span>
             </span>
 
         </div>
@@ -433,7 +433,50 @@
 
 <h5><span id="五">五</span></h5><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[main]</span></span><br><span class="line"><span class="attr">databaseRealm</span>=DatabaseRealm</span><br><span class="line"><span class="attr">securityManager.realms</span>=<span class="variable">$databaseRealm</span></span><br></pre></td></tr></table></figure>
 
-<h5><span id="结束-̀-ω-́">结束( •̀ ω •́ )✧</span></h5>
+<h5><span id="结束-̀-ω-́">结束( •̀ ω •́ )✧</span></h5><h4><span id="加密">加密</span></h4><h2><span id="swagger">swagger</span></h2><h3><span id="配置swagger">配置swagger</span></h3><p>（Swagger实例Bean是Docket，所以通过配置Docket实例来配置Swaggger。）</p>
+<p>  可以通过apiInfo()属性配置文档信息</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">//配置文档信息</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> ApiInfo <span class="title">apiInfo</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Contact contact = <span class="keyword">new</span> Contact(<span class="string">&quot;gzz&quot;</span>, <span class="string">&quot;https://www.zhihu.com/people/sjbja&quot;</span>, <span class="string">&quot;https://weibo.com/u/7194380917?is_all=1&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ApiInfo(</span><br><span class="line">                <span class="string">&quot;Swagger学习&quot;</span>, <span class="comment">// 标题</span></span><br><span class="line">                <span class="string">&quot;学习演示如何配置Swagger&quot;</span>, <span class="comment">// 描述</span></span><br><span class="line">                <span class="string">&quot;v1.0&quot;</span>, <span class="comment">// 版本</span></span><br><span class="line">                <span class="string">&quot;https://user.qzone.qq.com/1614399965?source=namecardhoverqzone&quot;</span>, <span class="comment">// 组织链接</span></span><br><span class="line">                contact, <span class="comment">// 联系人信息</span></span><br><span class="line">                <span class="string">&quot;Apach 2.0 许可&quot;</span>, <span class="comment">// 许可</span></span><br><span class="line">                <span class="string">&quot;许可链接&quot;</span>, <span class="comment">// 许可连接</span></span><br><span class="line">                <span class="keyword">new</span> ArrayList&lt;&gt;()<span class="comment">// 扩展</span></span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line"><span class="comment">//Docket 实例关联上 apiInfo()</span></span><br><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Docket <span class="title">docket</span><span class="params">()</span> </span>&#123;</span><br><span class="line">   <span class="keyword">return</span> <span class="keyword">new</span> Docket(DocumentationType.SWAGGER_2).apiInfo(apiInfo());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3><span id="配置接口扫描信息">配置接口扫描信息</span></h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.select()<span class="comment">// 通过.select()方法，去配置扫描接口,RequestHandlerSelectors配置如何扫描接口</span></span><br><span class="line">.apis(RequestHandlerSelectors.basePackage(<span class="string">&quot;com.kuang.swagger.controller&quot;</span>))</span><br><span class="line">.build();</span><br></pre></td></tr></table></figure>
+
+<p>上面为根据包路径扫描接口</p>
+<p><strong>其他配置扫描接口的方式：</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">any() <span class="comment">// 扫描所有，项目中的所有接口都会被扫描到</span></span><br><span class="line">none() <span class="comment">// 不扫描接口</span></span><br><span class="line"><span class="comment">// 通过方法上的注解扫描，如withMethodAnnotation(GetMapping.class)只扫描get请求</span></span><br><span class="line">withMethodAnnotation(<span class="keyword">final</span> Class&lt;? extends Annotation&gt; annotation)</span><br><span class="line"><span class="comment">// 通过类上的注解扫描，如.withClassAnnotation(Controller.class)只扫描有controller注解的类中的接口</span></span><br><span class="line">withClassAnnotation(<span class="keyword">final</span> Class&lt;? extends Annotation&gt; annotation)</span><br></pre></td></tr></table></figure>
+
+<p>还可以配置接口扫描过滤：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 配置如何通过path过滤,即这里只扫描请求以/kuang开头的接口</span></span><br><span class="line">     .paths(PathSelectors.ant(<span class="string">&quot;/kuang/**&quot;</span>))</span><br></pre></td></tr></table></figure>
+
+<p>配置开关</p>
+<p><img src="/2021/09/26/Spring-boot%E9%9A%8F%E8%AE%B0/image-20211010183122574.png" alt="image-20211010183122574"></p>
+<p>效果图：<img src="/2021/09/26/Spring-boot%E9%9A%8F%E8%AE%B0/image-20211010183203887.png" alt="image-20211010183203887"></p>
+<h3><span id="动态配置当项目处于test-dev环境时显示swagger处于prod时不显示">动态配置当项目处于test、dev环境时显示swagger，处于prod时不显示</span></h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Docket <span class="title">docket</span><span class="params">(Environment environment)</span></span>&#123;</span><br><span class="line">        <span class="comment">// 设置要显示swagger的环境</span></span><br><span class="line">        Profiles of = Profiles.of(<span class="string">&quot;dev&quot;</span>, <span class="string">&quot;test&quot;</span>);</span><br><span class="line">        <span class="comment">// 判断当前是否处于该环境</span></span><br><span class="line">        <span class="comment">// 通过 enable() 接收此参数判断是否要显示</span></span><br><span class="line">        <span class="keyword">boolean</span> b = environment.acceptsProfiles(of);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Docket(DocumentationType.SWAGGER_2)</span><br><span class="line">                .apiInfo(apiInfo())</span><br><span class="line">                .enable(b) <span class="comment">//配置是否启用Swagger，如果是false，在浏览器将无法访问</span></span><br><span class="line">                .select()<span class="comment">// 通过.select()方法，去配置扫描接口,RequestHandlerSelectors配置如何扫描接口</span></span><br><span class="line">                .apis(RequestHandlerSelectors.basePackage(<span class="string">&quot;com.kuang.swagger.controller&quot;</span>))</span><br><span class="line">                <span class="comment">// 配置如何通过path过滤,即这里只扫描请求以/kuang开头的接口</span></span><br><span class="line">                .paths(PathSelectors.ant(<span class="string">&quot;/kuang/**&quot;</span>))</span><br><span class="line">                .build();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h3><span id="配置api分组">配置api分组</span></h3><h4><span id="给自己分配组">给自己分配组</span></h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.groupName(&quot;wtt&quot;)// 配置分组</span><br></pre></td></tr></table></figure>
+
+<h4><span id="配置多个分组">配置多个分组</span></h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Docket <span class="title">docket1</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Docket(DocumentationType.SWAGGER_2).groupName(<span class="string">&quot;group1&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Docket <span class="title">docket2</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Docket(DocumentationType.SWAGGER_2).groupName(<span class="string">&quot;group2&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Docket <span class="title">docket3</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Docket(DocumentationType.SWAGGER_2).groupName(<span class="string">&quot;group3&quot;</span>);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h3><span id="实体配置">实体配置</span></h3><h4><span id="新建实体类">新建实体类</span></h4><p><img src="/2021/09/26/Spring-boot%E9%9A%8F%E8%AE%B0/image-20211010192744837.png" alt="image-20211010192744837"></p>
+<h4><span id="在controller中配置接口">在controller中配置接口</span></h4><p><img src="/2021/09/26/Spring-boot%E9%9A%8F%E8%AE%B0/image-20211010192927354.png" alt="image-20211010192927354"></p>
+<h1><span id="异步-定时-邮件任务">异步、定时、邮件任务</span></h1><h6><span id="异步前台发送邮件点击发送前台瞬间响应后台进行多线程处理">异步：前台发送邮件，点击发送前台瞬间响应，后台进行多线程处理</span></h6><p>实现异步方法：<br>在需实现异步的方法上加</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//告诉Spring这是一个异步方法</span></span><br><span class="line"><span class="meta">@Async</span></span><br></pre></td></tr></table></figure>
+
+<p>在主程序上加</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@EnableAsync</span> <span class="comment">//开启异步注解功能</span></span><br></pre></td></tr></table></figure>
+
+<p>完成🎇🎇🎇</p>
+<h6><span id="定时和发送邮件组合起来可实现定时邮件功能">定时和发送邮件：组合起来可实现定时邮件功能</span></h6><p>导入邮件依赖：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-mail<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>定时有两个注解，实现形式和异步差不多：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Scheduled(cron = &quot;0 0/2 * * * ? &quot;)</span><span class="comment">//此注解放在要实现定时任务的方法上</span></span><br><span class="line"><span class="meta">@EnableScheduling</span> <span class="comment">//开启基于注解的定时任务，放在主程序上</span></span><br></pre></td></tr></table></figure>
+
+<p>邮件配置：</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">spring.mail.username</span>=<span class="string">1614399965@qq.com</span></span><br><span class="line"><span class="comment">#授权码</span></span><br><span class="line"><span class="meta">spring.mail.password</span>=<span class="string">zuursxqcywrddfhf</span></span><br><span class="line"><span class="meta">spring.mail.host</span>=<span class="string">smtp.qq.com</span></span><br><span class="line"><span class="comment"># qq需要配置ssl</span></span><br><span class="line"><span class="meta">spring.mail.properties.mail.smtp.ssl.enable</span>=<span class="string">true</span></span><br></pre></td></tr></table></figure>
+
+<p>发送一个两分钟一次的邮件：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Scheduled(cron = &quot;0 0/2 * * * ? &quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sendEmailTo</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">//邮件设置1：一个简单的邮件</span></span><br><span class="line">    SimpleMailMessage message = <span class="keyword">new</span> SimpleMailMessage();</span><br><span class="line">    message.setSubject(<span class="string">&quot;Love tt&quot;</span>);</span><br><span class="line">    message.setText(<span class="string">&quot;一生所爱&quot;</span>);</span><br><span class="line"></span><br><span class="line">    message.setTo(<span class="string">&quot;1614399965@qq.com&quot;</span>);</span><br><span class="line">    message.setFrom(<span class="string">&quot;1614399965@qq.com&quot;</span>);</span><br><span class="line">    mailSender.send(message);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
       
     </div>
 
@@ -1638,18 +1681,18 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">68k</span>
+    <span title="站点总字数">71k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:02</span>
+    <span title="站点阅读时长">1:05</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共17.4k字</span>
+  <span class="post-count">博客全站共18.3k字</span>
 </div>
 
     <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
