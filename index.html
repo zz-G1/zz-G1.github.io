@@ -311,7 +311,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-10-10 20:31:14" itemprop="dateModified" datetime="2021-10-10T20:31:14+08:00">2021-10-10</time>
+                <time title="修改时间：2021-10-10 20:36:32" itemprop="dateModified" datetime="2021-10-10T20:36:32+08:00">2021-10-10</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -328,13 +328,13 @@
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
               </span>
-              <span>12k</span>
+              <span>13k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
-              <span>11 分钟</span>
+              <span>12 分钟</span>
             </span>
 
         </div>
@@ -457,7 +457,7 @@
 
 <h3><span id="实体配置">实体配置</span></h3><h4><span id="新建实体类">新建实体类</span></h4><p><img src="/2021/09/26/Spring-boot%E9%9A%8F%E8%AE%B0/image-20211010192744837.png" alt="image-20211010192744837"></p>
 <h4><span id="在controller中配置接口">在controller中配置接口</span></h4><p><img src="/2021/09/26/Spring-boot%E9%9A%8F%E8%AE%B0/image-20211010192927354.png" alt="image-20211010192927354"></p>
-<h1><span id="异步-定时-邮件任务">异步、定时、邮件任务</span></h1><h6><span id="异步前台发送邮件点击发送前台瞬间响应后台进行多线程处理">异步：前台发送邮件，点击发送前台瞬间响应，后台进行多线程处理</span></h6><p>实现异步方法：<br>在需实现异步的方法上加</p>
+<h2><span id="异步-定时-邮件任务">异步、定时、邮件任务</span></h2><h6><span id="异步前台发送邮件点击发送前台瞬间响应后台进行多线程处理">异步：前台发送邮件，点击发送前台瞬间响应，后台进行多线程处理</span></h6><p>实现异步方法：<br>在需实现异步的方法上加</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//告诉Spring这是一个异步方法</span></span><br><span class="line"><span class="meta">@Async</span></span><br></pre></td></tr></table></figure>
 
 <p>在主程序上加</p>
@@ -473,8 +473,13 @@
 <p>邮件配置：</p>
 <figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">spring.mail.username</span>=<span class="string">1614399965@qq.com</span></span><br><span class="line"><span class="comment">#授权码</span></span><br><span class="line"><span class="meta">spring.mail.password</span>=<span class="string">zuursxqcywrddfhf</span></span><br><span class="line"><span class="meta">spring.mail.host</span>=<span class="string">smtp.qq.com</span></span><br><span class="line"><span class="comment"># qq需要配置ssl</span></span><br><span class="line"><span class="meta">spring.mail.properties.mail.smtp.ssl.enable</span>=<span class="string">true</span></span><br></pre></td></tr></table></figure>
 
+
+
 <p>发送一个两分钟一次的邮件：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Scheduled(cron = &quot;0 0/2 * * * ? &quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sendEmailTo</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">//邮件设置1：一个简单的邮件</span></span><br><span class="line">    SimpleMailMessage message = <span class="keyword">new</span> SimpleMailMessage();</span><br><span class="line">    message.setSubject(<span class="string">&quot;Love tt&quot;</span>);</span><br><span class="line">    message.setText(<span class="string">&quot;一生所爱&quot;</span>);</span><br><span class="line"></span><br><span class="line">    message.setTo(<span class="string">&quot;1614399965@qq.com&quot;</span>);</span><br><span class="line">    message.setFrom(<span class="string">&quot;1614399965@qq.com&quot;</span>);</span><br><span class="line">    mailSender.send(message);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>常用的表达式</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">（1）0/2 * * * * ?   表示每2秒 执行任务</span><br><span class="line">（1）0 0/2 * * * ?   表示每2分钟 执行任务</span><br><span class="line">（1）0 0 2 1 * ?   表示在每月的1日的凌晨2点调整任务</span><br><span class="line">（2）0 15 10 ? * MON-FRI   表示周一到周五每天上午10:15执行作业</span><br><span class="line">（3）0 15 10 ? 6L 2002-2006   表示2002-2006年的每个月的最后一个星期五上午10:15执行作</span><br><span class="line">（4）0 0 10,14,16 * * ?   每天上午10点，下午2点，4点</span><br><span class="line">（5）0 0/30 9-17 * * ?   朝九晚五工作时间内每半小时</span><br><span class="line">（6）0 0 12 ? * WED   表示每个星期三中午12点</span><br><span class="line">（7）0 0 12 * * ?   每天中午12点触发</span><br><span class="line">（8）0 15 10 ? * *   每天上午10:15触发</span><br><span class="line">（9）0 15 10 * * ?     每天上午10:15触发</span><br><span class="line">（10）0 15 10 * * ?   每天上午10:15触发</span><br><span class="line">（11）0 15 10 * * ? 2005   2005年的每天上午10:15触发</span><br><span class="line">（12）0 * 14 * * ?     在每天下午2点到下午2:59期间的每1分钟触发</span><br><span class="line">（13）0 0/5 14 * * ?   在每天下午2点到下午2:55期间的每5分钟触发</span><br><span class="line">（14）0 0/5 14,18 * * ?     在每天下午2点到2:55期间和下午6点到6:55期间的每5分钟触发</span><br><span class="line">（15）0 0-5 14 * * ?   在每天下午2点到下午2:05期间的每1分钟触发</span><br><span class="line">（16）0 10,44 14 ? 3 WED   每年三月的星期三的下午2:10和2:44触发</span><br><span class="line">（17）0 15 10 ? * MON-FRI   周一至周五的上午10:15触发</span><br><span class="line">（18）0 15 10 15 * ?   每月15日上午10:15触发</span><br><span class="line">（19）0 15 10 L * ?   每月最后一日的上午10:15触发</span><br><span class="line">（20）0 15 10 ? * 6L   每月的最后一个星期五上午10:15触发</span><br><span class="line">（21）0 15 10 ? * 6L 2002-2005   2002年至2005年的每月的最后一个星期五上午10:15触发</span><br><span class="line">（22）0 15 10 ? * 6#3   每月的第三个星期五上午10:15触发</span><br></pre></td></tr></table></figure>
 
 
       
@@ -530,7 +535,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-09-24 20:58:27" itemprop="dateModified" datetime="2021-09-24T20:58:27+08:00">2021-09-24</time>
+                <time title="修改时间：2021-10-11 19:03:43" itemprop="dateModified" datetime="2021-10-11T19:03:43+08:00">2021-10-11</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -708,6 +713,13 @@
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">&lt;</span><span class="keyword">select</span> id<span class="operator">=</span>&quot;queryBlogIf&quot; parameterType<span class="operator">=</span>&quot;map&quot; resultType<span class="operator">=</span>&quot;blog&quot;<span class="operator">&gt;</span></span><br><span class="line">  <span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> blog</span><br><span class="line">   <span class="operator">&lt;</span><span class="keyword">where</span><span class="operator">&gt;</span></span><br><span class="line">       <span class="operator">&lt;</span>if test<span class="operator">=</span>&quot;title != null&quot;<span class="operator">&gt;</span></span><br><span class="line">          title <span class="operator">=</span> #&#123;title&#125;</span><br><span class="line">       <span class="operator">&lt;</span><span class="operator">/</span>if<span class="operator">&gt;</span></span><br><span class="line">       <span class="operator">&lt;</span>if test<span class="operator">=</span>&quot;author != null&quot;<span class="operator">&gt;</span></span><br><span class="line">          <span class="keyword">and</span> author <span class="operator">=</span> #&#123;author&#125;</span><br><span class="line">       <span class="operator">&lt;</span><span class="operator">/</span>if<span class="operator">&gt;</span></span><br><span class="line">   <span class="operator">&lt;</span><span class="operator">/</span><span class="keyword">where</span><span class="operator">&gt;</span></span><br><span class="line"><span class="operator">&lt;</span><span class="operator">/</span><span class="keyword">select</span><span class="operator">&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>这个“where”标签会知道如果它包含的标签中有返回值的话，它就插入一个‘where’。此外，如果标签返回的内容是以AND 或OR 开头的，则它会剔除掉。</p>
+<blockquote>
+<p>Trim</p>
+</blockquote>
+<p>和where功能一样，还可以去除多余的逗号</p>
+<p><img src="/2021/09/21/Mybatis%E5%85%A5%E9%97%A8/image-20211011190142894.png" alt="image-20211011190142894"></p>
+<p>如红框里的note为null，则sql语句错误</p>
+<p>加了<trim>则会避免出错，会自动把role_name后面的逗号去掉，从而sql语句不会出错</trim></p>
 <blockquote>
 <p>Set</p>
 </blockquote>
@@ -1681,7 +1693,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">71k</span>
+    <span title="站点总字数">72k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
@@ -1692,7 +1704,7 @@
   </div>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共18.3k字</span>
+  <span class="post-count">博客全站共18.8k字</span>
 </div>
 
     <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
