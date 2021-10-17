@@ -220,23 +220,29 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-10-16 16:50:45 / 修改时间：19:39:04" itemprop="dateCreated datePublished" datetime="2021-10-16T16:50:45+08:00">2021-10-16</time>
+              <time title="创建时间：2021-10-16 16:50:45" itemprop="dateCreated datePublished" datetime="2021-10-16T16:50:45+08:00">2021-10-16</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-10-17 21:21:43" itemprop="dateModified" datetime="2021-10-17T21:21:43+08:00">2021-10-17</time>
+              </span>
 
           
             <span class="post-meta-item" title="本文字数">
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
               </span>
-              <span>375</span>
+              <span>2.7k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
-              <span>1 分钟</span>
+              <span>2 分钟</span>
             </span>
 
         </div>
@@ -249,18 +255,71 @@
 
       
           <h1><span id="mybatisplus">mybatisPlus</span></h1><p><img src="/2021/10/16/mybatisPlus/image-20211016165647437.png" alt="image-20211016165647437"></p>
-<h2><span id="一入门">一（入门）</span></h2><p>mapper接口文件继承<strong>basemapper</strong>，记得加参数要显示查询对象类型</p>
+<h2><span id="入门">入门</span></h2><p>mapper接口文件继承<strong>basemapper</strong>，记得加参数要显示查询对象类型</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//继承Basemapper就可以不编写xml文件了</span></span><br><span class="line"><span class="meta">@Repository</span><span class="comment">//代表是持久层</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">UserMapper</span> <span class="keyword">extends</span> <span class="title">BaseMapper</span>&lt;<span class="title">User</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>注意：🧨🧨🧨🧨🧨要在主启动类下配置扫描的mapper包下所有的接口</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@MapperScan(&quot;com.zz.mybatisplus.mapper&quot;)</span></span><br></pre></td></tr></table></figure>
 
 <p>🎇🎇🎇🎇🎇🎇</p>
-<h2><span id="二日志配置">二（日志配置）</span></h2><p>为了查看sql语句运用情况</p>
+<h2><span id="日志配置">日志配置</span></h2><p>为了查看sql语句运用情况</p>
 <figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">mybatis-plus:</span></span><br><span class="line">  <span class="attr">configuration:</span></span><br><span class="line">    <span class="attr">log-impl:</span> <span class="string">org.apache.ibatis.logging.stdout.StdOutImpl</span></span><br></pre></td></tr></table></figure>
 
 <p>结果：</p>
 <p><img src="/2021/10/16/mybatisPlus/image-20211016173856822.png" alt="image-20211016173856822"></p>
+<h2><span id></span></h2><h2><span id="主键生成策略">主键生成策略</span></h2><p>雪花算法</p>
+<blockquote>
+<p>默认 ID_WORKER 全局唯一id</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * &lt;p&gt;</span></span><br><span class="line"><span class="comment"> * 生成ID类型枚举类</span></span><br><span class="line"><span class="comment"> * &lt;/p&gt;</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> hubin</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> 2015-11-10</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Getter</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">enum</span> <span class="title">IdType</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 数据库ID自增</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    AUTO(<span class="number">0</span>),</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 该类型为未设置主键类型</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    NONE(<span class="number">1</span>),</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 用户输入ID</span></span><br><span class="line"><span class="comment">     * 该类型可以通过自己注册自动填充插件进行填充</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    INPUT(<span class="number">2</span>),</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 以下3种类型、只有当插入对象ID 为空，才自动填充。 */</span></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 全局唯一ID (idWorker)</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    ID_WORKER(<span class="number">3</span>),</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 全局唯一ID (UUID)</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    UUID(<span class="number">4</span>),</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 字符串全局唯一ID (idWorker 的字符串表示)</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    ID_WORKER_STR(<span class="number">5</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> key;</span><br><span class="line"></span><br><span class="line">    IdType(<span class="keyword">int</span> key) &#123;</span><br><span class="line">        <span class="keyword">this</span>.key = key;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2021/10/16/mybatisPlus/image-20211017192539524.png" alt="image-20211017192539524"></p>
+<blockquote>
+<p>主键自增</p>
+</blockquote>
+<p>实体类字段上 </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@TableId(type = IdType.AUTO)</span></span><br></pre></td></tr></table></figure>
+
+<p>数据库字段一定要是自增！</p>
+<h2><span id="更新操作"><img src="/2021/10/16/mybatisPlus/image-20211017193225402.png">更新操作</span></h2><p>参数为对象</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">test1</span><span class="params">()</span></span>&#123;</span><br><span class="line">        User user=<span class="keyword">new</span> User(<span class="number">6</span>,<span class="string">&quot;gzz&quot;</span>,<span class="number">89</span>,<span class="string">&quot;1614399965@qq.com&quot;</span>);</span><br><span class="line">        userMapper.updateById(user);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2><span id="自动填充时间">自动填充时间</span></h2><p>1.数据库管理工具设置</p>
+<p>2.代码级别设置</p>
+<blockquote>
+<p>实体类字段属性上需要增加注解</p>
+</blockquote>
+<p><img src="/2021/10/16/mybatisPlus/image-20211017200938069.png" alt="image-20211017200938069"></p>
+<p>实现自己的处理器</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="meta">@Component</span><span class="comment">//把自己的处理器添加到IOC容器中</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">My</span> <span class="keyword">implements</span> <span class="title">MetaObjectHandler</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insertFill</span><span class="params">(MetaObject metaObject)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        log.debug(<span class="string">&quot;=================insertFill被调用==================&quot;</span>);</span><br><span class="line">        <span class="keyword">this</span>.setFieldValByName(<span class="string">&quot;createTime&quot;</span>,<span class="keyword">new</span> Date(),metaObject);</span><br><span class="line">        <span class="keyword">this</span>.setFieldValByName(<span class="string">&quot;updateTime&quot;</span>,<span class="keyword">new</span> Date(),metaObject);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">updateFill</span><span class="params">(MetaObject metaObject)</span> </span>&#123;</span><br><span class="line">        log.debug(<span class="string">&quot;==========updateFill被调用====================&quot;</span>);</span><br><span class="line">        <span class="keyword">this</span>.setFieldValByName(<span class="string">&quot;updateTime&quot;</span>,<span class="keyword">new</span> Date(),metaObject);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>结果查看：</p>
+<p><img src="/2021/10/16/mybatisPlus/image-20211017201647403.png" alt="image-20211017201647403"></p>
+<h2><span id></span></h2><h2><span id="乐观锁">乐观锁</span></h2><p>原理：</p>
+<p>  取出记录时，获取当前 version</p>
+<p> 更新时，带上这个version </p>
+<p>  执行更新时， set version = newVersion where version = oldVersion 如果version不对，就更新失败</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">乐观锁：<span class="number">1</span>、先查询，获得版本号 version <span class="operator">=</span> <span class="number">1</span></span><br><span class="line"><span class="comment">-- A</span></span><br><span class="line">update <span class="keyword">user</span> <span class="keyword">set</span> name <span class="operator">=</span> &quot;kuangshen&quot;, version <span class="operator">=</span> version <span class="operator">+</span> <span class="number">1</span></span><br><span class="line"><span class="keyword">where</span> id <span class="operator">=</span> <span class="number">2</span> <span class="keyword">and</span> version <span class="operator">=</span> <span class="number">1</span></span><br><span class="line"><span class="comment">-- B 线程抢先完成，这个时候 version = 2，会导致 A 修改失败！</span></span><br><span class="line">update <span class="keyword">user</span> <span class="keyword">set</span> name <span class="operator">=</span> &quot;kuangshen&quot;, version <span class="operator">=</span> version <span class="operator">+</span> <span class="number">1</span></span><br><span class="line"><span class="keyword">where</span> id <span class="operator">=</span> <span class="number">2</span> <span class="keyword">and</span> version <span class="operator">=</span> <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2021/10/16/mybatisPlus/image-20211017211514770.png" alt="image-20211017211514770"></p>
+<p>数据库增加<strong>version</strong>字段，默认为一</p>
+<p>实体类加对应的字段，增加对应的注解</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Version</span><span class="comment">//乐观锁</span></span><br><span class="line"><span class="keyword">private</span> Integer version;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>注册组件</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@MapperScan(&quot;com.zz.mybatisplus.mapper&quot;)</span></span><br><span class="line"><span class="meta">@EnableTransactionManagement</span><span class="comment">//自动管理事务</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Myconfig</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//注册乐观锁插件</span></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">     <span class="function"><span class="keyword">public</span> OptimisticLockerInterceptor <span class="title">optimisticLockerInterceptor</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> OptimisticLockerInterceptor();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>测试</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//测试乐观锁</span></span><br><span class="line">   <span class="meta">@Test</span></span><br><span class="line">   <span class="function"><span class="keyword">void</span> <span class="title">test3</span><span class="params">()</span></span>&#123;</span><br><span class="line">       <span class="comment">// 线程 1</span></span><br><span class="line">       User user = userMapper.selectById(<span class="number">1L</span>);</span><br><span class="line">       user.setName(<span class="string">&quot;zz111&quot;</span>);</span><br><span class="line"></span><br><span class="line">       <span class="comment">// 模拟另外一个线程执行了插队操作</span></span><br><span class="line">       User user2 = userMapper.selectById(<span class="number">1L</span>);</span><br><span class="line">       user2.setName(<span class="string">&quot;zz222&quot;</span>);</span><br><span class="line"></span><br><span class="line">       userMapper.updateById(user2);</span><br><span class="line">       userMapper.updateById(user);<span class="comment">//如果没有乐观锁就会覆盖插队线程的值</span></span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>结果可以看到名字更新最终结果为zz222</p>
+<p><img src="/2021/10/16/mybatisPlus/image-20211017212009400.png" alt="image-20211017212009400"></p>
 
       
     </div>
@@ -1791,18 +1850,18 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">75k</span>
+    <span title="站点总字数">77k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:08</span>
+    <span title="站点阅读时长">1:10</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共20.3k字</span>
+  <span class="post-count">博客全站共20.9k字</span>
 </div>
 
     <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
