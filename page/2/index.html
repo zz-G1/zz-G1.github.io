@@ -195,6 +195,113 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/18/ajax%E6%80%BB%E7%BB%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Gzz">
+      <meta itemprop="description" content="只要开始就不算晚">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="香饽饽">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/09/18/ajax%E6%80%BB%E7%BB%93/" class="post-title-link" itemprop="url">ajax总结</a>
+        </h2>
+
+        <div class="post-meta">
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-09-18 19:35:00" itemprop="dateCreated datePublished" datetime="2021-09-18T19:35:00+08:00">2021-09-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-10-13 17:04:21" itemprop="dateModified" datetime="2021-10-13T17:04:21+08:00">2021-10-13</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+              <span>3.2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1><span id="ajax">Ajax</span></h1><p>现在对Ajax的理解就是简简单单地优化用户体验</p>
+<p>Ajax的核心是XMLHttpRequest对象(XHR)。XHR为向服务器发送请求和解析服务器响应提供了接口。能够以异步方式从服务器获取新数据。</p>
+<p>jQuery 提供多个与 AJAX 有关的方法。</p>
+<p><strong>实现异步验证用户名</strong></p>
+<p>新建一个maven项目，增加web支持，<strong>配置好tomcat服务器</strong>（就配置这破玩意二花了我两天！！！！！！！如有问题：首先新建一个项目，不要再原项目下新建一个modle；接下来就是配置好tomcat的deployment）</p>
+<p><img src="/2021/09/18/ajax%E6%80%BB%E7%BB%93/image-20210918194117558.png" alt="image-20210918194117558"></p>
+<img src="/2021/09/18/ajax%E6%80%BB%E7%BB%93/image-20210918194214940.png" alt="image-20210918194214940" style="zoom: 50%;">
+
+<p>如没有Artifact，点击加号把现项目以war包形式发布，点击🆗即可。</p>
+<p><img src="/2021/09/18/ajax%E6%80%BB%E7%BB%93/image-20210918194435095.png" alt="image-20210918194435095"></p>
+<p><img src="/2021/09/18/ajax%E6%80%BB%E7%BB%93/image-20210918194456928.png" alt="image-20210918194456928"></p>
+<p>如项目部署成功访问controller显示500，原因可能是spring版本和tomcat版本不匹配，我的之前有问题的就是因为用的是tomcat6，换成tomcat9就好了。还有还有：：：：<strong>记得在project structure里面的artifacts项里配置lib目录</strong>。</p>
+<h2><span id="言归正传">言归正传</span></h2><p>开始实现功能了🧨🧨🧨🎠🎠🎠🎊🎊🎊</p>
+<p>实现效果简单的来说就是输入账号名和密码，当鼠标离开输入框也就是失去焦点，页面会自动显示正确或错误/<img src="/2021/09/18/ajax%E6%80%BB%E7%BB%93/image-20210918195233626.png" alt="image-20210918195233626"></p>
+<p><img src="/2021/09/18/ajax%E6%80%BB%E7%BB%93/image-20210918195314836.png" alt="image-20210918195314836"></p>
+<p>首先编写controller层（UserController）</p>
+<ul>
+<li>记得控制类前要加@Restcontroller注解，就会以json形式返回前台数据</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.zz.controller;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.zz.pojo.User;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Controller;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.HttpMediaTypeException;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RestController;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.security.auth.login.CredentialException;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AjaxController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">   </span><br><span class="line"></span><br><span class="line">    <span class="meta">@RequestMapping(&quot;/a3&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">ajax3</span><span class="params">(String name,String pwd)</span></span>&#123;</span><br><span class="line">        String msg = <span class="string">&quot;&quot;</span>;</span><br><span class="line">        <span class="comment">//模拟数据库中存在数据</span></span><br><span class="line">        <span class="keyword">if</span> (name!=<span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="string">&quot;admin&quot;</span>.equals(name))&#123;</span><br><span class="line">                msg = <span class="string">&quot;OK&quot;</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                msg = <span class="string">&quot;用户名输入错误&quot;</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (pwd!=<span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="string">&quot;123456&quot;</span>.equals(pwd))&#123;</span><br><span class="line">                msg = <span class="string">&quot;OK&quot;</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                msg = <span class="string">&quot;密码输入有误&quot;</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> msg; <span class="comment">//由于@RestController注解，将msg转成json格式返回</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>然后从网上下载jquery，放在项目的web包中，然后编写login.jsp页面</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page contentType=<span class="string">&quot;text/html;charset=UTF-8&quot;</span> language=<span class="string">&quot;java&quot;</span> %&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">  &lt;title&gt;ajax&lt;/title&gt;</span><br><span class="line">  &lt;script src=<span class="string">&quot;$&#123;pageContext.request.contextPath&#125;/statics/js/jquery.js&quot;</span>&gt;&lt;/script&gt;</span><br><span class="line">  &lt;script&gt;</span><br><span class="line"></span><br><span class="line">    <span class="function">function <span class="title">a1</span><span class="params">()</span></span>&#123;</span><br><span class="line">      $.post(&#123;</span><br><span class="line">        url:<span class="string">&quot;$&#123;pageContext.request.contextPath&#125;/a3&quot;</span>,</span><br><span class="line">        data:&#123;<span class="string">&#x27;name&#x27;</span>:$(<span class="string">&quot;#name&quot;</span>).val()&#125;,</span><br><span class="line">        success:function (data) &#123;</span><br><span class="line">          <span class="keyword">if</span> (data.toString()==<span class="string">&#x27;OK&#x27;</span>)&#123;</span><br><span class="line">            $(<span class="string">&quot;#userInfo&quot;</span>).css(<span class="string">&quot;color&quot;</span>,<span class="string">&quot;green&quot;</span>);</span><br><span class="line">          &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">            $(<span class="string">&quot;#userInfo&quot;</span>).css(<span class="string">&quot;color&quot;</span>,<span class="string">&quot;red&quot;</span>);</span><br><span class="line">          &#125;</span><br><span class="line">          $(<span class="string">&quot;#userInfo&quot;</span>).html(data);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function">function <span class="title">a2</span><span class="params">()</span></span>&#123;</span><br><span class="line">      $.post(&#123;</span><br><span class="line">        url:<span class="string">&quot;$&#123;pageContext.request.contextPath&#125;/a3&quot;</span>,</span><br><span class="line">        data:&#123;<span class="string">&#x27;pwd&#x27;</span>:$(<span class="string">&quot;#pwd&quot;</span>).val()&#125;,</span><br><span class="line">        success:function (data) &#123;</span><br><span class="line">          <span class="keyword">if</span> (data.toString()==<span class="string">&#x27;OK&#x27;</span>)&#123;</span><br><span class="line">            $(<span class="string">&quot;#pwdInfo&quot;</span>).css(<span class="string">&quot;color&quot;</span>,<span class="string">&quot;green&quot;</span>);</span><br><span class="line">          &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">            $(<span class="string">&quot;#pwdInfo&quot;</span>).css(<span class="string">&quot;color&quot;</span>,<span class="string">&quot;red&quot;</span>);</span><br><span class="line">          &#125;</span><br><span class="line">          $(<span class="string">&quot;#pwdInfo&quot;</span>).html(data);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  &lt;/script&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;p&gt;</span><br><span class="line">  用户名:&lt;input type=<span class="string">&quot;text&quot;</span> id=<span class="string">&quot;name&quot;</span> onblur=<span class="string">&quot;a1()&quot;</span>/&gt;</span><br><span class="line">  &lt;span id=<span class="string">&quot;userInfo&quot;</span>&gt;&lt;/span&gt;</span><br><span class="line">&lt;/p&gt;</span><br><span class="line">&lt;p&gt;</span><br><span class="line">  密码:&lt;input type=<span class="string">&quot;text&quot;</span> id=<span class="string">&quot;pwd&quot;</span> onblur=<span class="string">&quot;a2()&quot;</span>/&gt;</span><br><span class="line">  &lt;span id=<span class="string">&quot;pwdInfo&quot;</span>&gt;&lt;/span&gt;</span><br><span class="line">&lt;/p&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>到现在启动服务器就可以看到啦，成功后在浏览器查看时每失去焦点时都会向后台发送请求，也是<strong>Ajax的独特之处，把主动权交给了前端。</strong></p>
+<p>放一下项目结构图吧</p>
+<p><img src="/2021/09/18/ajax%E6%80%BB%E7%BB%93/image-20210918200158409.png" alt="image-20210918200158409"></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/15/Restful%E8%AF%A6%E8%A7%A3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -749,7 +856,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-09-02 09:32:07" itemprop="dateModified" datetime="2021-09-02T09:32:07+08:00">2021-09-02</time>
+                <time title="修改时间：2021-10-24 20:21:57" itemprop="dateModified" datetime="2021-10-24T20:21:57+08:00">2021-10-24</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -763,10 +870,6 @@
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/Java%E8%BF%9B%E9%98%B6/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">设计模式</span></a>
                 </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java%E8%BF%9B%E9%98%B6/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E7%AE%80%E5%8D%95%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">简单工厂模式</span></a>
-                </span>
             </span>
 
           
@@ -774,13 +877,13 @@
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
               </span>
-              <span>3.2k</span>
+              <span>4.9k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
-              <span>3 分钟</span>
+              <span>4 分钟</span>
             </span>
 
         </div>
@@ -792,16 +895,17 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1><span id="简单工厂模式">简单工厂模式</span></h1><p><strong>UML类图</strong></p>
+          <h1><span id="工厂设计模式">工厂设计模式</span></h1><p>✨✨✨源码示例：<a target="_blank" rel="noopener" href="https://gitee.com/guozhuangzhuang1/design-pattern%F0%9F%A5%8B%F0%9F%A5%8B%F0%9F%A5%8B">https://gitee.com/guozhuangzhuang1/design-pattern🥋🥋🥋</a></p>
+<h2><span id="简单工厂模式">简单工厂模式</span></h2><p><strong>UML类图</strong></p>
 <p><img src="/2021/09/01/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-1/image-20210901101148383.png" alt="image-20210901101148383"></p>
-<h2><span id="案例计算器">案例：计算器</span></h2><p>实现一个计算器功能：输入两个数和运算符号输出结果</p>
-<h3><span id="第一版">第一版</span></h3><p><img src="/2021/09/01/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-1/image-20210901103229566.png" alt="image-20210901103229566"></p>
+<h4><span id="案例计算器">案例：计算器</span></h4><p>实现一个计算器功能：输入两个数和运算符号输出结果</p>
+<h4><span id="第一版">第一版</span></h4><p><img src="/2021/09/01/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-1/image-20210901103229566.png" alt="image-20210901103229566"></p>
 <p><strong>问题：</strong></p>
 <p>命名不规范，浪费资源时间，没考虑意外情况</p>
-<h3><span id="第二版">第二版</span></h3><p><img src="/2021/09/01/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-1/image-20210901103547596.png" alt="image-20210901103547596"></p>
+<h4><span id="第二版">第二版</span></h4><p><img src="/2021/09/01/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-1/image-20210901103547596.png" alt="image-20210901103547596"></p>
 <p><strong>问题：</strong></p>
 <p>没有面向对象</p>
-<h3><span id="第三版">第三版</span></h3><p>运算类</p>
+<h4><span id="第三版">第三版</span></h4><p>运算类</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Operation</span> <span class="keyword">extends</span> <span class="title">Exception</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">double</span> <span class="title">getresult</span><span class="params">(<span class="keyword">double</span> numberA,<span class="keyword">double</span> numberB,String operation)</span><span class="keyword">throws</span> Exception</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">double</span> result=<span class="number">0d</span>;</span><br><span class="line">        <span class="keyword">switch</span> (operation)&#123;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">&quot;+&quot;</span>:</span><br><span class="line">                result=numberA+numberB;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">&quot;-&quot;</span>:</span><br><span class="line">                result=numberA-numberB;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">&quot;*&quot;</span>:</span><br><span class="line">                result=numberA*numberB;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">&quot;/&quot;</span>:</span><br><span class="line">                <span class="keyword">if</span>(numberB==<span class="number">0</span>)&#123;</span><br><span class="line">                    <span class="keyword">throw</span> <span class="keyword">new</span> Exception(<span class="string">&quot;除数不可为0&quot;</span>);</span><br><span class="line">                &#125;</span><br><span class="line">                result=numberA/numberB;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p><strong>客户端</strong></p>
@@ -810,7 +914,7 @@
 <p><strong>结果：</strong></p>
 <p><img src="/2021/09/01/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-1/image-20210901105747617.png" alt="image-20210901105747617"></p>
 <p>问题：面向对象三大特性只使用了一个，继承和多态没有使用</p>
-<h3><span id="最终版">最终版</span></h3><p><strong>简单工厂模式</strong></p>
+<h4><span id="最终版">最终版</span></h4><p><strong>简单工厂模式</strong></p>
 <p><strong>operation运算类</strong></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Operation1</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">double</span> _numberA=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">double</span> _numberB=<span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">getResult</span><span class="params">()</span><span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">        <span class="keyword">double</span> result=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -824,6 +928,40 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ma1</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span>&#123;</span><br><span class="line">          Operation1 oper;</span><br><span class="line">          Scanner sc=<span class="keyword">new</span> Scanner(System.in);</span><br><span class="line">          System.out.println(<span class="string">&quot;请输入运算符号:&quot;</span>);</span><br><span class="line">          String strOpreation = sc.next();</span><br><span class="line">          oper=OperationFacotry.createOperation(strOpreation);</span><br><span class="line">          System.out.println(<span class="string">&quot;请输入数字A:&quot;</span>);</span><br><span class="line">          Double strNumberA= sc.nextDouble();</span><br><span class="line">          oper._numberA=strNumberA;</span><br><span class="line">          System.out.println(<span class="string">&quot;请输入数字B:&quot;</span>);</span><br><span class="line">          Double strNumberB= sc.nextDouble();</span><br><span class="line">          oper._numberB=strNumberB;</span><br><span class="line">          <span class="keyword">double</span> result=oper.getResult();</span><br><span class="line">          System.out.println(<span class="string">&quot;结果为:&quot;</span>+result);</span><br><span class="line">        &#125;<span class="keyword">catch</span> (Exception e)&#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;您的输入有误:&quot;</span>+e.getMessage());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>这样的话只需输入运算符号，工厂就实例化出合适的对象，通过多态返回父类实现了计算器的结果。</p>
+<h2><span id="工厂方法模式">工厂方法模式</span></h2><p><img src="/2021/09/01/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-1/image-20211024194707957.png" alt="image-20211024194707957"></p>
+<h2><span id="抽象工厂模式">抽象工厂模式</span></h2><p><img src="/2021/09/01/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-1/Blog\source_posts\设计模式Study-1\image-20211024200947475.png" alt="image-20211024200947475"></p>
+<p>源码示例：<br><img src="/2021/09/01/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-1/image-20211024201731740.png"></p>
+<p><img src="/2021/09/01/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-1/image-20211024201809444.png" alt="image-20211024201809444"></p>
+<p><img src="/2021/09/01/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-1/image-20211024201839309.png" alt="image-20211024201839309"></p>
+<p>工厂模式小结：<br><img src="/2021/09/01/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-1/image-20211024202149598.png" alt="image-20211024202149598"></p>
+<h1><span id="单例模式">单例模式</span></h1><p>某个类只能存在一个对象实例，并且该类只提供一个取得其对象实例的方法（静态方法）</p>
+<p>源码实例: Hibernate的SessionFactory，充当数据存储源的代理，并负责创建Session对象，由于sessionFactory是一个重量级对象，通常情况下一个项目只需要一个，这就是单例模式。</p>
+<p><img src="/2021/09/01/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-1/image-20211023204614428.png" alt="image-20211023204614428"></p>
+<h2><span id="饿汉式">饿汉式：</span></h2><p><img src="/2021/09/01/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-1/image-20211023204851504.png" alt="image-20211023204851504"></p>
+<h2><span id="懒汉式线程不安全">懒汉式（线程不安全）</span></h2><p>在调用getInstance方法时才会创建单例对象，起到了懒加载效果，只不过线程不安全</p>
+<h2><span id="懒汉式线程安全同步方法">懒汉式（线程安全，同步方法）</span></h2><p>保证了线程安全，但是效率太低，每一次调用都要实例化对象</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//提供一个静态的公有方法，加入同步处理的代码，解决线程安全问题</span></span><br><span class="line"><span class="comment">//即懒汉式</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">synchronized</span> Singleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(instance == <span class="keyword">null</span>) &#123;</span><br><span class="line">			instance = <span class="keyword">new</span> Singleton();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> instance;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2><span id="懒汉式线程安全同步代码块">懒汉式（线程安全，同步代码块）</span></h2><p>面试常问：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//都不能保证线程安全问题</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">synchronized</span> Singleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(instance == <span class="keyword">null</span>) &#123;</span><br><span class="line">			<span class="keyword">synchronized</span> (Singleton.class) &#123;</span><br><span class="line">				</span><br><span class="line">					instance = <span class="keyword">new</span> Singleton();</span><br><span class="line">				</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> instance;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2><span id="双重检查">双重检查</span></h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//提供一个静态的公有方法，加入双重检查代码，解决线程安全问题, 同时解决懒加载问题</span></span><br><span class="line"><span class="comment">//同时保证了效率, 推荐使用</span></span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">synchronized</span> Singleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(instance == <span class="keyword">null</span>) &#123;</span><br><span class="line">			<span class="keyword">synchronized</span> (Singleton.class) &#123;</span><br><span class="line">				<span class="keyword">if</span>(instance == <span class="keyword">null</span>) &#123;</span><br><span class="line">					instance = <span class="keyword">new</span> Singleton();</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> instance;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这种方式实例化代码只执行一次，效率大大提高！</p>
+<h2><span id="静态内部类">静态内部类</span></h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 静态内部类完成， 推荐使用</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">volatile</span> Singleton instance;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//构造器私有化</span></span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//写一个静态内部类,该类中有一个静态属性 Singleton</span></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">SingletonInstance</span> </span>&#123;</span><br><span class="line">		<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Singleton INSTANCE = <span class="keyword">new</span> Singleton();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//提供一个静态的公有方法，直接返回SingletonInstance.INSTANCE</span></span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">synchronized</span> Singleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span> SingletonInstance.INSTANCE;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>实现了懒加载，采用了类装载的机制来保证初始化实例时只有一个线程；在创建instance对象时，jvm底层机制保证了线程安全，在类进行<strong>初始化</strong>时，其他线程是<strong>无法进入</strong>的。</p>
+<h2><span id="枚举">枚举</span></h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">Singleton</span></span>&#123;</span><br><span class="line">	INSTANCE;<span class="comment">//属性</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sayOK</span><span class="params">()</span></span>&#123;</span><br><span class="line">		System.out.println(<span class="string">&quot;hello ,zzzzz&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2021/09/01/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-1/image-20211024160546802.png" alt="image-20211024160546802"></p>
+<h2><span id="单例模式实际应用">单例模式实际应用</span></h2><p><img src="/2021/09/01/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-1/image-20211024161002863.png" alt="image-20211024161002863"></p>
+<p><img src="/2021/09/01/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-1/image-20211024161411068.png" alt="image-20211024161411068"></p>
 
       
     </div>
@@ -1201,132 +1339,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/27/SpringDataJPA%E4%B9%8B%E6%8F%90%E4%BE%9B%E6%8E%A5%E5%8F%A3%E7%A7%8D%E7%B1%BB-%E4%BA%8C/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Gzz">
-      <meta itemprop="description" content="只要开始就不算晚">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="香饽饽">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/08/27/SpringDataJPA%E4%B9%8B%E6%8F%90%E4%BE%9B%E6%8E%A5%E5%8F%A3%E7%A7%8D%E7%B1%BB-%E4%BA%8C/" class="post-title-link" itemprop="url">SpringDataJPA之提供接口种类(二)</a>
-        </h2>
-
-        <div class="post-meta">
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-08-27 11:29:40" itemprop="dateCreated datePublished" datetime="2021-08-27T11:29:40+08:00">2021-08-27</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-08-29 21:40:09" itemprop="dateModified" datetime="2021-08-29T21:40:09+08:00">2021-08-29</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java%E8%BF%9B%E9%98%B6/" itemprop="url" rel="index"><span itemprop="name">Java进阶</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java%E8%BF%9B%E9%98%B6/spring-boot%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">spring boot学习</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java%E8%BF%9B%E9%98%B6/spring-boot%E5%AD%A6%E4%B9%A0/JPA/" itemprop="url" rel="index"><span itemprop="name">JPA</span></a>
-                </span>
-            </span>
-
-          
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-              <span>2.9k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-              <span>3 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2><span id="crudreposiroty">CrudReposiroty</span></h2><p>继承了Repository</p>
-<p><img src="/2021/08/27/SpringDataJPA%E4%B9%8B%E6%8F%90%E4%BE%9B%E6%8E%A5%E5%8F%A3%E7%A7%8D%E7%B1%BB-%E4%BA%8C/1445322-20190113001524301-1212575806.png" alt="1445322-20190113001524301-1212575806"></p>
-<p>Crud主要是添加了对数据的增删改查的方法</p>
-<h2><span id="pagingandsortingrepositor">PagingAndSortingRepositor</span></h2><p> 继承了CrudRepository</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 继承了Repository,缺点只能对所有的数据进行排序或者分页</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Repository</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">UserPagingAndSortingReposiroty</span> <span class="keyword">extends</span> <span class="title">PagingAndSortingRepository</span>&lt;<span class="title">User</span>, <span class="title">Integer</span>&gt; </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2><span id="jparepository">JPARepository</span></h2><p>继承了PagingAndSortingRepository接口</p>
-<p>在开发中常用JPARepository</p>
-<p>优点: 对继承父接口中方法的返回值进行了适配,因为在父类接口中通常都返回迭代器，需要我们自己进行强制类型转化。而在JpaRepository中，直接返回了List</p>
-<h2><span id="jpaspecificationexecutor">JpaSpecificationExecutor</span></h2><p>接口内部如图所示：</p>
-<p><img src="/2021/08/27/SpringDataJPA%E4%B9%8B%E6%8F%90%E4%BE%9B%E6%8E%A5%E5%8F%A3%E7%A7%8D%E7%B1%BB-%E4%BA%8C/Snipaste_2021-08-27_09-24-59.png" alt="Snipaste_2021-08-27_09-24-59"></p>
-<p>提供了多条件查询的支持，并且可以在查询中添加分页和排序，因为这个接口单独存在，所以要配合以上接口配合使用。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * JpaSpecificationExecutor是单独存在的，需要配合这JpaRepository一起使用</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Repository</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">UserJpaSpecificationExecutor</span> <span class="keyword">extends</span> <span class="title">JpaSpecificationExecutor</span>&lt;<span class="title">User</span>&gt;, <span class="title">JpaRepository</span>&lt;<span class="title">User</span>, <span class="title">Integer</span>&gt; </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">JpaSpecificationExecutor</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">   <span class="comment">//根据 Specification 条件查询单个对象，注意的是，如果条件能查出来多个会报错</span></span><br><span class="line">   <span class="function">T <span class="title">findOne</span><span class="params">(<span class="meta">@Nullable</span> Specification&lt;T&gt; spec)</span></span>;</span><br><span class="line">   <span class="comment">//根据 Specification 条件查询 List 结果</span></span><br><span class="line">   <span class="function">List&lt;T&gt; <span class="title">findAll</span><span class="params">(<span class="meta">@Nullable</span> Specification&lt;T&gt; spec)</span></span>;</span><br><span class="line">   <span class="comment">//根据 Specification 条件，分页查询</span></span><br><span class="line">   <span class="function">Page&lt;T&gt; <span class="title">findAll</span><span class="params">(<span class="meta">@Nullable</span> Specification&lt;T&gt; spec, Pageable pageable)</span></span>;</span><br><span class="line">   <span class="comment">//根据 Specification 条件，带排序的查询结果</span></span><br><span class="line">   <span class="function">List&lt;T&gt; <span class="title">findAll</span><span class="params">(<span class="meta">@Nullable</span> Specification&lt;T&gt; spec, Sort sort)</span></span>;</span><br><span class="line">   <span class="comment">//根据 Specification 条件，查询数量</span></span><br><span class="line">   <span class="function"><span class="keyword">long</span> <span class="title">count</span><span class="params">(<span class="meta">@Nullable</span> Specification&lt;T&gt; spec)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>可以根据传入参数看出<strong>JpaSpecificationExecutor</strong>接口基本是围绕<strong>Specification</strong>接口定义的。而<strong>Specification</strong>接口最常用的就是以下方法：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Predicate <span class="title">toPredicate</span><span class="params">(Root&lt;T&gt; root, CriteriaQuery&lt;?&gt; query, CriteriaBuilder criteriaBuilder)</span></span>;</span><br></pre></td></tr></table></figure>
-
-<p>可以看出JpaSpecificationExecutor对criteria进行了Predicate格式的封装，使我们操作criteria更加遍利</p>
-<p><strong>Criteria介绍：</strong></p>
-<p>（1）<strong>Root<t>root</t></strong>代表了可以查询和操作的实体对象的根。通俗讲就是对象的属性。通过里面的**Path<y>get(String attributeName)**来获得我们操作的字段。</y></p>
-<p>（2）<strong>CriteriaQuery&lt;?&gt;query：</strong>代表一个特殊的顶层查询对象，它包含着查询的各个部分，比如：select、from、where、groupby、order by等。CriteriaQuery对象只对实体类型或嵌入式类型的Criteria查询起作用，简单理解，它提供了查询ROOT的方法。常用的方法有：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> javax.persistence.criteria;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.Set;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">CriteriaQuery</span>&lt;<span class="title">T</span>&gt; <span class="keyword">extends</span> <span class="title">AbstractQuery</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">    <span class="function">CriteriaQuery&lt;T&gt; <span class="title">select</span><span class="params">(Selection&lt;? extends T&gt; var1)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">CriteriaQuery&lt;T&gt; <span class="title">multiselect</span><span class="params">(Selection&lt;?&gt;... var1)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">CriteriaQuery&lt;T&gt; <span class="title">multiselect</span><span class="params">(List&lt;Selection&lt;?&gt;&gt; var1)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">CriteriaQuery&lt;T&gt; <span class="title">where</span><span class="params">(Expression&lt;Boolean&gt; var1)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">CriteriaQuery&lt;T&gt; <span class="title">where</span><span class="params">(Predicate... var1)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">CriteriaQuery&lt;T&gt; <span class="title">groupBy</span><span class="params">(Expression&lt;?&gt;... var1)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">CriteriaQuery&lt;T&gt; <span class="title">groupBy</span><span class="params">(List&lt;Expression&lt;?&gt;&gt; var1)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">CriteriaQuery&lt;T&gt; <span class="title">having</span><span class="params">(Expression&lt;Boolean&gt; var1)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">CriteriaQuery&lt;T&gt; <span class="title">having</span><span class="params">(Predicate... var1)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">CriteriaQuery&lt;T&gt; <span class="title">orderBy</span><span class="params">(Order... var1)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">CriteriaQuery&lt;T&gt; <span class="title">orderBy</span><span class="params">(List&lt;Order&gt; var1)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">CriteriaQuery&lt;T&gt; <span class="title">distinct</span><span class="params">(<span class="keyword">boolean</span> var1)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">List&lt;Order&gt; <span class="title">getOrderList</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    Set&lt;ParameterExpression&lt;?&gt;&gt; getParameters();</span><br><span class="line">&#125;</span><br><span class="line"> </span><br></pre></td></tr></table></figure>
-
-<p>（3）CriteriaBuilder cb：用来构建<strong>CritiaQuery</strong>的构建器对象，其实就相当于条件或者是条件组合，即以Predicate的形式返回。构建简单的Predicate示例：</p>
-<p><strong>JpaSpecificationExecutor接口下结构如图：</strong>!<img src="/2021/08/27/SpringDataJPA%E4%B9%8B%E6%8F%90%E4%BE%9B%E6%8E%A5%E5%8F%A3%E7%A7%8D%E7%B1%BB-%E4%BA%8C/1445322-20190113140545272-914950979.png" alt="1445322-20190113140545272-914950979"></p>
-<p><strong>JpaSpecificationExecutor实现原理</strong></p>
-<p><img src="/2021/08/27/SpringDataJPA%E4%B9%8B%E6%8F%90%E4%BE%9B%E6%8E%A5%E5%8F%A3%E7%A7%8D%E7%B1%BB-%E4%BA%8C/Snipaste_2021-08-29_21-38-01.png" alt="Snipaste_2021-08-29_21-38-01"></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1398,20 +1410,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-count">27</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-count">15</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-count">24</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1477,18 +1489,18 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">78k</span>
+    <span title="站点总字数">80k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:11</span>
+    <span title="站点阅读时长">1:13</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共21.7k字</span>
+  <span class="post-count">博客全站共22.5k字</span>
 </div>
 
     <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
