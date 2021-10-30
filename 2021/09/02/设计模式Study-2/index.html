@@ -32,8 +32,15 @@
 <meta property="og:image" content="http://example.com/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20210902154825052.png">
 <meta property="og:image" content="http://example.com/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20210915112133772.png">
 <meta property="og:image" content="http://example.com/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20210919200622568.png">
+<meta property="og:image" content="http://example.com/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211030173749872.png">
+<meta property="og:image" content="http://example.com/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211030175139500.png">
+<meta property="og:image" content="http://example.com/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211030184755658.png">
+<meta property="og:image" content="http://example.com/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211030194842610.png">
+<meta property="og:image" content="http://example.com/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211030194815008.png">
+<meta property="og:image" content="http://example.com/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211030204459067.png">
+<meta property="og:image" content="http://example.com/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211030204659806.png">
 <meta property="article:published_time" content="2021-09-02T01:34:07.000Z">
-<meta property="article:modified_time" content="2021-09-19T12:06:56.270Z">
+<meta property="article:modified_time" content="2021-10-30T12:47:52.980Z">
 <meta property="article:author" content="Gzz">
 <meta property="article:tag" content="设计模式">
 <meta name="twitter:card" content="summary">
@@ -235,7 +242,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-09-19 20:06:56" itemprop="dateModified" datetime="2021-09-19T20:06:56+08:00">2021-09-19</time>
+                <time title="修改时间：2021-10-30 20:47:52" itemprop="dateModified" datetime="2021-10-30T20:47:52+08:00">2021-10-30</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -267,7 +274,7 @@
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
               </span>
-              <span>5k</span>
+              <span>6k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -326,6 +333,43 @@
 
 <p>观察简单工厂和策略模式与简单工厂模式相结合地情况下：简单工厂向用户暴露了两个类：CashSuper和CashFactory，而策略模式与简单工厂结合地用法，客户端就只需要认识一个类CashContext就可以，耦合性更低。</p>
 <h3><span id="总结">总结</span></h3><p><img src="/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20210919200622568.png" alt="image-20210919200622568"></p>
+<h1><span id="命令模式">命令模式</span></h1><p><img src="/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211030173749872.png" alt="image-20211030173749872"></p>
+<ul>
+<li><img src="/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211030175139500.png" alt="image-20211030175139500"></li>
+<li>StatementCallback 接口 ,类似命令接口(Command) -<br>class QueryStatementCallback implements StatementCallback<t>, SqlProvider , 匿名内 部类，实现了命令接口，同时也充当命令接收者</t></li>
+<li>命令调用者是 JdbcTemplate , 其中execute(StatementCallback<t> action) 方法中，调 用action.doInStatement 方法. 不同的实现 StatementCallback 接口的对象，对应不同 的doInStatemnt 实现逻辑</t></li>
+<li>另外实现 StatementCallback 命令接口的子类还有 QueryStatementCallback</li>
+</ul>
+<p><strong>注意：</strong></p>
+<p>调用者发起请求，不需知道具体接收者对象是谁，命令对象起到了纽带桥梁的作用，起到了解耦的作用</p>
+<p>容易设计一个命令队列，把命令对象放到队列里，就可以执行多线程的命令</p>
+<p>不足：增加系统复杂度</p>
+<h1><span id="访问者模式">访问者模式</span></h1><p><strong>访问者模式（Visitor Pattern）</strong>，封装一些作用于某种数据结构的各元素的操作， 它可以在不改变数据结构的前提下定义作用于这些元素的新的操作。</p>
+<p>主要将数据结构与数据操作分离，解决数据结构和操作耦合性问题 </p>
+<p>访问者模式的基本工作原理是：在被访问的类里面加一个对外提供接待访问者的接口，在源码中即为在man和women中提供一个accept接口</p>
+<p>其中重要的概念：<strong>双分派</strong></p>
+<p>双分派是指不管类怎么变化，我们都能找到期望的方法运行。 双分派意味着得到执行的操作取决于请求的种类和两个接收者的类型</p>
+<p>优缺点：</p>
+<p><img src="/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211030184755658.png" alt="image-20211030184755658"></p>
+<h1><span id="迭代器模式">迭代器模式</span></h1><p>属于行为型模式，如果集合元素实现方式不同：有数组有集合，当客户端遍历这些元素时，需要使用多种遍历方式，而且还会暴露元素的内部结构，可以考虑使用<strong>迭代器模式</strong>解决。</p>
+<p>会提供一个遍历集合元素的统一接口，用一致的方法遍历集合元素，不暴露内部结构</p>
+<p>注意：</p>
+<ol>
+<li><p>提供了一个设计思想，就是一个类应该只有一个引起变化的原因（单一责任原则）。在此例中，我们把管理对象集合和遍历对象集合的责任分开，这样一来集合改变的话，只影响到聚合对象，如果遍历方式改变，只影响迭代器</p>
+</li>
+<li><p>每个聚合对象都需要自定义一个迭代器，不好管理。</p>
+</li>
+<li><p>源码分析</p>
+<p><img src="/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211030194842610.png" alt="image-20211030194842610"></p>
+</li>
+</ol>
+<p><img src="/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211030194815008.png" alt="image-20211030194815008"></p>
+<h1><span id="观察者模式">观察者模式</span></h1><p>会以集合的形式来管理用户，可以注册，移除和更新</p>
+<p>源码分析：</p>
+<p><img src="/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211030204459067.png" alt="image-20211030204459067"></p>
+<p>Observable相当于观察者管理类</p>
+<p><img src="/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211030204659806.png" alt="image-20211030204659806"></p>
+<p>可以看出以上皆具有本角色的操作</p>
 
     </div>
 
@@ -470,7 +514,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">strategy pattern</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.1.</span> <span class="nav-text">策略模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.2.</span> <span class="nav-text">实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.2.1.</span> <span class="nav-text">第一版</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.2.2.</span> <span class="nav-text">第二版</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.2.3.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">strategy pattern</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.1.</span> <span class="nav-text">策略模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.2.</span> <span class="nav-text">实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.2.1.</span> <span class="nav-text">第一版</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.2.2.</span> <span class="nav-text">第二版</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.2.3.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">命令模式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">访问者模式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">迭代器模式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">观察者模式</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -565,18 +609,18 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">81k</span>
+    <span title="站点总字数">83k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:14</span>
+    <span title="站点阅读时长">1:15</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共23.3k字</span>
+  <span class="post-count">博客全站共24.2k字</span>
 </div>
 
     <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
