@@ -22,16 +22,18 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="strategy pattern策略模式 123456789&#x2F;** * 定义所有支持算法的接口 *&#x2F;abstract class Strategy &amp;#123;    &#x2F;**     * 算法方法     *&#x2F;    public abstract void algorithmInterface();&amp;#125;  12345678910111213141516171819202122&#x2F;** *">
+  <meta name="description" content="strategy pattern策略模式  123456789&#x2F;** * 定义所有支持算法的接口 *&#x2F;abstract class Strategy &amp;#123;    &#x2F;**     * 算法方法     *&#x2F;    public abstract void algorithmInterface();&amp;#125;  12345678910111213141516171819202122&#x2F;** *">
 <meta property="og:type" content="article">
 <meta property="og:title" content="设计模式Study-2">
 <meta property="og:url" content="http://example.com/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/index.html">
 <meta property="og:site_name" content="香饽饽">
-<meta property="og:description" content="strategy pattern策略模式 123456789&#x2F;** * 定义所有支持算法的接口 *&#x2F;abstract class Strategy &amp;#123;    &#x2F;**     * 算法方法     *&#x2F;    public abstract void algorithmInterface();&amp;#125;  12345678910111213141516171819202122&#x2F;** *">
+<meta property="og:description" content="strategy pattern策略模式  123456789&#x2F;** * 定义所有支持算法的接口 *&#x2F;abstract class Strategy &amp;#123;    &#x2F;**     * 算法方法     *&#x2F;    public abstract void algorithmInterface();&amp;#125;  12345678910111213141516171819202122&#x2F;** *">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211101215229119.png">
 <meta property="og:image" content="http://example.com/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20210902154825052.png">
 <meta property="og:image" content="http://example.com/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20210915112133772.png">
 <meta property="og:image" content="http://example.com/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20210919200622568.png">
+<meta property="og:image" content="http://example.com/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211101220338094.png">
 <meta property="og:image" content="http://example.com/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211030173749872.png">
 <meta property="og:image" content="http://example.com/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211030175139500.png">
 <meta property="og:image" content="http://example.com/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211030184755658.png">
@@ -39,12 +41,20 @@
 <meta property="og:image" content="http://example.com/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211030194815008.png">
 <meta property="og:image" content="http://example.com/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211030204459067.png">
 <meta property="og:image" content="http://example.com/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211030204659806.png">
+<meta property="og:image" content="http://example.com/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211101145044841.png">
+<meta property="og:image" content="http://example.com/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211101145135630.png">
+<meta property="og:image" content="http://example.com/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211101151124350.png">
+<meta property="og:image" content="http://example.com/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211101151352027.png">
+<meta property="og:image" content="http://example.com/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211101204142883.png">
+<meta property="og:image" content="http://example.com/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211101212642704.png">
+<meta property="og:image" content="http://example.com/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211102160326945.png">
+<meta property="og:image" content="http://example.com/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211102160747217.png">
 <meta property="article:published_time" content="2021-09-02T01:34:07.000Z">
-<meta property="article:modified_time" content="2021-10-30T12:47:52.980Z">
+<meta property="article:modified_time" content="2021-11-02T08:11:30.878Z">
 <meta property="article:author" content="Gzz">
 <meta property="article:tag" content="设计模式">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20210902154825052.png">
+<meta name="twitter:image" content="http://example.com/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211101215229119.png">
 
 <link rel="canonical" href="http://example.com/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/">
 
@@ -242,7 +252,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-10-30 20:47:52" itemprop="dateModified" datetime="2021-10-30T20:47:52+08:00">2021-10-30</time>
+                <time title="修改时间：2021-11-02 16:11:30" itemprop="dateModified" datetime="2021-11-02T16:11:30+08:00">2021-11-02</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -274,13 +284,13 @@
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
               </span>
-              <span>6k</span>
+              <span>7.2k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
-              <span>5 分钟</span>
+              <span>7 分钟</span>
             </span>
 
         </div>
@@ -292,7 +302,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1><span id="strategy-pattern"><em><a href="javascript:;">strategy</a> <a href="javascript:;">pattern</a></em></span></h1><h2><span id="策略模式">策略模式</span></h2><p><img src="/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20210902154825052.png" alt="image-20210902154825052"></p>
+        <h1><span id="strategy-pattern"><em><a href="javascript:;">strategy</a> <a href="javascript:;">pattern</a></em></span></h1><h1><span id="策略模式">策略模式</span></h1><p><img src="/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211101215229119.png" alt="image-20211101215229119"></p>
+<p><img src="/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20210902154825052.png" alt="image-20210902154825052"></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 定义所有支持算法的接口</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Strategy</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 算法方法</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">algorithmInterface</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 封装具体的算法和行为，继承于Strategy</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteStrategyA</span> <span class="keyword">extends</span> <span class="title">Strategy</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">     <span class="function"><span class="keyword">public</span>  <span class="keyword">void</span> <span class="title">algorithmInterface</span><span class="params">()</span></span>&#123;</span><br><span class="line">         System.out.println(<span class="string">&quot;执行算法A&quot;</span>);</span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteStrategyB</span> <span class="keyword">extends</span> <span class="title">Strategy</span></span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span>  <span class="keyword">void</span> <span class="title">algorithmInterface</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;执行算法B&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteStrategyC</span> <span class="keyword">extends</span> <span class="title">Strategy</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span>  <span class="keyword">void</span> <span class="title">algorithmInterface</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;执行算法C&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
@@ -333,6 +344,10 @@
 
 <p>观察简单工厂和策略模式与简单工厂模式相结合地情况下：简单工厂向用户暴露了两个类：CashSuper和CashFactory，而策略模式与简单工厂结合地用法，客户端就只需要认识一个类CashContext就可以，耦合性更低。</p>
 <h3><span id="总结">总结</span></h3><p><img src="/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20210919200622568.png" alt="image-20210919200622568"></p>
+<p>源码分析：<br><img src="/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211101220338094.png" alt="image-20211101220338094"></p>
+<p><strong>注意：</strong></p>
+<p>多用组合或聚合，而不是继承</p>
+<p>每添加一个策略就要增加一个类，当策略增多会导致类过多</p>
 <h1><span id="命令模式">命令模式</span></h1><p><img src="/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211030173749872.png" alt="image-20211030173749872"></p>
 <ul>
 <li><img src="/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211030175139500.png" alt="image-20211030175139500"></li>
@@ -370,6 +385,27 @@
 <p>Observable相当于观察者管理类</p>
 <p><img src="/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211030204659806.png" alt="image-20211030204659806"></p>
 <p>可以看出以上皆具有本角色的操作</p>
+<h1><span id="中介者模式">中介者模式</span></h1><p><img src="/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211101145044841.png" alt="image-20211101145044841"></p>
+<p><img src="/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211101145135630.png" alt="image-20211101145135630"></p>
+<h1><span id="备忘录模式">备忘录模式</span></h1><p>不破坏封装性的前提下。捕获一个对象的内部状态，并在备忘录管理类里保存，属于行为型模式</p>
+<p><img src="/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211101151124350.png" alt="image-20211101151124350"></p>
+<p><strong>注意事项：</strong></p>
+<p><img src="/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211101151352027.png" alt="image-20211101151352027"></p>
+<h1><span id="解释器模式">解释器模式</span></h1><p>指定一个语言（表达式），定义它的文法的一种表示，并定义一个解释器，使用该解释器来解释语言中的句子（表达式）</p>
+<p><img src="/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211101204142883.png" alt="image-20211101204142883"></p>
+<h1><span id="状态模式">状态模式</span></h1><p>解决对象转换多种状态，并对外输出不同行为的问题，状态之间可以相互转化</p>
+<p>实际项目：借贷平台</p>
+<p>注意：</p>
+<p><img src="/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211101212642704.png" alt="image-20211101212642704"></p>
+<h1><span id="职责链模式">职责链模式</span></h1><p><img src="/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211102160326945.png" alt="image-20211102160326945"></p>
+<p>源码分析：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doDispatch</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">		 *   HandlerExecutionChain mappedHandler = <span class="keyword">null</span>; </span><br><span class="line">		 *   mappedHandler = getHandler(processedRequest);<span class="comment">//获取到HandlerExecutionChain对象</span></span><br><span class="line">		 *    <span class="comment">//在 mappedHandler.applyPreHandle 内部 得到啦 HandlerInterceptor interceptor</span></span><br><span class="line">		 *    <span class="comment">//调用了拦截器的  interceptor.preHandle</span></span><br><span class="line">		 *   <span class="keyword">if</span> (!mappedHandler.applyPreHandle(processedRequest, response)) &#123;</span><br><span class="line">					<span class="keyword">return</span>;</span><br><span class="line">				&#125;</span><br><span class="line"></span><br><span class="line">			  <span class="comment">//说明：mappedHandler.applyPostHandle 方法内部获取到拦截器，并调用 </span></span><br><span class="line">			  <span class="comment">//拦截器的  interceptor.postHandle(request, response, this.handler, mv);</span></span><br><span class="line">			 mappedHandler.applyPostHandle(processedRequest, response, mv);</span><br><span class="line">		 *  &#125;</span><br><span class="line">		 *  </span><br><span class="line">		 *  </span><br><span class="line">		 *  说明：在  mappedHandler.applyPreHandle内部中，</span><br><span class="line">		 *  还调用了  triggerAfterCompletion 方法，该方法中调用了  </span><br><span class="line">		 *  HandlerInterceptor interceptor = getInterceptors()[i];</span><br><span class="line">			<span class="keyword">try</span> &#123;</span><br><span class="line">				interceptor.afterCompletion(request, response, <span class="keyword">this</span>.handler, ex);</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">catch</span> (Throwable ex2) &#123;</span><br><span class="line">				logger.error(<span class="string">&quot;HandlerInterceptor.afterCompletion threw exception&quot;</span>, ex2);</span><br><span class="line">			&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211102160747217.png" alt="image-20211102160747217"></p>
+<p><strong>注意</strong></p>
+<p>实现了解耦，简化了对象，使对象不需知道链的结构</p>
+<p>但是性能会受到影响，因此需控制链中的最大节点个数。</p>
+<p>最佳应用场景：如多级请求，审批流程。Javaweb中tomcat对Encoding的处理，拦截器。</p>
 
     </div>
 
@@ -514,7 +550,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">strategy pattern</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.1.</span> <span class="nav-text">策略模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.2.</span> <span class="nav-text">实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.2.1.</span> <span class="nav-text">第一版</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.2.2.</span> <span class="nav-text">第二版</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.2.3.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">命令模式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">访问者模式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">迭代器模式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">观察者模式</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">strategy pattern</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">策略模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">2.1.</span> <span class="nav-text">实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">2.1.1.</span> <span class="nav-text">第一版</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">2.1.2.</span> <span class="nav-text">第二版</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">2.1.3.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">命令模式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">访问者模式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">迭代器模式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">6.</span> <span class="nav-text">观察者模式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">7.</span> <span class="nav-text">中介者模式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">8.</span> <span class="nav-text">备忘录模式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">9.</span> <span class="nav-text">解释器模式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">10.</span> <span class="nav-text">状态模式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">11.</span> <span class="nav-text">职责链模式</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -530,7 +566,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">27</span>
+          <span class="site-state-item-count">29</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -543,7 +579,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-count">25</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -609,18 +645,18 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">83k</span>
+    <span title="站点总字数">93k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:15</span>
+    <span title="站点阅读时长">1:24</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共24.2k字</span>
+  <span class="post-count">博客全站共28.7k字</span>
 </div>
 
     <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>

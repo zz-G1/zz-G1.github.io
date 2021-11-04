@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Redis 因为没有指定配置文件 需配置 1redis-server redis.windows.conf  之后自动启动 测试性能1redis-benchmark -p 6379 -c 100 -n 10000    基础概念：  清空当前数据库：flushdb 清空全部数据库：flushall  redis是单线程的  redis的瓶颈是机器的内存和网络的带宽，用单线程既然可以实现，就用单线程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Redis">
+<meta property="og:url" content="http://example.com/2021/11/04/Redis/index.html">
+<meta property="og:site_name" content="香饽饽">
+<meta property="og:description" content="Redis 因为没有指定配置文件 需配置 1redis-server redis.windows.conf  之后自动启动 测试性能1redis-benchmark -p 6379 -c 100 -n 10000    基础概念：  清空当前数据库：flushdb 清空全部数据库：flushall  redis是单线程的  redis的瓶颈是机器的内存和网络的带宽，用单线程既然可以实现，就用单线程">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2021/11/04/Redis/image-20211104130443874.png">
+<meta property="og:image" content="http://example.com/2021/11/04/Redis/image-20211104140217226.png">
+<meta property="og:image" content="http://example.com/2021/11/04/Redis/image-20211104140647780.png">
+<meta property="og:image" content="http://example.com/2021/11/04/Redis/image-20211104141011197.png">
+<meta property="og:image" content="http://example.com/2021/11/04/Redis/image-20211104141230255.png">
+<meta property="og:image" content="http://example.com/2021/11/04/Redis/image-20211104143325041.png">
+<meta property="og:image" content="http://example.com/2021/11/04/Redis/image-20211104143636111.png">
+<meta property="og:image" content="http://example.com/2021/11/04/Redis/image-20211104143922548.png">
+<meta property="og:image" content="http://example.com/2021/11/04/Redis/image-20211104144412464.png">
+<meta property="og:image" content="http://example.com/2021/11/04/Redis/image-20211104145142401.png">
+<meta property="og:image" content="http://example.com/2021/11/04/Redis/image-20211104145422840.png">
+<meta property="og:image" content="http://example.com/2021/11/04/Redis/image-20211104145501629.png">
+<meta property="og:image" content="http://example.com/2021/11/04/Redis/image-20211104145749240.png">
+<meta property="og:image" content="http://example.com/2021/11/04/Redis/image-20211104150144398.png">
+<meta property="og:image" content="http://example.com/2021/11/04/Redis/image-20211104150700175.png">
+<meta property="og:image" content="http://example.com/2021/11/04/Redis/image-20211104151319002.png">
+<meta property="og:image" content="http://example.com/2021/11/04/Redis/image-20211104151448797.png">
+<meta property="og:image" content="http://example.com/2021/11/04/Redis/image-20211104152112654.png">
+<meta property="og:image" content="http://example.com/2021/11/04/Redis/image-20211104152548954.png">
+<meta property="og:image" content="http://example.com/2021/11/04/Redis/image-20211104153013118.png">
+<meta property="og:image" content="http://example.com/2021/11/04/Redis/image-20211104153153183.png">
+<meta property="og:image" content="http://example.com/2021/11/04/Redis/image-20211104153655790.png">
+<meta property="og:image" content="http://example.com/2021/11/04/Redis/image-20211104154058106.png">
+<meta property="og:image" content="http://example.com/2021/11/04/Redis/image-20211104154308321.png">
+<meta property="og:image" content="http://example.com/2021/11/04/Redis/image-20211104154722495.png">
+<meta property="og:image" content="http://example.com/2021/11/04/Redis/image-20211104155347613.png">
+<meta property="og:image" content="http://example.com/2021/11/04/Redis/image-20211104155948255.png">
+<meta property="og:image" content="http://example.com/2021/11/04/Redis/image-20211104160159057.png">
+<meta property="og:image" content="http://example.com/2021/11/04/Redis/image-20211104160308656.png">
+<meta property="og:image" content="http://example.com/2021/11/04/Redis/image-20211104160609153.png">
+<meta property="og:image" content="http://example.com/2021/11/04/Redis/image-20211104161114018.png">
+<meta property="og:image" content="http://example.com/2021/11/04/Redis/image-20211104162116587.png">
+<meta property="og:image" content="http://example.com/2021/11/04/Redis/image-20211104162829439.png">
+<meta property="og:image" content="http://example.com/2021/11/04/Redis/image-20211104163226493.png">
+<meta property="og:image" content="http://example.com/2021/11/04/Redis/image-20211104170955039.png">
+<meta property="og:image" content="http://example.com/2021/11/04/Redis/image-20211104171308530.png">
+<meta property="og:image" content="http://example.com/2021/11/04/Redis/image-20211104172219379.png">
+<meta property="og:image" content="http://example.com/2021/11/04/Redis/image-20211104173454977.png">
+<meta property="og:image" content="http://example.com/2021/11/04/Redis/image-20211104175033465.png">
+<meta property="article:published_time" content="2021-11-04T03:37:46.000Z">
+<meta property="article:modified_time" content="2021-11-04T09:50:53.622Z">
+<meta property="article:author" content="Gzz">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2021/11/04/Redis/image-20211104130443874.png">
+
+<link rel="canonical" href="http://example.com/2021/11/04/Redis/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Redis | 香饽饽</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="香饽饽" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+        <a target="_blank" rel="noopener" href="https://github.com/zz-G1" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#70B7FD; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">香饽饽</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">欢迎观察一只Java小白的成长之路！</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/04/Redis/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Gzz">
+      <meta itemprop="description" content="只要开始就不算晚">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="香饽饽">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Redis
+        </h1>
+
+        <div class="post-meta">
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-11-04 11:37:46 / 修改时间：17:50:53" itemprop="dateCreated datePublished" datetime="2021-11-04T11:37:46+08:00">2021-11-04</time>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+              <span>895</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1><span id="redis">Redis</span></h1><p><img src="/2021/11/04/Redis/image-20211104130443874.png" alt="image-20211104130443874"></p>
+<p>因为没有指定配置文件</p>
+<p>需配置</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redis-server redis.windows.conf</span><br></pre></td></tr></table></figure>
+
+<p>之后自动启动</p>
+<h2><span id="测试性能"><strong>测试性能</strong></span></h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redis-benchmark -p 6379 -c 100 -n 10000</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2021/11/04/Redis/image-20211104140217226.png" alt="image-20211104140217226"></p>
+<p><img src="/2021/11/04/Redis/image-20211104140647780.png" alt="image-20211104140647780"></p>
+<h2><span id="基础概念">基础概念：</span></h2><p><img src="/2021/11/04/Redis/image-20211104141011197.png" alt="image-20211104141011197"></p>
+<p><img src="/2021/11/04/Redis/image-20211104141230255.png" alt="image-20211104141230255"></p>
+<p>清空当前数据库：flushdb</p>
+<p>清空全部数据库：flushall</p>
+<blockquote>
+<p>redis是单线程的</p>
+</blockquote>
+<p>redis的瓶颈是机器的内存和网络的带宽，用单线程既然可以实现，就用单线程了</p>
+<blockquote>
+<p>为什么单线程还这么快呢</p>
+</blockquote>
+<p>redis是将所有的数据全部放在内存中，所以说用单线程操作效率最高，多线程（cpu上下文会切换：耗时的操作），对于内存系统来说，如果没有上下文切换效率就是最高的！多次读写都是在一个cpu上，在内存情况下，这个就是最佳的选择。</p>
+<h1><span id="五大数据类型">五大数据类型</span></h1><h3><span id="redis-key">redis-key</span></h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#移除name key</span></span><br><span class="line">move name 1</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2021/11/04/Redis/image-20211104143325041.png" alt="image-20211104143325041"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#设置过期时间</span></span><br><span class="line">expire name 10 </span><br></pre></td></tr></table></figure>
+
+<p><img src="/2021/11/04/Redis/image-20211104143636111.png" alt="image-20211104143636111"></p>
+<p>查看剩余过期时间：ttl name;</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#查看键的类型</span></span><br><span class="line"><span class="built_in">type</span> name</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2021/11/04/Redis/image-20211104143922548.png" alt="image-20211104143922548"></p>
+<h3><span id="string">String</span></h3><p><img src="/2021/11/04/Redis/image-20211104144412464.png" alt="image-20211104144412464"></p>
+<p>如果append后的键不存在就创建一个，相当于set</p>
+<p><img src="/2021/11/04/Redis/image-20211104145142401.png" alt="image-20211104145142401"></p>
+<blockquote>
+<p>获取一部分值</p>
+</blockquote>
+<p><img src="/2021/11/04/Redis/image-20211104145422840.png" alt="image-20211104145422840"></p>
+<blockquote>
+<p>获取全部的值 </p>
+</blockquote>
+<p><img src="/2021/11/04/Redis/image-20211104145501629.png" alt="image-20211104145501629"></p>
+<blockquote>
+<p>替换值</p>
+</blockquote>
+<p><img src="/2021/11/04/Redis/image-20211104145749240.png" alt="image-20211104145749240"></p>
+<blockquote>
+<p>setex 设置过期时间</p>
+<p>setnx 如果没有这个键就设置值成功，如果已存在这个键就设置不成功（在分布式锁中常应用 ）</p>
+</blockquote>
+<p><img src="/2021/11/04/Redis/image-20211104150144398.png" alt="image-20211104150144398"></p>
+<blockquote>
+<p>批量设置键和值，批量获取值</p>
+</blockquote>
+<p><img src="/2021/11/04/Redis/image-20211104150700175.png" alt="image-20211104150700175"></p>
+<blockquote>
+<p>msetnx 具有原子性</p>
+</blockquote>
+<p>设置对象，以json字符串的形式</p>
+<p><img src="/2021/11/04/Redis/image-20211104151319002.png" alt="image-20211104151319002"></p>
+<blockquote>
+<p>getset</p>
+</blockquote>
+<p><img src="/2021/11/04/Redis/image-20211104151448797.png" alt="image-20211104151448797"></p>
+<h3><span id="list">List</span></h3><p>在redis中，list可以被我们玩成栈，队列，阻塞队列</p>
+<blockquote>
+<p>lpush 放进列表数据</p>
+<p>lrange 取出指定位置的数据，可以看出下标是倒着来的。</p>
+</blockquote>
+<p><img src="/2021/11/04/Redis/image-20211104152112654.png" alt="image-20211104152112654"></p>
+<p>说明rpush把值放在了队列的最后面</p>
+<p><img src="/2021/11/04/Redis/image-20211104152548954.png" alt="image-20211104152548954"></p>
+<blockquote>
+<p>从列表中移除值，可以分为移除左边的和右边的</p>
+</blockquote>
+<p><img src="/2021/11/04/Redis/image-20211104153013118.png" alt="image-20211104153013118"></p>
+<blockquote>
+<p>通过下标获取值</p>
+</blockquote>
+<p><img src="/2021/11/04/Redis/image-20211104153153183.png" alt="image-20211104153153183"></p>
+<blockquote>
+<p>获取列表长度</p>
+</blockquote>
+<p>llen</p>
+<blockquote>
+<p>移除指定的值,可指定数量</p>
+</blockquote>
+<p><img src="/2021/11/04/Redis/image-20211104153655790.png" alt="image-20211104153655790"></p>
+<blockquote>
+<p>通过下标截取指定的长度</p>
+</blockquote>
+<p><img src="/2021/11/04/Redis/image-20211104154058106.png" alt="image-20211104154058106"></p>
+<blockquote>
+<p>移除列表的最后一个元素，将他移动到新列表中</p>
+</blockquote>
+<p><img src="/2021/11/04/Redis/image-20211104154308321.png" alt="image-20211104154308321"></p>
+<blockquote>
+<p>更新指定位置的值</p>
+</blockquote>
+<p><img src="/2021/11/04/Redis/image-20211104154722495.png" alt="image-20211104154722495"></p>
+<p><img src="/2021/11/04/Redis/image-20211104155347613.png" alt="image-20211104155347613"></p>
+<h3><span id="set">set</span></h3><p><img src="/2021/11/04/Redis/image-20211104155948255.png" alt="image-20211104155948255"></p>
+<p><img src="/2021/11/04/Redis/image-20211104160159057.png" alt="image-20211104160159057"></p>
+<p><img src="/2021/11/04/Redis/image-20211104160308656.png" alt="image-20211104160308656"></p>
+<p><img src="/2021/11/04/Redis/image-20211104160609153.png" alt="image-20211104160500757"></p>
+<p><img src="/2021/11/04/Redis/image-20211104161114018.png" alt="image-20211104161114018"></p>
+<h3><span id="hash">hash</span></h3><p>Map集合，key-map，那时候这个值是一个map集合，本质和String类型没有太大区别，还是一个简单的key-vlaue</p>
+<p><img src="/2021/11/04/Redis/image-20211104162116587.png" alt="image-20211104162116587"></p>
+<p>获取hash表的内容长度</p>
+<p><img src="/2021/11/04/Redis/image-20211104162829439.png" alt="image-20211104162829439"></p>
+<p>获取所有的field和所有的值</p>
+<p><img src="/2021/11/04/Redis/image-20211104163226493.png" alt="image-20211104163226493"></p>
+<p>hash更适合于对象的存储</p>
+<h3><span id="zset有序集合">Zset（有序集合）</span></h3><p><strong>排列</strong></p>
+<p><img src="/2021/11/04/Redis/image-20211104170955039.png" alt="image-20211104170955039"></p>
+<p>显示工资小于2000的工资排列</p>
+<p><img src="/2021/11/04/Redis/image-20211104171308530.png" alt="image-20211104171308530"></p>
+<p>移除指定元素</p>
+<p><img src="/2021/11/04/Redis/image-20211104172219379.png" alt="image-20211104172219379"></p>
+<p>获取集合中的个数</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">zcard salary</span><br></pre></td></tr></table></figure>
+
+<p>获取指定区间的成员数量</p>
+<p><img src="/2021/11/04/Redis/image-20211104173454977.png" alt="image-20211104173454977"></p>
+<p>总结：</p>
+<p><img src="/2021/11/04/Redis/image-20211104175033465.png" alt="image-20211104175033465"></p>
+
+    </div>
+
+    
+    
+    
+
+    
+      <div>
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:24px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+      </div>
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="Gzz 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Gzz
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://example.com/2021/11/04/Redis/" title="Redis">http://example.com/2021/11/04/Redis/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/11/02/dubbo/" rel="prev" title="dubbo">
+      <i class="fa fa-chevron-left"></i> dubbo
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">Redis</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.1.</span> <span class="nav-text">测试性能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.2.</span> <span class="nav-text">基础概念：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">五大数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">2.0.1.</span> <span class="nav-text">redis-key</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">2.0.2.</span> <span class="nav-text">String</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">2.0.3.</span> <span class="nav-text">List</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">2.0.4.</span> <span class="nav-text">set</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">2.0.5.</span> <span class="nav-text">hash</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">2.0.6.</span> <span class="nav-text">Zset（有序集合）</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Gzz"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Gzz</p>
+  <div class="site-description" itemprop="description">只要开始就不算晚</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zz-G1" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zz-G1" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/7194380917" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;7194380917" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="http://www.zhihu.com/people/sjbja" title="知乎 → http:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;sjbja" rel="noopener" target="_blank"><i class="fa-american-sign-language-interpreting fa-fw"></i>知乎</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      链接网站
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://baidu.com/" title="https:&#x2F;&#x2F;baidu.com" rel="noopener" target="_blank">百度</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://juejin.im/" title="https:&#x2F;&#x2F;juejin.im" rel="noopener" target="_blank">掘金</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://pdai.tech/" title="https:&#x2F;&#x2F;pdai.tech&#x2F;" rel="noopener" target="_blank">java全栈体系</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.proginn.com/" title="https:&#x2F;&#x2F;www.proginn.com&#x2F;" rel="noopener" target="_blank">程序员客栈</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; Fri Aug 20 2021 08:00:00 GMT+0800 (GMT+08:00) – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Gzz</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">93k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:24</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共28.7k字</span>
+</div>
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <span id="busuanzi_container_site_pv">总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_uv">总访客数<span id="busuanzi_value_site_uv"></span>人</span>
+    <span class="post-meta-divider">|</span>
+<!-- 不蒜子计数初始值纠正 -->
+<script>
+$(document).ready(function() {
+
+    var int = setInterval(fixCount, 50);  // 50ms周期检测函数
+    var countOffset = 20000;  // 初始化首次数据
+
+    function fixCount() {            
+       if (document.getElementById("busuanzi_container_site_pv").style.display != "none")
+        {
+            $("#busuanzi_value_site_pv").html(parseInt($("#busuanzi_value_site_pv").html()) + countOffset); 
+            clearInterval(int);
+        }                  
+        if ($("#busuanzi_container_site_pv").css("display") != "none")
+        {
+            $("#busuanzi_value_site_uv").html(parseInt($("#busuanzi_value_site_uv").html()) + countOffset); // 加上初始数据 
+            clearInterval(int); // 停止检测
+        }  
+    }
+       	
+});
+</script> 
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
