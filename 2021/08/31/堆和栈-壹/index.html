@@ -301,8 +301,11 @@
 <td align="center">其中所有实体都有内存地址值，实体用来封装数据，都有默认初始值</td>
 </tr>
 </tbody></table>
-<h2><span id="使用6个例子来加深理解">使用6个例子来加深理解：</span></h2><h3><span id="壹">壹：</span></h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">main()</span><br><span class="line">　　<span class="keyword">int</span> x=<span class="number">1</span>;</span><br><span class="line">show ()</span><br><span class="line">　　<span class="keyword">int</span> x=<span class="number">2</span></span><br></pre></td></tr></table></figure>
-
+<h2><span id="使用6个例子来加深理解">使用6个例子来加深理解：</span></h2><h3><span id="壹">壹：</span></h3><pre><code class="java">main()
+　　int x=1;
+show ()
+　　int x=2
+</code></pre>
 <p>main函数和show函数内都定义了x变量，jvm在栈内分配空间，两者互不影响</p>
 <p><strong>详细过程</strong>：</p>
 <p>1—主函数为入口jvm先执行，在栈内存开辟空间，存放int类型变量x,同时赋值1；</p>
@@ -310,8 +313,11 @@
 <p>3—show()执行完毕，变量X立即释放，空间消失。但是main函数空间依然存在，不收影响。</p>
 <p><img src="/2021/08/31/%E5%A0%86%E5%92%8C%E6%A0%88-%E5%A3%B9/image-20210831104241503.png"></p>
 <hr>
-<h3><span id="贰">贰：</span></h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">main()</span><br><span class="line">    <span class="keyword">int</span>[] x=<span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">3</span>];</span><br><span class="line">    x[<span class="number">0</span>]=<span class="number">20</span>;</span><br><span class="line">  </span><br></pre></td></tr></table></figure>
-
+<h3><span id="贰">贰：</span></h3><pre><code class="java">main()
+    int[] x=new int[3];
+    x[0]=20;
+  
+</code></pre>
 <p><strong>详细过程</strong>:</p>
 <p>1—老样子，main为入口，jvm在栈内存中开辟一个空间存放x变量（局部变量）   同时在堆内存中也开辟一个空间，用来x指向的int数组。此时所有元素均为赋值但是都有默认初始值；</p>
 <p>2—-执行x[0]=20</p>
@@ -319,16 +325,23 @@
 <img src="/2021/08/31/%E5%A0%86%E5%92%8C%E6%A0%88-%E5%A3%B9/image-20210831105527840.png" alt="image-20210831105527840">
 
 <hr>
-<h3><span id="叁">叁：</span></h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">main()</span><br><span class="line">　　<span class="keyword">int</span>[] x=<span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">3</span>];</span><br><span class="line">　　x[<span class="number">0</span>]=<span class="number">20</span></span><br><span class="line">　　x=<span class="keyword">null</span>;</span><br></pre></td></tr></table></figure>
-
+<h3><span id="叁">叁：</span></h3><pre><code class="Java">main()
+　　int[] x=new int[3];
+　　x[0]=20
+　　x=null;
+</code></pre>
 <p><strong>详细过程</strong>:</p>
 <p>1-2与上相同</p>
 <p>3—执行x=null</p>
 <p>​      null表示空值，即X的引用数组内存地址0x0045被删除了，在栈内引用不了了。同时，由于堆中的数组不再被X使用，被jvm视为垃圾，启动垃圾回收机制，不定时自定删除。</p>
 <p><img src="/2021/08/31/%E5%A0%86%E5%92%8C%E6%A0%88-%E5%A3%B9/image-20210831110142264.png" alt="image-20210831110142264"></p>
 <hr>
-<h3><span id="肆">肆：</span></h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">main()</span><br><span class="line">　　<span class="keyword">int</span>[] x=<span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">3</span>];</span><br><span class="line">　　<span class="keyword">int</span>[] y=x;</span><br><span class="line">　　y[<span class="number">1</span>]=<span class="number">100</span></span><br><span class="line">　　x=<span class="keyword">null</span></span><br></pre></td></tr></table></figure>
-
+<h3><span id="肆">肆：</span></h3><pre><code class="Java">main()
+　　int[] x=new int[3];
+　　int[] y=x;
+　　y[1]=100
+　　x=null
+</code></pre>
 <p><strong>详细过程</strong>:</p>
 <p> 1—与贰的第一步相同</p>
 <p> 2—执行int [] y=x;</p>
@@ -339,13 +352,19 @@
 <p>​       则变量x不再指向栈内存中的数组。但是y仍然指向数组，所以数组不消失</p>
 <p><img src="/2021/08/31/%E5%A0%86%E5%92%8C%E6%A0%88-%E5%A3%B9/image-20210831141750764.png" alt="image-20210831141750764"></p>
 <hr>
-<h3><span id="伍">伍：</span></h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Car c=<span class="keyword">new</span> Car;</span><br><span class="line">c.color=<span class="string">&quot;bule&quot;</span>;</span><br><span class="line">Car c1=<span class="keyword">new</span> Car;</span><br><span class="line">c1.num=<span class="number">5</span></span><br></pre></td></tr></table></figure>
-
+<h3><span id="伍">伍：</span></h3><pre><code class="java">Car c=new Car;
+c.color=&quot;bule&quot;;
+Car c1=new Car;
+c1.num=5
+</code></pre>
 <p>都引用new Car,但两个不同的对象会产生两个不同的实体</p>
 <p><img src="/2021/08/31/%E5%A0%86%E5%92%8C%E6%A0%88-%E5%A3%B9/image-20210831142206084.png" alt="image-20210831142206084"></p>
 <hr>
-<h3><span id="陆">陆：</span></h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Car c=<span class="keyword">new</span> Car;</span><br><span class="line">c.color=<span class="string">&quot;green&quot;</span>;</span><br><span class="line">Car c1=c;</span><br><span class="line">c1.num=<span class="number">5</span></span><br></pre></td></tr></table></figure>
-
+<h3><span id="陆">陆：</span></h3><pre><code class="java">Car c=new Car;
+c.color=&quot;green&quot;;
+Car c1=c;
+c1.num=5
+</code></pre>
 <p>c1=c，相当于复制一份对象，两个对象在堆中的内存地址一样，指向同一个实体，修改一个两个对象的属性都修改。</p>
 <p><img src="/2021/08/31/%E5%A0%86%E5%92%8C%E6%A0%88-%E5%A3%B9/image-20210831111340998.png" alt="image-20210831111340998"></p>
 <p>想宝贝的第好几天👩‍❤️‍💋‍👩👯‍♂️👩🏼‍🤝‍👩🏻</p>
@@ -509,20 +528,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-count">31</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-count">16</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-count">27</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -588,18 +607,18 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">100k</span>
+    <span title="站点总字数">109k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:31</span>
+    <span title="站点阅读时长">1:39</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共31.9k字</span>
+  <span class="post-count">博客全站共37.5k字</span>
 </div>
 
     <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>

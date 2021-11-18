@@ -242,7 +242,7 @@
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
               </span>
-              <span>869</span>
+              <span>820</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -263,8 +263,36 @@
         <h3><span id="swaager配置时">Swaager配置时</span></h3><p>要注意<strong>RequestMapping</strong>属性 （comsumes）本次传入参数点击<strong>excute</strong>报红却不可执行 改变了datatype也不行</p>
 <p>看了响应头原来是 <strong>content-type: application/json</strong> 在<strong>RequestMapping</strong>中配置<strong>consumes</strong>指定数据请求的格式为<strong>application/json</strong>格式，把<strong>consumes</strong>属性去掉就好</p>
 <p><img src="/2021/08/26/Swaager%E4%BC%A0%E5%85%A5%E5%8F%82%E6%95%B0%E9%97%AE%E9%A2%98/image-20210826103240523.png" alt="image-20210826103240523"></p>
-<h5><span id="request-mapping属性">Request Mapping属性</span></h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target(&#123;ElementType.METHOD, ElementType.TYPE&#125;)</span> <span class="comment">// 可以在方法和类的声明中使用</span></span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span></span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Mapping</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> RequestMapping &#123;</span><br><span class="line"></span><br><span class="line">    <span class="function">String <span class="title">name</span><span class="params">()</span> <span class="keyword">default</span> &quot;&quot;</span>;<span class="comment">// 指定映射的名称</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@AliasFor(&quot;path&quot;)</span></span><br><span class="line">    String[] value() <span class="keyword">default</span> &#123;&#125;; <span class="comment">// 指定请求路径的地址</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@AliasFor(&quot;value&quot;)</span></span><br><span class="line">    String[] path() <span class="keyword">default</span> &#123;&#125;; <span class="comment">// 指定请求路径的地址</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// 指定请求的方式，是一个RequsetMethod数组，可以配置多个方法</span></span><br><span class="line">    RequestMethod[] method() <span class="keyword">default</span> &#123;&#125;;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// 指定参数的类型</span></span><br><span class="line">    String[] params() <span class="keyword">default</span> &#123;&#125;;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// 指定请求头内容</span></span><br><span class="line">    String[] headers() <span class="keyword">default</span> &#123;&#125;;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// 指定数据请求的格式</span></span><br><span class="line">    String[] consumes() <span class="keyword">default</span> &#123;&#125;;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// 指定返回的内容类型</span></span><br><span class="line">    String[] produces() <span class="keyword">default</span> &#123;&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5><span id="request-mapping属性">Request Mapping属性</span></h5><pre><code class="java">@Target(&#123;ElementType.METHOD, ElementType.TYPE&#125;) // 可以在方法和类的声明中使用
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+@Mapping
+public @interface RequestMapping &#123;
 
+    String name() default &quot;&quot;;// 指定映射的名称
+
+    @AliasFor(&quot;path&quot;)
+    String[] value() default &#123;&#125;; // 指定请求路径的地址
+
+    @AliasFor(&quot;value&quot;)
+    String[] path() default &#123;&#125;; // 指定请求路径的地址
+
+    // 指定请求的方式，是一个RequsetMethod数组，可以配置多个方法
+    RequestMethod[] method() default &#123;&#125;;
+    
+    // 指定参数的类型
+    String[] params() default &#123;&#125;;
+    
+    // 指定请求头内容
+    String[] headers() default &#123;&#125;;
+    
+    // 指定数据请求的格式
+    String[] consumes() default &#123;&#125;;
+    
+    // 指定返回的内容类型
+    String[] produces() default &#123;&#125;;
+&#125;
+</code></pre>
 
     </div>
 
@@ -425,20 +453,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-count">31</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-count">16</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-count">27</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -504,18 +532,18 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">100k</span>
+    <span title="站点总字数">109k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:31</span>
+    <span title="站点阅读时长">1:39</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共31.9k字</span>
+  <span class="post-count">博客全站共37.5k字</span>
 </div>
 
     <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>

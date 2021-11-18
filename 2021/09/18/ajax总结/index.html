@@ -254,7 +254,7 @@
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
               </span>
-              <span>3.2k</span>
+              <span>3.1k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -291,11 +291,98 @@
 <ul>
 <li>记得控制类前要加@Restcontroller注解，就会以json形式返回前台数据</li>
 </ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.zz.controller;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.zz.pojo.User;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Controller;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.HttpMediaTypeException;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RestController;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.security.auth.login.CredentialException;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AjaxController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">   </span><br><span class="line"></span><br><span class="line">    <span class="meta">@RequestMapping(&quot;/a3&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">ajax3</span><span class="params">(String name,String pwd)</span></span>&#123;</span><br><span class="line">        String msg = <span class="string">&quot;&quot;</span>;</span><br><span class="line">        <span class="comment">//模拟数据库中存在数据</span></span><br><span class="line">        <span class="keyword">if</span> (name!=<span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="string">&quot;admin&quot;</span>.equals(name))&#123;</span><br><span class="line">                msg = <span class="string">&quot;OK&quot;</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                msg = <span class="string">&quot;用户名输入错误&quot;</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (pwd!=<span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="string">&quot;123456&quot;</span>.equals(pwd))&#123;</span><br><span class="line">                msg = <span class="string">&quot;OK&quot;</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                msg = <span class="string">&quot;密码输入有误&quot;</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> msg; <span class="comment">//由于@RestController注解，将msg转成json格式返回</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<pre><code class="java">package com.zz.controller;
 
+import com.zz.pojo.User;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.HttpMediaTypeException;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.security.auth.login.CredentialException;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+@RestController
+public class AjaxController &#123;
+
+   
+
+    @RequestMapping(&quot;/a3&quot;)
+    public String ajax3(String name,String pwd)&#123;
+        String msg = &quot;&quot;;
+        //模拟数据库中存在数据
+        if (name!=null)&#123;
+            if (&quot;admin&quot;.equals(name))&#123;
+                msg = &quot;OK&quot;;
+            &#125;else &#123;
+                msg = &quot;用户名输入错误&quot;;
+            &#125;
+        &#125;
+        if (pwd!=null)&#123;
+            if (&quot;123456&quot;.equals(pwd))&#123;
+                msg = &quot;OK&quot;;
+            &#125;else &#123;
+                msg = &quot;密码输入有误&quot;;
+            &#125;
+        &#125;
+        return msg; //由于@RestController注解，将msg转成json格式返回
+    &#125;
+&#125;
+</code></pre>
 <p>然后从网上下载jquery，放在项目的web包中，然后编写login.jsp页面</p>
-<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page contentType=<span class="string">&quot;text/html;charset=UTF-8&quot;</span> language=<span class="string">&quot;java&quot;</span> %&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">  &lt;title&gt;ajax&lt;/title&gt;</span><br><span class="line">  &lt;script src=<span class="string">&quot;$&#123;pageContext.request.contextPath&#125;/statics/js/jquery.js&quot;</span>&gt;&lt;/script&gt;</span><br><span class="line">  &lt;script&gt;</span><br><span class="line"></span><br><span class="line">    <span class="function">function <span class="title">a1</span><span class="params">()</span></span>&#123;</span><br><span class="line">      $.post(&#123;</span><br><span class="line">        url:<span class="string">&quot;$&#123;pageContext.request.contextPath&#125;/a3&quot;</span>,</span><br><span class="line">        data:&#123;<span class="string">&#x27;name&#x27;</span>:$(<span class="string">&quot;#name&quot;</span>).val()&#125;,</span><br><span class="line">        success:function (data) &#123;</span><br><span class="line">          <span class="keyword">if</span> (data.toString()==<span class="string">&#x27;OK&#x27;</span>)&#123;</span><br><span class="line">            $(<span class="string">&quot;#userInfo&quot;</span>).css(<span class="string">&quot;color&quot;</span>,<span class="string">&quot;green&quot;</span>);</span><br><span class="line">          &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">            $(<span class="string">&quot;#userInfo&quot;</span>).css(<span class="string">&quot;color&quot;</span>,<span class="string">&quot;red&quot;</span>);</span><br><span class="line">          &#125;</span><br><span class="line">          $(<span class="string">&quot;#userInfo&quot;</span>).html(data);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function">function <span class="title">a2</span><span class="params">()</span></span>&#123;</span><br><span class="line">      $.post(&#123;</span><br><span class="line">        url:<span class="string">&quot;$&#123;pageContext.request.contextPath&#125;/a3&quot;</span>,</span><br><span class="line">        data:&#123;<span class="string">&#x27;pwd&#x27;</span>:$(<span class="string">&quot;#pwd&quot;</span>).val()&#125;,</span><br><span class="line">        success:function (data) &#123;</span><br><span class="line">          <span class="keyword">if</span> (data.toString()==<span class="string">&#x27;OK&#x27;</span>)&#123;</span><br><span class="line">            $(<span class="string">&quot;#pwdInfo&quot;</span>).css(<span class="string">&quot;color&quot;</span>,<span class="string">&quot;green&quot;</span>);</span><br><span class="line">          &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">            $(<span class="string">&quot;#pwdInfo&quot;</span>).css(<span class="string">&quot;color&quot;</span>,<span class="string">&quot;red&quot;</span>);</span><br><span class="line">          &#125;</span><br><span class="line">          $(<span class="string">&quot;#pwdInfo&quot;</span>).html(data);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  &lt;/script&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;p&gt;</span><br><span class="line">  用户名:&lt;input type=<span class="string">&quot;text&quot;</span> id=<span class="string">&quot;name&quot;</span> onblur=<span class="string">&quot;a1()&quot;</span>/&gt;</span><br><span class="line">  &lt;span id=<span class="string">&quot;userInfo&quot;</span>&gt;&lt;/span&gt;</span><br><span class="line">&lt;/p&gt;</span><br><span class="line">&lt;p&gt;</span><br><span class="line">  密码:&lt;input type=<span class="string">&quot;text&quot;</span> id=<span class="string">&quot;pwd&quot;</span> onblur=<span class="string">&quot;a2()&quot;</span>/&gt;</span><br><span class="line">  &lt;span id=<span class="string">&quot;pwdInfo&quot;</span>&gt;&lt;/span&gt;</span><br><span class="line">&lt;/p&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<pre><code class="jsp">&lt;%@ page contentType=&quot;text/html;charset=UTF-8&quot; language=&quot;java&quot; %&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;ajax&lt;/title&gt;
+  &lt;script src=&quot;$&#123;pageContext.request.contextPath&#125;/statics/js/jquery.js&quot;&gt;&lt;/script&gt;
+  &lt;script&gt;
 
+    function a1()&#123;
+      $.post(&#123;
+        url:&quot;$&#123;pageContext.request.contextPath&#125;/a3&quot;,
+        data:&#123;&#39;name&#39;:$(&quot;#name&quot;).val()&#125;,
+        success:function (data) &#123;
+          if (data.toString()==&#39;OK&#39;)&#123;
+            $(&quot;#userInfo&quot;).css(&quot;color&quot;,&quot;green&quot;);
+          &#125;else &#123;
+            $(&quot;#userInfo&quot;).css(&quot;color&quot;,&quot;red&quot;);
+          &#125;
+          $(&quot;#userInfo&quot;).html(data);
+        &#125;
+      &#125;);
+    &#125;
+    function a2()&#123;
+      $.post(&#123;
+        url:&quot;$&#123;pageContext.request.contextPath&#125;/a3&quot;,
+        data:&#123;&#39;pwd&#39;:$(&quot;#pwd&quot;).val()&#125;,
+        success:function (data) &#123;
+          if (data.toString()==&#39;OK&#39;)&#123;
+            $(&quot;#pwdInfo&quot;).css(&quot;color&quot;,&quot;green&quot;);
+          &#125;else &#123;
+            $(&quot;#pwdInfo&quot;).css(&quot;color&quot;,&quot;red&quot;);
+          &#125;
+          $(&quot;#pwdInfo&quot;).html(data);
+        &#125;
+      &#125;);
+    &#125;
+
+  &lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;p&gt;
+  用户名:&lt;input type=&quot;text&quot; id=&quot;name&quot; onblur=&quot;a1()&quot;/&gt;
+  &lt;span id=&quot;userInfo&quot;&gt;&lt;/span&gt;
+&lt;/p&gt;
+&lt;p&gt;
+  密码:&lt;input type=&quot;text&quot; id=&quot;pwd&quot; onblur=&quot;a2()&quot;/&gt;
+  &lt;span id=&quot;pwdInfo&quot;&gt;&lt;/span&gt;
+&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
 <p>到现在启动服务器就可以看到啦，成功后在浏览器查看时每失去焦点时都会向后台发送请求，也是<strong>Ajax的独特之处，把主动权交给了前端。</strong></p>
 <p>放一下项目结构图吧</p>
 <p><img src="/2021/09/18/ajax%E6%80%BB%E7%BB%93/image-20210918200158409.png" alt="image-20210918200158409"></p>
@@ -459,20 +546,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-count">31</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-count">16</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-count">27</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -538,18 +625,18 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">100k</span>
+    <span title="站点总字数">109k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:31</span>
+    <span title="站点阅读时长">1:39</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共31.9k字</span>
+  <span class="post-count">博客全站共37.5k字</span>
 </div>
 
     <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>

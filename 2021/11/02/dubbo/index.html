@@ -259,7 +259,7 @@
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
               </span>
-              <span>7.8k</span>
+              <span>7.7k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -290,21 +290,23 @@
 <p>Properties 最后，相当于缺省值，只有 XML 没有配置时，dubbo.properties 的相应配置项才会生效，通常用于共享公共配置，比如应用名。</p>
 <h2><span id="2-重试次数">2、重试次数</span></h2><p>失败自动切换，当出现失败，重试其它服务器，但重试会带来更长延迟。可通过 retries=”2” 来设置重试次数(不含第一次)。</p>
 <p>重试次数配置如下</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dubbo:service</span> <span class="attr">retries</span>=<span class="string">&quot;2&quot;</span> /&gt;</span></span><br><span class="line">或<span class="tag">&lt;<span class="name">dubbo:reference</span> <span class="attr">retries</span>=<span class="string">&quot;2&quot;</span> /&gt;</span></span><br><span class="line">或<span class="tag">&lt;<span class="name">dubbo:reference</span>&gt;</span><span class="tag">&lt;<span class="name">dubbo:method</span> <span class="attr">name</span>=<span class="string">&quot;findFoo&quot;</span> <span class="attr">retries</span>=<span class="string">&quot;2&quot;</span> /&gt;</span><span class="tag">&lt;/<span class="name">dubbo:reference</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-
-
+<pre><code class="xml">&lt;dubbo:service retries=&quot;2&quot; /&gt;
+或&lt;dubbo:reference retries=&quot;2&quot; /&gt;
+或&lt;dubbo:reference&gt;&lt;dubbo:method name=&quot;findFoo&quot; retries=&quot;2&quot; /&gt;&lt;/dubbo:reference&gt;
+</code></pre>
 <h2><span id="3-超时时间">3、超时时间</span></h2><p>由于网络或服务端不可靠，会导致调用出现一种不确定的中间状态（超时）。为了避免超时导致客户端资源（线程）挂起耗尽，必须设置超时时间。</p>
-<h3><span id="1-dubbo消费端">1、Dubbo消费端</span></h3> <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">全局超时配置</span><br><span class="line"><span class="tag">&lt;<span class="name">dubbo:consumer</span> <span class="attr">timeout</span>=<span class="string">&quot;5000&quot;</span> /&gt;</span> </span><br><span class="line">指定接口以及特定方法超时配置</span><br><span class="line"><span class="tag">&lt;<span class="name">dubbo:reference</span> <span class="attr">interface</span>=<span class="string">&quot;com.foo.BarService&quot;</span> <span class="attr">timeout</span>=<span class="string">&quot;2000&quot;</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="name">dubbo:method</span> <span class="attr">name</span>=<span class="string">&quot;sayHello&quot;</span> <span class="attr">timeout</span>=<span class="string">&quot;3000&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dubbo:reference</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-
-
-<h3><span id="2-dubbo服务端">2、Dubbo服务端</span></h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">全局超时配置<span class="tag">&lt;<span class="name">dubbo:provider</span> <span class="attr">timeout</span>=<span class="string">&quot;5000&quot;</span> /&gt;</span> </span><br><span class="line">指定接口以及特定方法超时配置</span><br><span class="line"><span class="tag">&lt;<span class="name">dubbo:provider</span> <span class="attr">interface</span>=<span class="string">&quot;com.foo.BarService&quot;</span> <span class="attr">timeout</span>=<span class="string">&quot;2000&quot;</span>&gt;</span>  <span class="tag">&lt;<span class="name">dubbo:method</span> <span class="attr">name</span>=<span class="string">&quot;sayHello&quot;</span> <span class="attr">timeout</span>=<span class="string">&quot;3000&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dubbo:provider</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-
-
-
-
+<h3><span id="1-dubbo消费端">1、Dubbo消费端</span></h3><pre><code class="xml">全局超时配置
+&lt;dubbo:consumer timeout=&quot;5000&quot; /&gt; 
+指定接口以及特定方法超时配置
+&lt;dubbo:reference interface=&quot;com.foo.BarService&quot; timeout=&quot;2000&quot;&gt;  
+    &lt;dubbo:method name=&quot;sayHello&quot; timeout=&quot;3000&quot; /&gt;
+&lt;/dubbo:reference&gt;
+</code></pre>
+<h3><span id="2-dubbo服务端">2、Dubbo服务端</span></h3><pre><code class="xml">全局超时配置&lt;dubbo:provider timeout=&quot;5000&quot; /&gt; 
+指定接口以及特定方法超时配置
+&lt;dubbo:provider interface=&quot;com.foo.BarService&quot; timeout=&quot;2000&quot;&gt;  &lt;dubbo:method name=&quot;sayHello&quot; timeout=&quot;3000&quot; /&gt;
+&lt;/dubbo:provider&gt;
+</code></pre>
 <h3><span id="3-配置原则">3、配置原则</span></h3><p>dubbo推荐在Provider上尽量多配置Consumer端属性：</p>
 <p>1、作服务的提供者，比服务使用方更清楚服务性能参数，如调用的超时时间，合理的重试次数，等等2、在Provider配置后，Consumer不配置则会使用Provider的配置值，即Provider配置可以作为Consumer的缺省值。否则，Consumer会使用Consumer端的全局设置，这对于Provider不可控的，并且往往是不合理的</p>
 <p>配置的覆盖规则：</p>
@@ -317,12 +319,15 @@
 <p>在低压力时间段，先升级一半提供者为新版本</p>
 <p>再将所有消费者升级为新版本</p>
 <p>然后将剩下的一半提供者升级为新版本</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">老版本服务提供者配置：</span><br><span class="line"><span class="tag">&lt;<span class="name">dubbo:service</span> <span class="attr">interface</span>=<span class="string">&quot;com.foo.BarService&quot;</span> <span class="attr">version</span>=<span class="string">&quot;1.0.0&quot;</span> /&gt;</span></span><br><span class="line">新版本服务提供者配置：</span><br><span class="line"><span class="tag">&lt;<span class="name">dubbo:service</span> <span class="attr">interface</span>=<span class="string">&quot;com.foo.BarService&quot;</span> <span class="attr">version</span>=<span class="string">&quot;2.0.0&quot;</span> /&gt;</span> </span><br><span class="line">老版本服务消费者配置：<span class="tag">&lt;<span class="name">dubbo:reference</span> <span class="attr">id</span>=<span class="string">&quot;barService&quot;</span> <span class="attr">interface</span>=<span class="string">&quot;com.foo.BarService&quot;</span> <span class="attr">version</span>=<span class="string">&quot;1.0.0&quot;</span> /&gt;</span> </span><br><span class="line">新版本服务消费者配置：<span class="tag">&lt;<span class="name">dubbo:reference</span> <span class="attr">id</span>=<span class="string">&quot;barService&quot;</span> <span class="attr">interface</span>=<span class="string">&quot;com.foo.BarService&quot;</span> <span class="attr">version</span>=<span class="string">&quot;2.0.0&quot;</span> /&gt;</span> </span><br><span class="line">如果不需要区分版本，可以按照以下的方式配置：</span><br><span class="line"><span class="tag">&lt;<span class="name">dubbo:reference</span> <span class="attr">id</span>=<span class="string">&quot;barService&quot;</span> <span class="attr">interface</span>=<span class="string">&quot;com.foo.BarService&quot;</span> <span class="attr">version</span>=<span class="string">&quot;*&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
-
-
-
-
-
+<pre><code class="xml">老版本服务提供者配置：
+&lt;dubbo:service interface=&quot;com.foo.BarService&quot; version=&quot;1.0.0&quot; /&gt;
+新版本服务提供者配置：
+&lt;dubbo:service interface=&quot;com.foo.BarService&quot; version=&quot;2.0.0&quot; /&gt; 
+老版本服务消费者配置：&lt;dubbo:reference id=&quot;barService&quot; interface=&quot;com.foo.BarService&quot; version=&quot;1.0.0&quot; /&gt; 
+新版本服务消费者配置：&lt;dubbo:reference id=&quot;barService&quot; interface=&quot;com.foo.BarService&quot; version=&quot;2.0.0&quot; /&gt; 
+如果不需要区分版本，可以按照以下的方式配置：
+&lt;dubbo:reference id=&quot;barService&quot; interface=&quot;com.foo.BarService&quot; version=&quot;*&quot; /&gt;
+</code></pre>
 <h1><span id="三-高可用">三、高可用</span></h1><h2><span id="1-zookeeper宕机与dubbo直连">1、zookeeper宕机与dubbo直连</span></h2><p>现象：zookeeper注册中心宕机，还可以消费dubbo暴露的服务。</p>
 <p>原因：</p>
 <p>健壮性l 监控中心宕掉不影响使用，只是丢失部分采样数据l 数据库宕掉后，注册中心仍能通过缓存提供服务列表查询，但不能注册新服务l 注册中心对等集群，任意一台宕掉后，将自动切换到另一台l <strong>注册中心全部宕掉后，服务提供者和服务消费者仍能通过本地缓存通讯</strong>l 服务提供者无状态，任意一台宕掉后，不影响使用l 服务提供者全部宕掉后，服务消费者应用将无法使用，并无限次重连等待服务提供者恢复 </p>
@@ -335,12 +340,10 @@
 <p><strong>当服务器压力剧增的情况下，根据实际业务情况及流量，对一些服务和页面有策略的不处理或换种简单的方式处理，从而释放服务器资源以保证核心交易正常运作或高效运作。</strong></p>
 <p>可以通过服务降级功能临时屏蔽某个出错的非关键服务，并定义降级后的返回策略。</p>
 <p>向注册中心写入动态配置覆盖规则：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">RegistryFactory registryFactory = ExtensionLoader.getExtensionLoader(RegistryFactory.class).getAdaptiveExtension();Registry registry = registryFactory.getRegistry(URL.valueOf(<span class="string">&quot;zookeeper://10.20.153.10:2181&quot;</span>));registry.register(URL.valueOf(<span class="string">&quot;override://0.0.0.0/com.foo.BarService?category=configurators&amp;dynamic=false&amp;application=foo&amp;mock=force:return+null&quot;</span>));</span><br><span class="line"></span><br><span class="line"> </span><br></pre></td></tr></table></figure>
+<pre><code class="java">RegistryFactory registryFactory = ExtensionLoader.getExtensionLoader(RegistryFactory.class).getAdaptiveExtension();Registry registry = registryFactory.getRegistry(URL.valueOf(&quot;zookeeper://10.20.153.10:2181&quot;));registry.register(URL.valueOf(&quot;override://0.0.0.0/com.foo.BarService?category=configurators&amp;dynamic=false&amp;application=foo&amp;mock=force:return+null&quot;));
 
-
-
-
-
+ 
+</code></pre>
 <p>其中：</p>
 <p>mock=force:return+null 表示消费方对该服务的方法调用都直接返回 null 值，不发起远程调用。用来屏蔽不重要服务不可用时对调用方的影响。</p>
 <p>还可以改为 mock=fail:return+null 表示消费方对该服务的方法调用在失败后，再返回 null 值，不抛异常。用来容忍不重要服务不稳定时对调用方的影响。</p>
@@ -353,31 +356,38 @@
 <p> <strong>集群模式配置</strong>按照以下示例在服务提供方和消费方配置集群模式&lt;dubbo:service cluster=”failsafe” /&gt;或&lt;dubbo:reference cluster=”failsafe” /&gt;</p>
 <h3><span id="3-整合hystrix">3、整合hystrix</span></h3><p>Hystrix 旨在通过控制那些访问远程系统、服务和第三方库的节点，从而对延迟和故障提供更强大的容错能力。Hystrix具备拥有回退机制和断路器功能的线程和信号隔离，请求缓存和请求打包，以及监控和配置等功能</p>
 <h4><span id="1-配置spring-cloud-starter-netflix-hystrix"><strong>1、配置spring-cloud-starter-netflix-hystrix</strong></span></h4><p>spring boot官方提供了对hystrix的集成，直接在pom.xml里加入依赖：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span>      </span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span>                    </span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-netflix-hystrix<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span>      </span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.4.4.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span>    </span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-
-
-
-
+<pre><code class="xml">    &lt;dependency&gt;      
+        &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;                    
+        &lt;artifactId&gt;spring-cloud-starter-netflix-hystrix&lt;/artifactId&gt;      
+        &lt;version&gt;1.4.4.RELEASE&lt;/version&gt;    
+    &lt;/dependency&gt;
+</code></pre>
 <p>然后在Application类上增加@EnableHystrix来启用hystrix starter：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="meta">@EnableHystrixpublic</span> </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ProviderApplication</span> </span>&#123; </span><br></pre></td></tr></table></figure>
-
-
-
-
-
+<pre><code class="java">@SpringBootApplication
+@EnableHystrixpublic 
+class ProviderApplication &#123; 
+</code></pre>
 <h4><span id="2-配置provider端"><strong>2、配置Provider端</strong></span></h4><p>在Dubbo的Provider上增加@HystrixCommand配置，这样子调用就会经过Hystrix代理。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service(version = &quot;1.0.0&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloServiceImpl</span> <span class="keyword">implements</span> <span class="title">HelloService</span> </span>&#123;  </span><br><span class="line">    <span class="meta">@HystrixCommand(commandProperties = &#123;   </span></span><br><span class="line"><span class="meta">    @HystrixProperty(name = &quot;circuitBreaker.requestVolumeThreshold&quot;, value = &quot;10&quot;),   </span></span><br><span class="line"><span class="meta">    @HystrixProperty(name = &quot;execution.isolation.thread.timeoutInMilliseconds&quot;, value = &quot;2000&quot;) &#125;)</span></span><br><span class="line">    <span class="meta">@Override</span>  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">sayHello</span><span class="params">(String name)</span> </span>&#123;    </span><br><span class="line">        <span class="comment">// System.out.println(&quot;async provider received: &quot; + name);    </span></span><br><span class="line">        <span class="comment">// return &quot;annotation: hello, &quot; + name;    </span></span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">&quot;Exception to show hystrix enabled.&quot;</span>);  &#125;&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
+<pre><code class="java">@Service(version = &quot;1.0.0&quot;)
+public class HelloServiceImpl implements HelloService &#123;  
+    @HystrixCommand(commandProperties = &#123;   
+    @HystrixProperty(name = &quot;circuitBreaker.requestVolumeThreshold&quot;, value = &quot;10&quot;),   
+    @HystrixProperty(name = &quot;execution.isolation.thread.timeoutInMilliseconds&quot;, value = &quot;2000&quot;) &#125;)
+    @Override  
+    public String sayHello(String name) &#123;    
+        // System.out.println(&quot;async provider received: &quot; + name);    
+        // return &quot;annotation: hello, &quot; + name;    
+        throw new RuntimeException(&quot;Exception to show hystrix enabled.&quot;);  &#125;&#125;
+</code></pre>
 <h4><span id="3-配置consumer端"><strong>3、配置Consumer端</strong></span></h4><p>对于Consumer端，则可以增加一层method调用，并在method上配置@HystrixCommand。当调用出错时，会走到fallbackMethod = “reliable”的调用里。</p>
- <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Reference(version = &quot;1.0.0&quot;)</span> </span><br><span class="line"><span class="keyword">private</span> HelloService demoService;  </span><br><span class="line"><span class="meta">@HystrixCommand(fallbackMethod = &quot;reliable&quot;)</span>  </span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">doSayHello</span><span class="params">(String name)</span> </span>&#123;    </span><br><span class="line">    <span class="keyword">return</span> demoService.sayHello(name);  &#125;  </span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">reliable</span><span class="params">(String name)</span> </span>&#123;    </span><br><span class="line">   <span class="keyword">return</span> <span class="string">&quot;hystrix fallback value&quot;</span>;  &#125;</span><br></pre></td></tr></table></figure>
-
-
-
+<pre><code class="java"> @Reference(version = &quot;1.0.0&quot;) 
+ private HelloService demoService;  
+ @HystrixCommand(fallbackMethod = &quot;reliable&quot;)  
+ public String doSayHello(String name) &#123;    
+     return demoService.sayHello(name);  &#125;  
+ public String reliable(String name) &#123;    
+    return &quot;hystrix fallback value&quot;;  &#125;
+</code></pre>
 <h1><span id="四-dubbo原理">四、dubbo原理</span></h1><h2><span id="1-rpc原理">1、RPC原理</span></h2><p><img src="/2021/11/02/dubbo/wpsBCEF.tmp.jpg" alt="img"> </p>
 <p>一次完整的RPC调用流程（同步调用，异步另说）如下： <strong>1）服务消费方（client）调用以本地调用方式调用服务；</strong> 2）client stub接收到调用后负责将方法、参数等组装成能够进行网络传输的消息体； 3）client stub找到服务地址，并将消息发送到服务端； 4）server stub收到消息后进行解码； 5）server stub根据解码结果调用本地的服务； 6）本地服务执行并将结果返回给server stub； 7）server stub将返回结果打包成消息并发送至消费方； 8）client stub接收到消息，并进行解码； <strong>9）服务消费方得到最终结果。</strong>RPC框架的目标就是要2~8这些步骤都封装起来，这些细节对用户来说是透明的，不可见的。</p>
 <h2><span id="2-netty通信原理">2、netty通信原理</span></h2><p>Netty是一个异步事件驱动的网络应用程序框架， 用于快速开发可维护的高性能协议服务器和客户端。它极大地简化并简化了TCP和UDP套接字服务器等网络编程。</p>
@@ -563,20 +573,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-count">31</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-count">16</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-count">27</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -642,18 +652,18 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">100k</span>
+    <span title="站点总字数">109k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:31</span>
+    <span title="站点阅读时长">1:39</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共31.9k字</span>
+  <span class="post-count">博客全站共37.5k字</span>
 </div>
 
     <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>

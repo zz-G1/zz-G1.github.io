@@ -22,12 +22,12 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="原子操作类AtomicInteger在使用Java爬取网站图片时，遇到多线程下载图片，需显示下载到第几张图片问题，于是使用了原子操作类AtomicInteger，可以保证操作具有原子性 例一创建两个线程，分别将全局变量i进行加1 每个线程执行5000次（次数少了正确率比较高🤣，5000都是重复执行好几次之后才出现不理想结果） 12345678910111213141516171819202122">
+  <meta name="description" content="原子操作类AtomicInteger在使用Java爬取网站图片时，遇到多线程下载图片，需显示下载到第几张图片问题，于是使用了原子操作类AtomicInteger，可以保证操作具有原子性 例一创建两个线程，分别将全局变量i进行加1 每个线程执行5000次（次数少了正确率比较高🤣，5000都是重复执行好几次之后才出现不理想结果） public class D &amp;#123;     private s">
 <meta property="og:type" content="article">
 <meta property="og:title" content="原子操作类">
 <meta property="og:url" content="http://example.com/2021/09/10/post%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C%E7%B1%BB/index.html">
 <meta property="og:site_name" content="香饽饽">
-<meta property="og:description" content="原子操作类AtomicInteger在使用Java爬取网站图片时，遇到多线程下载图片，需显示下载到第几张图片问题，于是使用了原子操作类AtomicInteger，可以保证操作具有原子性 例一创建两个线程，分别将全局变量i进行加1 每个线程执行5000次（次数少了正确率比较高🤣，5000都是重复执行好几次之后才出现不理想结果） 12345678910111213141516171819202122">
+<meta property="og:description" content="原子操作类AtomicInteger在使用Java爬取网站图片时，遇到多线程下载图片，需显示下载到第几张图片问题，于是使用了原子操作类AtomicInteger，可以保证操作具有原子性 例一创建两个线程，分别将全局变量i进行加1 每个线程执行5000次（次数少了正确率比较高🤣，5000都是重复执行好几次之后才出现不理想结果） public class D &amp;#123;     private s">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/2021/09/10/post%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C%E7%B1%BB/image-20210910184257578.png">
 <meta property="og:image" content="http://example.com/2021/09/10/post%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C%E7%B1%BB/image-20210910184723295.png">
@@ -243,13 +243,13 @@
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
               </span>
-              <span>1.7k</span>
+              <span>1.6k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
-              <span>2 分钟</span>
+              <span>1 分钟</span>
             </span>
 
         </div>
@@ -264,13 +264,79 @@
         <h1><span id="原子操作类atomicinteger">原子操作类AtomicInteger</span></h1><p>在使用Java爬取网站图片时，遇到多线程下载图片，需显示下载到第几张图片问题，于是使用了原子操作类AtomicInteger，可以保证操作具有原子性</p>
 <h2><span id="例一">例一</span></h2><p>创建两个线程，分别将全局变量i进行加1</p>
 <p>每个线程执行5000次（次数少了正确率比较高🤣，5000都是重复执行好几次之后才出现不理想结果）</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">D</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> m = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line"><span class="comment">//        CountDownLatch cdl = new CountDownLatch(2);</span></span><br><span class="line"></span><br><span class="line">        Thread t1 = <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">5000</span>; j++) &#123;</span><br><span class="line">                    m++;</span><br><span class="line">                    System.out.println(<span class="string">&quot;1:&quot;</span>+m);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="comment">//cdl.countDown();</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        Thread t2 = <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">5000</span>; j++) &#123;</span><br><span class="line">                    m++;</span><br><span class="line">                    System.out.println(<span class="string">&quot;2:&quot;</span>+m);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="comment">//cdl.countDown();</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        t1.start();</span><br><span class="line">        t2.start();</span><br><span class="line"></span><br><span class="line">        <span class="comment">//cdl.await();</span></span><br><span class="line">        System.out.println(<span class="string">&quot;result=&quot;</span> + m);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="java">public class D &#123;
+    private static int m = 0;
 
+    public static void main(String[] args) throws InterruptedException &#123;
+//        CountDownLatch cdl = new CountDownLatch(2);
+
+        Thread t1 = new Thread(new Runnable() &#123;
+            @Override
+            public void run() &#123;
+                for (int j = 0; j &lt; 5000; j++) &#123;
+                    m++;
+                    System.out.println(&quot;1:&quot;+m);
+                &#125;
+                //cdl.countDown();
+            &#125;
+        &#125;);
+        Thread t2 = new Thread(new Runnable() &#123;
+            @Override
+            public void run() &#123;
+                for (int j = 0; j &lt; 5000; j++) &#123;
+                    m++;
+                    System.out.println(&quot;2:&quot;+m);
+                &#125;
+                //cdl.countDown();
+            &#125;
+        &#125;);
+        t1.start();
+        t2.start();
+
+        //cdl.await();
+        System.out.println(&quot;result=&quot; + m);
+    &#125;
+&#125;
+</code></pre>
 <p><img src="/2021/09/10/post%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C%E7%B1%BB/image-20210910184257578.png" alt="image-20210910184257578"></p>
 <p>由此可以看出m变量没有加锁(synchronized)，。但是synchronized过于沉重。于是我们可以考虑使用原子操作类<strong>AtomicInteger</strong>来实现。</p>
 <h2><span id="例二">例二</span></h2><p>使用<strong>AtomicInteger</strong> 中的<strong>incrementAndGet</strong> 函数来进行自增操作，代替直接使用**i++**来进行自增，保证了操作的原子性。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.concurrent.atomic.AtomicInteger;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">D</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> m = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line"><span class="comment">//        CountDownLatch cdl = new CountDownLatch(2);</span></span><br><span class="line">          AtomicInteger i=<span class="keyword">new</span> AtomicInteger(<span class="number">0</span>);</span><br><span class="line">        Thread t1 = <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">5000</span>; j++) &#123;</span><br><span class="line">                    i.incrementAndGet();</span><br><span class="line">                    System.out.println(<span class="string">&quot;1:&quot;</span>+i);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="comment">//cdl.countDown();</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        Thread t2 = <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">5000</span>; j++) &#123;</span><br><span class="line">                    i.incrementAndGet();</span><br><span class="line">                    System.out.println(<span class="string">&quot;2:&quot;</span>+i);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="comment">//cdl.countDown();</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        t1.start();</span><br><span class="line">        t2.start();</span><br><span class="line"></span><br><span class="line">        <span class="comment">//cdl.await();</span></span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="java">import java.util.concurrent.atomic.AtomicInteger;
 
+public class D &#123;
+    private static int m = 0;
+
+    public static void main(String[] args) throws InterruptedException &#123;
+//        CountDownLatch cdl = new CountDownLatch(2);
+          AtomicInteger i=new AtomicInteger(0);
+        Thread t1 = new Thread(new Runnable() &#123;
+            @Override
+            public void run() &#123;
+                for (int j = 0; j &lt; 5000; j++) &#123;
+                    i.incrementAndGet();
+                    System.out.println(&quot;1:&quot;+i);
+                &#125;
+                //cdl.countDown();
+            &#125;
+        &#125;);
+        Thread t2 = new Thread(new Runnable() &#123;
+            @Override
+            public void run() &#123;
+                for (int j = 0; j &lt; 5000; j++) &#123;
+                    i.incrementAndGet();
+                    System.out.println(&quot;2:&quot;+i);
+                &#125;
+                //cdl.countDown();
+            &#125;
+        &#125;);
+        t1.start();
+        t2.start();
+
+        //cdl.await();
+        
+    &#125;
+&#125;
+</code></pre>
 <p><img src="/2021/09/10/post%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C%E7%B1%BB/image-20210910184723295.png" alt="image-20210910184723295"></p>
 <p>现在无论执行多少次，结果永远是10000</p>
 
@@ -433,20 +499,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-count">31</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-count">16</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-count">27</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -512,18 +578,18 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">100k</span>
+    <span title="站点总字数">109k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:31</span>
+    <span title="站点阅读时长">1:39</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共31.9k字</span>
+  <span class="post-count">博客全站共37.5k字</span>
 </div>
 
     <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>

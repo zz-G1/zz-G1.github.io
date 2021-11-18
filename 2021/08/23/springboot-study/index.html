@@ -268,13 +268,13 @@
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
               </span>
-              <span>8.4k</span>
+              <span>7.9k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
-              <span>8 分钟</span>
+              <span>7 分钟</span>
             </span>
 
         </div>
@@ -429,22 +429,236 @@
 <td align="center">top 10/where ROWNUM &lt;=10</td>
 </tr>
 </tbody></table>
-<h3><span id="dao层的userdao接口">Dao层的UserDao接口：</span></h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.zz.dao;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.zz.pojo.Users;</span><br><span class="line"><span class="keyword">import</span> org.springframework.data.jpa.repository.JpaRepository;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">UsersDao</span> <span class="keyword">extends</span> <span class="title">JpaRepository</span>&lt;<span class="title">Users</span>,<span class="title">Integer</span>&gt; </span>&#123;</span><br><span class="line">    <span class="function">List&lt;Users&gt; <span class="title">findByUsernameIs</span><span class="params">(String string)</span></span>;</span><br><span class="line">    <span class="function">List&lt;Users&gt; <span class="title">findByUsernameLike</span><span class="params">(String string)</span></span>;</span><br><span class="line">    <span class="function">List&lt;Users&gt; <span class="title">findByUsernameAndUserageGreaterThanEqual</span><span class="params">(String name, Integer age)</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3><span id="dao层的userdao接口">Dao层的UserDao接口：</span></h3><pre><code class="Java">package com.zz.dao;
+
+import com.zz.pojo.Users;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
+
+public interface UsersDao extends JpaRepository&lt;Users,Integer&gt; &#123;
+    List&lt;Users&gt; findByUsernameIs(String string);
+    List&lt;Users&gt; findByUsernameLike(String string);
+    List&lt;Users&gt; findByUsernameAndUserageGreaterThanEqual(String name, Integer age);
+&#125;
+</code></pre>
+<h4><span id="pojo层下的users">pojo层下的Users</span></h4><pre><code class="java">package com.zz.pojo;
+
+import lombok.Data;
+
+import javax.persistence.*;
+import java.io.Serializable;
+
+/**
+ * @program: spring-hibernate-jpa
+ * @description: Users的Pojo对象
+ * @author: zz
+ * @create: 2019-05-18 09:37
+ */
+
+@Entity
+@Data
+@Table(name=&quot;users&quot;)
+public class Users implements Serializable &#123;
+
+    @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)//strategy=GenerationType.IDENTITY 自增长
+    @Column(name=&quot;userid&quot;)
+    private Integer userid;
+
+    @Column(name=&quot;username&quot;)
+    private String username;
+
+    @Column(name=&quot;userage&quot;)
+    private Integer userage;
+
+    public Integer getUserid() &#123;
+        return userid;
+    &#125;
+
+    public void setUserid(Integer userid) &#123;
+        this.userid = userid;
+    &#125;
+
+    public String getUsername() &#123;
+        return username;
+    &#125;
+
+    public void setUsername(String username) &#123;
+        this.username = username;
+    &#125;
+
+    public Integer getUserage() &#123;
+        return userage;
+    &#125;
+
+    public void setUserage(Integer userage) &#123;
+        this.userage = userage;
+    &#125;
+
+    @Override
+    public String toString() &#123;
+        return &quot;Users [userid=&quot; + userid + &quot;, username=&quot; + username + &quot;, userage=&quot; + userage + &quot;]&quot;;
+    &#125;
+
+&#125;
+</code></pre>
+<h4><span id="test测试类">Test测试类</span></h4><pre><code class="java">import com.zz.dao.UsersDao;
+
+import com.zz.pojo.Users;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.Rollback;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+/**
+ * @program: spring-data-jpa
+ * @description: 单元测试
+ * @author: 波波烤鸭
+ * @create: 2019-05-18 09:48
+ */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(&quot;classpath:applicationContext.xml&quot;)
+public class TestDemo &#123;
+
+    @Autowired
+    private UsersDao usersDao;
+
+    /**
+     * 添加用户 如继承接口为jpaRespository,可直接用save方法
+     */
+    @Test
+    @Transactional// 在测试类对于事务提交方式默认的是回滚。
+    @Rollback(false)//取消自动回滚
+    public void testInsertUsers()&#123;
+        Users users = new Users();
+        users.setUserage(20);
+        users.setUsername(&quot;moyi&quot;);
+        this.usersDao.save(users);
+    &#125;
 
 
+    /**
+     * 需求：使用用户名作为查询条件
+     */
+    @Test
+    public void test1() &#123;
+    /**
+     * 判断相等的条件，三种表达方式
+     * 1.无，默认相等判断
+     * 2.Is
+     * 3.equal
+     */
+        List&lt;Users&gt; list = this.usersDao.findByUsernameIs(&quot;moyi&quot;);
+        for (Users users0 : list) &#123;
+            System.out.println(users0);
+            &#125;
+    &#125;
 
-<h4><span id="pojo层下的users">pojo层下的Users</span></h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.zz.pojo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> lombok.Data;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.persistence.*;</span><br><span class="line"><span class="keyword">import</span> java.io.Serializable;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@program</span>: spring-hibernate-jpa</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@description</span>: Users的Pojo对象</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span>: zz</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@create</span>: 2019-05-18 09:37</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@Entity</span></span><br><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="meta">@Table(name=&quot;users&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Users</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Id</span></span><br><span class="line">    <span class="meta">@GeneratedValue(strategy= GenerationType.IDENTITY)</span><span class="comment">//strategy=GenerationType.IDENTITY 自增长</span></span><br><span class="line">    <span class="meta">@Column(name=&quot;userid&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> Integer userid;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Column(name=&quot;username&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> String username;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Column(name=&quot;userage&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> Integer userage;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Integer <span class="title">getUserid</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> userid;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setUserid</span><span class="params">(Integer userid)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.userid = userid;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getUsername</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> username;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setUsername</span><span class="params">(String username)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.username = username;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Integer <span class="title">getUserage</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> userage;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setUserage</span><span class="params">(Integer userage)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.userage = userage;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;Users [userid=&quot;</span> + userid + <span class="string">&quot;, username=&quot;</span> + username + <span class="string">&quot;, userage=&quot;</span> + userage + <span class="string">&quot;]&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+    /**
+     * 需求：根据用户姓名做Like处理
+     * Like:条件关键字
+     */
+    @Test
+    public void test2() &#123;
+        List&lt;Users&gt; list = this.usersDao.findByUsernameLike(&quot;mo%&quot;);
+        for (Users users : list) &#123;
+            System.out.println(&quot;根据用户姓名做Like处理&quot;+users);
+        &#125;
+    &#125;
+
+    /**
+     * 需求：查询名称为moyi，且年龄大于18
+     */
+    @Test
+    public void test3() &#123;
+        List&lt;Users&gt; list = this.usersDao.findByUsernameAndUserageGreaterThanEqual(&quot;moyi&quot;, 18);
+        for (Users users : list) &#123;
+            System.out.println(&quot;查询名称为moyi，且年龄大于18&quot;+users);
+        &#125;
+    &#125;
 
 
+   
+&#125;
+</code></pre>
+<h4><span id="配置文件">配置文件</span></h4><h6><span id="applicationcontextxml">applicationContext.xml</span></h6><pre><code class="java">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:context=&quot;http://www.springframework.org/schema/context&quot;
+       xmlns:aop=&quot;http://www.springframework.org/schema/aop&quot; xmlns:tx=&quot;http://www.springframework.org/schema/tx&quot;
+       xmlns:jpa=&quot;http://www.springframework.org/schema/data/jpa&quot;
+       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd
+    http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop.xsd
+    http://www.springframework.org/schema/data/jpa
+    http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+    http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx.xsd&quot;&gt;
 
-<h4><span id="test测试类">Test测试类</span></h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> com.zz.dao.UsersDao;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.zz.pojo.Users;</span><br><span class="line"><span class="keyword">import</span> org.junit.Test;</span><br><span class="line"><span class="keyword">import</span> org.junit.runner.RunWith;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.test.annotation.Rollback;</span><br><span class="line"><span class="keyword">import</span> org.springframework.test.context.ContextConfiguration;</span><br><span class="line"><span class="keyword">import</span> org.springframework.test.context.junit4.SpringJUnit4ClassRunner;</span><br><span class="line"><span class="keyword">import</span> org.springframework.transaction.annotation.Transactional;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@program</span>: spring-data-jpa</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@description</span>: 单元测试</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span>: 波波烤鸭</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@create</span>: 2019-05-18 09:48</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@RunWith(SpringJUnit4ClassRunner.class)</span></span><br><span class="line"><span class="meta">@ContextConfiguration(&quot;classpath:applicationContext.xml&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestDemo</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> UsersDao usersDao;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 添加用户 如继承接口为jpaRespository,可直接用save方法</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="meta">@Transactional</span><span class="comment">// 在测试类对于事务提交方式默认的是回滚。</span></span><br><span class="line">    <span class="meta">@Rollback(false)</span><span class="comment">//取消自动回滚</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testInsertUsers</span><span class="params">()</span></span>&#123;</span><br><span class="line">        Users users = <span class="keyword">new</span> Users();</span><br><span class="line">        users.setUserage(<span class="number">20</span>);</span><br><span class="line">        users.setUsername(<span class="string">&quot;moyi&quot;</span>);</span><br><span class="line">        <span class="keyword">this</span>.usersDao.save(users);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 需求：使用用户名作为查询条件</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 判断相等的条件，三种表达方式</span></span><br><span class="line"><span class="comment">     * 1.无，默认相等判断</span></span><br><span class="line"><span class="comment">     * 2.Is</span></span><br><span class="line"><span class="comment">     * 3.equal</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">        List&lt;Users&gt; list = <span class="keyword">this</span>.usersDao.findByUsernameIs(<span class="string">&quot;moyi&quot;</span>);</span><br><span class="line">        <span class="keyword">for</span> (Users users0 : list) &#123;</span><br><span class="line">            System.out.println(users0);</span><br><span class="line">            &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 需求：根据用户姓名做Like处理</span></span><br><span class="line"><span class="comment">     * Like:条件关键字</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test2</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        List&lt;Users&gt; list = <span class="keyword">this</span>.usersDao.findByUsernameLike(<span class="string">&quot;mo%&quot;</span>);</span><br><span class="line">        <span class="keyword">for</span> (Users users : list) &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;根据用户姓名做Like处理&quot;</span>+users);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 需求：查询名称为moyi，且年龄大于18</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test3</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        List&lt;Users&gt; list = <span class="keyword">this</span>.usersDao.findByUsernameAndUserageGreaterThanEqual(<span class="string">&quot;moyi&quot;</span>, <span class="number">18</span>);</span><br><span class="line">        <span class="keyword">for</span> (Users users : list) &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;查询名称为moyi，且年龄大于18&quot;</span>+users);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">   </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+    &lt;!-- 配置读取properties文件的工具类 --&gt;
+    &lt;context:property-placeholder location=&quot;classpath:jdbc.properties&quot;/&gt;
 
+    &lt;!-- 配置c3p0数据库连接池 --&gt;
+    &lt;bean id=&quot;dataSource&quot; class=&quot;com.mchange.v2.c3p0.ComboPooledDataSource&quot;&gt;
+        &lt;property name=&quot;jdbcUrl&quot; value=&quot;$&#123;jdbc.url&#125;&quot;/&gt;
+        &lt;property name=&quot;driverClass&quot; value=&quot;$&#123;jdbc.driver.class&#125;&quot;/&gt;
+        &lt;property name=&quot;user&quot; value=&quot;$&#123;jdbc.username&#125;&quot;/&gt;
+        &lt;property name=&quot;password&quot; value=&quot;$&#123;jdbc.password&#125;&quot;/&gt;
+    &lt;/bean&gt;
 
+    &lt;!-- Spring 整合 JPA 配置 EntityManagerFactory--&gt;
+    &lt;bean id=&quot;entityManagerFactory&quot;
+          class=&quot;org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean&quot;&gt;
+        &lt;property name=&quot;dataSource&quot; ref=&quot;dataSource&quot;/&gt;
+        &lt;property name=&quot;jpaVendorAdapter&quot;&gt;
+            &lt;bean class=&quot;org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter&quot;&gt;
+                &lt;!-- hibernate 相关的属性的注入 --&gt;
+                &lt;!-- 配置数据库类型 --&gt;
+                &lt;property name=&quot;database&quot; value=&quot;MYSQL&quot;/&gt;
+                &lt;!-- 正向工程 自动创建表 --&gt;
+                &lt;property name=&quot;generateDdl&quot; value=&quot;true&quot;/&gt;
+                &lt;!-- 显示执行的 SQL --&gt;
+                &lt;property name=&quot;showSql&quot; value=&quot;true&quot;/&gt;
+            &lt;/bean&gt;
+        &lt;/property&gt;
+        &lt;!-- 扫描实体的包 --&gt;
+        &lt;property name=&quot;packagesToScan&quot;&gt;
+            &lt;list&gt;
+                &lt;value&gt;com.zz.pojo&lt;/value&gt;
+            &lt;/list&gt;
+        &lt;/property&gt;
+    &lt;/bean&gt;
+    &lt;!-- 配置 Hibernate 的事务管理器 --&gt;
+    &lt;bean id=&quot;transactionManager&quot;
+          class=&quot;org.springframework.orm.jpa.JpaTransactionManager&quot;&gt;
+        &lt;property name=&quot;entityManagerFactory&quot;
+                  ref=&quot;entityManagerFactory&quot;/&gt;
+    &lt;/bean&gt;
 
-<h4><span id="配置文件">配置文件</span></h4><h6><span id="applicationcontextxml">applicationContext.xml</span></h6><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span>?&gt;</span><br><span class="line">&lt;beans xmlns=<span class="string">&quot;http://www.springframework.org/schema/beans&quot;</span></span><br><span class="line">       xmlns:xsi=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span> xmlns:context=<span class="string">&quot;http://www.springframework.org/schema/context&quot;</span></span><br><span class="line">       xmlns:aop=<span class="string">&quot;http://www.springframework.org/schema/aop&quot;</span> xmlns:tx=<span class="string">&quot;http://www.springframework.org/schema/tx&quot;</span></span><br><span class="line">       xmlns:jpa=<span class="string">&quot;http://www.springframework.org/schema/data/jpa&quot;</span></span><br><span class="line">       xsi:schemaLocation=<span class="string">&quot;http://www.springframework.org/schema/beans</span></span><br><span class="line"><span class="string">	http://www.springframework.org/schema/beans/spring-beans.xsd</span></span><br><span class="line"><span class="string">	http://www.springframework.org/schema/context</span></span><br><span class="line"><span class="string">	http://www.springframework.org/schema/context/spring-context.xsd</span></span><br><span class="line"><span class="string">	http://www.springframework.org/schema/aop</span></span><br><span class="line"><span class="string">	http://www.springframework.org/schema/aop/spring-aop.xsd</span></span><br><span class="line"><span class="string">	http://www.springframework.org/schema/data/jpa</span></span><br><span class="line"><span class="string">	http://www.springframework.org/schema/data/jpa/spring-jpa.xsd</span></span><br><span class="line"><span class="string">	http://www.springframework.org/schema/tx</span></span><br><span class="line"><span class="string">	http://www.springframework.org/schema/tx/spring-tx.xsd&quot;</span>&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- 配置读取properties文件的工具类 --&gt;</span><br><span class="line">    &lt;context:property-placeholder location=<span class="string">&quot;classpath:jdbc.properties&quot;</span>/&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- 配置c3p0数据库连接池 --&gt;</span><br><span class="line">    &lt;bean id=<span class="string">&quot;dataSource&quot;</span> <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;com.mchange.v2.c3p0.ComboPooledDataSource&quot;</span>&gt;</span><br><span class="line">        &lt;property name=<span class="string">&quot;jdbcUrl&quot;</span> value=<span class="string">&quot;$&#123;jdbc.url&#125;&quot;</span>/&gt;</span><br><span class="line">        &lt;property name=<span class="string">&quot;driverClass&quot;</span> value=<span class="string">&quot;$&#123;jdbc.driver.class&#125;&quot;</span>/&gt;</span><br><span class="line">        &lt;property name=<span class="string">&quot;user&quot;</span> value=<span class="string">&quot;$&#123;jdbc.username&#125;&quot;</span>/&gt;</span><br><span class="line">        &lt;property name=<span class="string">&quot;password&quot;</span> value=<span class="string">&quot;$&#123;jdbc.password&#125;&quot;</span>/&gt;</span><br><span class="line">    &lt;/bean&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- Spring 整合 JPA 配置 EntityManagerFactory--&gt;</span><br><span class="line">    &lt;bean id=<span class="string">&quot;entityManagerFactory&quot;</span></span><br><span class="line">          <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean&quot;</span>&gt;</span><br><span class="line">        &lt;property name=<span class="string">&quot;dataSource&quot;</span> ref=<span class="string">&quot;dataSource&quot;</span>/&gt;</span><br><span class="line">        &lt;property name=<span class="string">&quot;jpaVendorAdapter&quot;</span>&gt;</span><br><span class="line">            &lt;bean <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter&quot;</span>&gt;</span><br><span class="line">                &lt;!-- hibernate 相关的属性的注入 --&gt;</span><br><span class="line">                &lt;!-- 配置数据库类型 --&gt;</span><br><span class="line">                &lt;property name=<span class="string">&quot;database&quot;</span> value=<span class="string">&quot;MYSQL&quot;</span>/&gt;</span><br><span class="line">                &lt;!-- 正向工程 自动创建表 --&gt;</span><br><span class="line">                &lt;property name=<span class="string">&quot;generateDdl&quot;</span> value=<span class="string">&quot;true&quot;</span>/&gt;</span><br><span class="line">                &lt;!-- 显示执行的 SQL --&gt;</span><br><span class="line">                &lt;property name=<span class="string">&quot;showSql&quot;</span> value=<span class="string">&quot;true&quot;</span>/&gt;</span><br><span class="line">            &lt;/bean&gt;</span><br><span class="line">        &lt;/property&gt;</span><br><span class="line">        &lt;!-- 扫描实体的包 --&gt;</span><br><span class="line">        &lt;property name=<span class="string">&quot;packagesToScan&quot;</span>&gt;</span><br><span class="line">            &lt;list&gt;</span><br><span class="line">                &lt;value&gt;com.zz.pojo&lt;/value&gt;</span><br><span class="line">            &lt;/list&gt;</span><br><span class="line">        &lt;/property&gt;</span><br><span class="line">    &lt;/bean&gt;</span><br><span class="line">    &lt;!-- 配置 Hibernate 的事务管理器 --&gt;</span><br><span class="line">    &lt;bean id=<span class="string">&quot;transactionManager&quot;</span></span><br><span class="line">          <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;org.springframework.orm.jpa.JpaTransactionManager&quot;</span>&gt;</span><br><span class="line">        &lt;property name=<span class="string">&quot;entityManagerFactory&quot;</span></span><br><span class="line">                  ref=<span class="string">&quot;entityManagerFactory&quot;</span>/&gt;</span><br><span class="line">    &lt;/bean&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- 配置开启注解事务处理 --&gt;</span><br><span class="line">    &lt;tx:annotation-driven transaction-manager=<span class="string">&quot;transactionManager&quot;</span>/&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- 配置springIOC的注解扫描 --&gt;</span><br><span class="line">    &lt;context:component-scan base-<span class="keyword">package</span>=<span class="string">&quot;com.zz&quot;</span>/&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- Spring Data JPA 的配置 --&gt;</span><br><span class="line">    &lt;!-- base-<span class="keyword">package</span>：扫描 dao 接口所在的包 --&gt;</span><br><span class="line">    &lt;jpa:repositories base-<span class="keyword">package</span>=<span class="string">&quot;com.zz.dao&quot;</span>/&gt;</span><br><span class="line">&lt;/beans&gt;</span><br></pre></td></tr></table></figure>
+    &lt;!-- 配置开启注解事务处理 --&gt;
+    &lt;tx:annotation-driven transaction-manager=&quot;transactionManager&quot;/&gt;
 
-<h6><span id="jdbcproperties">jdbc.properties</span></h6><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">jdbc.url=jdbc:mysql:<span class="comment">//localhost:3306/ssm?characterEncoding=utf-8</span></span><br><span class="line">jdbc.driver.class=com.mysql.jdbc.Driver</span><br><span class="line">jdbc.username=root</span><br><span class="line">jdbc.password=root</span><br></pre></td></tr></table></figure>
+    &lt;!-- 配置springIOC的注解扫描 --&gt;
+    &lt;context:component-scan base-package=&quot;com.zz&quot;/&gt;
 
+    &lt;!-- Spring Data JPA 的配置 --&gt;
+    &lt;!-- base-package：扫描 dao 接口所在的包 --&gt;
+    &lt;jpa:repositories base-package=&quot;com.zz.dao&quot;/&gt;
+&lt;/beans&gt;
+</code></pre>
+<h6><span id="jdbcproperties">jdbc.properties</span></h6><pre><code class="java">jdbc.url=jdbc:mysql://localhost:3306/ssm?characterEncoding=utf-8
+jdbc.driver.class=com.mysql.jdbc.Driver
+jdbc.username=root
+jdbc.password=root
+</code></pre>
 <p>几个测试结果如图：</p>
 <p><img src="/2021/08/23/springboot-study/Snipaste_2021-08-26_15-26-40.png" alt="Snipaste_2021-08-26_15-26-40"></p>
 <p><img src="/2021/08/23/springboot-study/Snipaste_2021-08-26_16-06-47.png" alt="Snipaste_2021-08-26_16-06-47"></p>
@@ -611,20 +825,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-count">31</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-count">16</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-count">27</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -690,18 +904,18 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">100k</span>
+    <span title="站点总字数">109k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:31</span>
+    <span title="站点阅读时长">1:39</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共31.9k字</span>
+  <span class="post-count">博客全站共37.5k字</span>
 </div>
 
     <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
