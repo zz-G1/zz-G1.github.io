@@ -195,7 +195,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/28/%E7%82%B9%E9%A4%90%E7%B3%BB%E7%BB%9F%E5%BC%80%E5%8F%91%E6%97%A5%E8%AE%B0/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/04/Redis/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -209,90 +209,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/09/28/%E7%82%B9%E9%A4%90%E7%B3%BB%E7%BB%9F%E5%BC%80%E5%8F%91%E6%97%A5%E8%AE%B0/" class="post-title-link" itemprop="url">点餐系统开发日记</a>
-        </h2>
-
-        <div class="post-meta">
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-09-28 20:23:05 / 修改时间：21:09:09" itemprop="dateCreated datePublished" datetime="2021-09-28T20:23:05+08:00">2021-09-28</time>
-            </span>
-
-          
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-              <span>309</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1><span id="开发日记">开发日记</span></h1><h2><span id="day1">Day1</span></h2><p>设计数据库</p>
-<p><strong>decimal</strong> 用来设计物品的单价</p>
-<p>decimal是MySQL中存在的精准数据类型，语法格式“DECIMAL(M,D)”。其中，M是数字的最大数（精度），其范围为“1～65”，默认值是10；D是小数点右侧数字的数目（标度），其范围是“0～30”，但不得超过M。</p>
-<p><img src="/2021/09/28/%E7%82%B9%E9%A4%90%E7%B3%BB%E7%BB%9F%E5%BC%80%E5%8F%91%E6%97%A5%E8%AE%B0/image-20210928205416256.png" alt="image-20210928205416256"></p>
-<p>key加索引 key的用途：主要是用来加快查询速度的。</p>
-<p><img src="/2021/09/28/%E7%82%B9%E9%A4%90%E7%B3%BB%E7%BB%9F%E5%BC%80%E5%8F%91%E6%97%A5%E8%AE%B0/image-20210928210730121.png"></p>
-<p>更新时数据库时自动更新更新时间 就用  <strong>on update current_timestamp</strong></p>
-<pre><code class="sql">`update_time` timestamp not null default current_timestamp on update current_timestamp comment &#39;修改时间&#39;,
-</code></pre>
-
-      
-    </div>
-
-    
-    
-    
-
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/26/Spring-boot%E9%9A%8F%E8%AE%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Gzz">
-      <meta itemprop="description" content="只要开始就不算晚">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="香饽饽">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/09/26/Spring-boot%E9%9A%8F%E8%AE%B0/" class="post-title-link" itemprop="url">Spring boot随记</a>
+            <a href="/2021/11/04/Redis/" class="post-title-link" itemprop="url">Redis</a>
         </h2>
 
         <div class="post-meta">
@@ -304,542 +221,15 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-09-26 16:00:44" itemprop="dateCreated datePublished" datetime="2021-09-26T16:00:44+08:00">2021-09-26</time>
+              <time title="创建时间：2021-11-04 11:37:46" itemprop="dateCreated datePublished" datetime="2021-11-04T11:37:46+08:00">2021-11-04</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-10-10 20:36:32" itemprop="dateModified" datetime="2021-10-10T20:36:32+08:00">2021-10-10</time>
+                <time title="修改时间：2021-11-08 14:24:16" itemprop="dateModified" datetime="2021-11-08T14:24:16+08:00">2021-11-08</time>
               </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Spring-boot/" itemprop="url" rel="index"><span itemprop="name">Spring boot</span></a>
-                </span>
-            </span>
-
-          
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-              <span>12k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-              <span>11 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1><span id="spring-boot随记">Spring boot随记</span></h1><p><strong>约定大于配置</strong></p>
-<h2><span id="yaml配置">yaml配置:</span></h2><p>实体类上加</p>
-<pre><code class="java">@ConfigurationProperties(prefix = &quot;dog&quot;)
-</code></pre>
-<p><img src="/2021/09/26/Spring-boot%E9%9A%8F%E8%AE%B0/image-20210929201905228.png" alt="image-20210929201905228"></p>
-<p>创建application.yaml文件</p>
-<p><img src="/2021/09/26/Spring-boot%E9%9A%8F%E8%AE%B0/image-20210929201940747.png" alt="image-20210929201940747"></p>
-<p>使用时：<img src="/2021/09/26/Spring-boot%E9%9A%8F%E8%AE%B0/image-20210929202014480.png" alt="image-20210929202014480"></p>
-<h3><span id="松散绑定">松散绑定</span></h3><p>实体类中为<strong>fistname</strong>，yaml文件中为<strong>first-name</strong>也可以赋值</p>
-<h3><span id="jsr303数据校验">JSR303数据校验</span></h3><p>@validated注解实体类</p>
-<pre><code class="java">@Email(message=&quot;邮箱格式错误&quot;) //name必须是邮箱格式
-    private String name;
-</code></pre>
-<p><strong>使用数据校验，可以保证数据的正确性；</strong></p>
-<pre><code class="java">@NotNull(message=&quot;名字不能为空&quot;)
-private String userName;
-@Max(value=120,message=&quot;年龄最大不能查过120&quot;)
-private int age;
-@Email(message=&quot;邮箱格式错误&quot;)
-private String email;
-
-空检查
-@Null       验证对象是否为null
-@NotNull    验证对象是否不为null, 无法查检长度为0的字符串
-@NotBlank   检查约束字符串是不是Null还有被Trim的长度是否大于0,只对字符串,且会去掉前后空格.
-@NotEmpty   检查约束元素是否为NULL或者是EMPTY.
-    
-Booelan检查
-@AssertTrue     验证 Boolean 对象是否为 true  
-@AssertFalse    验证 Boolean 对象是否为 false  
-    
-长度检查
-@Size(min=, max=) 验证对象（Array,Collection,Map,String）长度是否在给定的范围之内  
-@Length(min=, max=) string is between min and max included.
-
-日期检查
-@Past       验证 Date 和 Calendar 对象是否在当前时间之前  
-@Future     验证 Date 和 Calendar 对象是否在当前时间之后  
-@Pattern    验证 String 对象是否符合正则表达式的规则
-
-.......等等
-除此以外，我们还可以自定义一些数据校验规则
-</code></pre>
-<p>yaml文件优先级：<br>优先级1：项目路径下的config文件夹配置文件</p>
-<p>优先级2：项目路径下配置文件</p>
-<p>优先级3：资源路径下的config文件夹配置文件</p>
-<p>优先级4：资源路径下配置文件</p>
-<p><img src="/2021/09/26/Spring-boot%E9%9A%8F%E8%AE%B0/image-20210929204121922.png" alt="image-20210929204121922"></p>
-<p>多环境开发：</p>
-<pre><code class="yaml">server:
-  port: 8080
-#选择要激活那个环境块
-spring:
-  profiles:
-    active: prod
-
----
-server:
-  port: 8081
-spring:
-  profiles: prod
-
----
-server:
-  port: 8082
-spring:
-  profiles: dev
-</code></pre>
-<h3><span id="自动配置原理">自动配置原理：</span></h3><p>例子：</p>
-<pre><code class="java">
-//表示这是一个配置类，和以前编写的配置文件一样，也可以给容器中添加组件；
-@Configuration 
-
-//启动指定类的ConfigurationProperties功能；
-  //进入这个HttpProperties查看，将配置文件中对应的值和HttpProperties绑定起来；
-  //并把HttpProperties加入到ioc容器中
-@EnableConfigurationProperties(&#123;HttpProperties.class&#125;) 
-
-//Spring底层@Conditional注解
-  //根据不同的条件判断，如果满足指定的条件，整个配置类里面的配置就会生效；
-  //这里的意思就是判断当前应用是否是web应用，如果是，当前配置类生效
-@ConditionalOnWebApplication(
-    type = Type.SERVLET
-)
-
-//判断当前项目有没有这个类CharacterEncodingFilter；SpringMVC中进行乱码解决的过滤器；
-@ConditionalOnClass(&#123;CharacterEncodingFilter.class&#125;)
-
-//判断配置文件中是否存在某个配置：spring.http.encoding.enabled；
-  //如果不存在，判断也是成立的
-  //即使我们配置文件中不配置pring.http.encoding.enabled=true，也是默认生效的；
-@ConditionalOnProperty(
-    prefix = &quot;spring.http.encoding&quot;,
-    value = &#123;&quot;enabled&quot;&#125;,
-    matchIfMissing = true
-)
-
-public class HttpEncodingAutoConfiguration &#123;
-    //他已经和SpringBoot的配置文件映射了
-    private final Encoding properties;
-    //只有一个有参构造器的情况下，参数的值就会从容器中拿
-    public HttpEncodingAutoConfiguration(HttpProperties properties) &#123;
-        this.properties = properties.getEncoding();
-    &#125;
-    
-    //给容器中添加一个组件，这个组件的某些值需要从properties中获取
-    @Bean
-    @ConditionalOnMissingBean //判断容器没有这个组件？
-    public CharacterEncodingFilter characterEncodingFilter() &#123;
-        CharacterEncodingFilter filter = new OrderedCharacterEncodingFilter();
-        filter.setEncoding(this.properties.getCharset().name());
-        filter.setForceRequestEncoding(this.properties.shouldForce(org.springframework.boot.autoconfigure.http.HttpProperties.Encoding.Type.REQUEST));
-        filter.setForceResponseEncoding(this.properties.shouldForce(org.springframework.boot.autoconfigure.http.HttpProperties.Encoding.Type.RESPONSE));
-        return filter;
-    &#125;
-    //。。。。。。。
-&#125;
-</code></pre>
-<p><strong>根据当前不同的条件判断，决定这个配置类是否生效！</strong></p>
-<p>大体结构：</p>
-<pre><code class="Java">
-//从配置文件中获取指定的值和bean的属性进行绑定
-@ConfigurationProperties(prefix = &quot;spring.http&quot;) 
-public class HttpProperties &#123;
-    // .....
-&#125;
-</code></pre>
-<h3><span id="mvc自动配置原理">mvc自动配置原理</span></h3><pre><code class="java">Spring MVC Auto-configuration
-// Spring Boot为Spring MVC提供了自动配置，它可以很好地与大多数应用程序一起工作。
-Spring Boot provides auto-configuration for Spring MVC that works well with most applications.
-// 自动配置在Spring默认设置的基础上添加了以下功能：
-The auto-configuration adds the following features on top of Spring’s defaults:
-// 包含视图解析器
-Inclusion of ContentNegotiatingViewResolver and BeanNameViewResolver beans.
-// 支持静态资源文件夹的路径，以及webjars
-Support for serving static resources, including support for WebJars 
-// 自动注册了Converter：
-// 转换器，这就是我们网页提交数据到后台自动封装成为对象的东西，比如把&quot;1&quot;字符串自动转换为int类型
-// Formatter：【格式化器，比如页面给我们了一个2019-8-10，它会给我们自动格式化为Date对象】
-Automatic registration of Converter, GenericConverter, and Formatter beans.
-// HttpMessageConverters
-// SpringMVC用来转换Http请求和响应的的，比如我们要把一个User对象转换为JSON字符串，可以去看官网文档解释；
-Support for HttpMessageConverters (covered later in this document).
-// 定义错误代码生成规则的
-Automatic registration of MessageCodesResolver (covered later in this document).
-// 首页定制
-Static index.html support.
-// 图标定制
-Custom Favicon support (covered later in this document).
-// 初始化数据绑定器：帮我们把请求数据绑定到JavaBean中！
-Automatic use of a ConfigurableWebBindingInitializer bean (covered later in this document).
-
-/*
-如果您希望保留Spring Boot MVC功能，并且希望添加其他MVC配置（拦截器、格式化程序、视图控制器和其他功能），则可以添加自己
-的@configuration类，类型为webmvcconfiguer，但不添加@EnableWebMvc。如果希望提供
-RequestMappingHandlerMapping、RequestMappingHandlerAdapter或ExceptionHandlerExceptionResolver的自定义
-实例，则可以声明WebMVCregistrationAdapter实例来提供此类组件。
-*/
-If you want to keep Spring Boot MVC features and you want to add additional MVC configuration 
-(interceptors, formatters, view controllers, and other features), you can add your own 
-@Configuration class of type WebMvcConfigurer but without @EnableWebMvc. If you wish to provide 
-custom instances of RequestMappingHandlerMapping, RequestMappingHandlerAdapter, or 
-ExceptionHandlerExceptionResolver, you can declare a WebMvcRegistrationsAdapter instance to provide such components.
-
-// 如果您想完全控制Spring MVC，可以添加自己的@Configuration，并用@EnableWebMvc进行注释。
-If you want to take complete control of Spring MVC, you can add your own @Configuration annotated with @EnableWebMvc.
-</code></pre>
-<h3><span id="国际化">国际化</span></h3><p><strong>1.设置properties的编码问题</strong></p>
-<p><img src="/2021/09/26/Spring-boot%E9%9A%8F%E8%AE%B0/image-20211003204335787.png" alt="image-20211003204335787"></p>
-<p><strong>2</strong>.<img src="/2021/09/26/Spring-boot%E9%9A%8F%E8%AE%B0/image-20211003204447879.png" alt="image-20211003204447879"></p>
-<p>​    <strong>建立语言配置文件：</strong></p>
-<p><img src="/2021/09/26/Spring-boot%E9%9A%8F%E8%AE%B0/image-20211003204931853.png" alt="image-20211003204931853"></p>
-<p><strong>3.接下来就是让springboot识别我们对于国际化的个性配置，于是涉及到了spring boot的自动配置    MessageSourceProperties类</strong></p>
-<p><img src="/2021/09/26/Spring-boot%E9%9A%8F%E8%AE%B0/image-20211003205859135.png" alt="image-20211003205859135"></p>
-<p><em>// 设置国际化文件的基础名（去掉语言国家代码的）</em></p>
-<pre><code class="properties">spring.messages.basename=i18n.login
-</code></pre>
-<p><strong>4.配置国际化解析</strong></p>
-<p>在Spring中有一个国际化的Locale （区域信息对象）；里面有一个叫做LocaleResolver （获取区域信息对象）的解析器！</p>
-<p>那假如我们现在想点击链接让我们的国际化资源生效，就需要让我们自己的Locale生效！我们去自己写一个自己的LocaleResolver，可以在链接上携带区域信息！</p>
-<pre><code class="html">&lt;!-- 这里传入参数不需要使用 ？使用 （key=value）--&gt;
-&lt;a class=&quot;btn btn-sm&quot; th:href=&quot;@&#123;/index.html(l=&#39;zh_CN&#39;)&#125;&quot;&gt;中文&lt;/a&gt;
-&lt;a class=&quot;btn btn-sm&quot; th:href=&quot;@&#123;/index.html(l=&#39;en_US&#39;)&#125;&quot;&gt;English&lt;/a&gt;
-</code></pre>
-<h4><span id="编写一个处理的组件类">编写一个处理的组件类</span></h4><pre><code class="java">package com.zz.springboot03web.config;
-
-import org.springframework.util.StringUtils;
-import org.springframework.web.servlet.LocaleResolver;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.Locale;
-
-public class MyLocaleResolver implements LocaleResolver &#123;
-    @Override
-    public Locale resolveLocale(HttpServletRequest request) &#123;
-        String language=request.getParameter(&quot;l&quot;);
-        Locale locale=Locale.getDefault();//如果没有获取到就使用系统默认的
-        //如果需求链接不为空
-        if(!StringUtils.isEmpty(language))&#123;
-            //分割请求需求
-            String [] split=language.split(&quot;_&quot;);
-            locale=new Locale(split[0],split[1]);
-        &#125;
-        return locale;
-    &#125;
-
-    @Override
-    public void setLocale(HttpServletRequest request, HttpServletResponse response, Locale locale) &#123;
-
-    &#125;
-&#125;
-</code></pre>
-<p><strong>为了使自己定义的组件生效，在我们自己的MvcConofig下添加bean</strong></p>
-<pre><code class="Java">@Bean
-public LocaleResolver localeResolver()&#123;
-    return new MyLocaleResolver();
-&#125;
-</code></pre>
-<h2><span id="使用addviewcontroller实现无业务逻辑跳转">使用addviewController()实现无业务逻辑跳转</span></h2><p><img src="/2021/09/26/Spring-boot%E9%9A%8F%E8%AE%B0/image-20211004174440961.png" alt="image-20211004174440961"></p>
-<p>效果：实际跳转到了test.html页面</p>
-<p><img src="/2021/09/26/Spring-boot%E9%9A%8F%E8%AE%B0/image-20211004174507934.png" alt="image-20211004174507934"></p>
-<h2><span id="requestparam和pathvariable">@RequestParam和@PathVariable</span></h2><blockquote>
-<p> 相同点与区别</p>
-</blockquote>
-<p> @RequestParam和@PathVariable都能够完成类似的功能——因为本质上，它们都是用户的输入，只不过输入的部分不同，一个在URL路径部分，另一个在参数部分。要访问一篇博客文章，这两种URL设计都是可以的：</p>
-<ul>
-<li>通过@PathVariable，例如/blogs/1</li>
-<li>通过@RequestParam，例如blogs?blogId=1</li>
-</ul>
-<p>那么究竟应该选择哪一种呢？建议：</p>
-<p>1、当URL指向的是某一具体业务资源（或资源列表），例如博客，用户时，使用@PathVariable</p>
-<p>2、当URL需要对资源或者资源列表进行过滤，筛选时，用@RequestParam</p>
-<p>例如我们会这样设计URL：</p>
-<ul>
-<li>/blogs/{blogId}</li>
-<li>/blogs?state=publish而不是/blogs/state/publish来表示处于发布状态的博客文章</li>
-</ul>
-<h2><span id="安全shiro-springsecurity">安全（shiro  SpringSecurity）</span></h2><h3><span id="shiro">shiro</span></h3><h4><span id="结合数据库进行验证和授权">结合数据库进行验证和授权</span></h4><p>实际工作中，我们都会把权限相关的内容放在数据库中</p>
-<p>基于 <a target="_blank" rel="noopener" href="https://how2j.cn/k/shiro/shiro-database/1721.html#step7539">RBAC 概念</a>， 就会存在3 张基础表： 用户，角色，权限， 以及 2 张中间表来建立 用户与角色的多对多关系，角色与权限的多对多关系。 用户与权限之间也是多对多关系，但是是通过 角色间接建立的。</p>
-<h5><span id="一">一</span></h5><p><img src="/2021/09/26/Spring-boot%E9%9A%8F%E8%AE%B0/image-20211009223652791.png" alt="image-20211009223652791"></p>
-<h5><span id="二">二</span></h5><p><strong>插入模拟数据</strong></p>
-<h5><span id="三">三</span></h5><p>Dao类</p>
-<p><strong>提供了和权限相关查询</strong></p>
-<h5><span id="四">四</span></h5><p>DatabaseRealm 就是用来通过数据库 验证用户，和相关授权的类。两个方法分别做验证和授权：<br>doGetAuthenticationInfo(), doGetAuthorizationInfo()</p>
-<p>这个类由用户提供，但是不由用户自己调用，而是由 Shiro 去调用。从而在shiro.ini中配置</p>
-<pre><code class="java">public class DatabaseRealm extends AuthorizingRealm&#123;
-    @Override
-    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) &#123;
-        //能进入到这里，表示账号已经通过验证了
-        String userName =(String)principals.getPrimaryPrincipal();
-        //通过DAO获取角色和权限
-        Set&lt;String&gt; permissions = new Dao().listPermissions(userName);
-        Set&lt;String&gt; roles = new Dao().listRoles(userName);
-
-        //授权对象
-        SimpleAuthorizationInfo s = new SimpleAuthorizationInfo();
-        //把通过DAO获取到的角色和权限放进去
-        s.setStringPermissions(permissions);
-        s.setRoles(roles);
-        return s;
-    &#125;
-
-    @Override
-    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException &#123;
-        //获取账号密码
-        UsernamePasswordToken t = (UsernamePasswordToken) token;
-        String userName= token.getPrincipal().toString();
-        String password= new String( t.getPassword());
-        //获取数据库中的密码
-        String passwordInDB = new Dao().getPassword(userName);
-
-        //如果为空就是账号不存在，如果不相同就是密码错误，但是都抛出AuthenticationException，而不是抛出具体错误原因，免得给破解者提供帮助信息
-        if(null==passwordInDB || !passwordInDB.equals(password))&#123;
-            throw new AuthenticationException();&#125;
-
-        //认证信息里存放账号密码, getName() 是当前Realm的继承方法,通常返回当前类名 :databaseRealm
-        SimpleAuthenticationInfo a = new SimpleAuthenticationInfo(userName,password,getName());
-        return a;
-    &#125;
-    &#125;
-
-</code></pre>
-<h5><span id="五">五</span></h5><pre><code class="ini">[main]
-databaseRealm=DatabaseRealm
-securityManager.realms=$databaseRealm
-</code></pre>
-<h5><span id="结束-̀-ω-́">结束( •̀ ω •́ )✧</span></h5><h4><span id="加密">加密</span></h4><h2><span id="swagger">swagger</span></h2><h3><span id="配置swagger">配置swagger</span></h3><p>（Swagger实例Bean是Docket，所以通过配置Docket实例来配置Swaggger。）</p>
-<p>  可以通过apiInfo()属性配置文档信息</p>
-<pre><code class="java"> //配置文档信息
-    private ApiInfo apiInfo() &#123;
-        Contact contact = new Contact(&quot;gzz&quot;, &quot;https://www.zhihu.com/people/sjbja&quot;, &quot;https://weibo.com/u/7194380917?is_all=1&quot;);
-        return new ApiInfo(
-                &quot;Swagger学习&quot;, // 标题
-                &quot;学习演示如何配置Swagger&quot;, // 描述
-                &quot;v1.0&quot;, // 版本
-                &quot;https://user.qzone.qq.com/1614399965?source=namecardhoverqzone&quot;, // 组织链接
-                contact, // 联系人信息
-                &quot;Apach 2.0 许可&quot;, // 许可
-                &quot;许可链接&quot;, // 许可连接
-                new ArrayList&lt;&gt;()// 扩展
-        );
-    &#125;
-//Docket 实例关联上 apiInfo()
-@Bean
-public Docket docket() &#123;
-   return new Docket(DocumentationType.SWAGGER_2).apiInfo(apiInfo());
-&#125;
-</code></pre>
-<h3><span id="配置接口扫描信息">配置接口扫描信息</span></h3><pre><code class="java"> .select()// 通过.select()方法，去配置扫描接口,RequestHandlerSelectors配置如何扫描接口
- .apis(RequestHandlerSelectors.basePackage(&quot;com.kuang.swagger.controller&quot;))
- .build();
-</code></pre>
-<p>上面为根据包路径扫描接口</p>
-<p><strong>其他配置扫描接口的方式：</strong></p>
-<pre><code class="java">any() // 扫描所有，项目中的所有接口都会被扫描到
-none() // 不扫描接口
-// 通过方法上的注解扫描，如withMethodAnnotation(GetMapping.class)只扫描get请求
-withMethodAnnotation(final Class&lt;? extends Annotation&gt; annotation)
-// 通过类上的注解扫描，如.withClassAnnotation(Controller.class)只扫描有controller注解的类中的接口
-withClassAnnotation(final Class&lt;? extends Annotation&gt; annotation)
-</code></pre>
-<p>还可以配置接口扫描过滤：</p>
-<pre><code class="Java"> // 配置如何通过path过滤,即这里只扫描请求以/kuang开头的接口
-      .paths(PathSelectors.ant(&quot;/kuang/**&quot;))
-</code></pre>
-<p>配置开关</p>
-<p><img src="/2021/09/26/Spring-boot%E9%9A%8F%E8%AE%B0/image-20211010183122574.png" alt="image-20211010183122574"></p>
-<p>效果图：<img src="/2021/09/26/Spring-boot%E9%9A%8F%E8%AE%B0/image-20211010183203887.png" alt="image-20211010183203887"></p>
-<h3><span id="动态配置当项目处于test-dev环境时显示swagger处于prod时不显示">动态配置当项目处于test、dev环境时显示swagger，处于prod时不显示</span></h3><pre><code class="java">@Bean
-    public Docket docket(Environment environment)&#123;
-        // 设置要显示swagger的环境
-        Profiles of = Profiles.of(&quot;dev&quot;, &quot;test&quot;);
-        // 判断当前是否处于该环境
-        // 通过 enable() 接收此参数判断是否要显示
-        boolean b = environment.acceptsProfiles(of);
-
-        return new Docket(DocumentationType.SWAGGER_2)
-                .apiInfo(apiInfo())
-                .enable(b) //配置是否启用Swagger，如果是false，在浏览器将无法访问
-                .select()// 通过.select()方法，去配置扫描接口,RequestHandlerSelectors配置如何扫描接口
-                .apis(RequestHandlerSelectors.basePackage(&quot;com.kuang.swagger.controller&quot;))
-                // 配置如何通过path过滤,即这里只扫描请求以/kuang开头的接口
-                .paths(PathSelectors.ant(&quot;/kuang/**&quot;))
-                .build();
-    &#125;
-</code></pre>
-<h3><span id="配置api分组">配置api分组</span></h3><h4><span id="给自己分配组">给自己分配组</span></h4><pre><code>.groupName(&quot;wtt&quot;)// 配置分组
-</code></pre>
-<h4><span id="配置多个分组">配置多个分组</span></h4><pre><code class="java">@Bean
-    public Docket docket1()&#123;
-        return new Docket(DocumentationType.SWAGGER_2).groupName(&quot;group1&quot;);
-    &#125;
-    @Bean
-    public Docket docket2()&#123;
-        return new Docket(DocumentationType.SWAGGER_2).groupName(&quot;group2&quot;);
-    &#125;
-    @Bean
-    public Docket docket3()&#123;
-        return new Docket(DocumentationType.SWAGGER_2).groupName(&quot;group3&quot;);
-    &#125;
-</code></pre>
-<h3><span id="实体配置">实体配置</span></h3><h4><span id="新建实体类">新建实体类</span></h4><p><img src="/2021/09/26/Spring-boot%E9%9A%8F%E8%AE%B0/image-20211010192744837.png" alt="image-20211010192744837"></p>
-<h4><span id="在controller中配置接口">在controller中配置接口</span></h4><p><img src="/2021/09/26/Spring-boot%E9%9A%8F%E8%AE%B0/image-20211010192927354.png" alt="image-20211010192927354"></p>
-<h2><span id="异步-定时-邮件任务">异步、定时、邮件任务</span></h2><h6><span id="异步前台发送邮件点击发送前台瞬间响应后台进行多线程处理">异步：前台发送邮件，点击发送前台瞬间响应，后台进行多线程处理</span></h6><p>实现异步方法：<br>在需实现异步的方法上加</p>
-<pre><code class="java">//告诉Spring这是一个异步方法
-@Async
-</code></pre>
-<p>在主程序上加</p>
-<pre><code class="java">@EnableAsync //开启异步注解功能
-</code></pre>
-<p>完成🎇🎇🎇</p>
-<h6><span id="定时和发送邮件组合起来可实现定时邮件功能">定时和发送邮件：组合起来可实现定时邮件功能</span></h6><p>导入邮件依赖：</p>
-<pre><code class="xml">&lt;dependency&gt;
-&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-&lt;artifactId&gt;spring-boot-starter-mail&lt;/artifactId&gt;
-&lt;/dependency&gt;
-</code></pre>
-<p>定时有两个注解，实现形式和异步差不多：</p>
-<pre><code class="java">  @Scheduled(cron = &quot;0 0/2 * * * ? &quot;)//此注解放在要实现定时任务的方法上
-  @EnableScheduling //开启基于注解的定时任务，放在主程序上
-</code></pre>
-<p>邮件配置：</p>
-<pre><code class="properties">spring.mail.username=1614399965@qq.com
-#授权码
-spring.mail.password=zuursxqcywrddfhf
-spring.mail.host=smtp.qq.com
-# qq需要配置ssl
-spring.mail.properties.mail.smtp.ssl.enable=true
-</code></pre>
-<p>发送一个两分钟一次的邮件：</p>
-<pre><code class="java">@Scheduled(cron = &quot;0 0/2 * * * ? &quot;)
-public void sendEmailTo()&#123;
-    //邮件设置1：一个简单的邮件
-    SimpleMailMessage message = new SimpleMailMessage();
-    message.setSubject(&quot;Love tt&quot;);
-    message.setText(&quot;一生所爱&quot;);
-
-    message.setTo(&quot;1614399965@qq.com&quot;);
-    message.setFrom(&quot;1614399965@qq.com&quot;);
-    mailSender.send(message);
-&#125;
-</code></pre>
-<p>常用的表达式</p>
-<pre><code>（1）0/2 * * * * ?   表示每2秒 执行任务
-（1）0 0/2 * * * ?   表示每2分钟 执行任务
-（1）0 0 2 1 * ?   表示在每月的1日的凌晨2点调整任务
-（2）0 15 10 ? * MON-FRI   表示周一到周五每天上午10:15执行作业
-（3）0 15 10 ? 6L 2002-2006   表示2002-2006年的每个月的最后一个星期五上午10:15执行作
-（4）0 0 10,14,16 * * ?   每天上午10点，下午2点，4点
-（5）0 0/30 9-17 * * ?   朝九晚五工作时间内每半小时
-（6）0 0 12 ? * WED   表示每个星期三中午12点
-（7）0 0 12 * * ?   每天中午12点触发
-（8）0 15 10 ? * *   每天上午10:15触发
-（9）0 15 10 * * ?     每天上午10:15触发
-（10）0 15 10 * * ?   每天上午10:15触发
-（11）0 15 10 * * ? 2005   2005年的每天上午10:15触发
-（12）0 * 14 * * ?     在每天下午2点到下午2:59期间的每1分钟触发
-（13）0 0/5 14 * * ?   在每天下午2点到下午2:55期间的每5分钟触发
-（14）0 0/5 14,18 * * ?     在每天下午2点到2:55期间和下午6点到6:55期间的每5分钟触发
-（15）0 0-5 14 * * ?   在每天下午2点到下午2:05期间的每1分钟触发
-（16）0 10,44 14 ? 3 WED   每年三月的星期三的下午2:10和2:44触发
-（17）0 15 10 ? * MON-FRI   周一至周五的上午10:15触发
-（18）0 15 10 15 * ?   每月15日上午10:15触发
-（19）0 15 10 L * ?   每月最后一日的上午10:15触发
-（20）0 15 10 ? * 6L   每月的最后一个星期五上午10:15触发
-（21）0 15 10 ? * 6L 2002-2005   2002年至2005年的每月的最后一个星期五上午10:15触发
-（22）0 15 10 ? * 6#3   每月的第三个星期五上午10:15触发
-</code></pre>
-
-      
-    </div>
-
-    
-    
-    
-
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/21/Mybatis%E5%85%A5%E9%97%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Gzz">
-      <meta itemprop="description" content="只要开始就不算晚">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="香饽饽">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/09/21/Mybatis%E5%85%A5%E9%97%A8/" class="post-title-link" itemprop="url">Mybatis入门</a>
-        </h2>
-
-        <div class="post-meta">
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-09-21 13:36:49" itemprop="dateCreated datePublished" datetime="2021-09-21T13:36:49+08:00">2021-09-21</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-10-11 19:03:43" itemprop="dateModified" datetime="2021-10-11T19:03:43+08:00">2021-10-11</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/About%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index"><span itemprop="name">About数据库</span></a>
-                </span>
-            </span>
 
           
             <span class="post-meta-item" title="本文字数">
@@ -852,7 +242,7 @@ public void sendEmailTo()&#123;
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
-              <span>13 分钟</span>
+              <span>12 分钟</span>
             </span>
 
         </div>
@@ -864,1273 +254,704 @@ public void sendEmailTo()&#123;
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1><span id="mybatis入门笔记">mybatis入门笔记</span></h1><h2><span id="第一个项目搭建流程">第一个项目搭建流程</span></h2><ol>
-<li><p>搭建实验数据库</p>
-</li>
-<li><p>导入mybatis相关jar包</p>
-<pre><code class="java">&lt;dependency&gt;
-            &lt;groupId&gt;mysql&lt;/groupId&gt;
-            &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;
-            &lt;version&gt;5.1.47&lt;/version&gt;
+          <h1><span id="redis">Redis</span></h1><p><img src="/2021/11/04/Redis/image-20211104130443874.png" alt="image-20211104130443874"></p>
+<p>因为没有指定配置文件</p>
+<p>需配置</p>
+<pre><code>redis-server redis.windows.conf
+</code></pre>
+<p>之后自动启动</p>
+<h2><span id="测试性能"><strong>测试性能</strong></span></h2><pre><code class="bash">redis-benchmark -p 6379 -c 100 -n 10000
+</code></pre>
+<p><img src="/2021/11/04/Redis/image-20211104140217226.png" alt="image-20211104140217226"></p>
+<p><img src="/2021/11/04/Redis/image-20211104140647780.png" alt="image-20211104140647780"></p>
+<h2><span id="基础概念">基础概念：</span></h2><p><img src="/2021/11/04/Redis/image-20211104141011197.png" alt="image-20211104141011197"></p>
+<p><img src="/2021/11/04/Redis/image-20211104141230255.png" alt="image-20211104141230255"></p>
+<p>清空当前数据库：flushdb</p>
+<p>清空全部数据库：flushall</p>
+<blockquote>
+<p>redis是单线程的</p>
+</blockquote>
+<p>redis的瓶颈是机器的内存和网络的带宽，用单线程既然可以实现，就用单线程了</p>
+<blockquote>
+<p>为什么单线程还这么快呢</p>
+</blockquote>
+<p>redis是将所有的数据全部放在内存中，所以说用单线程操作效率最高，多线程（cpu上下文会切换：耗时的操作），对于内存系统来说，如果没有上下文切换效率就是最高的！多次读写都是在一个cpu上，在内存情况下，这个就是最佳的选择。</p>
+<h1><span id="五大数据类型">五大数据类型</span></h1><h3><span id="redis-key">redis-key</span></h3><pre><code class="bash">#移除name key
+move name 1
+</code></pre>
+<p><img src="/2021/11/04/Redis/image-20211104143325041.png" alt="image-20211104143325041"></p>
+<pre><code class="bash">#设置过期时间
+expire name 10 
+</code></pre>
+<p><img src="/2021/11/04/Redis/image-20211104143636111.png" alt="image-20211104143636111"></p>
+<p>查看剩余过期时间：ttl name;</p>
+<pre><code class="bash">#查看键的类型
+type name
+</code></pre>
+<p><img src="/2021/11/04/Redis/image-20211104143922548.png" alt="image-20211104143922548"></p>
+<h3><span id="string">String</span></h3><p><img src="/2021/11/04/Redis/image-20211104144412464.png" alt="image-20211104144412464"></p>
+<p>如果append后的键不存在就创建一个，相当于set</p>
+<p><img src="/2021/11/04/Redis/image-20211104145142401.png" alt="image-20211104145142401"></p>
+<blockquote>
+<p>获取一部分值</p>
+</blockquote>
+<p><img src="/2021/11/04/Redis/image-20211104145422840.png" alt="image-20211104145422840"></p>
+<blockquote>
+<p>获取全部的值 </p>
+</blockquote>
+<p><img src="/2021/11/04/Redis/image-20211104145501629.png" alt="image-20211104145501629"></p>
+<blockquote>
+<p>替换值</p>
+</blockquote>
+<p><img src="/2021/11/04/Redis/image-20211104145749240.png" alt="image-20211104145749240"></p>
+<blockquote>
+<p>setex 设置过期时间</p>
+<p>setnx 如果没有这个键就设置值成功，如果已存在这个键就设置不成功（在分布式锁中常应用 ）</p>
+</blockquote>
+<p><img src="/2021/11/04/Redis/image-20211104150144398.png" alt="image-20211104150144398"></p>
+<blockquote>
+<p>批量设置键和值，批量获取值</p>
+</blockquote>
+<p><img src="/2021/11/04/Redis/image-20211104150700175.png" alt="image-20211104150700175"></p>
+<blockquote>
+<p>msetnx 具有原子性</p>
+</blockquote>
+<p>设置对象，以json字符串的形式</p>
+<p><img src="/2021/11/04/Redis/image-20211104151319002.png" alt="image-20211104151319002"></p>
+<blockquote>
+<p>getset</p>
+</blockquote>
+<p><img src="/2021/11/04/Redis/image-20211104151448797.png" alt="image-20211104151448797"></p>
+<h3><span id="list">List</span></h3><p>在redis中，list可以被我们玩成栈，队列，阻塞队列</p>
+<blockquote>
+<p>lpush 放进列表数据</p>
+<p>lrange 取出指定位置的数据，可以看出下标是倒着来的。</p>
+</blockquote>
+<p><img src="/2021/11/04/Redis/image-20211104152112654.png" alt="image-20211104152112654"></p>
+<p>说明rpush把值放在了队列的最后面</p>
+<p><img src="/2021/11/04/Redis/image-20211104152548954.png" alt="image-20211104152548954"></p>
+<blockquote>
+<p>从列表中移除值，可以分为移除左边的和右边的</p>
+</blockquote>
+<p><img src="/2021/11/04/Redis/image-20211104153013118.png" alt="image-20211104153013118"></p>
+<blockquote>
+<p>通过下标获取值</p>
+</blockquote>
+<p><img src="/2021/11/04/Redis/image-20211104153153183.png" alt="image-20211104153153183"></p>
+<blockquote>
+<p>获取列表长度</p>
+</blockquote>
+<p>llen</p>
+<blockquote>
+<p>移除指定的值,可指定数量</p>
+</blockquote>
+<p><img src="/2021/11/04/Redis/image-20211104153655790.png" alt="image-20211104153655790"></p>
+<blockquote>
+<p>通过下标截取指定的长度</p>
+</blockquote>
+<p><img src="/2021/11/04/Redis/image-20211104154058106.png" alt="image-20211104154058106"></p>
+<blockquote>
+<p>移除列表的最后一个元素，将他移动到新列表中</p>
+</blockquote>
+<p><img src="/2021/11/04/Redis/image-20211104154308321.png" alt="image-20211104154308321"></p>
+<blockquote>
+<p>更新指定位置的值</p>
+</blockquote>
+<p><img src="/2021/11/04/Redis/image-20211104154722495.png" alt="image-20211104154722495"></p>
+<p><img src="/2021/11/04/Redis/image-20211104155347613.png" alt="image-20211104155347613"></p>
+<h3><span id="set">set</span></h3><p><img src="/2021/11/04/Redis/image-20211104155948255.png" alt="image-20211104155948255"></p>
+<p><img src="/2021/11/04/Redis/image-20211104160159057.png" alt="image-20211104160159057"></p>
+<p><img src="/2021/11/04/Redis/image-20211104160308656.png" alt="image-20211104160308656"></p>
+<p><img src="/2021/11/04/Redis/image-20211104160609153.png" alt="image-20211104160500757"></p>
+<p><img src="/2021/11/04/Redis/image-20211104161114018.png" alt="image-20211104161114018"></p>
+<h3><span id="hash">hash</span></h3><p>Map集合，key-map，那时候这个值是一个map集合，本质和String类型没有太大区别，还是一个简单的key-vlaue</p>
+<p><img src="/2021/11/04/Redis/image-20211104162116587.png" alt="image-20211104162116587"></p>
+<p>获取hash表的内容长度</p>
+<p><img src="/2021/11/04/Redis/image-20211104162829439.png" alt="image-20211104162829439"></p>
+<p>获取所有的field和所有的值</p>
+<p><img src="/2021/11/04/Redis/image-20211104163226493.png" alt="image-20211104163226493"></p>
+<p>hash更适合于对象的存储</p>
+<h3><span id="zset有序集合">Zset（有序集合）</span></h3><p><strong>排列</strong></p>
+<p><img src="/2021/11/04/Redis/image-20211104170955039.png" alt="image-20211104170955039"></p>
+<p>显示工资小于2000的工资排列</p>
+<p><img src="/2021/11/04/Redis/image-20211104171308530.png" alt="image-20211104171308530"></p>
+<p>移除指定元素</p>
+<p><img src="/2021/11/04/Redis/image-20211104172219379.png" alt="image-20211104172219379"></p>
+<p>获取集合中的个数</p>
+<pre><code class="bash">zcard salary
+</code></pre>
+<p>获取指定区间的成员数量</p>
+<p><img src="/2021/11/04/Redis/image-20211104173454977.png" alt="image-20211104173454977"></p>
+<p>总结：</p>
+<p><img src="/2021/11/04/Redis/image-20211104175033465.png" alt="image-20211104175033465"></p>
+<h1><span id="三种特殊数据类型">三种特殊数据类型</span></h1><h2><span id="geospatial地理位置">Geospatial(地理位置)</span></h2><blockquote>
+<p>geoadd 添加地理位置</p>
+</blockquote>
+<pre><code class="bash">geoadd key longitude latitude member [longitude latitude member ...]
+</code></pre>
+<blockquote>
+<p>geopos获得地理位置详细信息</p>
+</blockquote>
+<pre><code class="bash">geopos key member [member ...]
+</code></pre>
+<blockquote>
+<p>geodist获得两个地点之间的距离，可在后面追加获得结果的单位 km m</p>
+</blockquote>
+<pre><code class="bash">geodist key member1 member2 [unit]
+</code></pre>
+<blockquote>
+<p>georadius获得以某一点经纬度为圆心，一定距离为半径之内的元素</p>
+</blockquote>
+<pre><code class="bash">georadius key longitude latitude radius m|km|ft|mi [WITHCOORD] [WITHDIST] [WITHHASH] [COUNT count] [ASC
+</code></pre>
+<blockquote>
+<p>georadiusbymember获得某一成员为圆心，一定距离为半径之内的元素</p>
+</blockquote>
+<blockquote>
+<p>geo底层的实现原理是zset，可以使用zset命令来操作geo</p>
+</blockquote>
+<h2><span id="hyperloglog">hyperloglog</span></h2><p>统计基数</p>
+<p>可以用作网站的UV（一个人访问网站多次，但是还是算作一个人）</p>
+<p>传统的方式是用set，如果存储量太大的话就比较麻烦</p>
+<blockquote>
+<p>测试</p>
+</blockquote>
+<p><img src="/2021/11/04/Redis/image-20211105221008371.png" alt="image-20211105221008371"></p>
+<h2><span id="bitmaps">bitmaps</span></h2><blockquote>
+<p>位存储</p>
+</blockquote>
+<p>位图，是数据结构，都是操作二进制为来进行操作，只有0和1两个状态</p>
+<p>统计一周的打卡情况</p>
+<p><img src="/2021/11/04/Redis/image-20211105221855488.png" alt="image-20211105221855488"></p>
+<p>查看某一天的打卡情况</p>
+<p><img src="/2021/11/04/Redis/image-20211105222028892.png" alt="image-20211105222028892"></p>
+<p>查看打卡了几天</p>
+<pre><code class="bash">127.0.0.1:6379&gt; bitcount si
+(integer) 2
+</code></pre>
+<h1><span id="事务">事务</span></h1><p>本质：一组命令的集合，所有命令都会被序列化，执行过程中，按照顺序执行</p>
+<p><strong>redis单挑命令保存原子性，但是事务不保证原子性，没有隔离级别的概念</strong></p>
+<p>所有命令在事务中，并不被直接执行，只有发起执行命令的时候才被执行</p>
+<ol>
+<li>开启事务</li>
+<li>命令入队</li>
+<li>执行事务</li>
+</ol>
+<blockquote>
+<p>正常执行事务</p>
+</blockquote>
+<pre><code class="bash">127.0.0.1:6379&gt; multi #开启事务
+OK
+127.0.0.1:6379&gt; set k1 v1
+QUEUED
+127.0.0.1:6379&gt; set k2 v2
+QUEUED
+127.0.0.1:6379&gt; get k2
+QUEUED
+127.0.0.1:6379&gt; set k3 v3
+QUEUED
+127.0.0.1:6379&gt; exec#执行事务
+1) OK
+2) OK
+3) &quot;v2&quot;
+4) OK
+127.0.0.1:6379&gt;
+</code></pre>
+<blockquote>
+<p>放弃事务</p>
+</blockquote>
+<p>discard</p>
+<blockquote>
+<p>编译型异常（代码有问题），事务中所有命令都不会被执行</p>
+<pre><code class="bash">127.0.0.1:6379&gt; get k1
+(nil)
+127.0.0.1:6379&gt; multi
+OK
+127.0.0.1:6379&gt; set k1 v1
+QUEUED
+127.0.0.1:6379&gt; set k2 v2
+QUEUED
+127.0.0.1:6379&gt; getset k3
+(error) ERR wrong number of arguments for &#39;getset&#39; command
+127.0.0.1:6379&gt; get k1
+QUEUED
+127.0.0.1:6379&gt; exec
+(error) EXECABORT Transaction discarded because of previous errors.#所有事务不会被运行
+127.0.0.1:6379&gt;
+</code></pre>
+</blockquote>
+<blockquote>
+<p>运行时异常（1/0），其他命令正常执行，错误命令抛出异常 </p>
+</blockquote>
+<pre><code class="bash">127.0.0.1:6379&gt; multi
+OK
+127.0.0.1:6379&gt; incr k1#字符串不会加1
+QUEUED
+127.0.0.1:6379&gt; get k1
+QUEUED
+127.0.0.1:6379&gt; exec
+1) (error) ERR value is not an integer or out of range#属于运行时异常
+2) &quot;v1&quot; #正常执行
+127.0.0.1:6379&gt;
+</code></pre>
+<h2><span id="监控">监控</span></h2><h4><span id="乐观锁">乐观锁</span></h4><p>获取version，比较version</p>
+<blockquote>
+<p>监视：</p>
+</blockquote>
+<p>watch key [key …]</p>
+<p>执行之前，另外一个线程如果修改了我们的值，事务就会执行失败，就要放弃监视，然后重新监视</p>
+<blockquote>
+<p>放弃监视</p>
+</blockquote>
+<p>unwatch key</p>
+<h1><span id></span></h1><h1><span id="jedis">Jedis</span></h1><p>配置依赖</p>
+<pre><code class="xml">&lt;dependencies&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;redis.clients&lt;/groupId&gt;
+            &lt;artifactId&gt;jedis&lt;/artifactId&gt;
+            &lt;version&gt;3.2.0&lt;/version&gt;
         &lt;/dependency&gt;
         &lt;dependency&gt;
-            &lt;groupId&gt;org.mybatis&lt;/groupId&gt;
-            &lt;artifactId&gt;mybatis&lt;/artifactId&gt;
-            &lt;version&gt;3.5.4&lt;/version&gt;
+            &lt;groupId&gt;com.alibaba&lt;/groupId&gt;
+            &lt;artifactId&gt;fastjson&lt;/artifactId&gt;
+            &lt;version&gt;1.2.62&lt;/version&gt;
         &lt;/dependency&gt;
-</code></pre>
-</li>
-<li><p>编写mybatis核心配置文件</p>
-<p><strong><!--千万注意配置mapper映射--></strong></p>
-</li>
-</ol>
-<pre><code class="java">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
-&lt;!DOCTYPE configuration
-        PUBLIC &quot;-//mybatis.org//DTD Config 3.0//EN&quot;
-        &quot;http://mybatis.org/dtd/mybatis-3-config.dtd&quot;&gt;
-&lt;configuration&gt;
-    &lt;environments default=&quot;development&quot;&gt;
-        &lt;environment id=&quot;development&quot;&gt;
-            &lt;transactionManager type=&quot;JDBC&quot;&gt;&lt;/transactionManager&gt;
-            &lt;dataSource type=&quot;POOLED&quot;&gt;
-             &lt;property name=&quot;driver&quot; value=&quot;com.mysql.jdbc.Driver&quot;/&gt;
-             &lt;property name=&quot;url&quot; value=&quot;jdbc:mysql://localhost:3306/mybatis?useSSL=false&amp;amp;useUnicode=false&amp;amp;characterEncoding=utf8&quot;/&gt;
-             &lt;property name=&quot;username&quot; value=&quot;root&quot;/&gt;
-             &lt;property name=&quot;password&quot; value=&quot;root&quot;/&gt;
-            &lt;/dataSource&gt;
-        &lt;/environment&gt;
-    &lt;/environments&gt;
-    
-    &lt;!--千万注意配置mapper映射--&gt;
-    &lt;mappers&gt;
-        &lt;mapper resource=&quot;com/zz/Userdao/UserMapper.xml&quot;/&gt;
-    &lt;/mappers&gt;
-&lt;/configuration&gt;
-</code></pre>
-<p>4.编写mybatis工具类（目的：获取sqlsession）</p>
-<pre><code class="java">package com.zz.utils;
-
-import org.apache.ibatis.io.Resources;
-import org.apache.ibatis.session.Configuration;
-import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-
-import javax.annotation.Resource;
-import java.io.InputStream;
-
-public class MybatisUtil &#123;
-    private static SqlSessionFactory sqlSessionFactory;
-    static &#123;
-        try&#123;
-            String resource=&quot;mybatis-config.xml&quot;;
-            InputStream inputStream= Resources.getResourceAsStream(resource);
-            Configuration config;
-            sqlSessionFactory=new SqlSessionFactoryBuilder().build(inputStream);
-        &#125;catch (Exception e)&#123;
-            e.printStackTrace();
-        &#125;
-    &#125;
-    //获取sqlsesion连接
-    public static SqlSession getSqlSession()&#123;
-        return sqlSessionFactory.openSession();
-    &#125;
-&#125;
-</code></pre>
-<p>5.创建实体类</p>
-<pre><code class="java">package com.zz.pojo;
-
-public class User &#123;
-
-    int id;
-
-    public User() &#123;
-    &#125;
-
-    @Override
-    public String toString() &#123;
-        return &quot;User&#123;&quot; +
-                &quot;id=&quot; + id +
-                &quot;, name=&#39;&quot; + name + &#39;\&#39;&#39; +
-                &quot;, pwd=&quot; + pwd +
-                &#39;&#125;&#39;;
-    &#125;
-
-    public User(int id, String name, int pwd) &#123;
-        this.id = id;
-        this.name = name;
-        this.pwd = pwd;
-    &#125;
-
-    public void setId(int id) &#123;
-        this.id = id;
-    &#125;
-
-    public void setName(String name) &#123;
-        this.name = name;
-    &#125;
-
-    public void setPwd(int pwd) &#123;
-        this.pwd = pwd;
-    &#125;
-
-    public int getId() &#123;
-        return id;
-    &#125;
-
-    public String getName() &#123;
-        return name;
-    &#125;
-
-    public int getPwd() &#123;
-        return pwd;
-    &#125;
-
-    String name;
-    int pwd;
-&#125;
-</code></pre>
-<p>6.编写mapper.xml</p>
-<p><strong>UserMapper</strong></p>
-<pre><code class="java">package com.zz.UserMapper;
-
-import com.zz.pojo.User;
-
-import java.util.List;
-
-public interface UserMapper &#123;
-    List&lt;User&gt; selectAll();
-&#125;
-</code></pre>
-<p><strong>UserMapper.xml</strong></p>
-<pre><code class="java">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
-&lt;!DOCTYPE mapper
-        PUBLIC &quot;-//mybatis.org//DTD Config 3.0//EN&quot;
-        &quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;&gt;
-
-&lt;mapper namespace=&quot;com.zz.UserMapper.UserMapper&quot;&gt;
-    &lt;select id=&quot;selectAll&quot; resultType=&quot;com.zz.pojo.User&quot;&gt;
-        select * from mybatis.user
-    &lt;/select&gt;
-&lt;/mapper&gt;
-</code></pre>
-<p>7.测试</p>
-<pre><code class="java">import com.zz.UserMapper.UserMapper;
-import com.zz.pojo.User;
-import com.zz.utils.MybatisUtil;
-import org.apache.ibatis.session.SqlSession;
-import org.junit.Test;
-
-import java.util.List;
-
-public class test &#123;
-    @Test
-    public void select()&#123;
-        SqlSession session= MybatisUtil.getSqlSession();
-        List&lt;User&gt; list=session.getMapper(UserMapper.class).selectAll();
-        for(User u:list)&#123;
-            System.out.println(u);
-        &#125;
-    &#125;
-&#125;
-</code></pre>
-<p>8.结果</p>
-<p><img src="/2021/09/21/Mybatis%E5%85%A5%E9%97%A8/image-20210921140953500.png" alt="image-20210921140953500"></p>
-<p>增删改需要提交事务：sqlsession.commit()</p>
-<h2><span id="万能map">万能Map</span></h2><p>假设实体类，或数据库中的表，字段或参数过多时，应当使用map</p>
-<p>步骤：🎇🎇🎇🎇</p>
-<p> 1.在接口中添加方法</p>
-<pre><code class="java">public int updateUser(Map&lt;String, Object&gt; map);
-</code></pre>
-<p>2.在mapper.xml中添加</p>
-<pre><code class="java">&lt;update id=&quot;updateUser&quot; parameterType=&quot;map&quot;&gt;
-        update mybatis.user set name=#&#123;uname&#125;, pwd=#&#123;pwds&#125; where id=#&#123;id&#125;
-&lt;/update&gt;
-</code></pre>
-<p><img src="/2021/09/21/Mybatis%E5%85%A5%E9%97%A8/image-20210921210742855.png" alt="image-20210921210742855"></p>
-<p>用map作为参数的好处就是便利，箭头所指元素捷克在定义map时自己定义，而参数为User实体类时，这些参数皆需要和在定义实体类时一样</p>
-<p>3.测试</p>
-<pre><code class="java"> Map&lt;String, Object&gt; map=new HashMap&lt;String, Object&gt;();
-
-        map.put(&quot;id&quot;,1);
-        map.put(&quot;uname&quot;,&quot;sadsada&quot;);
-        map.put(&quot;pwds&quot;,4646464);
-        System.out.println(u.updateUser(map));
-</code></pre>
-<p>成功！</p>
-<h2><span id="模糊查询">模糊查询</span></h2><p><img src="/2021/09/21/Mybatis%E5%85%A5%E9%97%A8/image-20210921212535801.png" alt="image-20210921212535801"></p>
-<h2><span id="结果集映射">结果集映射</span></h2><p>场景：实体类中属性名与数据库表中字段不匹配 如：数据库中为pwd，实体类中为password</p>
-<p>解决方法：</p>
-<p>​    1.</p>
-<pre><code class="java">&lt;select id=&quot;selectUser&quot; resultType=&quot;com.zz.pojo.User&quot;&gt;
-        select id,name,pwd as password from mybatis.user;
-    &lt;/select&gt;
-</code></pre>
-<p>​    2.使用结果集映射(ResultMap)</p>
-<p><img src="/2021/09/21/Mybatis%E5%85%A5%E9%97%A8/image-20210922173708063.png" alt="image-20210922173708063"></p>
-<h2><span id="日志">日志</span></h2><h3><span id="log4j">Log4j</span></h3><p>  1.导包</p>
-<pre><code class="java">&lt;dependency&gt;
-            &lt;groupId&gt;log4j&lt;/groupId&gt;
-            &lt;artifactId&gt;log4j&lt;/artifactId&gt;
-            &lt;version&gt;1.2.17&lt;/version&gt;
-        &lt;/dependency&gt;
-</code></pre>
-<p>2.配置文件编写logj.properties</p>
-<pre><code class="java">#将等级为DEBUG的日志信息输出到console和file这两个目的地，console和file的定义在下面的代码
-log4j.rootLogger=DEBUG,console,file
-
-#控制台输出的相关设置
-log4j.appender.console = org.apache.log4j.ConsoleAppender
-log4j.appender.console.Target = System.out
-log4j.appender.console.Threshold=DEBUG
-log4j.appender.console.layout = org.apache.log4j.PatternLayout
-log4j.appender.console.layout.ConversionPattern=[%c]-%m%n
-
-#文件输出的相关设置
-log4j.appender.file = org.apache.log4j.RollingFileAppender
-log4j.appender.file.File=./log/zz.log
-log4j.appender.file.MaxFileSize=10mb
-log4j.appender.file.Threshold=DEBUG
-log4j.appender.file.layout=org.apache.log4j.PatternLayout
-log4j.appender.file.layout.ConversionPattern=[%p][%d&#123;yy-MM-dd&#125;][%c]%m%n
-
-#日志输出级别
-log4j.logger.org.mybatis=DEBUG
-log4j.logger.java.sql=DEBUG
-log4j.logger.java.sql.Statement=DEBUG
-log4j.logger.java.sql.ResultSet=DEBUG
-log4j.logger.java.sql.PreparedStatement=DEBUG
-</code></pre>
-<p>3.setting设置日志实现<img src="/2021/09/21/Mybatis%E5%85%A5%E9%97%A8/image-20210922185902309.png" alt="image-20210922185902309"></p>
-<p>4.实现</p>
-<pre><code class="java">public class test &#123;
-    static Logger logger=Logger.getLogger(test.class);
-    @Test
-    public void select()&#123;
-        logger.info(&quot;info：进入selectUser方法&quot;);
-        logger.debug(&quot;debug：进入selectUser方法&quot;);
-        logger.error(&quot;error: 进入selectUser方法&quot;);
-        SqlSession session= MybatisUtil.getSqlSession();
-        List&lt;User&gt; list=session.getMapper(UserMapper.class).selectAll();
-        for(User u:list)&#123;
-            System.out.println(u);
-        &#125;
-        session.close();
-    &#125;
-&#125;
-</code></pre>
-<h2><span id="分页">分页</span></h2><p>如果查询大量数据的时候，我们往往使用分页进行查询，也就是每次处理小部分数据，这样对数据库压力就在可控范围内。</p>
-<h3><span id="limit实现分页">limit实现分页</span></h3><pre><code class="java">#语法
-SELECT * FROM table LIMIT stratIndex，pageSize
-
-SELECT * FROM table LIMIT 5,10; // 检索记录行 6-15  
-
-#为了检索从某一个偏移量到记录集的结束所有的记录行，可以指定第二个参数为 -1：   
-SELECT * FROM table LIMIT 95,-1; // 检索记录行 96-last.  
-
-#如果只给定一个参数，它表示返回最大的记录行数目：   
-SELECT * FROM table LIMIT 5; //检索前 5 个记录行  
-
-#换句话说，LIMIT n 等价于 LIMIT 0,n。
-</code></pre>
-<p><strong>步骤：</strong></p>
-<p>1、修改Mapper文件</p>
-<pre><code class="java">&lt;select id=&quot;selectUser&quot; parameterType=&quot;map&quot; resultType=&quot;user&quot;&gt;
-  select * from user limit #&#123;startIndex&#125;,#&#123;pageSize&#125;
-&lt;/select&gt;
-</code></pre>
-<p>2、Mapper接口，参数为map</p>
-<pre><code class="java">//选择全部用户实现分页
-List&lt;User&gt; selectUser(Map&lt;String,Integer&gt; map);
-</code></pre>
-<p>3、在测试类中传入参数测试</p>
-<ul>
-<li>推断：起始位置 =  （当前页面 - 1 ） * 页面大小</li>
-</ul>
-<pre><code class="java">//分页查询 , 两个参数startIndex , pageSize
-@Test
-public void testSelectUser() &#123;
-   SqlSession session = MybatisUtils.getSession();
-   UserMapper mapper = session.getMapper(UserMapper.class);
-
-   int currentPage = 1;  //第几页
-   int pageSize = 2;  //每页显示几个
-   Map&lt;String,Integer&gt; map = new HashMap&lt;String,Integer&gt;();
-   map.put(&quot;startIndex&quot;,(currentPage-1)*pageSize);
-   map.put(&quot;pageSize&quot;,pageSize);
-
-   List&lt;User&gt; users = mapper.selectUser(map);
-
-   for (User user: users)&#123;
-       System.out.println(user);
-  &#125;
-
-   session.close();
-&#125;
-</code></pre>
-<p><img src="/2021/09/21/Mybatis%E5%85%A5%E9%97%A8/Blog\source_posts\Mybatis入门\image-20210922195302374.png" alt="image-20210922195302374"></p>
-<h2><span id="mybatis详细的执行流程">Mybatis详细的执行流程</span></h2><p><img src="/2021/09/21/Mybatis%E5%85%A5%E9%97%A8/640" alt="图片"></p>
-<h2><span id="使用注解开发">使用注解开发</span></h2><p>【注意点：增删改一定记得对事务的处理】</p>
-<pre><code class="java"> //获取sqlsesion连接
-    public static SqlSession getSqlSession()&#123;
-        return sqlSessionFactory.openSession(true);
-    &#125;//事务自动提交
-&#125;
-</code></pre>
-<blockquote>
-<p>#与$的区别</p>
-</blockquote>
-<ul>
-<li><p>#{} 的作用主要是替换预编译语句(PrepareStatement)中的占位符? 【推荐使用】可以防止sql注入</p>
-<pre><code>INSERT INTO user (name) VALUES (#&#123;name&#125;);
-INSERT INTO user (name) VALUES (?);
-</code></pre>
-</li>
-<li><p>${} 的作用是直接进行字符串替换</p>
-<pre><code>INSERT INTO user (name) VALUES (&#39;$&#123;name&#125;&#39;);
-INSERT INTO user (name) VALUES (&#39;kuangshen&#39;);
-</code></pre>
-</li>
-</ul>
-<h2><span id="多对一处理">多对一处理</span></h2><p><img src="/2021/09/21/Mybatis%E5%85%A5%E9%97%A8/image-20210923213727143.png" alt="image-20210923213727143"></p>
-<p><img src="/2021/09/21/Mybatis%E5%85%A5%E9%97%A8/image-20210923213749558.png" alt="image-20210923213749558"></p>
-<p>创建两张表：Student，Teacher</p>
-<pre><code class="java">//获取所有学生及对应老师的信息
-    List&lt;Student&gt; getStudents();
-</code></pre>
-<p>mapper.xml文件编写</p>
-<p>按查询嵌套处理</p>
-<pre><code class="sql">&lt;select id=&quot;getStudents&quot; resultMap=&quot;StudentTeacher&quot;&gt;
-        select * from student
-    &lt;/select&gt;
-    &lt;resultMap id=&quot;StudentTeacher&quot; type=&quot;com.zz.pojo.Student&quot;&gt;
-        &lt;!--association关联属性 property属性名 javaType属性类型 column在多的一方的表中的列名--&gt;
-        &lt;association property=&quot;teacher&quot;  column=&quot;tid&quot; javaType=&quot;com.zz.pojo.Teacher&quot; select=&quot;getTeacher&quot;/&gt;
-    &lt;/resultMap&gt;
-
-
-    &lt;select id=&quot;getTeacher&quot; resultType=&quot;com.zz.pojo.Teacher&quot;&gt;
-        select * from teacher where id= #&#123;id&#125;
-    &lt;/select&gt;
-</code></pre>
-<p>按结果嵌套处理</p>
-<pre><code class="sql"> &lt;select id=&quot;getStudents2&quot; resultMap=&quot;StudentTeacher2&quot; &gt;
-        select s.id sid, s.name sname , t.name tname
-        from student s,teacher t
-        where s.tid = t.id
-    &lt;/select&gt;
-
-    &lt;resultMap id=&quot;StudentTeacher2&quot; type=&quot;com.zz.pojo.Student&quot;&gt;
-        &lt;id property=&quot;id&quot; column=&quot;sid&quot;/&gt;
-        &lt;result property=&quot;name&quot; column=&quot;sname&quot;/&gt;
-        &lt;!--关联对象property 关联对象在Student实体类中的属性--&gt;
-        &lt;association property=&quot;teacher&quot; javaType=&quot;com.zz.pojo.Teacher&quot;&gt;
-            &lt;result property=&quot;name&quot; column=&quot;tname&quot;/&gt;
-        &lt;/association&gt;
-    &lt;/resultMap&gt;
-</code></pre>
-<h2><span id="一对多处理">一对多处理</span></h2><p><strong>按结果嵌套处理</strong></p>
-<p>Teacher</p>
-<pre><code class="java">@Data
-public class Teacher &#123;
-    private int id;
-    private String name;
-    //一个老师多个学生
-    private List&lt;Student&gt; students;
-&#125;
-</code></pre>
-<p>TeacherMapper.xml</p>
-<pre><code class="sql">&lt;!--
-    思路:
-        1. 从学生表和老师表中查出学生id，学生姓名，老师姓名
-        2. 对查询出来的操作做结果集映射
-            1. 集合的话，使用collection！
-                JavaType和ofType都是用来指定对象类型的
-                JavaType是用来指定pojo中属性的类型
-                ofType指定的是映射到list集合属性中pojo的类型。
-    --&gt;
-    &lt;select id=&quot;getTeacher&quot; resultMap=&quot;TeacherStudent&quot;&gt;
-        select s.id sid, s.name sname , t.name tname, t.id tid
-        from student s,teacher t
-        where s.tid = t.id and t.id=#&#123;id&#125;
-    &lt;/select&gt;
-    &lt;resultMap id=&quot;TeacherStudent&quot; type=&quot;Teacher&quot;&gt;
-        &lt;result  property=&quot;name&quot; column=&quot;tname&quot;/&gt;
-        &lt;collection property=&quot;students&quot; ofType=&quot;Student&quot;&gt;
-            &lt;result property=&quot;id&quot; column=&quot;sid&quot; /&gt;
-            &lt;result property=&quot;name&quot; column=&quot;sname&quot; /&gt;
-            &lt;result property=&quot;tid&quot; column=&quot;tid&quot; /&gt;
-        &lt;/collection&gt;
-    &lt;/resultMap&gt;
-</code></pre>
-<p><strong>按查询嵌套处理</strong></p>
-<pre><code class="sql">&lt;select id=&quot;getTeacher2&quot; resultMap=&quot;TeacherStudent2&quot;&gt;
-        select * from teacher where id=#&#123;id&#125;
-    &lt;/select&gt;
-    &lt;!--column是一对多的外键 , 写的是一的主键的列名--&gt;
-    &lt;resultMap id=&quot;TeacherStudent2&quot; type=&quot;Teacher&quot;&gt;
-        &lt;collection property=&quot;students&quot; javaType=&quot;ArrayList&quot; ofType=&quot;Student&quot; column=&quot;id&quot; select=&quot;getStudentByTeacherId&quot;/&gt;
-    &lt;/resultMap&gt;
-
-    &lt;select id=&quot;getStudentByTeacherId&quot; resultType=&quot;Student&quot;&gt;
-        select * from student where tid=#&#123;id&#125;
-    &lt;/select&gt;
-</code></pre>
-<blockquote>
-<p>小结</p>
-</blockquote>
-<p>1、关联-association</p>
-<p>2、集合-collection</p>
-<p>3、所以association是用于一对一和多对一，而collection是用于一对多的关系</p>
-<p>4、JavaType和ofType都是用来指定对象类型的</p>
-<ul>
-<li>JavaType是用来指定pojo中属性的类型</li>
-<li>ofType指定的是映射到list集合属性中pojo的类型。</li>
-</ul>
-<h2><span id="动态sql">动态SQL</span></h2><blockquote>
-<p>if 语句</p>
-</blockquote>
-<p><strong>需求：根据作者名字和博客名字来查询博客！如果作者名字为空，那么只根据博客名字查询，反之，则根据作者名来查询</strong></p>
-<pre><code class="sql">&lt;!--需求1：
-根据作者名字和博客名字来查询博客！
-如果作者名字为空，那么只根据博客名字查询，反之，则根据作者名来查询
-select * from blog where title = #&#123;title&#125; and author = #&#123;author&#125;
---&gt;
-&lt;select id=&quot;queryBlogIf&quot; parameterType=&quot;map&quot; resultType=&quot;blog&quot;&gt;
-  select * from blog where
-   &lt;if test=&quot;title != null&quot;&gt;
-      title = #&#123;title&#125;
-   &lt;/if&gt;
-   &lt;if test=&quot;author != null&quot;&gt;
-      and author = #&#123;author&#125;
-   &lt;/if&gt;
-&lt;/select&gt;
-</code></pre>
-<p>如果title为空的话，sql语句为错误语句，那就用到where</p>
-<blockquote>
-<p>Where</p>
-</blockquote>
-<p>修改上面的SQL语句；</p>
-<pre><code class="sql">&lt;select id=&quot;queryBlogIf&quot; parameterType=&quot;map&quot; resultType=&quot;blog&quot;&gt;
-  select * from blog
-   &lt;where&gt;
-       &lt;if test=&quot;title != null&quot;&gt;
-          title = #&#123;title&#125;
-       &lt;/if&gt;
-       &lt;if test=&quot;author != null&quot;&gt;
-          and author = #&#123;author&#125;
-       &lt;/if&gt;
-   &lt;/where&gt;
-&lt;/select&gt;
-</code></pre>
-<p>这个“where”标签会知道如果它包含的标签中有返回值的话，它就插入一个‘where’。此外，如果标签返回的内容是以AND 或OR 开头的，则它会剔除掉。</p>
-<blockquote>
-<p>Trim</p>
-</blockquote>
-<p>和where功能一样，还可以去除多余的逗号</p>
-<p><img src="/2021/09/21/Mybatis%E5%85%A5%E9%97%A8/image-20211011190142894.png" alt="image-20211011190142894"></p>
-<p>如红框里的note为null，则sql语句错误</p>
-<p>加了<trim>则会避免出错，会自动把role_name后面的逗号去掉，从而sql语句不会出错</trim></p>
-<blockquote>
-<p>Set</p>
-</blockquote>
-<p>1、编写接口方法</p>
-<pre><code>int updateBlog(Map map);
-</code></pre>
-<p>2、sql配置文件</p>
-<pre><code class="sql">&lt;!--注意set是用的逗号隔开--&gt;
-&lt;update id=&quot;updateBlog&quot; parameterType=&quot;map&quot;&gt;
-  update blog
-     &lt;set&gt;
-         &lt;if test=&quot;title != null&quot;&gt;
-            title = #&#123;title&#125;,
-         &lt;/if&gt;
-         &lt;if test=&quot;author != null&quot;&gt;
-            author = #&#123;author&#125;
-         &lt;/if&gt;
-     &lt;/set&gt;
-  where id = #&#123;id&#125;;
-&lt;/update&gt;
-</code></pre>
-<blockquote>
-<p>choose语句</p>
-</blockquote>
-<p>有时候，我们不想用到所有的查询条件，只想选择其中的一个，查询条件有一个满足即可，使用 choose 标签可以解决此类问题</p>
-<p>1、编写接口方法</p>
-<pre><code class="sql">List&lt;Blog&gt; queryBlogChoose(Map map);
-</code></pre>
-<p>2、sql配置文件</p>
-<pre><code class="sql">&lt;select id=&quot;queryBlogChoose&quot; parameterType=&quot;map&quot; resultType=&quot;blog&quot;&gt;
-  select * from blog
-   &lt;where&gt;
-       &lt;choose&gt;
-           &lt;when test=&quot;title != null&quot;&gt;
-                title = #&#123;title&#125;
-           &lt;/when&gt;
-           &lt;when test=&quot;author != null&quot;&gt;
-              and author = #&#123;author&#125;
-           &lt;/when&gt;
-           &lt;otherwise&gt;
-              and views = #&#123;views&#125;
-           &lt;/otherwise&gt;
-       &lt;/choose&gt;
-   &lt;/where&gt;
-&lt;/select&gt;
-</code></pre>
-<p>3、测试类</p>
-<pre><code class="sql">@Test
-public void testQueryBlogChoose()&#123;
-   SqlSession session = MybatisUtils.getSession();
-   BlogMapper mapper = session.getMapper(BlogMapper.class);
-
-   HashMap&lt;String, Object&gt; map = new HashMap&lt;String, Object&gt;();
-   map.put(&quot;title&quot;,&quot;Java如此简单&quot;);
-   map.put(&quot;author&quot;,&quot;狂神说&quot;);
-   map.put(&quot;views&quot;,9999);
-   List&lt;Blog&gt; blogs = mapper.queryBlogChoose(map);
-
-   System.out.println(blogs);
-
-   session.close();
-&#125;
-</code></pre>
-<p>如只查询阅览量为9999的书籍则改成<img src="/2021/09/21/Mybatis%E5%85%A5%E9%97%A8/image-20210924195725942.png" alt="image-20210924195725942"></p>
-<blockquote>
-<p>SQL片段</p>
-</blockquote>
-<p>可能某个 sql 语句我们用的特别多，为了增加代码的重用性，简化代码，将这些代码抽取出来，然后使用时直接调用。</p>
-<p><strong>提取SQL片段：</strong></p>
-<pre><code class="sql">&lt;sql id=&quot;if-title-author&quot;&gt;
-   &lt;if test=&quot;title != null&quot;&gt;
-      title = #&#123;title&#125;
-   &lt;/if&gt;
-   &lt;if test=&quot;author != null&quot;&gt;
-      and author = #&#123;author&#125;
-   &lt;/if&gt;
-&lt;/sql&gt;
-</code></pre>
-<p><strong>引用SQL片段：</strong></p>
-<pre><code class="sql">&lt;select id=&quot;queryBlogIf&quot; parameterType=&quot;map&quot; resultType=&quot;blog&quot;&gt;
-  select * from blog
-   &lt;where&gt;
-       &lt;!-- 引用 sql 片段，如果refid 指定的不在本文件中，那么需要在前面加上 namespace --&gt;
-       &lt;include refid=&quot;if-title-author&quot;&gt;&lt;/include&gt;
-       &lt;!-- 在这里还可以引用其他的 sql 片段 --&gt;
-   &lt;/where&gt;
-&lt;/select&gt;
-</code></pre>
-<p>注意：</p>
-<p>①、最好基于 单表来定义 sql 片段，提高片段的可重用性</p>
-<p>②、在 sql 片段中不要包括 where</p>
-<h2><span id="缓存">缓存</span></h2><p>一级缓存：也叫本地缓存：</p>
-<ul>
-<li>与数据库同一次会话期间查询到的数据会放在本地缓存中。</li>
-<li>以后如果需要获取相同的数据，直接从缓存中拿，没必须再去查询数据库；</li>
-</ul>
-<p>例如：Sqlsession </p>
-<p>体验：测试在一个session中查询两次相同记录，第二次直接从缓存访问，不去访问数据库</p>
-<p><img src="/2021/09/21/Mybatis%E5%85%A5%E9%97%A8/image-20210924203651727.png" alt="image-20210924203651727"></p>
-<p><img src="/2021/09/21/Mybatis%E5%85%A5%E9%97%A8/image-20210924203701534.png" alt="image-20210924203701534"></p>
-<p>一级缓存失效的四种情况:</p>
-<p>1、sqlSession不同</p>
-<p>2、sqlSession相同，查询条件不同</p>
-<p>3、sqlSession相同，两次查询之间执行了增删改操作！</p>
-<p>4、sqlSession相同，手动清除一级缓存</p>
-<pre><code class="java">session.clearCache();//手动清除缓存
-</code></pre>
-<p><strong>一级缓存就是一个map</strong></p>
-<blockquote>
-<p>二级缓存</p>
-</blockquote>
-<ul>
-<li><p>二级缓存也叫全局缓存，一级缓存作用域太低了，所以诞生了二级缓存</p>
-</li>
-<li><p>基于namespace级别的缓存，一个名称空间，对应一个二级缓存；</p>
-</li>
-<li><p>工作机制</p>
-</li>
-<li><ul>
-<li>一个会话查询一条数据，这个数据就会被放在当前会话的一级缓存中；</li>
-<li>如果当前会话关闭了，这个会话对应的一级缓存就没了；但是我们想要的是，会话关闭了，一级缓存中的数据被保存到二级缓存中；</li>
-<li>新的会话查询信息，就可以从二级缓存中获取内容；</li>
-<li>不同的mapper查出的数据会放在自己对应的缓存（map）中；</li>
-</ul>
-</li>
-</ul>
-<p>简单地来说：二级缓存就是为了想从缓存中查询一级缓存中没有的东西（个人理解）</p>
-<blockquote>
-<p>使用步骤</p>
-</blockquote>
-<p>1、开启全局缓存 【mybatis-config.xml】</p>
-<pre><code class="java">&lt;setting name=&quot;cacheEnabled&quot; value=&quot;true&quot;/&gt;
-</code></pre>
-<p>2、去每个mapper.xml中配置使用二级缓存，这个配置非常简单；【xxxMapper.xml】</p>
-<pre><code class="java">&lt;cache/&gt;
-</code></pre>
-
       
-    </div>
+    &lt;/dependencies&gt;
+</code></pre>
+<p>创建连接进行测试</p>
+<pre><code class="java">Jedis jedis=new Jedis(&quot;127.0.0.1&quot;, 6379);
+System.out.println(jedis.ping());
+</code></pre>
+<h1><span id="springboot整合">springboot整合</span></h1><p>底层为lettuce：采用netty，实例可以在多个线程中共享，不存在线程不安全的情况，NIO模式 </p>
+<p>jeids采用直连，多线程不安全，如想避免不安全，就使用jedis pool连接池,BIO模式</p>
+<p>操作各种基本类型</p>
+<p><img src="/2021/11/04/Redis/image-20211106154640957.png" alt="image-20211106154640957"></p>
+<p>获得链接，操作数据库</p>
+<p><img src="/2021/11/04/Redis/image-20211106154840090.png" alt="image-20211106154840090"></p>
+<h2><span id="序列化">序列化</span></h2><p>放入对象需序列化</p>
+<pre><code class="java">@Configuration
+public class RedisConfig &#123;
 
-    
-    
-    
+    //编写自己的redisTemplate
+    @Bean
+    @SuppressWarnings(&quot;all&quot;)
 
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
+    public RedisTemplate&lt;String, Object&gt; redisTemplate(RedisConnectionFactory redisConnectionFactory)throws UnknownHostException &#123;
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/18/%E6%8B%A6%E6%88%AA%E5%99%A8%E4%B8%8E%E8%BF%87%E6%BB%A4%E5%99%A8/">
+        RedisTemplate&lt;String,Object&gt; redisTemplate=new RedisTemplate&lt;&gt;();
+        redisTemplate.setConnectionFactory(redisConnectionFactory);
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Gzz">
-      <meta itemprop="description" content="只要开始就不算晚">
-    </span>
+        //Json序列化配置
+        Jackson2JsonRedisSerializer jackson2JsonRedisSerializer=new Jackson2JsonRedisSerializer(Object.class);
+        ObjectMapper objectMapper=new ObjectMapper();
+        objectMapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
+        objectMapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
+        jackson2JsonRedisSerializer.setObjectMapper(objectMapper);
 
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="香饽饽">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/09/18/%E6%8B%A6%E6%88%AA%E5%99%A8%E4%B8%8E%E8%BF%87%E6%BB%A4%E5%99%A8/" class="post-title-link" itemprop="url">拦截器与过滤器</a>
-        </h2>
+        //String的序列化
+        StringRedisSerializer stringRedisSerializer=new StringRedisSerializer();
 
-        <div class="post-meta">
+        //key采用String的序列化方式
+        redisTemplate.setKeySerializer(stringRedisSerializer);
+        //Hash的序列化方式也采用String的方式
+        redisTemplate.setHashKeySerializer(stringRedisSerializer);
+        //value序列化方式采用jackson
+        redisTemplate.setValueSerializer(jackson2JsonRedisSerializer);
+        redisTemplate.afterPropertiesSet();
+        return redisTemplate;
+    &#125;
+&#125;
+</code></pre>
+<p>———————–固定配置模板</p>
+<h1><span id="redisconf详解">Redis.conf详解</span></h1><p><img src="/2021/11/04/Redis/image-20211106221030918.png" alt="image-20211106221030918"></p>
+<p>对大小写不敏感</p>
+<blockquote>
+<p>包含</p>
+<p><img src="/2021/11/04/Redis/image-20211106221148896.png" alt="image-20211106221148896"></p>
+<p>可包含多个配置文件</p>
+</blockquote>
+<blockquote>
+<p>网络</p>
+</blockquote>
+<pre><code class="bash">bind 127.0.0.1
+protected-mode yes #保护模式
+port 6379 #默认端口
+</code></pre>
+<p>绑定的IP</p>
+<blockquote>
+<p>通用</p>
+</blockquote>
+<pre><code class="bash"># NOT SUPPORTED ON WINDOWS daemonize no 
+#window端不支持此配置，配置此项须在linux端
+daemonize yes #以守护进程的方式运行，默认是no，我们需要自己开启为yes
 
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
+# NOT SUPPORTED ON WINDOWS pidfile /var/run/redis.pid
+#如果指定为后台方式运行，则需指定pid文件
+pidfile /var/run/redis.pid
 
-              <time title="创建时间：2021-09-18 20:46:41" itemprop="dateCreated datePublished" datetime="2021-09-18T20:46:41+08:00">2021-09-18</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-09-20 20:48:17" itemprop="dateModified" datetime="2021-09-20T20:48:17+08:00">2021-09-20</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/spring-mvc/" itemprop="url" rel="index"><span itemprop="name">spring mvc</span></a>
-                </span>
-            </span>
+#日志级别
+# debug (a lot of information, useful for development/testing)
+# verbose (many rarely useful info, but not a mess like the debug level)
+# notice (moderately verbose, what you want in production probably)
+# warning (only very important / critical messages are logged)
+loglevel notice
 
-          
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-              <span>1.4k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-              <span>1 分钟</span>
-            </span>
 
-        </div>
-      </header>
+logfile &quot;&quot; #日志文件位置
+databases 16 #默认数据库数量
+</code></pre>
+<blockquote>
+<p>快照</p>
+</blockquote>
+<p>持久化：在规定时间内，执行了多少次操作则会持久化到文件.rdb .aof</p>
+<p>reids是内存数据库，如果没有持久化，那么数据断电即失。</p>
+<pre><code class="bash">save 900 1 #如果900s内，有一个key进行了修改，我们将进行持久化操作。以下皆同
+save 300 10
+save 60 10000
 
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1><span id="拦截器与过滤器">拦截器与过滤器</span></h1><ul>
-<li><p>过滤器还得配置静态资源过滤，拦截器只会拦截访问的控制器方法，如访问静态资源是不会拦截的</p>
-</li>
-<li><p>拦截器是AOP思想的具体运用，是springmvc框架自己的，使用了springmvc框架的工程才能使用b</p>
-</li>
-<li><p>继承拦截器不许重写，继承过滤器需要重写方法</p>
-</li>
-</ul>
-<p>在web-INF下的所有页面只能通过controller或者servlet访问</p>
-<h2><span id="实现拦截器">实现拦截器</span></h2><p>定义个性化拦截器</p>
+stop-writes-on-bgsave-error yes#持久化出错，redis是否还继续工作
+rdbcompression yes#是否压缩rdb文件
+rdbchecksum yes #保存rdb文件的时候，进行错误的检查校验
+dir ./ #rdb文件的保存目录
+</code></pre>
+<blockquote>
+<p>安全</p>
+</blockquote>
+<pre><code class="bash">127.0.0.1:6379&gt; ping
+PONG
+127.0.0.1:6379&gt; config set requirepass 1234 #设置密码
+OK
+127.0.0.1:6379&gt; config get requirepass
+(error) NOAUTH Authentication required.
+127.0.0.1:6379&gt; auth 1234 #登录
+OK
+127.0.0.1:6379&gt; config get requirepass
+1) &quot;requirepass&quot;
+2) &quot;1234&quot;
+127.0.0.1:6379&gt;
+</code></pre>
+<p><img src="/2021/11/04/Redis/image-20211107174514097.png" alt="image-20211107174514097"></p>
+<blockquote>
+<p>客户端连接相关</p>
+</blockquote>
+<pre><code class="bash"># maxclients 10000a 最大客户端数量
+# maxmemory &lt;bytes&gt; 最大内存限制
+# maxmemory-policy noeviction 内存到达极限值的处理策略
+</code></pre>
+<h4><span id="maxmemory-policy-六种方式"><strong>maxmemory-policy 六种方式</strong></span></h4><p><strong>1、volatile-lru：</strong>只对设置了过期时间的key进行LRU（默认值）</p>
+<p><strong>2、allkeys-lru ：</strong> 删除lru算法的key</p>
+<p><strong>3、volatile-random：</strong>随机删除即将过期key</p>
+<p><strong>4、allkeys-random：</strong>随机删除</p>
+<p><strong>5、volatile-ttl ：</strong> 删除即将过期的</p>
+<p><strong>6、noeviction ：</strong> 永不过期，返回错误</p>
+<h1><span id="redis持久化">Redis持久化</span></h1><p><strong>RDB：Redis Databases</strong></p>
+<h2><span id="什么是rdb">什么是RDB</span></h2><hr>
+<p>在指定时间间隔后，将内存中的数据集快照写入数据库 ；在恢复时候，直接读取快照文件，进行数据的恢复 ；</p>
+<p><img src="/2021/11/04/Redis/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzg3MzIyNw==,size_16,color_FFFFFF,t_70-16362795898172" alt="在这里插入图片描述"></p>
+<p>默认情况下， Redis 将数据库快照保存在名字为 dump.rdb的二进制文件中。文件名可以在配置文件中进行自定义。</p>
+<h3><span id="工作原理">工作原理</span></h3><hr>
+<p>在进行 <strong><code>RDB</code></strong> 的时候，**<code>redis</code>** 的主线程是不会做 <strong><code>io</code></strong> 操作的，主线程会 <strong><code>fork</code></strong> 一个子线程来完成该操作；</p>
 <ol>
-<li><p>实现拦截器接口</p>
-<pre><code class="java">package com.zz.config;
-
-import org.springframework.web.servlet.HandlerInterceptor;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
-public class LoignIntercepter implements HandlerInterceptor &#123;
-    @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception &#123;
-        HttpSession httpSession= request.getSession();
-        System.out.println(&quot;uri&quot;+request.getRequestURI());
-
-        //如跳转的是登录页面
-        if(request.getRequestURI().contains(&quot;login&quot;))&#123;
-            return true;
-        &#125;
-
-
-        if(httpSession.getAttribute(&quot;userlogininfo&quot;)!=null)&#123;
-            return true;
-        &#125;
-        //执行到这里说明用户没有登陆
-        // 用户没有登陆就跳转到登陆页面
-        request.getRequestDispatcher(&quot;/WEB-INF/jsp/login.jsp&quot;).forward(request,response);
-        return false;
-    &#125;
-&#125;
-</code></pre>
-</li>
-<li><p>在applicationcontext.xml里配置</p>
-<pre><code class="java">&lt;mvc:interceptors&gt;
-        &lt;mvc:interceptor&gt;
-            &lt;!--包括这个请求下所有的请求--&gt;
-            &lt;mvc:mapping path=&quot;/**&quot;/&gt;
-            &lt;bean class=&quot;com.zz.config.MyInterceptor&quot;/&gt;
-        &lt;/mvc:interceptor&gt;
-        &lt;mvc:interceptor&gt;
-            &lt;mvc:mapping path=&quot;/**&quot;/&gt;
-            &lt;bean class=&quot;com.zz.config.LoignIntercepter&quot;/&gt;
-        &lt;/mvc:interceptor&gt;
-    &lt;/mvc:interceptors&gt;
-</code></pre>
-</li>
+<li>Redis 调用forks。同时拥有父进程和子进程。</li>
+<li>子进程将数据集写入到一个临时 RDB 文件中。</li>
+<li>当子进程完成对新 RDB 文件的写入时，Redis 用新 RDB 文件替换原来的 RDB 文件，并删除旧的 RDB 文件。</li>
 </ol>
+<p>这种工作方式使得 Redis 可以从写时复制（copy-on-write）机制中获益(因为是使用子进程进行写操作，而父进程依然可以接收来自客户端的请求。)</p>
+<p><img src="/2021/11/04/Redis/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzg3MzIyNw==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<h3><span id="触发机制">触发机制</span></h3><hr>
+<ol>
+<li>save的规则满足的情况下，会自动触发rdb原则</li>
+<li>执行flushall命令，也会触发我们的rdb原则</li>
+<li>退出redis，也会自动产生rdb文件</li>
+</ol>
+<h3><span id="优缺点">优缺点</span></h3><p><strong>优点：</strong></p>
+<ol>
+<li>适合大规模的数据恢复</li>
+<li>对数据的完整性要求不高</li>
+</ol>
+<p><strong>缺点：</strong></p>
+<ol>
+<li>需要一定的时间间隔进行操作，如果redis意外宕机了，这个最后一次修改的数据就没有了。</li>
+<li>fork进程的时候，会占用一定的内容空间。</li>
+</ol>
+<h2><span id="aof">AOF</span></h2><p><strong>Append Only File</strong></p>
+<p>将我们所有的命令都记录下来，history，恢复的时候就把这个文件全部再执行一遍</p>
+<blockquote>
+<p>以日志的形式来记录每个写的操作，将Redis执行过的所有指令记录下来（读操作不记录），只许追加文件但不可以改写文件，redis启动之初会读取该文件重新构建数据，换言之，redis重启的话就根据日志文件的内容将写指令从前到后执行一次以完成数据的恢复工作。</p>
+</blockquote>
+<h3><span id="什么是aof">什么是AOF</span></h3><p>快照功能（RDB）并不是非常耐久（durable）： 如果 Redis 因为某些原因而造成故障停机， 那么服务器将丢失最近写入、以及未保存到快照中的那些数据。 从 1.1 版本开始， Redis 增加了一种完全耐久的持久化方式： AOF 持久化。</p>
+<p>如果要使用AOF，需要修改配置文件：</p>
+<p><img src="/2021/11/04/Redis/20200513215247113.png" alt="在这里插入图片描述"></p>
+<p><code>appendonly no yes</code>则表示启用AOF</p>
+<p>默认是不开启的，我们需要手动配置，然后重启redis，就可以生效了！</p>
+<p>如果这个aof文件有错位，这时候redis是启动不起来的，我需要修改这个aof文件</p>
+<p>redis给我们提供了一个工具<code>redis-check-aof --fix</code></p>
+<blockquote>
+<p>优点和缺点</p>
+</blockquote>
+<pre><code class="bash">123456appendonly yes  # 默认是不开启aof模式的，默认是使用rdb方式持久化的，在大部分的情况下，rdb完全够用
+appendfilename &quot;appendonly.aof&quot;
 
-      
-    </div>
-
-    
-    
-    
-
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/18/ajax%E6%80%BB%E7%BB%93/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Gzz">
-      <meta itemprop="description" content="只要开始就不算晚">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="香饽饽">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/09/18/ajax%E6%80%BB%E7%BB%93/" class="post-title-link" itemprop="url">ajax总结</a>
-        </h2>
-
-        <div class="post-meta">
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-09-18 19:35:00" itemprop="dateCreated datePublished" datetime="2021-09-18T19:35:00+08:00">2021-09-18</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-10-13 17:04:21" itemprop="dateModified" datetime="2021-10-13T17:04:21+08:00">2021-10-13</time>
-              </span>
-
-          
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-              <span>3.1k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-              <span>3 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1><span id="ajax">Ajax</span></h1><p>现在对Ajax的理解就是简简单单地优化用户体验</p>
-<p>Ajax的核心是XMLHttpRequest对象(XHR)。XHR为向服务器发送请求和解析服务器响应提供了接口。能够以异步方式从服务器获取新数据。</p>
-<p>jQuery 提供多个与 AJAX 有关的方法。</p>
-<p><strong>实现异步验证用户名</strong></p>
-<p>新建一个maven项目，增加web支持，<strong>配置好tomcat服务器</strong>（就配置这破玩意二花了我两天！！！！！！！如有问题：首先新建一个项目，不要再原项目下新建一个modle；接下来就是配置好tomcat的deployment）</p>
-<p><img src="/2021/09/18/ajax%E6%80%BB%E7%BB%93/image-20210918194117558.png" alt="image-20210918194117558"></p>
-<img src="/2021/09/18/ajax%E6%80%BB%E7%BB%93/image-20210918194214940.png" alt="image-20210918194214940" style="zoom: 50%;">
-
-<p>如没有Artifact，点击加号把现项目以war包形式发布，点击🆗即可。</p>
-<p><img src="/2021/09/18/ajax%E6%80%BB%E7%BB%93/image-20210918194435095.png" alt="image-20210918194435095"></p>
-<p><img src="/2021/09/18/ajax%E6%80%BB%E7%BB%93/image-20210918194456928.png" alt="image-20210918194456928"></p>
-<p>如项目部署成功访问controller显示500，原因可能是spring版本和tomcat版本不匹配，我的之前有问题的就是因为用的是tomcat6，换成tomcat9就好了。还有还有：：：：<strong>记得在project structure里面的artifacts项里配置lib目录</strong>。</p>
-<h2><span id="言归正传">言归正传</span></h2><p>开始实现功能了🧨🧨🧨🎠🎠🎠🎊🎊🎊</p>
-<p>实现效果简单的来说就是输入账号名和密码，当鼠标离开输入框也就是失去焦点，页面会自动显示正确或错误/<img src="/2021/09/18/ajax%E6%80%BB%E7%BB%93/image-20210918195233626.png" alt="image-20210918195233626"></p>
-<p><img src="/2021/09/18/ajax%E6%80%BB%E7%BB%93/image-20210918195314836.png" alt="image-20210918195314836"></p>
-<p>首先编写controller层（UserController）</p>
+# appendfsync always # 每次修改都会sync 消耗性能
+appendfsync everysec # 每秒执行一次 sync 可能会丢失这一秒的数据
+# appendfsync no # 不执行 sync ,这时候操作系统自己同步数据，速度最快
+</code></pre>
+<p><strong>优点</strong></p>
+<ol>
+<li>每一次修改都会同步，文件的完整性会更加好</li>
+<li>每秒同步一次，可能会丢失一秒的数据</li>
+<li>从不同步，效率最高</li>
+</ol>
+<p><strong>缺点</strong></p>
+<ol>
+<li>相对于数据文件来说，aof远远大于rdb，修复速度比rdb慢！</li>
+<li>Aof运行效率也要比rdb慢，所以我们redis默认的配置就是rdb持久化</li>
+</ol>
+<h2><span id="rdb和aop选择">RDB和AOP选择</span></h2><h3><span id="rdb优势与劣势">RDB优势与劣势</span></h3><h4><span id="优势">优势</span></h4><ul>
+<li>适合大规模的数据恢复</li>
+<li>对数据完整性和一致性要求不高</li>
+</ul>
+<h4><span id="劣势">劣势</span></h4><ul>
+<li><p>在一定间隔时间做一次备份，所以如果redis意外down掉的话，就会丢失最后一次快照后的所有修改。</p>
+</li>
+<li><p>Fork的时候，内存中的数据被<code>克隆</code>了一份，<code>大致2倍</code>的膨胀性能需要考虑</p>
+</li>
+</ul>
+<h3><span id="aof优势劣势">AOF优势/劣势</span></h3><h4><span id="优势">优势</span></h4><ul>
+<li>每次修改同步：appendfsync always同步持久化，每次发生数据变更会被立即记录到磁盘，性能较差但数据完整性比较好</li>
+<li>每秒同步：appendfsync everysec异步操作，每秒记录，如果一秒内宕机，仅一秒内的数据丢失</li>
+</ul>
+<h4><span id="劣势">劣势</span></h4><ul>
+<li>相同数据集的数据而言aof文件要远大于rdb文件，恢复速度慢于rdb</li>
+<li>Aof运行效率要慢于rdb,每秒同步策略效率较好，不同步效率和rdb相同</li>
+</ul>
+<h3><span id="如何选择使用哪种持久化方式">如何选择使用哪种持久化方式？</span></h3><p>一般来说， 如果想达到足以媲美 PostgreSQL 的数据安全性， 你应该同时使用两种持久化功能。</p>
+<p>如果你非常关心你的数据， 但仍然可以承受数分钟以内的数据丢失， 那么你可以只使用 RDB 持久化。</p>
+<p>有很多用户都只使用 AOF 持久化， 但并不推荐这种方式： 因为定时生成 RDB 快照（snapshot）非常便于进行数据库备份， 并且 RDB 恢复数据集的速度也要比 AOF 恢复的速度要快。</p>
+<h1><span id="redis发布订阅">Redis发布订阅</span></h1><blockquote>
+<p>订阅</p>
+</blockquote>
+<pre><code class="bash">subscribe hongdou
+Reading messages... (press Ctrl-C to quit)
+1) &quot;subscribe&quot;
+2) &quot;hongdou&quot;
+3) (integer) 1
+</code></pre>
+<blockquote>
+<p>发布</p>
+<pre><code class="bash">127.0.0.1:6379&gt; publish hongdou hahaha
+(integer) 1
+</code></pre>
+<p>结果：</p>
+<pre><code class="原理">1) &quot;message&quot;
+2) &quot;hongdou&quot;
+3) &quot;hahaha&quot;
+</code></pre>
+</blockquote>
+<h3><span id="原理">原理</span></h3><p>每个 Redis 服务器进程都维持着一个表示服务器状态的 redis.h/redisServer 结构， 结构的 pubsub_channels 属性是一个字典， 这个字典就用于保存订阅频道的信息，其中，字典的键为正在被订阅的频道， 而字典的值则是一个链表， 链表中保存了所有订阅这个频道的客户端。</p>
+<p><img src="/2021/11/04/Redis/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzg3MzIyNw==,size_16,color_FFFFFF,t_70-16362932182646" alt="在这里插入图片描述"></p>
+<p>客户端订阅，就被链接到对应频道的链表的尾部，退订则就是将客户端节点从链表中移除。</p>
+<h3><span id="缺点">缺点</span></h3><ol>
+<li>如果一个客户端订阅了频道，但自己读取消息的速度却不够快的话，那么不断积压的消息会使redis输出缓冲区的体积变得越来越大，这可能使得redis本身的速度变慢，甚至直接崩溃。</li>
+<li>这和数据传输可靠性有关，如果在订阅方断线，那么他将会丢失所有在短线期间发布者发布的消息。</li>
+</ol>
+<h3><span id="应用">应用</span></h3><ol>
+<li>消息订阅：公众号订阅，微博关注等等（起始更多是使用消息队列来进行实现）</li>
+<li>多人在线聊天室。</li>
+</ol>
+<p>稍微复杂的场景，我们就会使用消息中间件MQ处理。</p>
+<h1><span id="redis主从复制">Redis主从复制</span></h1><h3><span id="概念">概念</span></h3><p> 主从复制，是指将一台Redis服务器的数据，复制到其他的Redis服务器。前者称为主节点（Master/Leader）,后者称为从节点（Slave/Follower）， 数据的复制是<strong>单向</strong>的！只能由主节点复制到从节点（主节点以写为主、从节点以读为主）。</p>
+<p><strong>默认情况下，每台Redis服务器都是主节点</strong>，<strong>一个主节点可以有0个或者多个从节点，但每个从节点只能由一个主节点。</strong></p>
+<h3><span id="作用">作用</span></h3><ol>
+<li>数据冗余：主从复制实现了数据的热备份，是持久化之外的一种数据冗余的方式。</li>
+<li>故障恢复：当主节点故障时，从节点可以暂时替代主节点提供服务，是一种服务冗余的方式</li>
+<li>负载均衡：在主从复制的基础上，配合读写分离，由主节点进行写操作，从节点进行读操作，分担服务器的负载；尤其是在多读少写的场景下，通过多个从节点分担负载，提高并发量。</li>
+<li>高可用基石：主从复制还是哨兵和集群能够实施的基础。</li>
+</ol>
+<h3><span id="为什么使用集群">为什么使用集群</span></h3><ol>
+<li>单台服务器难以负载大量的请求</li>
+<li>单台服务器故障率高，系统崩坏概率大</li>
+<li>单台服务器内存容量有限。</li>
+</ol>
+<h3><span id="环境配置">环境配置</span></h3><p>我们在讲解配置文件的时候，注意到有一个<code>replication</code>模块 (见Redis.conf中第8条)</p>
+<p>查看当前库的信息：<code>info replication</code></p>
+<pre><code class="bash">123456789101112127.0.0.1:6379&gt; info replication
+# Replication
+role:master # 角色
+connected_slaves:0 # 从机数量
+master_replid:3b54deef5b7b7b7f7dd8acefa23be48879b4fcff
+master_replid2:0000000000000000000000000000000000000000
+master_repl_offset:0
+second_repl_offset:-1
+repl_backlog_active:0
+repl_backlog_size:1048576
+repl_backlog_first_byte_offset:0
+repl_backlog_histlen:0
+</code></pre>
+<p>既然需要启动多个服务，就需要多个配置文件。每个配置文件对应修改以下信息：</p>
 <ul>
-<li>记得控制类前要加@Restcontroller注解，就会以json形式返回前台数据</li>
+<li><p>端口号</p>
+</li>
+<li><p>pid文件名</p>
+</li>
+<li><p>日志文件名</p>
+</li>
+<li><p>rdb文件名</p>
+</li>
 </ul>
-<pre><code class="java">package com.zz.controller;
-
-import com.zz.pojo.User;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.HttpMediaTypeException;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import javax.security.auth.login.CredentialException;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-@RestController
-public class AjaxController &#123;
-
-   
-
-    @RequestMapping(&quot;/a3&quot;)
-    public String ajax3(String name,String pwd)&#123;
-        String msg = &quot;&quot;;
-        //模拟数据库中存在数据
-        if (name!=null)&#123;
-            if (&quot;admin&quot;.equals(name))&#123;
-                msg = &quot;OK&quot;;
-            &#125;else &#123;
-                msg = &quot;用户名输入错误&quot;;
-            &#125;
-        &#125;
-        if (pwd!=null)&#123;
-            if (&quot;123456&quot;.equals(pwd))&#123;
-                msg = &quot;OK&quot;;
-            &#125;else &#123;
-                msg = &quot;密码输入有误&quot;;
-            &#125;
-        &#125;
-        return msg; //由于@RestController注解，将msg转成json格式返回
-    &#125;
-&#125;
-</code></pre>
-<p>然后从网上下载jquery，放在项目的web包中，然后编写login.jsp页面</p>
-<pre><code class="jsp">&lt;%@ page contentType=&quot;text/html;charset=UTF-8&quot; language=&quot;java&quot; %&gt;
-&lt;html&gt;
-&lt;head&gt;
-  &lt;title&gt;ajax&lt;/title&gt;
-  &lt;script src=&quot;$&#123;pageContext.request.contextPath&#125;/statics/js/jquery.js&quot;&gt;&lt;/script&gt;
-  &lt;script&gt;
-
-    function a1()&#123;
-      $.post(&#123;
-        url:&quot;$&#123;pageContext.request.contextPath&#125;/a3&quot;,
-        data:&#123;&#39;name&#39;:$(&quot;#name&quot;).val()&#125;,
-        success:function (data) &#123;
-          if (data.toString()==&#39;OK&#39;)&#123;
-            $(&quot;#userInfo&quot;).css(&quot;color&quot;,&quot;green&quot;);
-          &#125;else &#123;
-            $(&quot;#userInfo&quot;).css(&quot;color&quot;,&quot;red&quot;);
-          &#125;
-          $(&quot;#userInfo&quot;).html(data);
-        &#125;
-      &#125;);
-    &#125;
-    function a2()&#123;
-      $.post(&#123;
-        url:&quot;$&#123;pageContext.request.contextPath&#125;/a3&quot;,
-        data:&#123;&#39;pwd&#39;:$(&quot;#pwd&quot;).val()&#125;,
-        success:function (data) &#123;
-          if (data.toString()==&#39;OK&#39;)&#123;
-            $(&quot;#pwdInfo&quot;).css(&quot;color&quot;,&quot;green&quot;);
-          &#125;else &#123;
-            $(&quot;#pwdInfo&quot;).css(&quot;color&quot;,&quot;red&quot;);
-          &#125;
-          $(&quot;#pwdInfo&quot;).html(data);
-        &#125;
-      &#125;);
-    &#125;
-
-  &lt;/script&gt;
-&lt;/head&gt;
-&lt;body&gt;
-&lt;p&gt;
-  用户名:&lt;input type=&quot;text&quot; id=&quot;name&quot; onblur=&quot;a1()&quot;/&gt;
-  &lt;span id=&quot;userInfo&quot;&gt;&lt;/span&gt;
-&lt;/p&gt;
-&lt;p&gt;
-  密码:&lt;input type=&quot;text&quot; id=&quot;pwd&quot; onblur=&quot;a2()&quot;/&gt;
-  &lt;span id=&quot;pwdInfo&quot;&gt;&lt;/span&gt;
-&lt;/p&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre>
-<p>到现在启动服务器就可以看到啦，成功后在浏览器查看时每失去焦点时都会向后台发送请求，也是<strong>Ajax的独特之处，把主动权交给了前端。</strong></p>
-<p>放一下项目结构图吧</p>
-<p><img src="/2021/09/18/ajax%E6%80%BB%E7%BB%93/image-20210918200158409.png" alt="image-20210918200158409"></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/15/Restful%E8%AF%A6%E8%A7%A3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Gzz">
-      <meta itemprop="description" content="只要开始就不算晚">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="香饽饽">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/09/15/Restful%E8%AF%A6%E8%A7%A3/" class="post-title-link" itemprop="url">Restful详解</a>
-        </h2>
-
-        <div class="post-meta">
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-09-15 21:28:35 / 修改时间：22:02:53" itemprop="dateCreated datePublished" datetime="2021-09-15T21:28:35+08:00">2021-09-15</time>
-            </span>
-
-          
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-              <span>3.9k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-              <span>4 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2><span id="资源与uri">资源与URI</span></h2><p>REST全称是表述性状态转移，那究竟指的是什么的表述? 其实指的就是资源。</p>
-<p>要让一个资源可以被识别，需要有个唯一标识，在Web中这个唯一标识就是URI(Uniform Resource Identifier)。</p>
-<h3><span id="uri的设计技巧">URI的设计技巧</span></h3><ul>
-<li>使用_或-来让URI可读性更好  <strong>例子</strong>：<a target="_blank" rel="noopener" href="http://www.oschina.net/news/38119/oschina-translate-reward-plan">http://www.oschina.net/news/38119/oschina-translate-reward-plan</a></li>
-<li>使用/来表示资源的层级关系  <strong>例子</strong>：/orders/2012/10可以用来表示2012年10月的订单记录。</li>
-<li>使用?用来过滤资源  <strong>例子</strong>：很多人只是把?简单的当做是参数的传递，很容易造成URI过于复杂、难以理解。可以把?用于对资源的过滤， 例如/git/git/pulls用来表示git项目的所有推入请求，而/pulls?state=closed用来表示git项目中已经关闭的推入请求， 这种URL通常对应的是一些特定条件的查询结果或算法运算结果。</li>
-<li>,或;可以用来表示同级资源的关系 <strong>例子</strong>：例如哪天github可以比较某个文件在随意两次提交记录之间的差异，或许可以用；连接两个文件。</li>
-</ul>
-<h2><span id="统一资源接口">统一资源接口</span></h2><p>RESTful架构应该遵循统一接口原则，统一接口包含了一组受限的预定义的操作，不论什么样的资源，都是通过使用相同的接口进行资源的访问。接口应该使用标准的HTTP方法如GET，PUT和POST，并遵循这些方法的语义。</p>
-<p>如果按照HTTP方法的语义来暴露资源，那么接口将会拥有安全性和幂等性的特性，例如GET和HEAD请求都是安全的， 无论请求多少次，都不会改变服务器状态。而GET、HEAD、PUT和DELETE请求都是幂等的，无论对资源操作多少次， 结果总是一样的，后面的请求并不会产生比第一次更多的影响。</p>
-<h3><span id="资源的表述">资源的表述</span></h3><p>上面提到，客户端通过HTTP方法可以获取资源，是吧? 不，确切的说，客户端获取的只是资源的表述而已。 资源在外界的具体呈现，可以有多种表述(或成为表现、表示)形式，在客户端和服务端之间传送的也是资源的表述，而不是资源本身。 例如文本资源可以采用html、xml、json等格式，图片可以使用PNG或JPG展现出来。</p>
-<p>资源的表述包括数据和描述数据的元数据，例如，HTTP头”Content-Type” 就是这样一个元数据属性。</p>
-<p>那么客户端如何知道服务端提供哪种表述形式呢?</p>
-<p>答案是可以通过HTTP内容协商，客户端可以通过Accept头请求一种特定格式的表述，服务端则通过Content-Type告诉客户端资源的表述形式。</p>
-<p>以github为例，请求某组织资源的json格式的表述形式:</p>
-<p><img src="/2021/09/15/Restful%E8%AF%A6%E8%A7%A3/291731048886033.jpg" alt="291731048886033"></p>
-<p>假如github也能够支持xml格式的表述格式，那么结果就是这样的:</p>
-<p><img src="/2021/09/15/Restful%E8%AF%A6%E8%A7%A3/291731045756062.jpg" alt="291731045756062"></p>
-<h2><span id="springmvc实现restful服务">SpringMVC实现restful服务:</span></h2><p>SpringMVC原生态的支持了REST风格的架构设计</p>
-<p>所涉及到的注解:</p>
-<p>---@RequestMapping<br> ---@PathVariable<br> ---@ResponseBody</p>
-<pre><code class="java">package cn.itcast.mybatis.controller;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import cn.itcast.mybatis.pojo.User;
-import cn.itcast.mybatis.service.NewUserService;
-
-@RequestMapping(&quot;restful/user&quot;)
-@Controller
-public class RestUserController &#123;
-
-@Autowired
-private NewUserService newUserService;
-
-/**
- * 根据用户id查询用户数据
- * 
- * @param id
- * @return
- */
-@RequestMapping(value = &quot;&#123;id&#125;&quot;, method = RequestMethod.GET)
-@ResponseBody
-public ResponseEntity&lt;User&gt; queryUserById(@PathVariable(&quot;id&quot;) Long id) &#123;
-    try &#123;
-        User user = this.newUserService.queryUserById(id);
-        if (null == user) &#123;
-            // 资源不存在，响应404
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        &#125;
-        // 200
-        // return ResponseEntity.status(HttpStatus.OK).body(user);
-        return ResponseEntity.ok(user);
-    &#125; catch (Exception e) &#123;
-        e.printStackTrace();
-    &#125;
-    // 500
-    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-&#125;
-
-/**
- * 新增用户
- * 
- * @param user
- * @return
- */
-@RequestMapping(method = RequestMethod.POST)
-public ResponseEntity&lt;Void&gt; saveUser(User user) &#123;
-    try &#123;
-        this.newUserService.saveUser(user);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
-    &#125; catch (Exception e) &#123;
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-    &#125;
-    // 500
-    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-&#125;
-
-/**
- * 更新用户资源
- * 
- * @param user
- * @return
- */
-@RequestMapping(method = RequestMethod.PUT)
-public ResponseEntity&lt;Void&gt; updateUser(User user) &#123;
-    try &#123;
-        this.newUserService.updateUser(user);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-    &#125; catch (Exception e) &#123;
-        e.printStackTrace();
-    &#125;
-    // 500
-    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-&#125;
-
-/**
- * 删除用户资源
- * 
- * @param user
- * @return
- */
-@RequestMapping(method = RequestMethod.DELETE)
-public ResponseEntity&lt;Void&gt; deleteUser(@RequestParam(value = &quot;id&quot;, defaultValue = &quot;0&quot;) Long id) &#123;
-    try &#123;
-        if (id.intValue() == 0) &#123;
-            // 请求参数有误
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        &#125;
-        this.newUserService.deleteUserById(id);
-        // 204
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-    &#125; catch (Exception e) &#123;
-        e.printStackTrace();
-    &#125;
-    // 500
-    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-&#125;
-&#125;
-</code></pre>
-<p>出自：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/7893169a7c93">RESTful接口详解 - 简书 (jianshu.com)</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/13/java%E5%9B%9B%E7%A7%8D%E7%BA%BF%E7%A8%8B%E6%B1%A0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Gzz">
-      <meta itemprop="description" content="只要开始就不算晚">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="香饽饽">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/09/13/java%E5%9B%9B%E7%A7%8D%E7%BA%BF%E7%A8%8B%E6%B1%A0/" class="post-title-link" itemprop="url">java四种线程池</a>
-        </h2>
-
-        <div class="post-meta">
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-09-13 17:02:09 / 修改时间：17:21:09" itemprop="dateCreated datePublished" datetime="2021-09-13T17:02:09+08:00">2021-09-13</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BA%BF%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">线程</span></a>
-                </span>
-            </span>
-
-          
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-              <span>604</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2><span id="普通创建线程new-thead弊端">普通创建线程(new Thead)弊端</span></h2><pre><code class="Java">new Thread(new Runnable() &#123;
+<h5><span id="注意window配置方法">注意：window配置方法：</span></h5><p>开启多个端口服务器<br>1.配置文件<br>将redis.windows-service.conf复制一份，改名为相应文件，并更改配置文件中的端口为指定端口，以6380为例</p>
+<p>port 6380</p>
+<p>2.安装服务<br><strong>redis-server –service-install –service-name redis_6380 redis.windows-service-6380.conf</strong><br>3.启动服务<br><strong>redis-server –service-start –service-name redis_6380</strong><br>4.停止服务<br><strong>redis-server –service-stop –service-name redis_6380</strong><br>5.卸载服务<br><strong>redis-server –service-uninstall –service-name redis_6380</strong></p>
+<p>指定端口启动客户端：<br><strong>redis.cli -p 端口号</strong></p>
+<p><img src="/2021/11/04/Redis/image-20211108113934528.png" alt="image-20211108113934528"></p>
+<p><strong>启动单机多服务集群：</strong></p>
+<p><img src="/2021/11/04/Redis/20200513215610163.png" alt="在这里插入图片描述"></p>
+<h3><span id="一主二从配置">一主二从配置</span></h3><p>默认情况下，每台Redis服务器都是主节点；一般情况下只用配置从机就好了！</p>
+<p>认老大！一主（79）二从（80，81）</p>
+<p>使用<code>SLAVEOF host port</code>就可以为从机配置主机了。</p>
+<p><img src="/2021/11/04/Redis/image-20211108114239188.png" alt="image-20211108114239188"></p>
+<p><img src="/2021/11/04/Redis/image-20211108114323436.png" alt="image-20211108114323436"></p>
+<p>主机截图：</p>
+<p><img src="/2021/11/04/Redis/image-20211108114407873.png" alt="image-20211108114407873"></p>
+<p>使用命令搭建是暂时的，真实开发中应该在从机的配置文件中进行配置，这样的话是永久的。</p>
+<p><img src="/2021/11/04/Redis/image-20211108114911108.png" alt="image-20211108114911108"></p>
+<h4><span id="规则">规则</span></h4><p>从机只能读，不能写，主机可读可写但是多用于写。</p>
+<p>当主机断电宕机后，默认情况下从机的角色不会发生变化 ，集群中只是失去了写操作，当主机恢复以后，又会连接上从机恢复原状。</p>
+<p>当从机断电宕机后，若不是使用配置文件配置的从机，再次启动后作为主机是无法获取之前主机的数据的，若此时重新配置称为从机，又可以获取到主机的所有数据。这里就要提到一个同步原理</p>
+<blockquote>
+<p>复制原理</p>
+</blockquote>
+<p>从机成功连接到主机后会发送一个同步命令</p>
+<p>主机接到命令，启动后台存盘进程，同时收集所有的收到用于修改数据集命令，在后台进程执行完毕之后，主机将整个数据文件传送到从机，完成一次完全同步</p>
+<p><strong>全量复制</strong>：第一次连接时，获取主机的全部数据</p>
+<p><strong>增量复制</strong>：每次更新数据同步到从机</p>
+<h3><span id="层层链路">层层链路</span></h3><p>主机从机成链路式连接</p>
+<p>如果主机断开了连接，我们可以使用<code>SLAVEOF no one</code>让自己变成主机！其他的节点就可以手动连接到最新的主节点</p>
+<blockquote>
+<p>哨兵模式的全部配置</p>
+</blockquote>
+<p>完整的哨兵模式配置文件 sentinel.conf</p>
+<pre><code class="bash">12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970# Example sentinel.conf
  
-@Override
-public void run() &#123;
-// TODO Auto-generated method stub
-&#125;
-&#125;).start();
+# 哨兵sentinel实例运行的端口 默认26379
+port 26379
+ 
+# 哨兵sentinel的工作目录
+dir /tmp
+ 
+# 哨兵sentinel监控的redis主节点的 ip port 
+# master-name  可以自己命名的主节点名字 只能由字母A-z、数字0-9 、这三个字符&quot;.-_&quot;组成。
+# quorum 当这些quorum个数sentinel哨兵认为master主节点失联 那么这时 客观上认为主节点失联了
+# sentinel monitor &lt;master-name&gt; &lt;ip&gt; &lt;redis-port&gt; &lt;quorum&gt;
+sentinel monitor mymaster 127.0.0.1 6379 1
+ 
+# 当在Redis实例中开启了requirepass foobared 授权密码 这样所有连接Redis实例的客户端都要提供密码
+# 设置哨兵sentinel 连接主从的密码 注意必须为主从设置一样的验证密码
+# sentinel auth-pass &lt;master-name&gt; &lt;password&gt;
+sentinel auth-pass mymaster MySUPER--secret-0123passw0rd
+ 
+ 
+# 指定多少毫秒之后 主节点没有应答哨兵sentinel 此时 哨兵主观上认为主节点下线 默认30秒
+# sentinel down-after-milliseconds &lt;master-name&gt; &lt;milliseconds&gt;
+sentinel down-after-milliseconds mymaster 30000
+ 
+# 这个配置项指定了在发生failover主备切换时最多可以有多少个slave同时对新的master进行 同步，
+这个数字越小，完成failover所需的时间就越长，
+但是如果这个数字越大，就意味着越 多的slave因为replication而不可用。
+可以通过将这个值设为 1 来保证每次只有一个slave 处于不能处理命令请求的状态。
+# sentinel parallel-syncs &lt;master-name&gt; &lt;numslaves&gt;
+sentinel parallel-syncs mymaster 1
+ 
+ 
+ 
+# 故障转移的超时时间 failover-timeout 可以用在以下这些方面： 
+#1. 同一个sentinel对同一个master两次failover之间的间隔时间。
+#2. 当一个slave从一个错误的master那里同步数据开始计算时间。直到slave被纠正为向正确的master那里同步数据时。
+#3.当想要取消一个正在进行的failover所需要的时间。  
+#4.当进行failover时，配置所有slaves指向新的master所需的最大时间。不过，即使过了这个超时，slaves依然会被正确配置为指向master，但是就不按parallel-syncs所配置的规则来了
+# 默认三分钟
+# sentinel failover-timeout &lt;master-name&gt; &lt;milliseconds&gt;
+sentinel failover-timeout mymaster 180000
+ 
+# SCRIPTS EXECUTION
+ 
+#配置当某一事件发生时所需要执行的脚本，可以通过脚本来通知管理员，例如当系统运行不正常时发邮件通知相关人员。
+#对于脚本的运行结果有以下规则：
+#若脚本执行后返回1，那么该脚本稍后将会被再次执行，重复次数目前默认为10
+#若脚本执行后返回2，或者比2更高的一个返回值，脚本将不会重复执行。
+#如果脚本在执行过程中由于收到系统中断信号被终止了，则同返回值为1时的行为相同。
+#一个脚本的最大执行时间为60s，如果超过这个时间，脚本将会被一个SIGKILL信号终止，之后重新执行。
+ 
+#通知型脚本:当sentinel有任何警告级别的事件发生时（比如说redis实例的主观失效和客观失效等等），将会去调用这个脚本，
+#这时这个脚本应该通过邮件，SMS等方式去通知系统管理员关于系统不正常运行的信息。调用该脚本时，将传给脚本两个参数，
+#一个是事件的类型，
+#一个是事件的描述。
+#如果sentinel.conf配置文件中配置了这个脚本路径，那么必须保证这个脚本存在于这个路径，并且是可执行的，否则sentinel无法正常启动成功。
+#通知脚本
+# sentinel notification-script &lt;master-name&gt; &lt;script-path&gt;
+  sentinel notification-script mymaster /var/redis/notify.sh
+ 
+# 客户端重新配置主节点参数脚本
+# 当一个master由于failover而发生改变时，这个脚本将会被调用，通知相关的客户端关于master地址已经发生改变的信息。
+# 以下参数将会在调用脚本时传给脚本:
+# &lt;master-name&gt; &lt;role&gt; &lt;state&gt; &lt;from-ip&gt; &lt;from-port&gt; &lt;to-ip&gt; &lt;to-port&gt;
+# 目前&lt;state&gt;总是“failover”,
+# &lt;role&gt;是“leader”或者“observer”中的一个。 
+# 参数 from-ip, from-port, to-ip, to-port是用来和旧的master和新的master(即旧的slave)通信的
+# 这个脚本应该是通用的，能被多次调用，不是针对性的。
+# sentinel client-reconfig-script &lt;master-name&gt; &lt;script-path&gt;
+sentinel client-reconfig-script mymaster /var/redis/reconfig.sh
 </code></pre>
-<p>new Thread弊端如下：</p>
-<p>Java提供的四种线程池好处如下：</p>
-<table>
-<thead>
-<tr>
-<th align="center">Java四种线程</th>
-<th align="center">new Thread</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">重复利用存在的线程，减少对象创建，消亡的开销，性能佳</td>
-<td align="center">每次new Thread新建对象性能差</td>
-</tr>
-<tr>
-<td align="center">可有效控制最大并发线程数，提高系统资源的使用率</td>
-<td align="center">线程缺乏统一管理，可能无限制创建新线程，相互之间争夺资源，导致死机</td>
-</tr>
-<tr>
-<td align="center">提供定时执行、定期执行、单线程、并发数控制等功能。</td>
-<td align="center">缺乏更多功能如：定时执行，定期执行，线程中断</td>
-</tr>
-</tbody></table>
-<h2><span id="java线程池">Java线程池</span></h2><p>Java通过Executors提供四种线程池，分别为：</p>
+<h2><span id="缓存穿透与雪崩">缓存穿透与雪崩</span></h2><h3><span id="缓存穿透查不到">缓存穿透（查不到）</span></h3><blockquote>
+<p>概念</p>
+</blockquote>
+<p>在默认情况下，用户请求数据时，会先在缓存(Redis)中查找，若没找到即缓存未命中，再在数据库中进行查找，数量少可能问题不大，可是一旦大量的请求数据（例如秒杀场景）缓存都没有命中的话，就会全部转移到数据库上，造成数据库极大的压力，就有可能导致数据库崩溃。网络安全中也有人恶意使用这种手段进行攻击被称为洪水攻击。</p>
+<blockquote>
+<p>解决方案</p>
+</blockquote>
+<p><strong>布隆过滤器</strong></p>
+<p>对所有可能查询的参数以Hash的形式存储，以便快速确定是否存在这个值，在控制层先进行拦截校验，校验不通过直接打回，减轻了存储系统的压力。</p>
+<p><img src="/2021/11/04/Redis/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzg3MzIyNw==,size_16,color_FFFFFF,t_70-16363526192282" alt="在这里插入图片描述"></p>
+<p><strong>缓存空对象</strong></p>
+<p>一次请求若在缓存和数据库中都没找到，就在缓存中方一个空对象用于处理后续这个请求。</p>
+<p><img src="/2021/11/04/Redis/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzg3MzIyNw==,size_16,color_FFFFFF,t_70-16363526320984" alt="在这里插入图片描述"></p>
+<p> 这样做有一个缺陷：存储空对象也需要空间，大量的空对象会耗费一定的空间，存储效率并不高。解决这个缺陷的方式就是设置较短过期时间</p>
+<p>即使对空值设置了过期时间，还是会存在缓存层和存储层的数据会有一段时间窗口的不一致，这对于需要保持一致性的业务会有影响。</p>
+<h3><span id="缓存击穿量太大缓存过期">缓存击穿（量太大，缓存过期）</span></h3><blockquote>
+<p>概念</p>
+</blockquote>
+<p> 相较于缓存穿透，缓存击穿的目的性更强，一个存在的key，在缓存过期的一刻，同时有大量的请求，这些请求都会击穿到DB，造成瞬时DB请求量大、压力骤增。这就是缓存被击穿，只是针对其中某个key的缓存不可用而导致击穿，但是其他的key依然可以使用缓存响应。</p>
+<p> 比如热搜排行上，一个热点新闻被同时大量访问就可能导致缓存击穿。</p>
+<blockquote>
+<p>解决方案</p>
+</blockquote>
+<ol>
+<li><p><strong>设置热点数据永不过期</strong></p>
+<p>这样就不会出现热点数据过期的情况，但是当Redis内存空间满的时候也会清理部分数据，而且此种方案会占用空间，一旦热点数据多了起来，就会占用部分空间。</p>
+</li>
+<li><p><strong>加互斥锁(分布式锁)</strong></p>
+<p>在访问key之前，采用SETNX（set if not exists）来设置另一个短期key来锁住当前key的访问，访问结束再删除该短期key。保证同时刻只有一个线程访问。这样对锁的要求就十分高。</p>
+</li>
+</ol>
+<h3><span id="缓存雪崩">缓存雪崩</span></h3><blockquote>
+<p>概念</p>
+</blockquote>
+<p>大量的key设置了相同的过期时间，导致在缓存在同一时刻全部失效，造成瞬时DB请求量大、压力骤增，引起雪崩。</p>
+<p><img src="/2021/11/04/Redis/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzg3MzIyNw==,size_16,color_FFFFFF,t_70-16363526462886" alt="在这里插入图片描述"></p>
+<blockquote>
+<p>解决方案</p>
+</blockquote>
 <ul>
-<li>newCachedThreadPool创建一个可缓存线程池，如果线程池长度超过处理需要，可灵活回收空闲线程，若无可回收，则新建线程。</li>
-<li>newFixedThreadPool 创建一个定长线程池，可控制线程最大并发数，超出的线程会在队列中等待。</li>
-<li>newScheduledThreadPool 创建一个定长线程池，支持定时及周期性任务执行。</li>
-<li>newSingleThreadExecutor 创建一个单线程化的线程池，它只会用唯一的工作线程来执行任务，保证所有任务按照指定顺序(FIFO, LIFO, 优先级)执行。</li>
+<li><p>redis高可用</p>
+<p>这个思想的含义是，既然redis有可能挂掉，那我多增设几台redis，这样一台挂掉之后其他的还可以继续工作，其实就是搭建的集群</p>
+</li>
+<li><p>限流降级</p>
+<p>这个解决方案的思想是，在缓存失效后，通过加锁或者队列来控制读数据库写缓存的线程数量。比如对某个key只允许一个线程查询数据和写缓存，其他线程等待。</p>
+</li>
+<li><p>数据预热</p>
+<p>数据加热的含义就是在正式部署之前，我先把可能的数据先预先访问一遍，这样部分可能大量访问的数据就会加载到缓存中。在即将发生大并发访问前手动触发加载缓存不同的key，设置不同的过期时间，让缓存失效的时间点尽量均匀。</p>
+</li>
 </ul>
 
       
@@ -2153,7 +974,7 @@ public void run() &#123;
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/10/post%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C%E7%B1%BB/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/02/dubbo/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -2167,244 +988,7 @@ public void run() &#123;
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/09/10/post%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C%E7%B1%BB/" class="post-title-link" itemprop="url">原子操作类</a>
-        </h2>
-
-        <div class="post-meta">
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-09-10 11:58:53 / 修改时间：18:50:25" itemprop="dateCreated datePublished" datetime="2021-09-10T11:58:53+08:00">2021-09-10</time>
-            </span>
-
-          
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-              <span>1.6k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1><span id="原子操作类atomicinteger">原子操作类AtomicInteger</span></h1><p>在使用Java爬取网站图片时，遇到多线程下载图片，需显示下载到第几张图片问题，于是使用了原子操作类AtomicInteger，可以保证操作具有原子性</p>
-<h2><span id="例一">例一</span></h2><p>创建两个线程，分别将全局变量i进行加1</p>
-<p>每个线程执行5000次（次数少了正确率比较高🤣，5000都是重复执行好几次之后才出现不理想结果）</p>
-<pre><code class="java">public class D &#123;
-    private static int m = 0;
-
-    public static void main(String[] args) throws InterruptedException &#123;
-//        CountDownLatch cdl = new CountDownLatch(2);
-
-        Thread t1 = new Thread(new Runnable() &#123;
-            @Override
-            public void run() &#123;
-                for (int j = 0; j &lt; 5000; j++) &#123;
-                    m++;
-                    System.out.println(&quot;1:&quot;+m);
-                &#125;
-                //cdl.countDown();
-            &#125;
-        &#125;);
-        Thread t2 = new Thread(new Runnable() &#123;
-            @Override
-            public void run() &#123;
-                for (int j = 0; j &lt; 5000; j++) &#123;
-                    m++;
-                    System.out.println(&quot;2:&quot;+m);
-                &#125;
-                //cdl.countDown();
-            &#125;
-        &#125;);
-        t1.start();
-        t2.start();
-
-        //cdl.await();
-        System.out.println(&quot;result=&quot; + m);
-    &#125;
-&#125;
-</code></pre>
-<p><img src="/2021/09/10/post%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C%E7%B1%BB/image-20210910184257578.png" alt="image-20210910184257578"></p>
-<p>由此可以看出m变量没有加锁(synchronized)，。但是synchronized过于沉重。于是我们可以考虑使用原子操作类<strong>AtomicInteger</strong>来实现。</p>
-<h2><span id="例二">例二</span></h2><p>使用<strong>AtomicInteger</strong> 中的<strong>incrementAndGet</strong> 函数来进行自增操作，代替直接使用**i++**来进行自增，保证了操作的原子性。</p>
-<pre><code class="java">import java.util.concurrent.atomic.AtomicInteger;
-
-public class D &#123;
-    private static int m = 0;
-
-    public static void main(String[] args) throws InterruptedException &#123;
-//        CountDownLatch cdl = new CountDownLatch(2);
-          AtomicInteger i=new AtomicInteger(0);
-        Thread t1 = new Thread(new Runnable() &#123;
-            @Override
-            public void run() &#123;
-                for (int j = 0; j &lt; 5000; j++) &#123;
-                    i.incrementAndGet();
-                    System.out.println(&quot;1:&quot;+i);
-                &#125;
-                //cdl.countDown();
-            &#125;
-        &#125;);
-        Thread t2 = new Thread(new Runnable() &#123;
-            @Override
-            public void run() &#123;
-                for (int j = 0; j &lt; 5000; j++) &#123;
-                    i.incrementAndGet();
-                    System.out.println(&quot;2:&quot;+i);
-                &#125;
-                //cdl.countDown();
-            &#125;
-        &#125;);
-        t1.start();
-        t2.start();
-
-        //cdl.await();
-        
-    &#125;
-&#125;
-</code></pre>
-<p><img src="/2021/09/10/post%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C%E7%B1%BB/image-20210910184723295.png" alt="image-20210910184723295"></p>
-<p>现在无论执行多少次，结果永远是10000</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/08/post-WithWut/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Gzz">
-      <meta itemprop="description" content="只要开始就不算晚">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="香饽饽">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/09/08/post-WithWut/" class="post-title-link" itemprop="url">WithWut</a>
-        </h2>
-
-        <div class="post-meta">
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-09-08 22:29:22 / 修改时间：22:48:18" itemprop="dateCreated datePublished" datetime="2021-09-08T22:29:22+08:00">2021-09-08</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%94%9F%E6%B4%BB%E5%9B%AD%E5%9C%B0/" itemprop="url" rel="index"><span itemprop="name">生活园地</span></a>
-                </span>
-            </span>
-
-          
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-              <span>16</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1><span id="png">png</span></h1><p>宝贝亲自挑选的哦：🎎🎏</p>
-<p><img src="/2021/09/08/post-WithWut/QQ%E5%9B%BE%E7%89%8720210908223629.jpg" alt="QQ图片20210908223629"></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Gzz">
-      <meta itemprop="description" content="只要开始就不算晚">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="香饽饽">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/" class="post-title-link" itemprop="url">设计模式Study-2</a>
+            <a href="/2021/11/02/dubbo/" class="post-title-link" itemprop="url">dubbo</a>
         </h2>
 
         <div class="post-meta">
@@ -2416,45 +1000,28 @@ public class D &#123;
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-09-02 09:34:07" itemprop="dateCreated datePublished" datetime="2021-09-02T09:34:07+08:00">2021-09-02</time>
+              <time title="创建时间：2021-11-02 16:19:06" itemprop="dateCreated datePublished" datetime="2021-11-02T16:19:06+08:00">2021-11-02</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-11-02 16:11:30" itemprop="dateModified" datetime="2021-11-02T16:11:30+08:00">2021-11-02</time>
+                <time title="修改时间：2021-11-04 11:36:13" itemprop="dateModified" datetime="2021-11-04T11:36:13+08:00">2021-11-04</time>
               </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java%E8%BF%9B%E9%98%B6/" itemprop="url" rel="index"><span itemprop="name">Java进阶</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java%E8%BF%9B%E9%98%B6/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">设计模式</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java%E8%BF%9B%E9%98%B6/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">策略模式</span></a>
-                </span>
-            </span>
 
           
             <span class="post-meta-item" title="本文字数">
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
               </span>
-              <span>6.7k</span>
+              <span>7.7k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
-              <span>6 分钟</span>
+              <span>7 分钟</span>
             </span>
 
         </div>
@@ -2466,368 +1033,142 @@ public class D &#123;
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1><span id="strategy-pattern"><em><a href="javascript:;">strategy</a> <a href="javascript:;">pattern</a></em></span></h1><h1><span id="策略模式">策略模式</span></h1><p><img src="/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211101215229119.png" alt="image-20211101215229119"></p>
-<p><img src="/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20210902154825052.png" alt="image-20210902154825052"></p>
-<pre><code class="java">/**
- * 定义所有支持算法的接口
- */
-abstract class Strategy &#123;
-    /**
-     * 算法方法
-     */
-    public abstract void algorithmInterface();
-&#125;
+          <h1><span id="dubbo">Dubbo</span></h1><h2><span id="rpc框架">RPC框架</span></h2><p>RPC【Remote Procedure Call】是指远程过程调用，是一种进程间通信方式，他是一种技术的思想，而不是规范。</p>
+<p>Apache Dubbo (incubating) 是一款高性能、轻量级的开源Java RPC框架，它提供了三大核心能力：面向接口的远程方法调用，智能容错和负载均衡，以及服务自动注册和发现</p>
+<h2><span id="注册中心-zookeeperregistry">注册中心 zookeeper(Registry)</span></h2><p><img src="/2021/11/02/dubbo/image-20211102170838813.png" alt="image-20211102170838813"></p>
+<p><strong>服务提供者</strong>（<strong>Provider</strong>）：暴露服务的服务提供方，服务提供者在启动时，向注册中心注册自己提供的服务。</p>
+<p><strong>服务消费者</strong>（<strong>Consumer</strong>）: 调用远程服务的服务消费方，服务消费者在启动时，向注册中心订阅自己所需的服务，服务消费者，从提供者地址列表中，基于软负载均衡算法，选一台提供者进行调用，如果调用失败，再选另一台调用。</p>
+<p><strong>注册中心</strong>（<strong>Registry</strong>）：注册中心返回服务提供者地址列表给消费者，如果有变更，注册中心将基于长连接推送变更数据给消费者</p>
+<p><strong>监控中心</strong>（<strong>Monitor</strong>）：服务消费者和提供者，在内存中累计调用次数和调用时间，定时每分钟发送一次统计数据到监控中心</p>
+<h1><span id="dubbo配置">dubbo配置</span></h1><h2><span id="1-配置原则">1、配置原则</span></h2><p><img src="/2021/11/02/dubbo/wpsBCDE.tmp.png" alt="img"> </p>
+<p>JVM 启动 -D 参数优先，这样可以使用户在部署和启动时进行参数重写，比如在启动时需改变协议的端口。</p>
+<p>XML 次之，如果在 XML 中有配置，则 dubbo.properties 中的相应配置项无效。</p>
+<p>Properties 最后，相当于缺省值，只有 XML 没有配置时，dubbo.properties 的相应配置项才会生效，通常用于共享公共配置，比如应用名。</p>
+<h2><span id="2-重试次数">2、重试次数</span></h2><p>失败自动切换，当出现失败，重试其它服务器，但重试会带来更长延迟。可通过 retries=”2” 来设置重试次数(不含第一次)。</p>
+<p>重试次数配置如下</p>
+<pre><code class="xml">&lt;dubbo:service retries=&quot;2&quot; /&gt;
+或&lt;dubbo:reference retries=&quot;2&quot; /&gt;
+或&lt;dubbo:reference&gt;&lt;dubbo:method name=&quot;findFoo&quot; retries=&quot;2&quot; /&gt;&lt;/dubbo:reference&gt;
 </code></pre>
-<pre><code class="java">/**
- * 封装具体的算法和行为，继承于Strategy
- */
-public class ConcreteStrategyA extends Strategy &#123;
-    @Override
-     public  void algorithmInterface()&#123;
-         System.out.println(&quot;执行算法A&quot;);
-     &#125;
-&#125;
-public class ConcreteStrategyB extends Strategy&#123;
-    @Override
-    public  void algorithmInterface()&#123;
-        System.out.println(&quot;执行算法B&quot;);
-    &#125;
-&#125;
-public class ConcreteStrategyC extends Strategy &#123;
-    @Override
-    public  void algorithmInterface()&#123;
-        System.out.println(&quot;执行算法C&quot;);
-    &#125;
-&#125;
+<h2><span id="3-超时时间">3、超时时间</span></h2><p>由于网络或服务端不可靠，会导致调用出现一种不确定的中间状态（超时）。为了避免超时导致客户端资源（线程）挂起耗尽，必须设置超时时间。</p>
+<h3><span id="1-dubbo消费端">1、Dubbo消费端</span></h3><pre><code class="xml">全局超时配置
+&lt;dubbo:consumer timeout=&quot;5000&quot; /&gt; 
+指定接口以及特定方法超时配置
+&lt;dubbo:reference interface=&quot;com.foo.BarService&quot; timeout=&quot;2000&quot;&gt;  
+    &lt;dubbo:method name=&quot;sayHello&quot; timeout=&quot;3000&quot; /&gt;
+&lt;/dubbo:reference&gt;
 </code></pre>
-<pre><code class="java">/**
- * @author zz
- * 上下文，维持一个strategy对象的引用
- */
-public class Context &#123;
-    Strategy strategy;
-
-    /**
-     * 初始化时，传入具体的策略对象
-     * @param strategy 具体的策略对象
-     */
-    public Context(Strategy strategy)&#123;
-        this.strategy=strategy;
-    &#125;
-
-    /**
-     * 根据具体的策略对象，调用其算法
-     */
-    public void contextInterface()&#123;
-        this.strategy.algorithmInterface();
-    &#125;
-&#125;
+<h3><span id="2-dubbo服务端">2、Dubbo服务端</span></h3><pre><code class="xml">全局超时配置&lt;dubbo:provider timeout=&quot;5000&quot; /&gt; 
+指定接口以及特定方法超时配置
+&lt;dubbo:provider interface=&quot;com.foo.BarService&quot; timeout=&quot;2000&quot;&gt;  &lt;dubbo:method name=&quot;sayHello&quot; timeout=&quot;3000&quot; /&gt;
+&lt;/dubbo:provider&gt;
 </code></pre>
-<p><strong>客户端</strong></p>
-<pre><code class="java">/**
- * 由于实例化不同的策略，所以最终调用context.contextInterface()时，
- * @author zz
- */
-public class Client &#123;
-    public static void main(String[] args) &#123;
-        Context context;
-        context=new Context(new ConcreteStrategyA());
-        context.contextInterface();
-
-        context=new Context(new ConcreteStrategyB());
-        context.contextInterface();
-
-        context=new Context(new ConcreteStrategyC());
-        context.contextInterface();
-
-    &#125;
-&#125;
+<h3><span id="3-配置原则">3、配置原则</span></h3><p>dubbo推荐在Provider上尽量多配置Consumer端属性：</p>
+<p>1、作服务的提供者，比服务使用方更清楚服务性能参数，如调用的超时时间，合理的重试次数，等等2、在Provider配置后，Consumer不配置则会使用Provider的配置值，即Provider配置可以作为Consumer的缺省值。否则，Consumer会使用Consumer端的全局设置，这对于Provider不可控的，并且往往是不合理的</p>
+<p>配置的覆盖规则：</p>
+<p>\1) 方法级配置别优于接口级别，即小Scope优先 </p>
+<p>\2) Consumer端配置 优于 Provider配置 优于 全局配置，</p>
+<p>\3) 最后是Dubbo Hard Code的配置值（见配置文档）</p>
+<p><img src="/2021/11/02/dubbo/wpsBCDF.tmp.png" alt="img"> </p>
+<h2><span id="4-版本号">4、版本号</span></h2><p>当一个接口实现，出现不兼容升级时，可以用版本号过渡，版本号不同的服务相互间不引用。</p>
+<p>可以按照以下的步骤进行版本迁移：</p>
+<p>在低压力时间段，先升级一半提供者为新版本</p>
+<p>再将所有消费者升级为新版本</p>
+<p>然后将剩下的一半提供者升级为新版本</p>
+<pre><code class="xml">老版本服务提供者配置：
+&lt;dubbo:service interface=&quot;com.foo.BarService&quot; version=&quot;1.0.0&quot; /&gt;
+新版本服务提供者配置：
+&lt;dubbo:service interface=&quot;com.foo.BarService&quot; version=&quot;2.0.0&quot; /&gt; 
+老版本服务消费者配置：&lt;dubbo:reference id=&quot;barService&quot; interface=&quot;com.foo.BarService&quot; version=&quot;1.0.0&quot; /&gt; 
+新版本服务消费者配置：&lt;dubbo:reference id=&quot;barService&quot; interface=&quot;com.foo.BarService&quot; version=&quot;2.0.0&quot; /&gt; 
+如果不需要区分版本，可以按照以下的方式配置：
+&lt;dubbo:reference id=&quot;barService&quot; interface=&quot;com.foo.BarService&quot; version=&quot;*&quot; /&gt;
 </code></pre>
-<hr>
-<h2><span id="实现">实现</span></h2><p><img src="/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20210915112133772.png" alt="image-20210915112133772"></p>
-<h3><span id="第一版">第一版</span></h3><p>支持所有收费策略的接口：</p>
-<pre><code class="java">public class CashContext &#123;
+<h1><span id="三-高可用">三、高可用</span></h1><h2><span id="1-zookeeper宕机与dubbo直连">1、zookeeper宕机与dubbo直连</span></h2><p>现象：zookeeper注册中心宕机，还可以消费dubbo暴露的服务。</p>
+<p>原因：</p>
+<p>健壮性l 监控中心宕掉不影响使用，只是丢失部分采样数据l 数据库宕掉后，注册中心仍能通过缓存提供服务列表查询，但不能注册新服务l 注册中心对等集群，任意一台宕掉后，将自动切换到另一台l <strong>注册中心全部宕掉后，服务提供者和服务消费者仍能通过本地缓存通讯</strong>l 服务提供者无状态，任意一台宕掉后，不影响使用l 服务提供者全部宕掉后，服务消费者应用将无法使用，并无限次重连等待服务提供者恢复 </p>
+<p>高可用：通过设计，减少系统不能提供服务的时间；</p>
+<h2><span id="2-集群下dubbo负载均衡配置">2、集群下dubbo负载均衡配置</span></h2><p>在集群负载均衡时，Dubbo 提供了多种均衡策略，缺省为 random 随机调用。</p>
+<p>负载均衡策略</p>
+<p><strong>Random LoadBalance</strong>随机，按权重设置随机概率。在一个截面上碰撞的概率高，但调用量越大分布越均匀，而且按概率使用权重后也比较均匀，有利于动态调整提供者权重。<strong>RoundRobin LoadBalance</strong>轮循，按公约后的权重设置轮循比率。存在慢的提供者累积请求的问题，比如：第二台机器很慢，但没挂，当请求调到第二台时就卡在那，久而久之，所有请求都卡在调到第二台上。</p>
+<p><strong>LeastActive LoadBalance</strong>最少活跃调用数，相同活跃数的随机，活跃数指调用前后计数差。使慢的提供者收到更少请求，因为越慢的提供者的调用前后计数差会越大。<strong>ConsistentHash LoadBalance</strong>一致性 Hash，相同参数的请求总是发到同一提供者。当某一台提供者挂时，原本发往该提供者的请求，基于虚拟节点，平摊到其它提供者，不会引起剧烈变动。算法参见：<a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Consistent_hashing%E7%BC%BA%E7%9C%81%E5%8F%AA%E5%AF%B9%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8F%82%E6%95%B0">http://en.wikipedia.org/wiki/Consistent_hashing缺省只对第一个参数</a> Hash，如果要修改，请配置 &lt;dubbo:parameter key=”hash.arguments” value=”0,1” /&gt;缺省用 160 份虚拟节点，如果要修改，请配置 &lt;dubbo:parameter key=”hash.nodes” value=”320” /&gt;</p>
+<h2><span id="3-整合hystrix服务熔断与降级处理">3、整合hystrix，服务熔断与降级处理</span></h2><h3><span id="1-服务降级">1、服务降级</span></h3><p><strong>什么是服务降级？</strong></p>
+<p><strong>当服务器压力剧增的情况下，根据实际业务情况及流量，对一些服务和页面有策略的不处理或换种简单的方式处理，从而释放服务器资源以保证核心交易正常运作或高效运作。</strong></p>
+<p>可以通过服务降级功能临时屏蔽某个出错的非关键服务，并定义降级后的返回策略。</p>
+<p>向注册中心写入动态配置覆盖规则：</p>
+<pre><code class="java">RegistryFactory registryFactory = ExtensionLoader.getExtensionLoader(RegistryFactory.class).getAdaptiveExtension();Registry registry = registryFactory.getRegistry(URL.valueOf(&quot;zookeeper://10.20.153.10:2181&quot;));registry.register(URL.valueOf(&quot;override://0.0.0.0/com.foo.BarService?category=configurators&amp;dynamic=false&amp;application=foo&amp;mock=force:return+null&quot;));
 
-    //声明一个CashSuper对象
-    private CashSuper cs;
-
-    public CashContext(CashSuper cashSuper)&#123;
-        this.cs=cashSuper;
-    &#125;
-
-    public Double GetResult(Double money)&#123;
-        return cs.acceptCash(money);
-    &#125;
-
-&#125;
+ 
 </code></pre>
-<p>收费策略</p>
-<pre><code class="java">/**
- * 正常收费子类
- */
-public class CashNormal extends CashSuper&#123;
-    @Override
-    Double acceptCash(Double money) &#123;
-        return money;
-    &#125;
-&#125;
-/**
- * 打折收费子类
- */
-public class CashRebate extends CashSuper &#123;
-    private Double moneyRebate;//打折率
-
-    public CashRebate(String moneyRebate) &#123;
-        this.moneyRebate = Double.parseDouble(moneyRebate);
-    &#125;
-
-
-    @Override
-    Double acceptCash(Double money) &#123;
-        return moneyRebate * money;
-    &#125;
-
-
-&#125;
-/**
- * 返利收费子类
- */
-public class CashReturn extends CashSuper&#123;
-
-    public CashReturn(double monryCondition, double moneyValue) &#123;
-        this.moneyCondition = monryCondition;
-        this.moneyValue = moneyValue;
-    &#125;
-
-    //返利条件
-    private double moneyCondition;
-    //返利值
-    private double moneyValue;
-
-
-    @Override
-    Double acceptCash(Double money) &#123;
-        if (money&gt;=moneyCondition)&#123;
-            return (money-moneyValue);
-        &#125;else &#123;
-            return money;
-        &#125;
-    &#125;
-&#125;
+<p>其中：</p>
+<p>mock=force:return+null 表示消费方对该服务的方法调用都直接返回 null 值，不发起远程调用。用来屏蔽不重要服务不可用时对调用方的影响。</p>
+<p>还可以改为 mock=fail:return+null 表示消费方对该服务的方法调用在失败后，再返回 null 值，不抛异常。用来容忍不重要服务不稳定时对调用方的影响。</p>
+<h3><span id="2-集群容错">2、集群容错</span></h3><p>在集群调用失败时，Dubbo 提供了多种容错方案，缺省为 failover 重试。</p>
+<p><strong>集群容错模式</strong></p>
+<p><strong>Failover Cluster</strong>失败自动切换，当出现失败，重试其它服务器。通常用于读操作，但重试会带来更长延迟。可通过 retries=”2” 来设置重试次数(不含第一次)。 重试次数配置如下：&lt;dubbo:service retries=”2” /&gt;或&lt;dubbo:reference retries=”2” /&gt;或<a href="dubbo:reference">dubbo:reference</a>  &lt;dubbo:method name=”findFoo” retries=”2” /&gt; </p>
+<p><strong>Failfast Cluster</strong>快速失败，只发起一次调用，失败立即报错。通常用于非幂等性的写操作，比如新增记录。 </p>
+<p><strong>Failsafe Cluster</strong>失败安全，出现异常时，直接忽略。通常用于写入审计日志等操作。 <strong>Failback Cluster</strong>失败自动恢复，后台记录失败请求，定时重发。通常用于消息通知操作。 <strong>Forking Cluster</strong>并行调用多个服务器，只要一个成功即返回。通常用于实时性要求较高的读操作，但需要浪费更多服务资源。可通过 forks=”2” 来设置最大并行数。</p>
+<p> <strong>Broadcast Cluster</strong>广播调用所有提供者，逐个调用，任意一台报错则报错 [2]。通常用于通知所有提供者更新缓存或日志等本地资源信息。</p>
+<p> <strong>集群模式配置</strong>按照以下示例在服务提供方和消费方配置集群模式&lt;dubbo:service cluster=”failsafe” /&gt;或&lt;dubbo:reference cluster=”failsafe” /&gt;</p>
+<h3><span id="3-整合hystrix">3、整合hystrix</span></h3><p>Hystrix 旨在通过控制那些访问远程系统、服务和第三方库的节点，从而对延迟和故障提供更强大的容错能力。Hystrix具备拥有回退机制和断路器功能的线程和信号隔离，请求缓存和请求打包，以及监控和配置等功能</p>
+<h4><span id="1-配置spring-cloud-starter-netflix-hystrix"><strong>1、配置spring-cloud-starter-netflix-hystrix</strong></span></h4><p>spring boot官方提供了对hystrix的集成，直接在pom.xml里加入依赖：</p>
+<pre><code class="xml">    &lt;dependency&gt;      
+        &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;                    
+        &lt;artifactId&gt;spring-cloud-starter-netflix-hystrix&lt;/artifactId&gt;      
+        &lt;version&gt;1.4.4.RELEASE&lt;/version&gt;    
+    &lt;/dependency&gt;
 </code></pre>
-<p>工厂类</p>
-<pre><code class="Java">/**
- * 现金收费工厂类
- */
-public class CashFactory &#123;
-    public static CashSuper createCash(String type)&#123;
-        CashSuper cs=null;
-        switch (type)&#123;
-            case &quot;正常收费&quot;:
-                cs=new CashNormal();
-                break;
-            case &quot;打八折&quot;:
-                cs=new CashRebate(&quot;0.8&quot;);
-                break;
-            case &quot;返利&quot;:
-                cs=new CashReturn(300,100);
-                break;
-        &#125;
-        return cs;
-    &#125;
-
-&#125;
+<p>然后在Application类上增加@EnableHystrix来启用hystrix starter：</p>
+<pre><code class="java">@SpringBootApplication
+@EnableHystrixpublic 
+class ProviderApplication &#123; 
 </code></pre>
-<p>现金收费抽象类</p>
-<pre><code class="Java">/**
- * 现金收费抽象类
- */
-abstract class CashSuper &#123;
-    abstract Double acceptCash(Double money);
-&#125;
+<h4><span id="2-配置provider端"><strong>2、配置Provider端</strong></span></h4><p>在Dubbo的Provider上增加@HystrixCommand配置，这样子调用就会经过Hystrix代理。</p>
+<pre><code class="java">@Service(version = &quot;1.0.0&quot;)
+public class HelloServiceImpl implements HelloService &#123;  
+    @HystrixCommand(commandProperties = &#123;   
+    @HystrixProperty(name = &quot;circuitBreaker.requestVolumeThreshold&quot;, value = &quot;10&quot;),   
+    @HystrixProperty(name = &quot;execution.isolation.thread.timeoutInMilliseconds&quot;, value = &quot;2000&quot;) &#125;)
+    @Override  
+    public String sayHello(String name) &#123;    
+        // System.out.println(&quot;async provider received: &quot; + name);    
+        // return &quot;annotation: hello, &quot; + name;    
+        throw new RuntimeException(&quot;Exception to show hystrix enabled.&quot;);  &#125;&#125;
 </code></pre>
-<p>客户端</p>
-<pre><code class="java">package a.impl;
-
-import java.util.Scanner;
-
-public class Client &#123;
-
-    public static void main(String[] args) &#123;
-        CashContext cc;
-        Scanner sc=new Scanner(System.in);
-        System.out.println(&quot;请输入单价和数量：&quot;);
-        System.out.println(&quot;单价:&quot;);
-        int text=sc.nextInt();
-        System.out.println(&quot;数量:&quot;);
-        int num=sc.nextInt();
-        System.out.println(&quot;请选择收费策略&quot;);
-        String select=sc.next();
-        switch (select)&#123;
-            case &quot;正常收费&quot;:
-                cc=new CashContext(new CashNormal());
-                break;
-            case &quot;满300返100&quot;:
-                cc=new CashContext(new CashReturn(300,100));
-                break;
-            case &quot;打八折&quot;:
-                cc=new CashContext(new CashRebate(&quot;0.8&quot;));
-                break;
-            default:
-                throw new IllegalStateException(&quot;Unexpected value: &quot; + select);
-        &#125;
-
-        double totalPrices;
-        totalPrices=cc.GetResult(Double.parseDouble(String.valueOf(text*num)));
-        System.out.println(&quot;结果为：&quot;+totalPrices);
-    &#125;
-
-
-
-&#125;
+<h4><span id="3-配置consumer端"><strong>3、配置Consumer端</strong></span></h4><p>对于Consumer端，则可以增加一层method调用，并在method上配置@HystrixCommand。当调用出错时，会走到fallbackMethod = “reliable”的调用里。</p>
+<pre><code class="java"> @Reference(version = &quot;1.0.0&quot;) 
+ private HelloService demoService;  
+ @HystrixCommand(fallbackMethod = &quot;reliable&quot;)  
+ public String doSayHello(String name) &#123;    
+     return demoService.sayHello(name);  &#125;  
+ public String reliable(String name) &#123;    
+    return &quot;hystrix fallback value&quot;;  &#125;
 </code></pre>
-<p>只是简单地实现了策略模式，选择算法还在客户端，应移走</p>
-<h3><span id="第二版">第二版</span></h3><p>策略与简单工厂结合</p>
-<p>CashContext</p>
-<pre><code class="java">package a.impl;
-
-public class CashContext &#123;
-
-    //声明一个CashSuper对象
-    private CashSuper cs;
-
-    public CashContext(String type)&#123;
-        switch (type)&#123;
-            case &quot;正常收费&quot;:
-                cs=new CashNormal();
-                break;
-            case &quot;打八折&quot;:
-                cs=new CashRebate(&quot;0.8&quot;);
-                break;
-            case &quot;返利&quot;:
-                cs=new CashReturn(300,100);
-                break;
-        &#125;
-
-    &#125;
-
-    public Double GetResult(Double money)&#123;
-        return cs.acceptCash(money);
-    &#125;
-
-&#125;
-</code></pre>
-<p>客户端</p>
-<pre><code class="java">package a.impl;
-
-import java.util.Scanner;
-
-public class Client &#123;
-
-    public static void main(String[] args) &#123;
-
-        Scanner sc=new Scanner(System.in);
-        System.out.println(&quot;请输入单价和数量：&quot;);
-        System.out.println(&quot;单价:&quot;);
-        int text=sc.nextInt();
-        System.out.println(&quot;数量:&quot;);
-        int num=sc.nextInt();
-        System.out.println(&quot;请选择收费策略&quot;);
-        String select=sc.next();
-       CashContext cashContext=new CashContext(select);
-
-        double totalPrices;
-        totalPrices=cashContext.GetResult(Double.parseDouble(String.valueOf(text*num)));
-        System.out.println(&quot;结果为：&quot;+totalPrices);
-    &#125;
-</code></pre>
-<p>观察简单工厂和策略模式与简单工厂模式相结合地情况下：简单工厂向用户暴露了两个类：CashSuper和CashFactory，而策略模式与简单工厂结合地用法，客户端就只需要认识一个类CashContext就可以，耦合性更低。</p>
-<h3><span id="总结">总结</span></h3><p><img src="/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20210919200622568.png" alt="image-20210919200622568"></p>
-<p>源码分析：<br><img src="/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211101220338094.png" alt="image-20211101220338094"></p>
-<p><strong>注意：</strong></p>
-<p>多用组合或聚合，而不是继承</p>
-<p>每添加一个策略就要增加一个类，当策略增多会导致类过多</p>
-<h1><span id="命令模式">命令模式</span></h1><p><img src="/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211030173749872.png" alt="image-20211030173749872"></p>
-<ul>
-<li><img src="/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211030175139500.png" alt="image-20211030175139500"></li>
-<li>StatementCallback 接口 ,类似命令接口(Command) -<br>class QueryStatementCallback implements StatementCallback<t>, SqlProvider , 匿名内 部类，实现了命令接口，同时也充当命令接收者</t></li>
-<li>命令调用者是 JdbcTemplate , 其中execute(StatementCallback<t> action) 方法中，调 用action.doInStatement 方法. 不同的实现 StatementCallback 接口的对象，对应不同 的doInStatemnt 实现逻辑</t></li>
-<li>另外实现 StatementCallback 命令接口的子类还有 QueryStatementCallback</li>
-</ul>
-<p><strong>注意：</strong></p>
-<p>调用者发起请求，不需知道具体接收者对象是谁，命令对象起到了纽带桥梁的作用，起到了解耦的作用</p>
-<p>容易设计一个命令队列，把命令对象放到队列里，就可以执行多线程的命令</p>
-<p>不足：增加系统复杂度</p>
-<h1><span id="访问者模式">访问者模式</span></h1><p><strong>访问者模式（Visitor Pattern）</strong>，封装一些作用于某种数据结构的各元素的操作， 它可以在不改变数据结构的前提下定义作用于这些元素的新的操作。</p>
-<p>主要将数据结构与数据操作分离，解决数据结构和操作耦合性问题 </p>
-<p>访问者模式的基本工作原理是：在被访问的类里面加一个对外提供接待访问者的接口，在源码中即为在man和women中提供一个accept接口</p>
-<p>其中重要的概念：<strong>双分派</strong></p>
-<p>双分派是指不管类怎么变化，我们都能找到期望的方法运行。 双分派意味着得到执行的操作取决于请求的种类和两个接收者的类型</p>
-<p>优缺点：</p>
-<p><img src="/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211030184755658.png" alt="image-20211030184755658"></p>
-<h1><span id="迭代器模式">迭代器模式</span></h1><p>属于行为型模式，如果集合元素实现方式不同：有数组有集合，当客户端遍历这些元素时，需要使用多种遍历方式，而且还会暴露元素的内部结构，可以考虑使用<strong>迭代器模式</strong>解决。</p>
-<p>会提供一个遍历集合元素的统一接口，用一致的方法遍历集合元素，不暴露内部结构</p>
-<p>注意：</p>
-<ol>
-<li><p>提供了一个设计思想，就是一个类应该只有一个引起变化的原因（单一责任原则）。在此例中，我们把管理对象集合和遍历对象集合的责任分开，这样一来集合改变的话，只影响到聚合对象，如果遍历方式改变，只影响迭代器</p>
-</li>
-<li><p>每个聚合对象都需要自定义一个迭代器，不好管理。</p>
-</li>
-<li><p>源码分析</p>
-<p><img src="/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211030194842610.png" alt="image-20211030194842610"></p>
-</li>
-</ol>
-<p><img src="/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211030194815008.png" alt="image-20211030194815008"></p>
-<h1><span id="观察者模式">观察者模式</span></h1><p>会以集合的形式来管理用户，可以注册，移除和更新</p>
-<p>源码分析：</p>
-<p><img src="/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211030204459067.png" alt="image-20211030204459067"></p>
-<p>Observable相当于观察者管理类</p>
-<p><img src="/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211030204659806.png" alt="image-20211030204659806"></p>
-<p>可以看出以上皆具有本角色的操作</p>
-<h1><span id="中介者模式">中介者模式</span></h1><p><img src="/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211101145044841.png" alt="image-20211101145044841"></p>
-<p><img src="/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211101145135630.png" alt="image-20211101145135630"></p>
-<h1><span id="备忘录模式">备忘录模式</span></h1><p>不破坏封装性的前提下。捕获一个对象的内部状态，并在备忘录管理类里保存，属于行为型模式</p>
-<p><img src="/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211101151124350.png" alt="image-20211101151124350"></p>
-<p><strong>注意事项：</strong></p>
-<p><img src="/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211101151352027.png" alt="image-20211101151352027"></p>
-<h1><span id="解释器模式">解释器模式</span></h1><p>指定一个语言（表达式），定义它的文法的一种表示，并定义一个解释器，使用该解释器来解释语言中的句子（表达式）</p>
-<p><img src="/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211101204142883.png" alt="image-20211101204142883"></p>
-<h1><span id="状态模式">状态模式</span></h1><p>解决对象转换多种状态，并对外输出不同行为的问题，状态之间可以相互转化</p>
-<p>实际项目：借贷平台</p>
-<p>注意：</p>
-<p><img src="/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211101212642704.png" alt="image-20211101212642704"></p>
-<h1><span id="职责链模式">职责链模式</span></h1><p><img src="/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211102160326945.png" alt="image-20211102160326945"></p>
-<p>源码分析：</p>
-<pre><code class="Java">protected void doDispatch(HttpServletRequest request, HttpServletResponse response) throws Exception &#123;
-         *   HandlerExecutionChain mappedHandler = null; 
-         *   mappedHandler = getHandler(processedRequest);//获取到HandlerExecutionChain对象
-         *    //在 mappedHandler.applyPreHandle 内部 得到啦 HandlerInterceptor interceptor
-         *    //调用了拦截器的  interceptor.preHandle
-         *   if (!mappedHandler.applyPreHandle(processedRequest, response)) &#123;
-                    return;
-                &#125;
-
-              //说明：mappedHandler.applyPostHandle 方法内部获取到拦截器，并调用 
-              //拦截器的  interceptor.postHandle(request, response, this.handler, mv);
-             mappedHandler.applyPostHandle(processedRequest, response, mv);
-         *  &#125;
-         *  
-         *  
-         *  说明：在  mappedHandler.applyPreHandle内部中，
-         *  还调用了  triggerAfterCompletion 方法，该方法中调用了  
-         *  HandlerInterceptor interceptor = getInterceptors()[i];
-            try &#123;
-                interceptor.afterCompletion(request, response, this.handler, ex);
-            &#125;
-            catch (Throwable ex2) &#123;
-                logger.error(&quot;HandlerInterceptor.afterCompletion threw exception&quot;, ex2);
-            &#125;
-</code></pre>
-<p><img src="/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211102160747217.png" alt="image-20211102160747217"></p>
-<p><strong>注意</strong></p>
-<p>实现了解耦，简化了对象，使对象不需知道链的结构</p>
-<p>但是性能会受到影响，因此需控制链中的最大节点个数。</p>
-<p>最佳应用场景：如多级请求，审批流程。Javaweb中tomcat对Encoding的处理，拦截器。</p>
+<h1><span id="四-dubbo原理">四、dubbo原理</span></h1><h2><span id="1-rpc原理">1、RPC原理</span></h2><p><img src="/2021/11/02/dubbo/wpsBCEF.tmp.jpg" alt="img"> </p>
+<p>一次完整的RPC调用流程（同步调用，异步另说）如下： <strong>1）服务消费方（client）调用以本地调用方式调用服务；</strong> 2）client stub接收到调用后负责将方法、参数等组装成能够进行网络传输的消息体； 3）client stub找到服务地址，并将消息发送到服务端； 4）server stub收到消息后进行解码； 5）server stub根据解码结果调用本地的服务； 6）本地服务执行并将结果返回给server stub； 7）server stub将返回结果打包成消息并发送至消费方； 8）client stub接收到消息，并进行解码； <strong>9）服务消费方得到最终结果。</strong>RPC框架的目标就是要2~8这些步骤都封装起来，这些细节对用户来说是透明的，不可见的。</p>
+<h2><span id="2-netty通信原理">2、netty通信原理</span></h2><p>Netty是一个异步事件驱动的网络应用程序框架， 用于快速开发可维护的高性能协议服务器和客户端。它极大地简化并简化了TCP和UDP套接字服务器等网络编程。</p>
+<p>BIO：(Blocking IO)</p>
+<p><img src="/2021/11/02/dubbo/wpsBCF0.tmp.jpg" alt="img"> </p>
+<p>NIO (Non-Blocking IO)</p>
+<p><img src="/2021/11/02/dubbo/wpsBCF1.tmp.jpg" alt="img"> </p>
+<p>Selector 一般称 为<strong>选择器</strong> ，也可以翻译为 <strong>多路复用器，</strong></p>
+<p>Connect（连接就绪）、Accept（接受就绪）、Read（读就绪）、Write（写就绪）</p>
+<p>Netty基本原理：</p>
+<p><img src="/2021/11/02/dubbo/wpsBCF2.tmp.jpg" alt="img"> </p>
+<h2><span id="3-dubbo原理">3、dubbo原理</span></h2><h3><span id="1-dubbo原理-框架设计">1、dubbo原理    -框架设计</span></h3><p><img src="/2021/11/02/dubbo/wpsBCF3.tmp.png" alt="img"> </p>
+<p>l config 配置层：对外配置接口，以 ServiceConfig, ReferenceConfig 为中心，可以直接初始化配置类，也可以通过 spring 解析配置生成配置类</p>
+<p>l proxy 服务代理层：服务接口透明代理，生成服务的客户端 Stub 和服务器端 Skeleton, 以 ServiceProxy 为中心，扩展接口为 ProxyFactory</p>
+<p>l registry 注册中心层：封装服务地址的注册与发现，以服务 URL 为中心，扩展接口为 RegistryFactory, Registry, RegistryService</p>
+<p>l cluster 路由层：封装多个提供者的路由及负载均衡，并桥接注册中心，以 Invoker 为中心，扩展接口为 Cluster, Directory, Router, LoadBalance</p>
+<p>l monitor 监控层：RPC 调用次数和调用时间监控，以 Statistics 为中心，扩展接口为 MonitorFactory, Monitor, MonitorService</p>
+<p>l protocol 远程调用层：封装 RPC 调用，以 Invocation, Result 为中心，扩展接口为 Protocol, Invoker, Exporter</p>
+<p>l exchange 信息交换层：封装请求响应模式，同步转异步，以 Request, Response 为中心，扩展接口为 Exchanger, ExchangeChannel, ExchangeClient, ExchangeServer</p>
+<p>l transport 网络传输层：抽象 mina 和 netty 为统一接口，以 Message 为中心，扩展接口为 Channel, Transporter, Client, Server, Codec</p>
+<p>l serialize 数据序列化层：可复用的一些工具，扩展接口为 Serialization, ObjectInput, ObjectOutput, ThreadPool</p>
+<h3><span id="2-dubbo原理-启动解析-加载配置信息">2、dubbo原理    -启动解析、加载配置信息</span></h3><p><img src="/2021/11/02/dubbo/wpsBD04.tmp.jpg" alt="img"> </p>
+<h3><span id="3-dubbo原理-服务暴露">3、dubbo原理    -服务暴露</span></h3><p><img src="/2021/11/02/dubbo/wpsBD05.tmp.png" alt="img"> </p>
+<h3><span id="4-dubbo原理-服务引用">4、dubbo原理    -服务引用</span></h3><p><img src="/2021/11/02/dubbo/wpsBD06.tmp.png" alt="img"> </p>
+<h3><span id="5-dubbo原理-服务调用">5、dubbo原理    -服务调用</span></h3><p><img src="/2021/11/02/dubbo/wpsBD07.tmp.png" alt="img"></p>
 
       
     </div>
@@ -2848,7 +1189,7 @@ public class Client &#123;
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 

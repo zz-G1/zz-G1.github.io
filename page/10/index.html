@@ -25,14 +25,14 @@
   <meta name="description" content="只要开始就不算晚">
 <meta property="og:type" content="website">
 <meta property="og:title" content="香饽饽">
-<meta property="og:url" content="http://example.com/index.html">
+<meta property="og:url" content="http://example.com/page/10/index.html">
 <meta property="og:site_name" content="香饽饽">
 <meta property="og:description" content="只要开始就不算晚">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:author" content="Gzz">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/">
+<link rel="canonical" href="http://example.com/page/10/">
 
 
 <script id="page-configurations">
@@ -195,7 +195,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/11/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/08/post-WithWut/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -209,7 +209,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/11/11/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B/" class="post-title-link" itemprop="url">谷粒学院项目历程</a>
+            <a href="/2021/09/08/post-WithWut/" class="post-title-link" itemprop="url">WithWut</a>
         </h2>
 
         <div class="post-meta">
@@ -220,23 +220,17 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2021-11-11 16:52:17" itemprop="dateCreated datePublished" datetime="2021-11-11T16:52:17+08:00">2021-11-11</time>
+              <time title="创建时间：2021-09-08 22:29:22 / 修改时间：22:48:18" itemprop="dateCreated datePublished" datetime="2021-09-08T22:29:22+08:00">2021-09-08</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-11-20 16:32:10" itemprop="dateModified" datetime="2021-11-20T16:32:10+08:00">2021-11-20</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/" itemprop="url" rel="index"><span itemprop="name">项目实战</span></a>
+                  <a href="/categories/%E7%94%9F%E6%B4%BB%E5%9B%AD%E5%9C%B0/" itemprop="url" rel="index"><span itemprop="name">生活园地</span></a>
                 </span>
             </span>
 
@@ -245,13 +239,13 @@
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
               </span>
-              <span>7k</span>
+              <span>16</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
-              <span>6 分钟</span>
+              <span>1 分钟</span>
             </span>
 
         </div>
@@ -263,301 +257,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1><span id="谷粒学院项目">谷粒学院项目</span></h1><h2><span id="搭建环境">搭建环境</span></h2><p>了解到非业务流程开发正好符合我之前影像系统开发的某些功能，原来是以这个名词来进行概括</p>
-<h3><span id="项目总体架构">项目总体架构</span></h3><ul>
-<li><input disabled type="checkbox"> common 模块的公共配置</li>
-<li><input disabled type="checkbox"> canal_client 数据库同步模块（统计同步数据）</li>
-<li><input disabled type="checkbox"> infrastructure：基础服务模块父节点</li>
-<li><input disabled type="checkbox"> service api接口服务父节点</li>
-<li><input disabled type="checkbox"> node.js做BFF层</li>
-</ul>
-<p>父项目只管理依赖的版本，就做到了按需加载依赖，而且版本统一</p>
-<p><dependencymanagement>用于父项目中对子项目进行统一依赖管理</dependencymanagement></p>
-<p>遇到问题：IDEA中删除模块后，重新创建同名模块，显示已存在该模块</p>
-<p>解决：</p>
-<p><strong>1.在项目区单击右键找到load/Unload Modules…unload出问题的模块就可以</strong></p>
-<p><img src="/2021/11/11/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xleHVlaXQ=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-<h3><span id="后台业务接口配置">后台业务接口配置</span></h3><h4><span id></span></h4><p><img src="/2021/11/11/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B/image-20211112190716874.png" alt="image-20211112190716874"></p>
-<h3><span id="设置统一返回结果">设置统一返回结果：</span></h3><pre><code class="java">@Data
-@ApiModel(value = &quot;全局统一返回结果&quot;)
-public class R &#123;
-
-    @ApiModelProperty(value = &quot;是否成功&quot;)
-    private Boolean success;
-
-    @ApiModelProperty(value = &quot;返回码&quot;)
-    private Integer code;
-
-    @ApiModelProperty(value = &quot;返回消息&quot;)
-    private String message;
-
-    @ApiModelProperty(value = &quot;返回数据&quot;)
-    private Map&lt;String, Object&gt; data = new HashMap&lt;String, Object&gt;();
-
-    public R()&#123;&#125;
-
-    public static R ok()&#123;
-        R r = new R();
-        r.setSuccess(ResultCodeEnum.SUCCESS.getSuccess());
-        r.setCode(ResultCodeEnum.SUCCESS.getCode());
-        r.setMessage(ResultCodeEnum.SUCCESS.getMessage());
-        return r;
-    &#125;
-
-    public static R error()&#123;
-        R r = new R();
-        r.setSuccess(ResultCodeEnum.UNKNOWN_REASON.getSuccess());
-        r.setCode(ResultCodeEnum.UNKNOWN_REASON.getCode());
-        r.setMessage(ResultCodeEnum.UNKNOWN_REASON.getMessage());
-        return r;
-    &#125;
-
-    public static R setResult(ResultCodeEnum resultCodeEnum)&#123;
-        R r = new R();
-        r.setSuccess(resultCodeEnum.getSuccess());
-        r.setCode(resultCodeEnum.getCode());
-        r.setMessage(resultCodeEnum.getMessage());
-        return r;
-    &#125;
-
-    public R success(Boolean success)&#123;
-        this.setSuccess(success);
-        return this;
-    &#125;
-
-    public R message(String message)&#123;
-        this.setMessage(message);
-        return this;
-    &#125;
-
-    public R code(Integer code)&#123;
-        this.setCode(code);
-        return this;
-    &#125;
-
-    public R data(String key, Object value)&#123;
-        this.data.put(key, value);
-        return this;
-    &#125;
-
-    public R data(Map&lt;String, Object&gt; map)&#123;
-        this.setData(map);
-        return this;
-    &#125;
-&#125;
-</code></pre>
-<h4><span id="各种状态信息返回码是由我们前端使用的vue框架决定的">各种状态信息，返回码是由我们前端使用的VUE框架决定的</span></h4><pre><code class="Java">@Getter
-@ToString
-public enum ResultCodeEnum &#123;
-
-    SUCCESS(true, 20000,&quot;成功&quot;),
-    UNKNOWN_REASON(false, 20001, &quot;未知错误&quot;),
-
-    BAD_SQL_GRAMMAR(false, 21001, &quot;sql语法错误&quot;),
-    JSON_PARSE_ERROR(false, 21002, &quot;json解析异常&quot;),
-    PARAM_ERROR(false, 21003, &quot;参数不正确&quot;),
-
-    FILE_UPLOAD_ERROR(false, 21004, &quot;文件上传错误&quot;),
-    FILE_DELETE_ERROR(false, 21005, &quot;文件刪除错误&quot;),
-    EXCEL_DATA_IMPORT_ERROR(false, 21006, &quot;Excel数据导入错误&quot;),
-
-    VIDEO_UPLOAD_ALIYUN_ERROR(false, 22001, &quot;视频上传至阿里云失败&quot;),
-    VIDEO_UPLOAD_TOMCAT_ERROR(false, 22002, &quot;视频上传至业务服务器失败&quot;),
-    VIDEO_DELETE_ALIYUN_ERROR(false, 22003, &quot;阿里云视频文件删除失败&quot;),
-    FETCH_VIDEO_UPLOADAUTH_ERROR(false, 22004, &quot;获取上传地址和凭证失败&quot;),
-    REFRESH_VIDEO_UPLOADAUTH_ERROR(false, 22005, &quot;刷新上传地址和凭证失败&quot;),
-    FETCH_PLAYAUTH_ERROR(false, 22006, &quot;获取播放凭证失败&quot;),
-
-    URL_ENCODE_ERROR(false, 23001, &quot;URL编码失败&quot;),
-    ILLEGAL_CALLBACK_REQUEST_ERROR(false, 23002, &quot;非法回调请求&quot;),
-    FETCH_ACCESSTOKEN_FAILD(false, 23003, &quot;获取accessToken失败&quot;),
-    FETCH_USERINFO_ERROR(false, 23004, &quot;获取用户信息失败&quot;),
-    LOGIN_ERROR(false, 23005, &quot;登录失败&quot;),
-
-    COMMENT_EMPTY(false, 24006, &quot;评论内容必须填写&quot;),
-
-    PAY_RUN(false, 25000, &quot;支付中&quot;),
-    PAY_UNIFIEDORDER_ERROR(false, 25001, &quot;统一下单错误&quot;),
-    PAY_ORDERQUERY_ERROR(false, 25002, &quot;查询支付结果错误&quot;),
-
-    ORDER_EXIST_ERROR(false, 25003, &quot;课程已购买&quot;),
-
-    GATEWAY_ERROR(false, 26000, &quot;服务不能访问&quot;),
-
-    CODE_ERROR(false, 28000, &quot;验证码错误&quot;),
-
-    LOGIN_PHONE_ERROR(false, 28009, &quot;手机号码不正确&quot;),
-    LOGIN_MOBILE_ERROR(false, 28001, &quot;账号不正确&quot;),
-    LOGIN_PASSWORD_ERROR(false, 28008, &quot;密码不正确&quot;),
-    LOGIN_DISABLED_ERROR(false, 28002, &quot;该用户已被禁用&quot;),
-    REGISTER_MOBLE_ERROR(false, 28003, &quot;手机号已被注册&quot;),
-    LOGIN_AUTH(false, 28004, &quot;需要登录&quot;),
-    LOGIN_ACL(false, 28005, &quot;没有权限&quot;),
-    SMS_SEND_ERROR(false, 28006, &quot;短信发送失败&quot;),
-    SMS_SEND_ERROR_BUSINESS_LIMIT_CONTROL(false, 28007, &quot;短信发送过于频繁&quot;);
-
-
-    private Boolean success;
-
-    private Integer code;
-
-    private String message;
-
-    ResultCodeEnum(Boolean success, Integer code, String message) &#123;
-        this.success = success;
-        this.code = code;
-        this.message = message;
-    &#125;
-&#125;
-</code></pre>
-<p>遇到问题：<strong>pom文件变橘红</strong>：idea没有识别，我们可以通过右键pom.xml文件选择Add as Maven Poject 来解决</p>
-<p>​                    <strong>pom文件变灰</strong>：打开setting，搜索ignored<img src="/2021/11/11/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B/image-20211112212242759.png" alt="image-20211112212242759"></p>
-<h3><span id="定义前端查询的对象">定义前端查询的对象</span></h3><p>讲师：</p>
-<pre><code class="java">public class TeacherQueryVo implements Serializable &#123;
-    private static final long serialVersionUID = 1L;
-
-    @ApiModelProperty(value = &quot;讲师姓名&quot;)
-    private String name;
-
-    @ApiModelProperty(value = &quot;讲师级别&quot;)
-    private Integer level;
-
-    @ApiModelProperty(value = &quot;开始时间&quot;)
-    private String joinDateBegin;
-
-    @ApiModelProperty(value = &quot;结束时间&quot;)
-    private String joinDateEnd;
-&#125;
-</code></pre>
-<p>关于设置自动填充类</p>
-<p>如果没有设置的话，save方法前端以json形式返回后台数据中没有创建时间和更新时间，但是数据库中两字段为必填字段，程序就会报错</p>
-<p><img src="/2021/11/11/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B/image-20211113135408082.png" alt="image-20211113135408082"></p>
-<p>所以就要设置自动配置handler类</p>
-<pre><code class="Java">@Component
-public class CommonMetaObjectHandler implements MetaObjectHandler &#123;
-
-    @Override
-    public void insertFill(MetaObject metaObject) &#123;
-        this.setFieldValByName(&quot;gmtCreate&quot;, new Date(), metaObject);
-        this.setFieldValByName(&quot;gmtModified&quot;, new Date(), metaObject);
-    &#125;
-
-    @Override
-    public void updateFill(MetaObject metaObject) &#123;
-        this.setFieldValByName(&quot;gmtModified&quot;, new Date(), metaObject);
-    &#125;
-&#125;
-</code></pre>
-<h3><span id="定义统一异常处理器">定义统一异常处理器</span></h3><p>因为要返回前台，所以要统一异常处理，并以json格式返回</p>
-<pre><code class="Java">@ControllerAdvice
-@Slf4j
-public class GlobalExceptionHandler &#123;
-
-    @ExceptionHandler(Exception.class)
-    @ResponseBody
-    public R error(Exception e)&#123;
-//        e.printStackTrace();
-        log.error(ExceptionUtils.getMessage(e));
-        return R.error();
-    &#125;
-
-    @ExceptionHandler(BadSqlGrammarException.class)
-    @ResponseBody
-    public R error(BadSqlGrammarException e)&#123;
-        log.error(ExceptionUtils.getMessage(e));
-        return R.setResult(ResultCodeEnum.BAD_SQL_GRAMMAR);
-    &#125;
-
-    @ExceptionHandler(HttpMessageNotReadableException.class)
-    @ResponseBody
-    public R error(HttpMessageNotReadableException e)&#123;
-        log.error(ExceptionUtils.getMessage(e));
-        return R.setResult(ResultCodeEnum.JSON_PARSE_ERROR);
-    &#125;
-&#125;
-</code></pre>
-<h2><span id="前端">前端</span></h2><p>vue axios</p>
-<p>跨域问题：@crossOrigin</p>
-<p>npm</p>
-<p><strong>安装生产环境依赖</strong>：npm install –save-dev  ***</p>
-<p>或者 npm i -D ***</p>
-<p>安装全局依赖：npm install –global ***</p>
-<p>webpack进行项目打包 ，创建webpack.config.js文件：</p>
-<pre><code class="js">const path = require(&quot;path&quot;) //Node.js内置模块
-
-module.exports = &#123;
-    entry: &#39;./src/main.js&#39;, //配置入口文件
-    output: &#123;
-        path: path.resolve(__dirname, &#39;./dist&#39;), //输出路径，__dirname：当前文件所在路径
-        filename: &#39;bundle.js&#39; //输出文件
-    &#125;,
-    module: &#123;
-        rules: [  
-            &#123;  
-                test: /\.css$/,    //打包规则应用到以css结尾的文件上
-                use: [&#39;style-loader&#39;, &#39;css-loader&#39;]
-            &#125;  
-        ]  
-    &#125;
-&#125;
-</code></pre>
-<p>然后执行webpack –mode=development命令</p>
-<p><img src="/2021/11/11/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B/image-20211116160418094.png" alt="image-20211116160418094"></p>
-<p>webpack压缩</p>
-<p>执行webpack –mode=production命令</p>
-<p>之后这些命令都会集成在脚本里，直接执行脚本就可以了</p>
-<p>webpack打包css</p>
-<p>安装两个依赖</p>
-<pre><code class="js">&quot;devDependencies&quot;: &#123;
-  &quot;css-loader&quot;: &quot;^3.5.2&quot;,
-  &quot;style-loader&quot;: &quot;^1.1.3&quot;
-&#125;
-</code></pre>
-<p>然后在webpak.config.js文件中加上以下配置</p>
-<pre><code class="js">module: &#123;
-        rules: [  
-            &#123;  
-                test: /\.css$/,    //打包规则应用到以css结尾的文件上
-                use: [&#39;style-loader&#39;, &#39;css-loader&#39;]
-            &#125;  
-        ]  
-    &#125;
-</code></pre>
-<p>页面渲染流程：创建路由–创建API–创建页面组件</p>
-<p><img src="/2021/11/11/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B/image-20211118111357610.png" alt="image-20211118111357610"></p>
-<p>遇到问题：<br>回显页切到新增页表单没有更新，两个页面通用一个表单，两个页面切换没有更新，因为vue会组件复用</p>
-<p><img src="/2021/11/11/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B/image-20211118113144519.png" alt="image-20211118113144519"></p>
-<p><img src="/2021/11/11/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B/image-20211118113800410.png" alt="image-20211118113800410"></p>
-<p>需要在appmain中进行配置</p>
-<p><img src="/2021/11/11/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B/image-20211118114000851.png" alt="image-20211118114000851"></p>
-<pre><code class="vue">&lt;template&gt;
-  &lt;section class=&quot;app-main&quot;&gt;
-    &lt;transition name=&quot;fade-transform&quot; mode=&quot;out-in&quot;&gt;
-      &lt;!-- or name=&quot;fade&quot; --&gt;
-      &lt;!-- 如果为路由出口定义一个唯一key值，那么组件会被强制重新渲染 --&gt;
-      &lt;router-view :key=&quot;key&quot;/&gt;
-      &lt;!-- 如果路由指向的页面组件是同一个，那么路由出口显示的页面组件不会重新被渲染 --&gt;
-      &lt;!--      &lt;router-view/&gt;--&gt;
-    &lt;/transition&gt;
-  &lt;/section&gt;
-&lt;/template&gt;
-
-&lt;script&gt;
-export default &#123;
-  name: &#39;AppMain&#39;,
-
-  // 计算属性
-  computed: &#123;
-    key() &#123;
-      return this.$route.name !== undefined ? this.$route.name + +new Date() : this.$route + +new Date()
-    &#125;
-  &#125;
-&#125;
-&lt;/script&gt;
-</code></pre>
-<p>计算属性效率很高</p>
-<h2><span id="自定义异常">自定义异常</span></h2><p>更为灵活</p>
-<p>一般情况下自定义异常类型都为运行时异常，继承RuntimeException</p>
+          <h1><span id="png">png</span></h1><p>宝贝亲自挑选的哦：🎎🎏</p>
+<p><img src="/2021/09/08/post-WithWut/QQ%E5%9B%BE%E7%89%8720210908223629.jpg" alt="QQ图片20210908223629"></p>
 
       
     </div>
@@ -579,7 +280,7 @@ export default &#123;
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/08/%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -593,7 +294,7 @@ export default &#123;
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/11/08/%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6/" class="post-title-link" itemprop="url">消息中间件</a>
+            <a href="/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/" class="post-title-link" itemprop="url">设计模式Study-2</a>
         </h2>
 
         <div class="post-meta">
@@ -605,28 +306,45 @@ export default &#123;
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-11-08 22:14:29" itemprop="dateCreated datePublished" datetime="2021-11-08T22:14:29+08:00">2021-11-08</time>
+              <time title="创建时间：2021-09-02 09:34:07" itemprop="dateCreated datePublished" datetime="2021-09-02T09:34:07+08:00">2021-09-02</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-11-09 12:44:08" itemprop="dateModified" datetime="2021-11-09T12:44:08+08:00">2021-11-09</time>
+                <time title="修改时间：2021-11-02 16:11:30" itemprop="dateModified" datetime="2021-11-02T16:11:30+08:00">2021-11-02</time>
               </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java%E8%BF%9B%E9%98%B6/" itemprop="url" rel="index"><span itemprop="name">Java进阶</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java%E8%BF%9B%E9%98%B6/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">设计模式</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java%E8%BF%9B%E9%98%B6/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">策略模式</span></a>
+                </span>
+            </span>
 
           
             <span class="post-meta-item" title="本文字数">
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
               </span>
-              <span>761</span>
+              <span>6.7k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
-              <span>1 分钟</span>
+              <span>6 分钟</span>
             </span>
 
         </div>
@@ -638,82 +356,368 @@ export default &#123;
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1><span id="基于消息中间件的分布式系统的架构">基于消息中间件的分布式系统的架构</span></h1><h2><span id="消息中间件应用的场景">消息中间件应用的场景</span></h2><p>1:跨系统数据传递<br>2:高并发的流量削峰<br>3:数据的分发和异步处理<br>4:大数据分析与传递<br>5:分布式事务<br>比如你有一个数据要进行迁移或者请求并发过多的时候，比如你有10W的并发请求下订单，我们可以在这些订单入库之前，我们可以把订单请求堆积到消息队列中，让它稳健可靠的入库和执行。</p>
-<h2><span id="常见的消息中间件">常见的消息中间件</span></h2><p>ActiveMQ、RabbitMQ、Kafka、RocketMQ等。</p>
-<p>MQ消息队列：负责数据的传接受，存储和传递，所以性能要过于普通服务和技术。</p>
-<h2><span id="消息中间件的核心组成部分">消息中间件的核心组成部分</span></h2><p>1：消息的协议<br>2：消息的持久化机制<br>3：消息的分发策略<br>4：消息的高可用，高可靠<br>5：消息的容错机制</p>
-<h2><span id="消息队列协议">消息队列协议</span></h2><p><strong>面试题：为什么消息中间件不直接使用http协议呢？</strong><br>1: 因为http请求报文头和响应报文头是比较复杂的，包含了cookie，数据的加密解密，状态码，响应码等附加的功能，但是对于一个消息而言，我们并不需要这么复杂，也没有这个必要性，它其实就是负责数据传递，存储，分发就行，一定要追求的是高性能。尽量简洁，快速。<br>2:大部分情况下http大部分都是短链接，在实际的交互过程中，一个请求到响应很有可能会中断，中断以后就不会就行持久化，就会造成请求的丢失。这样就不利于消息中间件的业务场景，因为消息中间件可能是一个长期的获取消息的过程，出现问题和故障要对数据或消息就行持久化等，目的是为了保证消息和数据的高可靠和稳健的运行。</p>
-<h3><span id="常见的持久化方式">常见的持久化方式</span></h3><table>
-<thead>
-<tr>
-<th></th>
-<th>ActiveMQ</th>
-<th>RabbitMQ</th>
-<th><strong>Kafka</strong></th>
-<th>RocketMQ</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>文件存储</td>
-<td>支持</td>
-<td>支持</td>
-<td>支持</td>
-<td>支持</td>
-</tr>
-<tr>
-<td>数据库</td>
-<td>支持</td>
-<td>/</td>
-<td>/</td>
-<td>/</td>
-</tr>
-</tbody></table>
-<h2><span id="消息分发策略的机制和对比">消息分发策略的机制和对比</span></h2><table>
-<thead>
-<tr>
-<th></th>
-<th>ActiveMQ</th>
-<th>RabbitMQ</th>
-<th>Kafka</th>
-<th>RocketMQ</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>发布订阅</td>
-<td>支持</td>
-<td>支持</td>
-<td>支持</td>
-<td>支持</td>
-</tr>
-<tr>
-<td>轮询分发</td>
-<td>支持</td>
-<td>支持</td>
-<td>支持</td>
-<td>/</td>
-</tr>
-<tr>
-<td>公平分发</td>
-<td>/</td>
-<td>支持</td>
-<td>支持</td>
-<td>/</td>
-</tr>
-<tr>
-<td>重发</td>
-<td>支持</td>
-<td>支持</td>
-<td>/</td>
-<td>支持</td>
-</tr>
-<tr>
-<td>消息拉取</td>
-<td>/</td>
-<td>支持</td>
-<td>支持</td>
-<td>支持</td>
-</tr>
-</tbody></table>
+          <h1><span id="strategy-pattern"><em><a href="javascript:;">strategy</a> <a href="javascript:;">pattern</a></em></span></h1><h1><span id="策略模式">策略模式</span></h1><p><img src="/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211101215229119.png" alt="image-20211101215229119"></p>
+<p><img src="/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20210902154825052.png" alt="image-20210902154825052"></p>
+<pre><code class="java">/**
+ * 定义所有支持算法的接口
+ */
+abstract class Strategy &#123;
+    /**
+     * 算法方法
+     */
+    public abstract void algorithmInterface();
+&#125;
+</code></pre>
+<pre><code class="java">/**
+ * 封装具体的算法和行为，继承于Strategy
+ */
+public class ConcreteStrategyA extends Strategy &#123;
+    @Override
+     public  void algorithmInterface()&#123;
+         System.out.println(&quot;执行算法A&quot;);
+     &#125;
+&#125;
+public class ConcreteStrategyB extends Strategy&#123;
+    @Override
+    public  void algorithmInterface()&#123;
+        System.out.println(&quot;执行算法B&quot;);
+    &#125;
+&#125;
+public class ConcreteStrategyC extends Strategy &#123;
+    @Override
+    public  void algorithmInterface()&#123;
+        System.out.println(&quot;执行算法C&quot;);
+    &#125;
+&#125;
+</code></pre>
+<pre><code class="java">/**
+ * @author zz
+ * 上下文，维持一个strategy对象的引用
+ */
+public class Context &#123;
+    Strategy strategy;
+
+    /**
+     * 初始化时，传入具体的策略对象
+     * @param strategy 具体的策略对象
+     */
+    public Context(Strategy strategy)&#123;
+        this.strategy=strategy;
+    &#125;
+
+    /**
+     * 根据具体的策略对象，调用其算法
+     */
+    public void contextInterface()&#123;
+        this.strategy.algorithmInterface();
+    &#125;
+&#125;
+</code></pre>
+<p><strong>客户端</strong></p>
+<pre><code class="java">/**
+ * 由于实例化不同的策略，所以最终调用context.contextInterface()时，
+ * @author zz
+ */
+public class Client &#123;
+    public static void main(String[] args) &#123;
+        Context context;
+        context=new Context(new ConcreteStrategyA());
+        context.contextInterface();
+
+        context=new Context(new ConcreteStrategyB());
+        context.contextInterface();
+
+        context=new Context(new ConcreteStrategyC());
+        context.contextInterface();
+
+    &#125;
+&#125;
+</code></pre>
+<hr>
+<h2><span id="实现">实现</span></h2><p><img src="/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20210915112133772.png" alt="image-20210915112133772"></p>
+<h3><span id="第一版">第一版</span></h3><p>支持所有收费策略的接口：</p>
+<pre><code class="java">public class CashContext &#123;
+
+    //声明一个CashSuper对象
+    private CashSuper cs;
+
+    public CashContext(CashSuper cashSuper)&#123;
+        this.cs=cashSuper;
+    &#125;
+
+    public Double GetResult(Double money)&#123;
+        return cs.acceptCash(money);
+    &#125;
+
+&#125;
+</code></pre>
+<p>收费策略</p>
+<pre><code class="java">/**
+ * 正常收费子类
+ */
+public class CashNormal extends CashSuper&#123;
+    @Override
+    Double acceptCash(Double money) &#123;
+        return money;
+    &#125;
+&#125;
+/**
+ * 打折收费子类
+ */
+public class CashRebate extends CashSuper &#123;
+    private Double moneyRebate;//打折率
+
+    public CashRebate(String moneyRebate) &#123;
+        this.moneyRebate = Double.parseDouble(moneyRebate);
+    &#125;
+
+
+    @Override
+    Double acceptCash(Double money) &#123;
+        return moneyRebate * money;
+    &#125;
+
+
+&#125;
+/**
+ * 返利收费子类
+ */
+public class CashReturn extends CashSuper&#123;
+
+    public CashReturn(double monryCondition, double moneyValue) &#123;
+        this.moneyCondition = monryCondition;
+        this.moneyValue = moneyValue;
+    &#125;
+
+    //返利条件
+    private double moneyCondition;
+    //返利值
+    private double moneyValue;
+
+
+    @Override
+    Double acceptCash(Double money) &#123;
+        if (money&gt;=moneyCondition)&#123;
+            return (money-moneyValue);
+        &#125;else &#123;
+            return money;
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<p>工厂类</p>
+<pre><code class="Java">/**
+ * 现金收费工厂类
+ */
+public class CashFactory &#123;
+    public static CashSuper createCash(String type)&#123;
+        CashSuper cs=null;
+        switch (type)&#123;
+            case &quot;正常收费&quot;:
+                cs=new CashNormal();
+                break;
+            case &quot;打八折&quot;:
+                cs=new CashRebate(&quot;0.8&quot;);
+                break;
+            case &quot;返利&quot;:
+                cs=new CashReturn(300,100);
+                break;
+        &#125;
+        return cs;
+    &#125;
+
+&#125;
+</code></pre>
+<p>现金收费抽象类</p>
+<pre><code class="Java">/**
+ * 现金收费抽象类
+ */
+abstract class CashSuper &#123;
+    abstract Double acceptCash(Double money);
+&#125;
+</code></pre>
+<p>客户端</p>
+<pre><code class="java">package a.impl;
+
+import java.util.Scanner;
+
+public class Client &#123;
+
+    public static void main(String[] args) &#123;
+        CashContext cc;
+        Scanner sc=new Scanner(System.in);
+        System.out.println(&quot;请输入单价和数量：&quot;);
+        System.out.println(&quot;单价:&quot;);
+        int text=sc.nextInt();
+        System.out.println(&quot;数量:&quot;);
+        int num=sc.nextInt();
+        System.out.println(&quot;请选择收费策略&quot;);
+        String select=sc.next();
+        switch (select)&#123;
+            case &quot;正常收费&quot;:
+                cc=new CashContext(new CashNormal());
+                break;
+            case &quot;满300返100&quot;:
+                cc=new CashContext(new CashReturn(300,100));
+                break;
+            case &quot;打八折&quot;:
+                cc=new CashContext(new CashRebate(&quot;0.8&quot;));
+                break;
+            default:
+                throw new IllegalStateException(&quot;Unexpected value: &quot; + select);
+        &#125;
+
+        double totalPrices;
+        totalPrices=cc.GetResult(Double.parseDouble(String.valueOf(text*num)));
+        System.out.println(&quot;结果为：&quot;+totalPrices);
+    &#125;
+
+
+
+&#125;
+</code></pre>
+<p>只是简单地实现了策略模式，选择算法还在客户端，应移走</p>
+<h3><span id="第二版">第二版</span></h3><p>策略与简单工厂结合</p>
+<p>CashContext</p>
+<pre><code class="java">package a.impl;
+
+public class CashContext &#123;
+
+    //声明一个CashSuper对象
+    private CashSuper cs;
+
+    public CashContext(String type)&#123;
+        switch (type)&#123;
+            case &quot;正常收费&quot;:
+                cs=new CashNormal();
+                break;
+            case &quot;打八折&quot;:
+                cs=new CashRebate(&quot;0.8&quot;);
+                break;
+            case &quot;返利&quot;:
+                cs=new CashReturn(300,100);
+                break;
+        &#125;
+
+    &#125;
+
+    public Double GetResult(Double money)&#123;
+        return cs.acceptCash(money);
+    &#125;
+
+&#125;
+</code></pre>
+<p>客户端</p>
+<pre><code class="java">package a.impl;
+
+import java.util.Scanner;
+
+public class Client &#123;
+
+    public static void main(String[] args) &#123;
+
+        Scanner sc=new Scanner(System.in);
+        System.out.println(&quot;请输入单价和数量：&quot;);
+        System.out.println(&quot;单价:&quot;);
+        int text=sc.nextInt();
+        System.out.println(&quot;数量:&quot;);
+        int num=sc.nextInt();
+        System.out.println(&quot;请选择收费策略&quot;);
+        String select=sc.next();
+       CashContext cashContext=new CashContext(select);
+
+        double totalPrices;
+        totalPrices=cashContext.GetResult(Double.parseDouble(String.valueOf(text*num)));
+        System.out.println(&quot;结果为：&quot;+totalPrices);
+    &#125;
+</code></pre>
+<p>观察简单工厂和策略模式与简单工厂模式相结合地情况下：简单工厂向用户暴露了两个类：CashSuper和CashFactory，而策略模式与简单工厂结合地用法，客户端就只需要认识一个类CashContext就可以，耦合性更低。</p>
+<h3><span id="总结">总结</span></h3><p><img src="/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20210919200622568.png" alt="image-20210919200622568"></p>
+<p>源码分析：<br><img src="/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211101220338094.png" alt="image-20211101220338094"></p>
+<p><strong>注意：</strong></p>
+<p>多用组合或聚合，而不是继承</p>
+<p>每添加一个策略就要增加一个类，当策略增多会导致类过多</p>
+<h1><span id="命令模式">命令模式</span></h1><p><img src="/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211030173749872.png" alt="image-20211030173749872"></p>
+<ul>
+<li><img src="/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211030175139500.png" alt="image-20211030175139500"></li>
+<li>StatementCallback 接口 ,类似命令接口(Command) -<br>class QueryStatementCallback implements StatementCallback<t>, SqlProvider , 匿名内 部类，实现了命令接口，同时也充当命令接收者</t></li>
+<li>命令调用者是 JdbcTemplate , 其中execute(StatementCallback<t> action) 方法中，调 用action.doInStatement 方法. 不同的实现 StatementCallback 接口的对象，对应不同 的doInStatemnt 实现逻辑</t></li>
+<li>另外实现 StatementCallback 命令接口的子类还有 QueryStatementCallback</li>
+</ul>
+<p><strong>注意：</strong></p>
+<p>调用者发起请求，不需知道具体接收者对象是谁，命令对象起到了纽带桥梁的作用，起到了解耦的作用</p>
+<p>容易设计一个命令队列，把命令对象放到队列里，就可以执行多线程的命令</p>
+<p>不足：增加系统复杂度</p>
+<h1><span id="访问者模式">访问者模式</span></h1><p><strong>访问者模式（Visitor Pattern）</strong>，封装一些作用于某种数据结构的各元素的操作， 它可以在不改变数据结构的前提下定义作用于这些元素的新的操作。</p>
+<p>主要将数据结构与数据操作分离，解决数据结构和操作耦合性问题 </p>
+<p>访问者模式的基本工作原理是：在被访问的类里面加一个对外提供接待访问者的接口，在源码中即为在man和women中提供一个accept接口</p>
+<p>其中重要的概念：<strong>双分派</strong></p>
+<p>双分派是指不管类怎么变化，我们都能找到期望的方法运行。 双分派意味着得到执行的操作取决于请求的种类和两个接收者的类型</p>
+<p>优缺点：</p>
+<p><img src="/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211030184755658.png" alt="image-20211030184755658"></p>
+<h1><span id="迭代器模式">迭代器模式</span></h1><p>属于行为型模式，如果集合元素实现方式不同：有数组有集合，当客户端遍历这些元素时，需要使用多种遍历方式，而且还会暴露元素的内部结构，可以考虑使用<strong>迭代器模式</strong>解决。</p>
+<p>会提供一个遍历集合元素的统一接口，用一致的方法遍历集合元素，不暴露内部结构</p>
+<p>注意：</p>
+<ol>
+<li><p>提供了一个设计思想，就是一个类应该只有一个引起变化的原因（单一责任原则）。在此例中，我们把管理对象集合和遍历对象集合的责任分开，这样一来集合改变的话，只影响到聚合对象，如果遍历方式改变，只影响迭代器</p>
+</li>
+<li><p>每个聚合对象都需要自定义一个迭代器，不好管理。</p>
+</li>
+<li><p>源码分析</p>
+<p><img src="/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211030194842610.png" alt="image-20211030194842610"></p>
+</li>
+</ol>
+<p><img src="/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211030194815008.png" alt="image-20211030194815008"></p>
+<h1><span id="观察者模式">观察者模式</span></h1><p>会以集合的形式来管理用户，可以注册，移除和更新</p>
+<p>源码分析：</p>
+<p><img src="/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211030204459067.png" alt="image-20211030204459067"></p>
+<p>Observable相当于观察者管理类</p>
+<p><img src="/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211030204659806.png" alt="image-20211030204659806"></p>
+<p>可以看出以上皆具有本角色的操作</p>
+<h1><span id="中介者模式">中介者模式</span></h1><p><img src="/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211101145044841.png" alt="image-20211101145044841"></p>
+<p><img src="/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211101145135630.png" alt="image-20211101145135630"></p>
+<h1><span id="备忘录模式">备忘录模式</span></h1><p>不破坏封装性的前提下。捕获一个对象的内部状态，并在备忘录管理类里保存，属于行为型模式</p>
+<p><img src="/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211101151124350.png" alt="image-20211101151124350"></p>
+<p><strong>注意事项：</strong></p>
+<p><img src="/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211101151352027.png" alt="image-20211101151352027"></p>
+<h1><span id="解释器模式">解释器模式</span></h1><p>指定一个语言（表达式），定义它的文法的一种表示，并定义一个解释器，使用该解释器来解释语言中的句子（表达式）</p>
+<p><img src="/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211101204142883.png" alt="image-20211101204142883"></p>
+<h1><span id="状态模式">状态模式</span></h1><p>解决对象转换多种状态，并对外输出不同行为的问题，状态之间可以相互转化</p>
+<p>实际项目：借贷平台</p>
+<p>注意：</p>
+<p><img src="/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211101212642704.png" alt="image-20211101212642704"></p>
+<h1><span id="职责链模式">职责链模式</span></h1><p><img src="/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211102160326945.png" alt="image-20211102160326945"></p>
+<p>源码分析：</p>
+<pre><code class="Java">protected void doDispatch(HttpServletRequest request, HttpServletResponse response) throws Exception &#123;
+         *   HandlerExecutionChain mappedHandler = null; 
+         *   mappedHandler = getHandler(processedRequest);//获取到HandlerExecutionChain对象
+         *    //在 mappedHandler.applyPreHandle 内部 得到啦 HandlerInterceptor interceptor
+         *    //调用了拦截器的  interceptor.preHandle
+         *   if (!mappedHandler.applyPreHandle(processedRequest, response)) &#123;
+                    return;
+                &#125;
+
+              //说明：mappedHandler.applyPostHandle 方法内部获取到拦截器，并调用 
+              //拦截器的  interceptor.postHandle(request, response, this.handler, mv);
+             mappedHandler.applyPostHandle(processedRequest, response, mv);
+         *  &#125;
+         *  
+         *  
+         *  说明：在  mappedHandler.applyPreHandle内部中，
+         *  还调用了  triggerAfterCompletion 方法，该方法中调用了  
+         *  HandlerInterceptor interceptor = getInterceptors()[i];
+            try &#123;
+                interceptor.afterCompletion(request, response, this.handler, ex);
+            &#125;
+            catch (Throwable ex2) &#123;
+                logger.error(&quot;HandlerInterceptor.afterCompletion threw exception&quot;, ex2);
+            &#125;
+</code></pre>
+<p><img src="/2021/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-2/image-20211102160747217.png" alt="image-20211102160747217"></p>
+<p><strong>注意</strong></p>
+<p>实现了解耦，简化了对象，使对象不需知道链的结构</p>
+<p>但是性能会受到影响，因此需控制链中的最大节点个数。</p>
+<p>最佳应用场景：如多级请求，审批流程。Javaweb中tomcat对Encoding的处理，拦截器。</p>
 
       
     </div>
@@ -734,7 +738,7 @@ export default &#123;
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/9/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/11/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
