@@ -195,7 +195,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/18/ajax%E6%80%BB%E7%BB%93/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/21/Mybatis%E5%85%A5%E9%97%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -209,7 +209,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/09/18/ajax%E6%80%BB%E7%BB%93/" class="post-title-link" itemprop="url">ajax总结</a>
+            <a href="/2021/09/21/Mybatis%E5%85%A5%E9%97%A8/" class="post-title-link" itemprop="url">Mybatis入门</a>
         </h2>
 
         <div class="post-meta">
@@ -221,28 +221,37 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-09-18 19:35:00" itemprop="dateCreated datePublished" datetime="2021-09-18T19:35:00+08:00">2021-09-18</time>
+              <time title="创建时间：2021-09-21 13:36:49" itemprop="dateCreated datePublished" datetime="2021-09-21T13:36:49+08:00">2021-09-21</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-10-13 17:04:21" itemprop="dateModified" datetime="2021-10-13T17:04:21+08:00">2021-10-13</time>
+                <time title="修改时间：2021-10-11 19:03:43" itemprop="dateModified" datetime="2021-10-11T19:03:43+08:00">2021-10-11</time>
               </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/About%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index"><span itemprop="name">About数据库</span></a>
+                </span>
+            </span>
 
           
             <span class="post-meta-item" title="本文字数">
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
               </span>
-              <span>3.1k</span>
+              <span>14k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
-              <span>3 分钟</span>
+              <span>13 分钟</span>
             </span>
 
         </div>
@@ -254,120 +263,609 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1><span id="ajax">Ajax</span></h1><p>现在对Ajax的理解就是简简单单地优化用户体验</p>
-<p>Ajax的核心是XMLHttpRequest对象(XHR)。XHR为向服务器发送请求和解析服务器响应提供了接口。能够以异步方式从服务器获取新数据。</p>
-<p>jQuery 提供多个与 AJAX 有关的方法。</p>
-<p><strong>实现异步验证用户名</strong></p>
-<p>新建一个maven项目，增加web支持，<strong>配置好tomcat服务器</strong>（就配置这破玩意二花了我两天！！！！！！！如有问题：首先新建一个项目，不要再原项目下新建一个modle；接下来就是配置好tomcat的deployment）</p>
-<p><img src="/2021/09/18/ajax%E6%80%BB%E7%BB%93/image-20210918194117558.png" alt="image-20210918194117558"></p>
-<img src="/2021/09/18/ajax%E6%80%BB%E7%BB%93/image-20210918194214940.png" alt="image-20210918194214940" style="zoom: 50%;">
+          <h1><span id="mybatis入门笔记">mybatis入门笔记</span></h1><h2><span id="第一个项目搭建流程">第一个项目搭建流程</span></h2><ol>
+<li><p>搭建实验数据库</p>
+</li>
+<li><p>导入mybatis相关jar包</p>
+<pre><code class="java">&lt;dependency&gt;
+            &lt;groupId&gt;mysql&lt;/groupId&gt;
+            &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;
+            &lt;version&gt;5.1.47&lt;/version&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.mybatis&lt;/groupId&gt;
+            &lt;artifactId&gt;mybatis&lt;/artifactId&gt;
+            &lt;version&gt;3.5.4&lt;/version&gt;
+        &lt;/dependency&gt;
+</code></pre>
+</li>
+<li><p>编写mybatis核心配置文件</p>
+<p><strong><!--千万注意配置mapper映射--></strong></p>
+</li>
+</ol>
+<pre><code class="java">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
+&lt;!DOCTYPE configuration
+        PUBLIC &quot;-//mybatis.org//DTD Config 3.0//EN&quot;
+        &quot;http://mybatis.org/dtd/mybatis-3-config.dtd&quot;&gt;
+&lt;configuration&gt;
+    &lt;environments default=&quot;development&quot;&gt;
+        &lt;environment id=&quot;development&quot;&gt;
+            &lt;transactionManager type=&quot;JDBC&quot;&gt;&lt;/transactionManager&gt;
+            &lt;dataSource type=&quot;POOLED&quot;&gt;
+             &lt;property name=&quot;driver&quot; value=&quot;com.mysql.jdbc.Driver&quot;/&gt;
+             &lt;property name=&quot;url&quot; value=&quot;jdbc:mysql://localhost:3306/mybatis?useSSL=false&amp;amp;useUnicode=false&amp;amp;characterEncoding=utf8&quot;/&gt;
+             &lt;property name=&quot;username&quot; value=&quot;root&quot;/&gt;
+             &lt;property name=&quot;password&quot; value=&quot;root&quot;/&gt;
+            &lt;/dataSource&gt;
+        &lt;/environment&gt;
+    &lt;/environments&gt;
+    
+    &lt;!--千万注意配置mapper映射--&gt;
+    &lt;mappers&gt;
+        &lt;mapper resource=&quot;com/zz/Userdao/UserMapper.xml&quot;/&gt;
+    &lt;/mappers&gt;
+&lt;/configuration&gt;
+</code></pre>
+<p>4.编写mybatis工具类（目的：获取sqlsession）</p>
+<pre><code class="java">package com.zz.utils;
 
-<p>如没有Artifact，点击加号把现项目以war包形式发布，点击🆗即可。</p>
-<p><img src="/2021/09/18/ajax%E6%80%BB%E7%BB%93/image-20210918194435095.png" alt="image-20210918194435095"></p>
-<p><img src="/2021/09/18/ajax%E6%80%BB%E7%BB%93/image-20210918194456928.png" alt="image-20210918194456928"></p>
-<p>如项目部署成功访问controller显示500，原因可能是spring版本和tomcat版本不匹配，我的之前有问题的就是因为用的是tomcat6，换成tomcat9就好了。还有还有：：：：<strong>记得在project structure里面的artifacts项里配置lib目录</strong>。</p>
-<h2><span id="言归正传">言归正传</span></h2><p>开始实现功能了🧨🧨🧨🎠🎠🎠🎊🎊🎊</p>
-<p>实现效果简单的来说就是输入账号名和密码，当鼠标离开输入框也就是失去焦点，页面会自动显示正确或错误/<img src="/2021/09/18/ajax%E6%80%BB%E7%BB%93/image-20210918195233626.png" alt="image-20210918195233626"></p>
-<p><img src="/2021/09/18/ajax%E6%80%BB%E7%BB%93/image-20210918195314836.png" alt="image-20210918195314836"></p>
-<p>首先编写controller层（UserController）</p>
-<ul>
-<li>记得控制类前要加@Restcontroller注解，就会以json形式返回前台数据</li>
-</ul>
-<pre><code class="java">package com.zz.controller;
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.Configuration;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
-import com.zz.pojo.User;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.HttpMediaTypeException;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import javax.annotation.Resource;
+import java.io.InputStream;
 
-import javax.security.auth.login.CredentialException;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-@RestController
-public class AjaxController &#123;
-
-   
-
-    @RequestMapping(&quot;/a3&quot;)
-    public String ajax3(String name,String pwd)&#123;
-        String msg = &quot;&quot;;
-        //模拟数据库中存在数据
-        if (name!=null)&#123;
-            if (&quot;admin&quot;.equals(name))&#123;
-                msg = &quot;OK&quot;;
-            &#125;else &#123;
-                msg = &quot;用户名输入错误&quot;;
-            &#125;
+public class MybatisUtil &#123;
+    private static SqlSessionFactory sqlSessionFactory;
+    static &#123;
+        try&#123;
+            String resource=&quot;mybatis-config.xml&quot;;
+            InputStream inputStream= Resources.getResourceAsStream(resource);
+            Configuration config;
+            sqlSessionFactory=new SqlSessionFactoryBuilder().build(inputStream);
+        &#125;catch (Exception e)&#123;
+            e.printStackTrace();
         &#125;
-        if (pwd!=null)&#123;
-            if (&quot;123456&quot;.equals(pwd))&#123;
-                msg = &quot;OK&quot;;
-            &#125;else &#123;
-                msg = &quot;密码输入有误&quot;;
-            &#125;
-        &#125;
-        return msg; //由于@RestController注解，将msg转成json格式返回
+    &#125;
+    //获取sqlsesion连接
+    public static SqlSession getSqlSession()&#123;
+        return sqlSessionFactory.openSession();
     &#125;
 &#125;
 </code></pre>
-<p>然后从网上下载jquery，放在项目的web包中，然后编写login.jsp页面</p>
-<pre><code class="jsp">&lt;%@ page contentType=&quot;text/html;charset=UTF-8&quot; language=&quot;java&quot; %&gt;
-&lt;html&gt;
-&lt;head&gt;
-  &lt;title&gt;ajax&lt;/title&gt;
-  &lt;script src=&quot;$&#123;pageContext.request.contextPath&#125;/statics/js/jquery.js&quot;&gt;&lt;/script&gt;
-  &lt;script&gt;
+<p>5.创建实体类</p>
+<pre><code class="java">package com.zz.pojo;
 
-    function a1()&#123;
-      $.post(&#123;
-        url:&quot;$&#123;pageContext.request.contextPath&#125;/a3&quot;,
-        data:&#123;&#39;name&#39;:$(&quot;#name&quot;).val()&#125;,
-        success:function (data) &#123;
-          if (data.toString()==&#39;OK&#39;)&#123;
-            $(&quot;#userInfo&quot;).css(&quot;color&quot;,&quot;green&quot;);
-          &#125;else &#123;
-            $(&quot;#userInfo&quot;).css(&quot;color&quot;,&quot;red&quot;);
-          &#125;
-          $(&quot;#userInfo&quot;).html(data);
-        &#125;
-      &#125;);
-    &#125;
-    function a2()&#123;
-      $.post(&#123;
-        url:&quot;$&#123;pageContext.request.contextPath&#125;/a3&quot;,
-        data:&#123;&#39;pwd&#39;:$(&quot;#pwd&quot;).val()&#125;,
-        success:function (data) &#123;
-          if (data.toString()==&#39;OK&#39;)&#123;
-            $(&quot;#pwdInfo&quot;).css(&quot;color&quot;,&quot;green&quot;);
-          &#125;else &#123;
-            $(&quot;#pwdInfo&quot;).css(&quot;color&quot;,&quot;red&quot;);
-          &#125;
-          $(&quot;#pwdInfo&quot;).html(data);
-        &#125;
-      &#125;);
+public class User &#123;
+
+    int id;
+
+    public User() &#123;
     &#125;
 
-  &lt;/script&gt;
-&lt;/head&gt;
-&lt;body&gt;
-&lt;p&gt;
-  用户名:&lt;input type=&quot;text&quot; id=&quot;name&quot; onblur=&quot;a1()&quot;/&gt;
-  &lt;span id=&quot;userInfo&quot;&gt;&lt;/span&gt;
-&lt;/p&gt;
-&lt;p&gt;
-  密码:&lt;input type=&quot;text&quot; id=&quot;pwd&quot; onblur=&quot;a2()&quot;/&gt;
-  &lt;span id=&quot;pwdInfo&quot;&gt;&lt;/span&gt;
-&lt;/p&gt;
-&lt;/body&gt;
-&lt;/html&gt;
+    @Override
+    public String toString() &#123;
+        return &quot;User&#123;&quot; +
+                &quot;id=&quot; + id +
+                &quot;, name=&#39;&quot; + name + &#39;\&#39;&#39; +
+                &quot;, pwd=&quot; + pwd +
+                &#39;&#125;&#39;;
+    &#125;
+
+    public User(int id, String name, int pwd) &#123;
+        this.id = id;
+        this.name = name;
+        this.pwd = pwd;
+    &#125;
+
+    public void setId(int id) &#123;
+        this.id = id;
+    &#125;
+
+    public void setName(String name) &#123;
+        this.name = name;
+    &#125;
+
+    public void setPwd(int pwd) &#123;
+        this.pwd = pwd;
+    &#125;
+
+    public int getId() &#123;
+        return id;
+    &#125;
+
+    public String getName() &#123;
+        return name;
+    &#125;
+
+    public int getPwd() &#123;
+        return pwd;
+    &#125;
+
+    String name;
+    int pwd;
+&#125;
 </code></pre>
-<p>到现在启动服务器就可以看到啦，成功后在浏览器查看时每失去焦点时都会向后台发送请求，也是<strong>Ajax的独特之处，把主动权交给了前端。</strong></p>
-<p>放一下项目结构图吧</p>
-<p><img src="/2021/09/18/ajax%E6%80%BB%E7%BB%93/image-20210918200158409.png" alt="image-20210918200158409"></p>
+<p>6.编写mapper.xml</p>
+<p><strong>UserMapper</strong></p>
+<pre><code class="java">package com.zz.UserMapper;
+
+import com.zz.pojo.User;
+
+import java.util.List;
+
+public interface UserMapper &#123;
+    List&lt;User&gt; selectAll();
+&#125;
+</code></pre>
+<p><strong>UserMapper.xml</strong></p>
+<pre><code class="java">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
+&lt;!DOCTYPE mapper
+        PUBLIC &quot;-//mybatis.org//DTD Config 3.0//EN&quot;
+        &quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;&gt;
+
+&lt;mapper namespace=&quot;com.zz.UserMapper.UserMapper&quot;&gt;
+    &lt;select id=&quot;selectAll&quot; resultType=&quot;com.zz.pojo.User&quot;&gt;
+        select * from mybatis.user
+    &lt;/select&gt;
+&lt;/mapper&gt;
+</code></pre>
+<p>7.测试</p>
+<pre><code class="java">import com.zz.UserMapper.UserMapper;
+import com.zz.pojo.User;
+import com.zz.utils.MybatisUtil;
+import org.apache.ibatis.session.SqlSession;
+import org.junit.Test;
+
+import java.util.List;
+
+public class test &#123;
+    @Test
+    public void select()&#123;
+        SqlSession session= MybatisUtil.getSqlSession();
+        List&lt;User&gt; list=session.getMapper(UserMapper.class).selectAll();
+        for(User u:list)&#123;
+            System.out.println(u);
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<p>8.结果</p>
+<p><img src="/2021/09/21/Mybatis%E5%85%A5%E9%97%A8/image-20210921140953500.png" alt="image-20210921140953500"></p>
+<p>增删改需要提交事务：sqlsession.commit()</p>
+<h2><span id="万能map">万能Map</span></h2><p>假设实体类，或数据库中的表，字段或参数过多时，应当使用map</p>
+<p>步骤：🎇🎇🎇🎇</p>
+<p> 1.在接口中添加方法</p>
+<pre><code class="java">public int updateUser(Map&lt;String, Object&gt; map);
+</code></pre>
+<p>2.在mapper.xml中添加</p>
+<pre><code class="java">&lt;update id=&quot;updateUser&quot; parameterType=&quot;map&quot;&gt;
+        update mybatis.user set name=#&#123;uname&#125;, pwd=#&#123;pwds&#125; where id=#&#123;id&#125;
+&lt;/update&gt;
+</code></pre>
+<p><img src="/2021/09/21/Mybatis%E5%85%A5%E9%97%A8/image-20210921210742855.png" alt="image-20210921210742855"></p>
+<p>用map作为参数的好处就是便利，箭头所指元素捷克在定义map时自己定义，而参数为User实体类时，这些参数皆需要和在定义实体类时一样</p>
+<p>3.测试</p>
+<pre><code class="java"> Map&lt;String, Object&gt; map=new HashMap&lt;String, Object&gt;();
+
+        map.put(&quot;id&quot;,1);
+        map.put(&quot;uname&quot;,&quot;sadsada&quot;);
+        map.put(&quot;pwds&quot;,4646464);
+        System.out.println(u.updateUser(map));
+</code></pre>
+<p>成功！</p>
+<h2><span id="模糊查询">模糊查询</span></h2><p><img src="/2021/09/21/Mybatis%E5%85%A5%E9%97%A8/image-20210921212535801.png" alt="image-20210921212535801"></p>
+<h2><span id="结果集映射">结果集映射</span></h2><p>场景：实体类中属性名与数据库表中字段不匹配 如：数据库中为pwd，实体类中为password</p>
+<p>解决方法：</p>
+<p>​    1.</p>
+<pre><code class="java">&lt;select id=&quot;selectUser&quot; resultType=&quot;com.zz.pojo.User&quot;&gt;
+        select id,name,pwd as password from mybatis.user;
+    &lt;/select&gt;
+</code></pre>
+<p>​    2.使用结果集映射(ResultMap)</p>
+<p><img src="/2021/09/21/Mybatis%E5%85%A5%E9%97%A8/image-20210922173708063.png" alt="image-20210922173708063"></p>
+<h2><span id="日志">日志</span></h2><h3><span id="log4j">Log4j</span></h3><p>  1.导包</p>
+<pre><code class="java">&lt;dependency&gt;
+            &lt;groupId&gt;log4j&lt;/groupId&gt;
+            &lt;artifactId&gt;log4j&lt;/artifactId&gt;
+            &lt;version&gt;1.2.17&lt;/version&gt;
+        &lt;/dependency&gt;
+</code></pre>
+<p>2.配置文件编写logj.properties</p>
+<pre><code class="java">#将等级为DEBUG的日志信息输出到console和file这两个目的地，console和file的定义在下面的代码
+log4j.rootLogger=DEBUG,console,file
+
+#控制台输出的相关设置
+log4j.appender.console = org.apache.log4j.ConsoleAppender
+log4j.appender.console.Target = System.out
+log4j.appender.console.Threshold=DEBUG
+log4j.appender.console.layout = org.apache.log4j.PatternLayout
+log4j.appender.console.layout.ConversionPattern=[%c]-%m%n
+
+#文件输出的相关设置
+log4j.appender.file = org.apache.log4j.RollingFileAppender
+log4j.appender.file.File=./log/zz.log
+log4j.appender.file.MaxFileSize=10mb
+log4j.appender.file.Threshold=DEBUG
+log4j.appender.file.layout=org.apache.log4j.PatternLayout
+log4j.appender.file.layout.ConversionPattern=[%p][%d&#123;yy-MM-dd&#125;][%c]%m%n
+
+#日志输出级别
+log4j.logger.org.mybatis=DEBUG
+log4j.logger.java.sql=DEBUG
+log4j.logger.java.sql.Statement=DEBUG
+log4j.logger.java.sql.ResultSet=DEBUG
+log4j.logger.java.sql.PreparedStatement=DEBUG
+</code></pre>
+<p>3.setting设置日志实现<img src="/2021/09/21/Mybatis%E5%85%A5%E9%97%A8/image-20210922185902309.png" alt="image-20210922185902309"></p>
+<p>4.实现</p>
+<pre><code class="java">public class test &#123;
+    static Logger logger=Logger.getLogger(test.class);
+    @Test
+    public void select()&#123;
+        logger.info(&quot;info：进入selectUser方法&quot;);
+        logger.debug(&quot;debug：进入selectUser方法&quot;);
+        logger.error(&quot;error: 进入selectUser方法&quot;);
+        SqlSession session= MybatisUtil.getSqlSession();
+        List&lt;User&gt; list=session.getMapper(UserMapper.class).selectAll();
+        for(User u:list)&#123;
+            System.out.println(u);
+        &#125;
+        session.close();
+    &#125;
+&#125;
+</code></pre>
+<h2><span id="分页">分页</span></h2><p>如果查询大量数据的时候，我们往往使用分页进行查询，也就是每次处理小部分数据，这样对数据库压力就在可控范围内。</p>
+<h3><span id="limit实现分页">limit实现分页</span></h3><pre><code class="java">#语法
+SELECT * FROM table LIMIT stratIndex，pageSize
+
+SELECT * FROM table LIMIT 5,10; // 检索记录行 6-15  
+
+#为了检索从某一个偏移量到记录集的结束所有的记录行，可以指定第二个参数为 -1：   
+SELECT * FROM table LIMIT 95,-1; // 检索记录行 96-last.  
+
+#如果只给定一个参数，它表示返回最大的记录行数目：   
+SELECT * FROM table LIMIT 5; //检索前 5 个记录行  
+
+#换句话说，LIMIT n 等价于 LIMIT 0,n。
+</code></pre>
+<p><strong>步骤：</strong></p>
+<p>1、修改Mapper文件</p>
+<pre><code class="java">&lt;select id=&quot;selectUser&quot; parameterType=&quot;map&quot; resultType=&quot;user&quot;&gt;
+  select * from user limit #&#123;startIndex&#125;,#&#123;pageSize&#125;
+&lt;/select&gt;
+</code></pre>
+<p>2、Mapper接口，参数为map</p>
+<pre><code class="java">//选择全部用户实现分页
+List&lt;User&gt; selectUser(Map&lt;String,Integer&gt; map);
+</code></pre>
+<p>3、在测试类中传入参数测试</p>
+<ul>
+<li>推断：起始位置 =  （当前页面 - 1 ） * 页面大小</li>
+</ul>
+<pre><code class="java">//分页查询 , 两个参数startIndex , pageSize
+@Test
+public void testSelectUser() &#123;
+   SqlSession session = MybatisUtils.getSession();
+   UserMapper mapper = session.getMapper(UserMapper.class);
+
+   int currentPage = 1;  //第几页
+   int pageSize = 2;  //每页显示几个
+   Map&lt;String,Integer&gt; map = new HashMap&lt;String,Integer&gt;();
+   map.put(&quot;startIndex&quot;,(currentPage-1)*pageSize);
+   map.put(&quot;pageSize&quot;,pageSize);
+
+   List&lt;User&gt; users = mapper.selectUser(map);
+
+   for (User user: users)&#123;
+       System.out.println(user);
+  &#125;
+
+   session.close();
+&#125;
+</code></pre>
+<p><img src="/2021/09/21/Mybatis%E5%85%A5%E9%97%A8/Blog\source_posts\Mybatis入门\image-20210922195302374.png" alt="image-20210922195302374"></p>
+<h2><span id="mybatis详细的执行流程">Mybatis详细的执行流程</span></h2><p><img src="/2021/09/21/Mybatis%E5%85%A5%E9%97%A8/640" alt="图片"></p>
+<h2><span id="使用注解开发">使用注解开发</span></h2><p>【注意点：增删改一定记得对事务的处理】</p>
+<pre><code class="java"> //获取sqlsesion连接
+    public static SqlSession getSqlSession()&#123;
+        return sqlSessionFactory.openSession(true);
+    &#125;//事务自动提交
+&#125;
+</code></pre>
+<blockquote>
+<p>#与$的区别</p>
+</blockquote>
+<ul>
+<li><p>#{} 的作用主要是替换预编译语句(PrepareStatement)中的占位符? 【推荐使用】可以防止sql注入</p>
+<pre><code>INSERT INTO user (name) VALUES (#&#123;name&#125;);
+INSERT INTO user (name) VALUES (?);
+</code></pre>
+</li>
+<li><p>${} 的作用是直接进行字符串替换</p>
+<pre><code>INSERT INTO user (name) VALUES (&#39;$&#123;name&#125;&#39;);
+INSERT INTO user (name) VALUES (&#39;kuangshen&#39;);
+</code></pre>
+</li>
+</ul>
+<h2><span id="多对一处理">多对一处理</span></h2><p><img src="/2021/09/21/Mybatis%E5%85%A5%E9%97%A8/image-20210923213727143.png" alt="image-20210923213727143"></p>
+<p><img src="/2021/09/21/Mybatis%E5%85%A5%E9%97%A8/image-20210923213749558.png" alt="image-20210923213749558"></p>
+<p>创建两张表：Student，Teacher</p>
+<pre><code class="java">//获取所有学生及对应老师的信息
+    List&lt;Student&gt; getStudents();
+</code></pre>
+<p>mapper.xml文件编写</p>
+<p>按查询嵌套处理</p>
+<pre><code class="sql">&lt;select id=&quot;getStudents&quot; resultMap=&quot;StudentTeacher&quot;&gt;
+        select * from student
+    &lt;/select&gt;
+    &lt;resultMap id=&quot;StudentTeacher&quot; type=&quot;com.zz.pojo.Student&quot;&gt;
+        &lt;!--association关联属性 property属性名 javaType属性类型 column在多的一方的表中的列名--&gt;
+        &lt;association property=&quot;teacher&quot;  column=&quot;tid&quot; javaType=&quot;com.zz.pojo.Teacher&quot; select=&quot;getTeacher&quot;/&gt;
+    &lt;/resultMap&gt;
+
+
+    &lt;select id=&quot;getTeacher&quot; resultType=&quot;com.zz.pojo.Teacher&quot;&gt;
+        select * from teacher where id= #&#123;id&#125;
+    &lt;/select&gt;
+</code></pre>
+<p>按结果嵌套处理</p>
+<pre><code class="sql"> &lt;select id=&quot;getStudents2&quot; resultMap=&quot;StudentTeacher2&quot; &gt;
+        select s.id sid, s.name sname , t.name tname
+        from student s,teacher t
+        where s.tid = t.id
+    &lt;/select&gt;
+
+    &lt;resultMap id=&quot;StudentTeacher2&quot; type=&quot;com.zz.pojo.Student&quot;&gt;
+        &lt;id property=&quot;id&quot; column=&quot;sid&quot;/&gt;
+        &lt;result property=&quot;name&quot; column=&quot;sname&quot;/&gt;
+        &lt;!--关联对象property 关联对象在Student实体类中的属性--&gt;
+        &lt;association property=&quot;teacher&quot; javaType=&quot;com.zz.pojo.Teacher&quot;&gt;
+            &lt;result property=&quot;name&quot; column=&quot;tname&quot;/&gt;
+        &lt;/association&gt;
+    &lt;/resultMap&gt;
+</code></pre>
+<h2><span id="一对多处理">一对多处理</span></h2><p><strong>按结果嵌套处理</strong></p>
+<p>Teacher</p>
+<pre><code class="java">@Data
+public class Teacher &#123;
+    private int id;
+    private String name;
+    //一个老师多个学生
+    private List&lt;Student&gt; students;
+&#125;
+</code></pre>
+<p>TeacherMapper.xml</p>
+<pre><code class="sql">&lt;!--
+    思路:
+        1. 从学生表和老师表中查出学生id，学生姓名，老师姓名
+        2. 对查询出来的操作做结果集映射
+            1. 集合的话，使用collection！
+                JavaType和ofType都是用来指定对象类型的
+                JavaType是用来指定pojo中属性的类型
+                ofType指定的是映射到list集合属性中pojo的类型。
+    --&gt;
+    &lt;select id=&quot;getTeacher&quot; resultMap=&quot;TeacherStudent&quot;&gt;
+        select s.id sid, s.name sname , t.name tname, t.id tid
+        from student s,teacher t
+        where s.tid = t.id and t.id=#&#123;id&#125;
+    &lt;/select&gt;
+    &lt;resultMap id=&quot;TeacherStudent&quot; type=&quot;Teacher&quot;&gt;
+        &lt;result  property=&quot;name&quot; column=&quot;tname&quot;/&gt;
+        &lt;collection property=&quot;students&quot; ofType=&quot;Student&quot;&gt;
+            &lt;result property=&quot;id&quot; column=&quot;sid&quot; /&gt;
+            &lt;result property=&quot;name&quot; column=&quot;sname&quot; /&gt;
+            &lt;result property=&quot;tid&quot; column=&quot;tid&quot; /&gt;
+        &lt;/collection&gt;
+    &lt;/resultMap&gt;
+</code></pre>
+<p><strong>按查询嵌套处理</strong></p>
+<pre><code class="sql">&lt;select id=&quot;getTeacher2&quot; resultMap=&quot;TeacherStudent2&quot;&gt;
+        select * from teacher where id=#&#123;id&#125;
+    &lt;/select&gt;
+    &lt;!--column是一对多的外键 , 写的是一的主键的列名--&gt;
+    &lt;resultMap id=&quot;TeacherStudent2&quot; type=&quot;Teacher&quot;&gt;
+        &lt;collection property=&quot;students&quot; javaType=&quot;ArrayList&quot; ofType=&quot;Student&quot; column=&quot;id&quot; select=&quot;getStudentByTeacherId&quot;/&gt;
+    &lt;/resultMap&gt;
+
+    &lt;select id=&quot;getStudentByTeacherId&quot; resultType=&quot;Student&quot;&gt;
+        select * from student where tid=#&#123;id&#125;
+    &lt;/select&gt;
+</code></pre>
+<blockquote>
+<p>小结</p>
+</blockquote>
+<p>1、关联-association</p>
+<p>2、集合-collection</p>
+<p>3、所以association是用于一对一和多对一，而collection是用于一对多的关系</p>
+<p>4、JavaType和ofType都是用来指定对象类型的</p>
+<ul>
+<li>JavaType是用来指定pojo中属性的类型</li>
+<li>ofType指定的是映射到list集合属性中pojo的类型。</li>
+</ul>
+<h2><span id="动态sql">动态SQL</span></h2><blockquote>
+<p>if 语句</p>
+</blockquote>
+<p><strong>需求：根据作者名字和博客名字来查询博客！如果作者名字为空，那么只根据博客名字查询，反之，则根据作者名来查询</strong></p>
+<pre><code class="sql">&lt;!--需求1：
+根据作者名字和博客名字来查询博客！
+如果作者名字为空，那么只根据博客名字查询，反之，则根据作者名来查询
+select * from blog where title = #&#123;title&#125; and author = #&#123;author&#125;
+--&gt;
+&lt;select id=&quot;queryBlogIf&quot; parameterType=&quot;map&quot; resultType=&quot;blog&quot;&gt;
+  select * from blog where
+   &lt;if test=&quot;title != null&quot;&gt;
+      title = #&#123;title&#125;
+   &lt;/if&gt;
+   &lt;if test=&quot;author != null&quot;&gt;
+      and author = #&#123;author&#125;
+   &lt;/if&gt;
+&lt;/select&gt;
+</code></pre>
+<p>如果title为空的话，sql语句为错误语句，那就用到where</p>
+<blockquote>
+<p>Where</p>
+</blockquote>
+<p>修改上面的SQL语句；</p>
+<pre><code class="sql">&lt;select id=&quot;queryBlogIf&quot; parameterType=&quot;map&quot; resultType=&quot;blog&quot;&gt;
+  select * from blog
+   &lt;where&gt;
+       &lt;if test=&quot;title != null&quot;&gt;
+          title = #&#123;title&#125;
+       &lt;/if&gt;
+       &lt;if test=&quot;author != null&quot;&gt;
+          and author = #&#123;author&#125;
+       &lt;/if&gt;
+   &lt;/where&gt;
+&lt;/select&gt;
+</code></pre>
+<p>这个“where”标签会知道如果它包含的标签中有返回值的话，它就插入一个‘where’。此外，如果标签返回的内容是以AND 或OR 开头的，则它会剔除掉。</p>
+<blockquote>
+<p>Trim</p>
+</blockquote>
+<p>和where功能一样，还可以去除多余的逗号</p>
+<p><img src="/2021/09/21/Mybatis%E5%85%A5%E9%97%A8/image-20211011190142894.png" alt="image-20211011190142894"></p>
+<p>如红框里的note为null，则sql语句错误</p>
+<p>加了<trim>则会避免出错，会自动把role_name后面的逗号去掉，从而sql语句不会出错</trim></p>
+<blockquote>
+<p>Set</p>
+</blockquote>
+<p>1、编写接口方法</p>
+<pre><code>int updateBlog(Map map);
+</code></pre>
+<p>2、sql配置文件</p>
+<pre><code class="sql">&lt;!--注意set是用的逗号隔开--&gt;
+&lt;update id=&quot;updateBlog&quot; parameterType=&quot;map&quot;&gt;
+  update blog
+     &lt;set&gt;
+         &lt;if test=&quot;title != null&quot;&gt;
+            title = #&#123;title&#125;,
+         &lt;/if&gt;
+         &lt;if test=&quot;author != null&quot;&gt;
+            author = #&#123;author&#125;
+         &lt;/if&gt;
+     &lt;/set&gt;
+  where id = #&#123;id&#125;;
+&lt;/update&gt;
+</code></pre>
+<blockquote>
+<p>choose语句</p>
+</blockquote>
+<p>有时候，我们不想用到所有的查询条件，只想选择其中的一个，查询条件有一个满足即可，使用 choose 标签可以解决此类问题</p>
+<p>1、编写接口方法</p>
+<pre><code class="sql">List&lt;Blog&gt; queryBlogChoose(Map map);
+</code></pre>
+<p>2、sql配置文件</p>
+<pre><code class="sql">&lt;select id=&quot;queryBlogChoose&quot; parameterType=&quot;map&quot; resultType=&quot;blog&quot;&gt;
+  select * from blog
+   &lt;where&gt;
+       &lt;choose&gt;
+           &lt;when test=&quot;title != null&quot;&gt;
+                title = #&#123;title&#125;
+           &lt;/when&gt;
+           &lt;when test=&quot;author != null&quot;&gt;
+              and author = #&#123;author&#125;
+           &lt;/when&gt;
+           &lt;otherwise&gt;
+              and views = #&#123;views&#125;
+           &lt;/otherwise&gt;
+       &lt;/choose&gt;
+   &lt;/where&gt;
+&lt;/select&gt;
+</code></pre>
+<p>3、测试类</p>
+<pre><code class="sql">@Test
+public void testQueryBlogChoose()&#123;
+   SqlSession session = MybatisUtils.getSession();
+   BlogMapper mapper = session.getMapper(BlogMapper.class);
+
+   HashMap&lt;String, Object&gt; map = new HashMap&lt;String, Object&gt;();
+   map.put(&quot;title&quot;,&quot;Java如此简单&quot;);
+   map.put(&quot;author&quot;,&quot;狂神说&quot;);
+   map.put(&quot;views&quot;,9999);
+   List&lt;Blog&gt; blogs = mapper.queryBlogChoose(map);
+
+   System.out.println(blogs);
+
+   session.close();
+&#125;
+</code></pre>
+<p>如只查询阅览量为9999的书籍则改成<img src="/2021/09/21/Mybatis%E5%85%A5%E9%97%A8/image-20210924195725942.png" alt="image-20210924195725942"></p>
+<blockquote>
+<p>SQL片段</p>
+</blockquote>
+<p>可能某个 sql 语句我们用的特别多，为了增加代码的重用性，简化代码，将这些代码抽取出来，然后使用时直接调用。</p>
+<p><strong>提取SQL片段：</strong></p>
+<pre><code class="sql">&lt;sql id=&quot;if-title-author&quot;&gt;
+   &lt;if test=&quot;title != null&quot;&gt;
+      title = #&#123;title&#125;
+   &lt;/if&gt;
+   &lt;if test=&quot;author != null&quot;&gt;
+      and author = #&#123;author&#125;
+   &lt;/if&gt;
+&lt;/sql&gt;
+</code></pre>
+<p><strong>引用SQL片段：</strong></p>
+<pre><code class="sql">&lt;select id=&quot;queryBlogIf&quot; parameterType=&quot;map&quot; resultType=&quot;blog&quot;&gt;
+  select * from blog
+   &lt;where&gt;
+       &lt;!-- 引用 sql 片段，如果refid 指定的不在本文件中，那么需要在前面加上 namespace --&gt;
+       &lt;include refid=&quot;if-title-author&quot;&gt;&lt;/include&gt;
+       &lt;!-- 在这里还可以引用其他的 sql 片段 --&gt;
+   &lt;/where&gt;
+&lt;/select&gt;
+</code></pre>
+<p>注意：</p>
+<p>①、最好基于 单表来定义 sql 片段，提高片段的可重用性</p>
+<p>②、在 sql 片段中不要包括 where</p>
+<h2><span id="缓存">缓存</span></h2><p>一级缓存：也叫本地缓存：</p>
+<ul>
+<li>与数据库同一次会话期间查询到的数据会放在本地缓存中。</li>
+<li>以后如果需要获取相同的数据，直接从缓存中拿，没必须再去查询数据库；</li>
+</ul>
+<p>例如：Sqlsession </p>
+<p>体验：测试在一个session中查询两次相同记录，第二次直接从缓存访问，不去访问数据库</p>
+<p><img src="/2021/09/21/Mybatis%E5%85%A5%E9%97%A8/image-20210924203651727.png" alt="image-20210924203651727"></p>
+<p><img src="/2021/09/21/Mybatis%E5%85%A5%E9%97%A8/image-20210924203701534.png" alt="image-20210924203701534"></p>
+<p>一级缓存失效的四种情况:</p>
+<p>1、sqlSession不同</p>
+<p>2、sqlSession相同，查询条件不同</p>
+<p>3、sqlSession相同，两次查询之间执行了增删改操作！</p>
+<p>4、sqlSession相同，手动清除一级缓存</p>
+<pre><code class="java">session.clearCache();//手动清除缓存
+</code></pre>
+<p><strong>一级缓存就是一个map</strong></p>
+<blockquote>
+<p>二级缓存</p>
+</blockquote>
+<ul>
+<li><p>二级缓存也叫全局缓存，一级缓存作用域太低了，所以诞生了二级缓存</p>
+</li>
+<li><p>基于namespace级别的缓存，一个名称空间，对应一个二级缓存；</p>
+</li>
+<li><p>工作机制</p>
+</li>
+<li><ul>
+<li>一个会话查询一条数据，这个数据就会被放在当前会话的一级缓存中；</li>
+<li>如果当前会话关闭了，这个会话对应的一级缓存就没了；但是我们想要的是，会话关闭了，一级缓存中的数据被保存到二级缓存中；</li>
+<li>新的会话查询信息，就可以从二级缓存中获取内容；</li>
+<li>不同的mapper查出的数据会放在自己对应的缓存（map）中；</li>
+</ul>
+</li>
+</ul>
+<p>简单地来说：二级缓存就是为了想从缓存中查询一级缓存中没有的东西（个人理解）</p>
+<blockquote>
+<p>使用步骤</p>
+</blockquote>
+<p>1、开启全局缓存 【mybatis-config.xml】</p>
+<pre><code class="java">&lt;setting name=&quot;cacheEnabled&quot; value=&quot;true&quot;/&gt;
+</code></pre>
+<p>2、去每个mapper.xml中配置使用二级缓存，这个配置非常简单；【xxxMapper.xml】</p>
+<pre><code class="java">&lt;cache/&gt;
+</code></pre>
 
       
     </div>
@@ -389,7 +887,7 @@ public class AjaxController &#123;
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/15/Restful%E8%AF%A6%E8%A7%A3/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/18/%E6%8B%A6%E6%88%AA%E5%99%A8%E4%B8%8E%E8%BF%87%E6%BB%A4%E5%99%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -403,7 +901,7 @@ public class AjaxController &#123;
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/09/15/Restful%E8%AF%A6%E8%A7%A3/" class="post-title-link" itemprop="url">Restful详解</a>
+            <a href="/2021/09/18/%E6%8B%A6%E6%88%AA%E5%99%A8%E4%B8%8E%E8%BF%87%E6%BB%A4%E5%99%A8/" class="post-title-link" itemprop="url">拦截器与过滤器</a>
         </h2>
 
         <div class="post-meta">
@@ -414,9 +912,24 @@ public class AjaxController &#123;
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-09-15 21:28:35 / 修改时间：22:02:53" itemprop="dateCreated datePublished" datetime="2021-09-15T21:28:35+08:00">2021-09-15</time>
+              <time title="创建时间：2021-09-18 20:46:41" itemprop="dateCreated datePublished" datetime="2021-09-18T20:46:41+08:00">2021-09-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-09-20 20:48:17" itemprop="dateModified" datetime="2021-09-20T20:48:17+08:00">2021-09-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/spring-mvc/" itemprop="url" rel="index"><span itemprop="name">spring mvc</span></a>
+                </span>
             </span>
 
           
@@ -424,13 +937,13 @@ public class AjaxController &#123;
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
               </span>
-              <span>3.9k</span>
+              <span>1.4k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
-              <span>4 分钟</span>
+              <span>1 分钟</span>
             </span>
 
         </div>
@@ -442,136 +955,64 @@ public class AjaxController &#123;
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2><span id="资源与uri">资源与URI</span></h2><p>REST全称是表述性状态转移，那究竟指的是什么的表述? 其实指的就是资源。</p>
-<p>要让一个资源可以被识别，需要有个唯一标识，在Web中这个唯一标识就是URI(Uniform Resource Identifier)。</p>
-<h3><span id="uri的设计技巧">URI的设计技巧</span></h3><ul>
-<li>使用_或-来让URI可读性更好  <strong>例子</strong>：<a target="_blank" rel="noopener" href="http://www.oschina.net/news/38119/oschina-translate-reward-plan">http://www.oschina.net/news/38119/oschina-translate-reward-plan</a></li>
-<li>使用/来表示资源的层级关系  <strong>例子</strong>：/orders/2012/10可以用来表示2012年10月的订单记录。</li>
-<li>使用?用来过滤资源  <strong>例子</strong>：很多人只是把?简单的当做是参数的传递，很容易造成URI过于复杂、难以理解。可以把?用于对资源的过滤， 例如/git/git/pulls用来表示git项目的所有推入请求，而/pulls?state=closed用来表示git项目中已经关闭的推入请求， 这种URL通常对应的是一些特定条件的查询结果或算法运算结果。</li>
-<li>,或;可以用来表示同级资源的关系 <strong>例子</strong>：例如哪天github可以比较某个文件在随意两次提交记录之间的差异，或许可以用；连接两个文件。</li>
+          <h1><span id="拦截器与过滤器">拦截器与过滤器</span></h1><ul>
+<li><p>过滤器还得配置静态资源过滤，拦截器只会拦截访问的控制器方法，如访问静态资源是不会拦截的</p>
+</li>
+<li><p>拦截器是AOP思想的具体运用，是springmvc框架自己的，使用了springmvc框架的工程才能使用b</p>
+</li>
+<li><p>继承拦截器不许重写，继承过滤器需要重写方法</p>
+</li>
 </ul>
-<h2><span id="统一资源接口">统一资源接口</span></h2><p>RESTful架构应该遵循统一接口原则，统一接口包含了一组受限的预定义的操作，不论什么样的资源，都是通过使用相同的接口进行资源的访问。接口应该使用标准的HTTP方法如GET，PUT和POST，并遵循这些方法的语义。</p>
-<p>如果按照HTTP方法的语义来暴露资源，那么接口将会拥有安全性和幂等性的特性，例如GET和HEAD请求都是安全的， 无论请求多少次，都不会改变服务器状态。而GET、HEAD、PUT和DELETE请求都是幂等的，无论对资源操作多少次， 结果总是一样的，后面的请求并不会产生比第一次更多的影响。</p>
-<h3><span id="资源的表述">资源的表述</span></h3><p>上面提到，客户端通过HTTP方法可以获取资源，是吧? 不，确切的说，客户端获取的只是资源的表述而已。 资源在外界的具体呈现，可以有多种表述(或成为表现、表示)形式，在客户端和服务端之间传送的也是资源的表述，而不是资源本身。 例如文本资源可以采用html、xml、json等格式，图片可以使用PNG或JPG展现出来。</p>
-<p>资源的表述包括数据和描述数据的元数据，例如，HTTP头”Content-Type” 就是这样一个元数据属性。</p>
-<p>那么客户端如何知道服务端提供哪种表述形式呢?</p>
-<p>答案是可以通过HTTP内容协商，客户端可以通过Accept头请求一种特定格式的表述，服务端则通过Content-Type告诉客户端资源的表述形式。</p>
-<p>以github为例，请求某组织资源的json格式的表述形式:</p>
-<p><img src="/2021/09/15/Restful%E8%AF%A6%E8%A7%A3/291731048886033.jpg" alt="291731048886033"></p>
-<p>假如github也能够支持xml格式的表述格式，那么结果就是这样的:</p>
-<p><img src="/2021/09/15/Restful%E8%AF%A6%E8%A7%A3/291731045756062.jpg" alt="291731045756062"></p>
-<h2><span id="springmvc实现restful服务">SpringMVC实现restful服务:</span></h2><p>SpringMVC原生态的支持了REST风格的架构设计</p>
-<p>所涉及到的注解:</p>
-<p>---@RequestMapping<br> ---@PathVariable<br> ---@ResponseBody</p>
-<pre><code class="java">package cn.itcast.mybatis.controller;
+<p>在web-INF下的所有页面只能通过controller或者servlet访问</p>
+<h2><span id="实现拦截器">实现拦截器</span></h2><p>定义个性化拦截器</p>
+<ol>
+<li><p>实现拦截器接口</p>
+<pre><code class="java">package com.zz.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.HandlerInterceptor;
 
-import cn.itcast.mybatis.pojo.User;
-import cn.itcast.mybatis.service.NewUserService;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-@RequestMapping(&quot;restful/user&quot;)
-@Controller
-public class RestUserController &#123;
+public class LoignIntercepter implements HandlerInterceptor &#123;
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception &#123;
+        HttpSession httpSession= request.getSession();
+        System.out.println(&quot;uri&quot;+request.getRequestURI());
 
-@Autowired
-private NewUserService newUserService;
-
-/**
- * 根据用户id查询用户数据
- * 
- * @param id
- * @return
- */
-@RequestMapping(value = &quot;&#123;id&#125;&quot;, method = RequestMethod.GET)
-@ResponseBody
-public ResponseEntity&lt;User&gt; queryUserById(@PathVariable(&quot;id&quot;) Long id) &#123;
-    try &#123;
-        User user = this.newUserService.queryUserById(id);
-        if (null == user) &#123;
-            // 资源不存在，响应404
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        //如跳转的是登录页面
+        if(request.getRequestURI().contains(&quot;login&quot;))&#123;
+            return true;
         &#125;
-        // 200
-        // return ResponseEntity.status(HttpStatus.OK).body(user);
-        return ResponseEntity.ok(user);
-    &#125; catch (Exception e) &#123;
-        e.printStackTrace();
-    &#125;
-    // 500
-    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-&#125;
 
-/**
- * 新增用户
- * 
- * @param user
- * @return
- */
-@RequestMapping(method = RequestMethod.POST)
-public ResponseEntity&lt;Void&gt; saveUser(User user) &#123;
-    try &#123;
-        this.newUserService.saveUser(user);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
-    &#125; catch (Exception e) &#123;
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-    &#125;
-    // 500
-    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-&#125;
 
-/**
- * 更新用户资源
- * 
- * @param user
- * @return
- */
-@RequestMapping(method = RequestMethod.PUT)
-public ResponseEntity&lt;Void&gt; updateUser(User user) &#123;
-    try &#123;
-        this.newUserService.updateUser(user);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-    &#125; catch (Exception e) &#123;
-        e.printStackTrace();
-    &#125;
-    // 500
-    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-&#125;
-
-/**
- * 删除用户资源
- * 
- * @param user
- * @return
- */
-@RequestMapping(method = RequestMethod.DELETE)
-public ResponseEntity&lt;Void&gt; deleteUser(@RequestParam(value = &quot;id&quot;, defaultValue = &quot;0&quot;) Long id) &#123;
-    try &#123;
-        if (id.intValue() == 0) &#123;
-            // 请求参数有误
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        if(httpSession.getAttribute(&quot;userlogininfo&quot;)!=null)&#123;
+            return true;
         &#125;
-        this.newUserService.deleteUserById(id);
-        // 204
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-    &#125; catch (Exception e) &#123;
-        e.printStackTrace();
+        //执行到这里说明用户没有登陆
+        // 用户没有登陆就跳转到登陆页面
+        request.getRequestDispatcher(&quot;/WEB-INF/jsp/login.jsp&quot;).forward(request,response);
+        return false;
     &#125;
-    // 500
-    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-&#125;
 &#125;
 </code></pre>
-<p>出自：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/7893169a7c93">RESTful接口详解 - 简书 (jianshu.com)</a></p>
+</li>
+<li><p>在applicationcontext.xml里配置</p>
+<pre><code class="java">&lt;mvc:interceptors&gt;
+        &lt;mvc:interceptor&gt;
+            &lt;!--包括这个请求下所有的请求--&gt;
+            &lt;mvc:mapping path=&quot;/**&quot;/&gt;
+            &lt;bean class=&quot;com.zz.config.MyInterceptor&quot;/&gt;
+        &lt;/mvc:interceptor&gt;
+        &lt;mvc:interceptor&gt;
+            &lt;mvc:mapping path=&quot;/**&quot;/&gt;
+            &lt;bean class=&quot;com.zz.config.LoignIntercepter&quot;/&gt;
+        &lt;/mvc:interceptor&gt;
+    &lt;/mvc:interceptors&gt;
+</code></pre>
+</li>
+</ol>
 
       
     </div>
@@ -592,7 +1033,7 @@ public ResponseEntity&lt;Void&gt; deleteUser(@RequestParam(value = &quot;id&quot
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/9/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><a class="extend next" rel="next" href="/page/9/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -660,7 +1101,7 @@ public ResponseEntity&lt;Void&gt; deleteUser(@RequestParam(value = &quot;id&quot
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-count">33</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -673,7 +1114,7 @@ public ResponseEntity&lt;Void&gt; deleteUser(@RequestParam(value = &quot;id&quot
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">28</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -739,18 +1180,18 @@ public ResponseEntity&lt;Void&gt; deleteUser(@RequestParam(value = &quot;id&quot
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">109k</span>
+    <span title="站点总字数">115k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:39</span>
+    <span title="站点阅读时长">1:45</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共37.5k字</span>
+  <span class="post-count">博客全站共40.9k字</span>
 </div>
 
     <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>

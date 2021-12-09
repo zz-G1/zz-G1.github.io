@@ -195,7 +195,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/26/Swaager%E4%BC%A0%E5%85%A5%E5%8F%82%E6%95%B0%E9%97%AE%E9%A2%98/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/27/SpringDataJPA%E4%B9%8B%E6%8F%90%E4%BE%9B%E6%8E%A5%E5%8F%A3%E7%A7%8D%E7%B1%BB-%E4%BA%8C/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -209,114 +209,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/08/26/Swaager%E4%BC%A0%E5%85%A5%E5%8F%82%E6%95%B0%E9%97%AE%E9%A2%98/" class="post-title-link" itemprop="url">Swaager传入参数问题</a>
-        </h2>
-
-        <div class="post-meta">
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-08-26 10:31:18 / 修改时间：10:34:39" itemprop="dateCreated datePublished" datetime="2021-08-26T10:31:18+08:00">2021-08-26</time>
-            </span>
-
-          
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-              <span>820</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3><span id="swaager配置时">Swaager配置时</span></h3><p>要注意<strong>RequestMapping</strong>属性 （comsumes）本次传入参数点击<strong>excute</strong>报红却不可执行 改变了datatype也不行</p>
-<p>看了响应头原来是 <strong>content-type: application/json</strong> 在<strong>RequestMapping</strong>中配置<strong>consumes</strong>指定数据请求的格式为<strong>application/json</strong>格式，把<strong>consumes</strong>属性去掉就好</p>
-<p><img src="/2021/08/26/Swaager%E4%BC%A0%E5%85%A5%E5%8F%82%E6%95%B0%E9%97%AE%E9%A2%98/image-20210826103240523.png" alt="image-20210826103240523"></p>
-<h5><span id="request-mapping属性">Request Mapping属性</span></h5><pre><code class="java">@Target(&#123;ElementType.METHOD, ElementType.TYPE&#125;) // 可以在方法和类的声明中使用
-@Retention(RetentionPolicy.RUNTIME)
-@Documented
-@Mapping
-public @interface RequestMapping &#123;
-
-    String name() default &quot;&quot;;// 指定映射的名称
-
-    @AliasFor(&quot;path&quot;)
-    String[] value() default &#123;&#125;; // 指定请求路径的地址
-
-    @AliasFor(&quot;value&quot;)
-    String[] path() default &#123;&#125;; // 指定请求路径的地址
-
-    // 指定请求的方式，是一个RequsetMethod数组，可以配置多个方法
-    RequestMethod[] method() default &#123;&#125;;
-    
-    // 指定参数的类型
-    String[] params() default &#123;&#125;;
-    
-    // 指定请求头内容
-    String[] headers() default &#123;&#125;;
-    
-    // 指定数据请求的格式
-    String[] consumes() default &#123;&#125;;
-    
-    // 指定返回的内容类型
-    String[] produces() default &#123;&#125;;
-&#125;
-</code></pre>
-
-      
-    </div>
-
-    
-    
-    
-
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/24/%E5%88%9D%E8%AF%86JPA/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Gzz">
-      <meta itemprop="description" content="只要开始就不算晚">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="香饽饽">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/08/24/%E5%88%9D%E8%AF%86JPA/" class="post-title-link" itemprop="url">初识JPA</a>
+            <a href="/2021/08/27/SpringDataJPA%E4%B9%8B%E6%8F%90%E4%BE%9B%E6%8E%A5%E5%8F%A3%E7%A7%8D%E7%B1%BB-%E4%BA%8C/" class="post-title-link" itemprop="url">SpringDataJPA之提供接口种类(二)</a>
         </h2>
 
         <div class="post-meta">
@@ -328,14 +221,14 @@ public @interface RequestMapping &#123;
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-08-24 15:39:08" itemprop="dateCreated datePublished" datetime="2021-08-24T15:39:08+08:00">2021-08-24</time>
+              <time title="创建时间：2021-08-27 11:29:40" itemprop="dateCreated datePublished" datetime="2021-08-27T11:29:40+08:00">2021-08-27</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-08-25 09:45:59" itemprop="dateModified" datetime="2021-08-25T09:45:59+08:00">2021-08-25</time>
+                <time title="修改时间：2021-08-29 21:40:09" itemprop="dateModified" datetime="2021-08-29T21:40:09+08:00">2021-08-29</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -360,13 +253,13 @@ public @interface RequestMapping &#123;
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
               </span>
-              <span>6.9k</span>
+              <span>2.8k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
-              <span>6 分钟</span>
+              <span>3 分钟</span>
             </span>
 
         </div>
@@ -378,237 +271,187 @@ public @interface RequestMapping &#123;
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1><span id="springdatajpa">SpringDataJPA</span></h1><p>[TOC]</p>
-<p>是springdata项目下的一个模块</p>
-<p>使用：定义接口并集成spring Data JPA中所提供的接口即可</p>
-<hr>
-<h3><span id="接口继承结构">接口继承结构👀</span></h3><p><img src="/2021/08/24/%E5%88%9D%E8%AF%86JPA/jpa1.png" alt="jpa1"></p>
-<h3><span id="入门案例">入门案例</span></h3><p> 通过jpaRepoistry接口实现一个简单操作</p>
-<h4><span id="1创建maven项目">1.创建maven项目</span></h4><h4><span id="2添加相关依赖">2.添加相关依赖</span></h4><p>​     基础依赖+额外依赖（hibernate JPA+SpringDataJPA）</p>
-<pre><code class="java">&lt;dependencies&gt;
-    &lt;dependency&gt;
-        &lt;groupId&gt;org.springframework&lt;/groupId&gt;
-        &lt;artifactId&gt;spring-context&lt;/artifactId&gt;
-        &lt;version&gt;4.3.21.RELEASE&lt;/version&gt;
-    &lt;/dependency&gt;
-    &lt;dependency&gt;
-        &lt;groupId&gt;org.aspectj&lt;/groupId&gt;
-        &lt;artifactId&gt;aspectjweaver&lt;/artifactId&gt;
-        &lt;version&gt;1.6.8.RELEASE&lt;/version&gt;
-    &lt;/dependency&gt;
-    &lt;dependency&gt;
-        &lt;groupId&gt;com.mchange&lt;/groupId&gt;
-        &lt;artifactId&gt;c3p0&lt;/artifactId&gt;
-        &lt;version&gt;0.9.5.3&lt;/version&gt;
-    &lt;/dependency&gt;
-    &lt;dependency&gt;
-        &lt;groupId&gt;org.hibernate&lt;/groupId&gt;
-        &lt;artifactId&gt;hibernate-core&lt;/artifactId&gt;
-        &lt;version&gt;5.0.7.Final&lt;/version&gt;
-    &lt;/dependency&gt;
-    &lt;dependency&gt;
-        &lt;groupId&gt;org.springframework&lt;/groupId&gt;
-        &lt;artifactId&gt;spring-orm&lt;/artifactId&gt;
-        &lt;version&gt;4.3.21.RELEASE&lt;/version&gt;
-    &lt;/dependency&gt;
-    &lt;dependency&gt;
-        &lt;groupId&gt;mysql&lt;/groupId&gt;
-        &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;
-        &lt;version&gt;5.1.32&lt;/version&gt;
-    &lt;/dependency&gt;
-    &lt;dependency&gt;
-        &lt;groupId&gt;junit&lt;/groupId&gt;
-        &lt;artifactId&gt;junit&lt;/artifactId&gt;
-        &lt;version&gt;4.12&lt;/version&gt;
-    &lt;/dependency&gt;
-    &lt;dependency&gt;
-        &lt;groupId&gt;org.springframework&lt;/groupId&gt;
-        &lt;artifactId&gt;spring-test&lt;/artifactId&gt;
-        &lt;version&gt;4.3.21.RELEASE&lt;/version&gt;
-    &lt;/dependency&gt;
-    &lt;dependency&gt;
-        &lt;groupId&gt;org.hibernate&lt;/groupId&gt;
-        &lt;artifactId&gt;hibernate-entitymanager&lt;/artifactId&gt;
-        &lt;version&gt;5.0.7.Final&lt;/version&gt;
-    &lt;/dependency&gt;
-    &lt;dependency&gt;
-        &lt;groupId&gt;org.springframework.data&lt;/groupId&gt;
-        &lt;artifactId&gt;spring-data-jpa&lt;/artifactId&gt;
-        &lt;version&gt;1.9.0.RELEASE&lt;/version&gt;
-    &lt;/dependency&gt;
-&lt;/dependencies&gt;
-</code></pre>
-<h4><span id="3添加配置文件">3.添加配置文件</span></h4><p>  数据库配置文件+spring配置文件（application.xml）( •̀ ω •́ )✧</p>
-<pre><code class="java">jdbc.url=jdbc:mysql://localhost:3306/ssm?characterEncoding=utf-8
-jdbc.driver.class=com.mysql.jdbc.Driver
-jdbc.username=root
-jdbc.password=123456
-</code></pre>
-<pre><code class="java">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
-    xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:context=&quot;http://www.springframework.org/schema/context&quot;
-    xmlns:aop=&quot;http://www.springframework.org/schema/aop&quot; xmlns:tx=&quot;http://www.springframework.org/schema/tx&quot;
-       xmlns:jpa=&quot;http://www.springframework.org/schema/data/jpa&quot;
-    xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans 
-    http://www.springframework.org/schema/beans/spring-beans.xsd
-    http://www.springframework.org/schema/context
-    http://www.springframework.org/schema/context/spring-context.xsd
-    http://www.springframework.org/schema/aop
-    http://www.springframework.org/schema/aop/spring-aop.xsd
-    http://www.springframework.org/schema/data/jpa
-    http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
-    http://www.springframework.org/schema/tx 
-    http://www.springframework.org/schema/tx/spring-tx.xsd&quot;&gt;
-    
-    &lt;!-- 配置读取properties文件的工具类 --&gt;
-    &lt;context:property-placeholder location=&quot;classpath:jdbc.properties&quot;/&gt;
-    
-    &lt;!-- 配置c3p0数据库连接池 --&gt;
-    &lt;bean id=&quot;dataSource&quot; class=&quot;com.mchange.v2.c3p0.ComboPooledDataSource&quot;&gt;
-        &lt;property name=&quot;jdbcUrl&quot; value=&quot;$&#123;jdbc.url&#125;&quot;/&gt;
-        &lt;property name=&quot;driverClass&quot; value=&quot;$&#123;jdbc.driver.class&#125;&quot;/&gt;
-        &lt;property name=&quot;user&quot; value=&quot;$&#123;jdbc.username&#125;&quot;/&gt;
-        &lt;property name=&quot;password&quot; value=&quot;$&#123;jdbc.password&#125;&quot;/&gt;
-    &lt;/bean&gt;
-
-    &lt;!-- Spring 整合 JPA 配置 EntityManagerFactory--&gt;
-    &lt;bean id=&quot;entityManagerFactory&quot;
-          class=&quot;org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean&quot;&gt;
-        &lt;property name=&quot;dataSource&quot; ref=&quot;dataSource&quot;/&gt;
-        &lt;property name=&quot;jpaVendorAdapter&quot;&gt;
-            &lt;bean class=&quot;org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter&quot;&gt;
-                &lt;!-- hibernate 相关的属性的注入 --&gt;
-                &lt;!-- 配置数据库类型 --&gt;
-                &lt;property name=&quot;database&quot; value=&quot;MYSQL&quot;/&gt;
-                &lt;!-- 正向工程 自动创建表 --&gt;
-                &lt;property name=&quot;generateDdl&quot; value=&quot;true&quot;/&gt;
-                &lt;!-- 显示执行的 SQL --&gt;
-                &lt;property name=&quot;showSql&quot; value=&quot;true&quot;/&gt;
-            &lt;/bean&gt;
-        &lt;/property&gt;
-        &lt;!-- 扫描实体的包 --&gt;
-        &lt;property name=&quot;packagesToScan&quot;&gt;
-            &lt;list&gt;
-                &lt;value&gt;com.dpb.pojo&lt;/value&gt;
-            &lt;/list&gt;
-        &lt;/property&gt;
-    &lt;/bean&gt;
-    &lt;!-- 配置 Hibernate 的事务管理器 --&gt;
-    &lt;bean id=&quot;transactionManager&quot;
-          class=&quot;org.springframework.orm.jpa.JpaTransactionManager&quot;&gt;
-        &lt;property name=&quot;entityManagerFactory&quot;
-                  ref=&quot;entityManagerFactory&quot;/&gt;
-    &lt;/bean&gt;
-    
-    &lt;!-- 配置开启注解事务处理 --&gt;
-    &lt;tx:annotation-driven transaction-manager=&quot;transactionManager&quot;/&gt;
-    
-    &lt;!-- 配置springIOC的注解扫描 --&gt;
-    &lt;context:component-scan base-package=&quot;com.dpb&quot;/&gt;
-
-    &lt;!-- Spring Data JPA 的配置 --&gt;
-    &lt;!-- base-package：扫描 dao 接口所在的包 --&gt;
-    &lt;jpa:repositories base-package=&quot;com.dpb.dao&quot;/&gt;
-&lt;/beans&gt;
-</code></pre>
-<h4><span id="4创建pojo类user和dao接口">4.创建pojo类User和Dao接口</span></h4><h6><span id="开发中modelentity和pojo的区别"></span></h6><pre><code class="java">package com.zz.pojo;
-
-import javax.persistence.*;
-import java.io.Serializable;
-
-/**
- * @program: spring-hibernate-jpa
- * @description: Users的Pojo对象
- * @author: zz
- * @create: 2021-08-24
- */
-
-@Entity
-@Table(name=&quot;users&quot;)
-public class Users implements Serializable &#123;
-
-    @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)//strategy=GenerationType.IDENTITY 自增长
-    @Column(name=&quot;userid&quot;)
-    private Integer userid;
-
-    @Column(name=&quot;username&quot;)
-    private String username;
-
-    @Column(name=&quot;userage&quot;)
-    private Integer userage;
-
-    public Integer getUserid() &#123;
-        return userid;
-    &#125;
-
-    public void setUserid(Integer userid) &#123;
-        this.userid = userid;
-    &#125;
-
-    public String getUsername() &#123;
-        return username;
-    &#125;
-
-    public void setUsername(String username) &#123;
-        this.username = username;
-    &#125;
-
-    public Integer getUserage() &#123;
-        return userage;
-    &#125;
-
-    public void setUserage(Integer userage) &#123;
-        this.userage = userage;
-    &#125;
-
-    @Override
-    public String toString() &#123;
-        return &quot;Users [userid=&quot; + userid + &quot;, username=&quot; + username + &quot;, userage=&quot; + userage + &quot;]&quot;;
-    &#125;
-
-&#125;
-</code></pre>
+          <h2><span id="crudreposiroty">CrudReposiroty</span></h2><p>继承了Repository</p>
+<p><img src="/2021/08/27/SpringDataJPA%E4%B9%8B%E6%8F%90%E4%BE%9B%E6%8E%A5%E5%8F%A3%E7%A7%8D%E7%B1%BB-%E4%BA%8C/1445322-20190113001524301-1212575806.png" alt="1445322-20190113001524301-1212575806"></p>
+<p>Crud主要是添加了对数据的增删改查的方法</p>
+<h2><span id="pagingandsortingrepositor">PagingAndSortingRepositor</span></h2><p> 继承了CrudRepository</p>
 <pre><code class="java">/**
- * SpringDataJPA 实现JpaRepository
- * 泛型 第一个参数是对应的Pojo类型
- *      第二个参数是注解的包装类型(将实体类型和实体类的id类型作为类型参数)
+ * 继承了Repository,缺点只能对所有的数据进行排序或者分页
  */
-public interface UserDao extends JpaRepository&lt;Users,Integer&gt; &#123;
-
+@Repository
+public interface UserPagingAndSortingReposiroty extends PagingAndSortingRepository&lt;User, Integer&gt; &#123;
 &#125;
 </code></pre>
-<h4><span id="5测试">5.测试</span></h4><pre><code class="java">
-/**
- * @program: spring-data-jpa
- * @description: 测试
- * @author: zz
- * @create: 2021-08-24
+<h2><span id="jparepository">JPARepository</span></h2><p>继承了PagingAndSortingRepository接口</p>
+<p>在开发中常用JPARepository</p>
+<p>优点: 对继承父接口中方法的返回值进行了适配,因为在父类接口中通常都返回迭代器，需要我们自己进行强制类型转化。而在JpaRepository中，直接返回了List</p>
+<h2><span id="jpaspecificationexecutor">JpaSpecificationExecutor</span></h2><p>接口内部如图所示：</p>
+<p><img src="/2021/08/27/SpringDataJPA%E4%B9%8B%E6%8F%90%E4%BE%9B%E6%8E%A5%E5%8F%A3%E7%A7%8D%E7%B1%BB-%E4%BA%8C/Snipaste_2021-08-27_09-24-59.png" alt="Snipaste_2021-08-27_09-24-59"></p>
+<p>提供了多条件查询的支持，并且可以在查询中添加分页和排序，因为这个接口单独存在，所以要配合以上接口配合使用。</p>
+<pre><code class="Java">/**
+ * JpaSpecificationExecutor是单独存在的，需要配合这JpaRepository一起使用
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(&quot;classpath:applicationContext.xml&quot;)//取当前项目路径中的主配置文件
-public class TestDemo &#123;
-
-    @Autowired
-    private UserDao usersDao;
-
-
-    /**
-     * 添加用户
-     */
-    @Test
-    @Transactional// 在测试类对于事务提交方式默认的是回滚。
-    @Rollback(false)//取消自动回滚
-    public void testInsertUsers()&#123;
-        Users users = new Users();
-        users.setUserage(20);
-        users.setUsername(&quot;张三-jpa&quot;);
-        this.usersDao.save(users);
-    &#125;
+@Repository
+public interface UserJpaSpecificationExecutor extends JpaSpecificationExecutor&lt;User&gt;, JpaRepository&lt;User, Integer&gt; &#123;
 &#125;
 </code></pre>
-<h4><span id="运行结果">运行结果：</span></h4><p><img src="/2021/08/24/%E5%88%9D%E8%AF%86JPA/image-20210824172908751.png" alt="image-20210824172908751"></p>
-<h5><span id="注意要先创建ssm数据库在idea中完成对数据库的连接"><strong>注意:<strong>💥💥💥💥💥：</strong>要先创建ssm数据库，在idea中完成对数据库的连接</strong>💢💢💢💢💢</span></h5><hr>
+<pre><code class="java">public interface JpaSpecificationExecutor&lt;T&gt; &#123;
+   //根据 Specification 条件查询单个对象，注意的是，如果条件能查出来多个会报错
+   T findOne(@Nullable Specification&lt;T&gt; spec);
+   //根据 Specification 条件查询 List 结果
+   List&lt;T&gt; findAll(@Nullable Specification&lt;T&gt; spec);
+   //根据 Specification 条件，分页查询
+   Page&lt;T&gt; findAll(@Nullable Specification&lt;T&gt; spec, Pageable pageable);
+   //根据 Specification 条件，带排序的查询结果
+   List&lt;T&gt; findAll(@Nullable Specification&lt;T&gt; spec, Sort sort);
+   //根据 Specification 条件，查询数量
+   long count(@Nullable Specification&lt;T&gt; spec);
+&#125;
+</code></pre>
+<p>可以根据传入参数看出<strong>JpaSpecificationExecutor</strong>接口基本是围绕<strong>Specification</strong>接口定义的。而<strong>Specification</strong>接口最常用的就是以下方法：</p>
+<pre><code class="java">Predicate toPredicate(Root&lt;T&gt; root, CriteriaQuery&lt;?&gt; query, CriteriaBuilder criteriaBuilder);
+</code></pre>
+<p>可以看出JpaSpecificationExecutor对criteria进行了Predicate格式的封装，使我们操作criteria更加遍利</p>
+<p><strong>Criteria介绍：</strong></p>
+<p>（1）<strong>Root<t>root</t></strong>代表了可以查询和操作的实体对象的根。通俗讲就是对象的属性。通过里面的**Path<y>get(String attributeName)**来获得我们操作的字段。</y></p>
+<p>（2）<strong>CriteriaQuery&lt;?&gt;query：</strong>代表一个特殊的顶层查询对象，它包含着查询的各个部分，比如：select、from、where、groupby、order by等。CriteriaQuery对象只对实体类型或嵌入式类型的Criteria查询起作用，简单理解，它提供了查询ROOT的方法。常用的方法有：</p>
+<pre><code class="java">package javax.persistence.criteria;
+
+import java.util.List;
+import java.util.Set;
+
+public interface CriteriaQuery&lt;T&gt; extends AbstractQuery&lt;T&gt; &#123;
+    CriteriaQuery&lt;T&gt; select(Selection&lt;? extends T&gt; var1);
+
+    CriteriaQuery&lt;T&gt; multiselect(Selection&lt;?&gt;... var1);
+
+    CriteriaQuery&lt;T&gt; multiselect(List&lt;Selection&lt;?&gt;&gt; var1);
+
+    CriteriaQuery&lt;T&gt; where(Expression&lt;Boolean&gt; var1);
+
+    CriteriaQuery&lt;T&gt; where(Predicate... var1);
+
+    CriteriaQuery&lt;T&gt; groupBy(Expression&lt;?&gt;... var1);
+
+    CriteriaQuery&lt;T&gt; groupBy(List&lt;Expression&lt;?&gt;&gt; var1);
+
+    CriteriaQuery&lt;T&gt; having(Expression&lt;Boolean&gt; var1);
+
+    CriteriaQuery&lt;T&gt; having(Predicate... var1);
+
+    CriteriaQuery&lt;T&gt; orderBy(Order... var1);
+
+    CriteriaQuery&lt;T&gt; orderBy(List&lt;Order&gt; var1);
+
+    CriteriaQuery&lt;T&gt; distinct(boolean var1);
+
+    List&lt;Order&gt; getOrderList();
+
+    Set&lt;ParameterExpression&lt;?&gt;&gt; getParameters();
+&#125;
+ 
+</code></pre>
+<p>（3）CriteriaBuilder cb：用来构建<strong>CritiaQuery</strong>的构建器对象，其实就相当于条件或者是条件组合，即以Predicate的形式返回。构建简单的Predicate示例：</p>
+<p><strong>JpaSpecificationExecutor接口下结构如图：</strong>!<img src="/2021/08/27/SpringDataJPA%E4%B9%8B%E6%8F%90%E4%BE%9B%E6%8E%A5%E5%8F%A3%E7%A7%8D%E7%B1%BB-%E4%BA%8C/1445322-20190113140545272-914950979.png" alt="1445322-20190113140545272-914950979"></p>
+<p><strong>JpaSpecificationExecutor实现原理</strong></p>
+<p><img src="/2021/08/27/SpringDataJPA%E4%B9%8B%E6%8F%90%E4%BE%9B%E6%8E%A5%E5%8F%A3%E7%A7%8D%E7%B1%BB-%E4%BA%8C/Snipaste_2021-08-29_21-38-01.png" alt="Snipaste_2021-08-29_21-38-01"></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/26/Spring-AOP%E5%92%8CIOC%E9%97%AE%E9%A2%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Gzz">
+      <meta itemprop="description" content="只要开始就不算晚">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="香饽饽">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/08/26/Spring-AOP%E5%92%8CIOC%E9%97%AE%E9%A2%98/" class="post-title-link" itemprop="url">Spring AOP和IOC问题</a>
+        </h2>
+
+        <div class="post-meta">
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-08-26 11:15:52 / 修改时间：13:42:05" itemprop="dateCreated datePublished" datetime="2021-08-26T11:15:52+08:00">2021-08-26</time>
+            </span>
+
+          
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+              <span>640</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3><span id="ioc">IOC</span></h3><h4><span id="first">First</span></h4><p>IOC(<strong>Inversion of Control</strong>) 即控制反转，<strong>注意</strong>：不是技术，而是一种设计思想🎆🎆🎆🎆🎆</p>
+<p><strong>Ioc意味着将你设计好的对象交给容器控制</strong></p>
+<p><strong>容器</strong>：IoC 容器控制了对象；</p>
+<p><strong>控制什么</strong>：主要控制了外部资源获取（不只是对象包括比如文件等），不用自己new了</p>
+<p><strong>正转</strong>：自己直接在对象内部通过new进行创建对象，是程序主动去创建依赖对象</p>
+<p><strong>反转</strong>：则是由容器来帮忙创建及注入依赖对象</p>
+<p><strong>控制什么反转了</strong>：依赖对象的获取</p>
+<p>传统程序设计如图：是主动创建对象然后再组合</p>
+<p><img src="/2021/08/26/Spring-AOP%E5%92%8CIOC%E9%97%AE%E9%A2%98/261421378318292.jpg" alt="261421378318292"></p>
+<p>有了IOC/DI容器后：客户端就不用去主动创建对象</p>
+<p><img src="/2021/08/26/Spring-AOP%E5%92%8CIOC%E9%97%AE%E9%A2%98/%E4%B8%8B%E8%BD%BD.png" alt="下载"></p>
+<p>其实从另一层面来说 IOC也达到的松耦合的效果</p>
+<p>🎞 <strong>面向对象设计法则之一—— 好莱坞法则：“别找我们，我们找你</strong></p>
+<p><strong>DI</strong>（Dependency Injection）依赖注入 ：由容器将某个依赖关系（example：用户类依赖用户信息类）动态地注入到组件中，目的并非为组件增加什么功能，而是提升组件重用地频率，并为系统搭建一个灵活可拓展的平台，有了依赖注入机制，我们只需进行简单的配置即可。</p>
+<p>理解DI的关键是：“谁依赖谁，为什么需要依赖，谁注入谁，注入了什么”</p>
+<ul>
+<li>谁依赖谁：应用程序依赖IOC容器</li>
+<li>为什么需要依赖：应用程序需要IOC容器来提供对象需要的外部资源</li>
+<li>谁注入谁：IOC注入应用程序某个对象，应用程序依赖的某个对象</li>
+<li>注入了什么：注入某个对象需要的外部资源（包括对象，资源，常量数据）</li>
+</ul>
+<h5><span id="ioc和di的关系">IOC和DI的关系</span></h5><p><strong>是同一个概念的不同角度描述</strong></p>
+<p>相对IoC 而言，依赖注入明确描述了<strong>被注入对象依赖IoC容器配置依赖对象</strong></p>
 
       
     </div>
@@ -629,7 +472,7 @@ public class TestDemo &#123;
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/13/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><span class="page-number current">14</span><a class="page-number" href="/page/15/">15</a><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/15/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/13/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><span class="page-number current">14</span><a class="page-number" href="/page/15/">15</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><a class="extend next" rel="next" href="/page/15/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -697,7 +540,7 @@ public class TestDemo &#123;
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-count">33</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -710,7 +553,7 @@ public class TestDemo &#123;
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">28</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -776,18 +619,18 @@ public class TestDemo &#123;
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">109k</span>
+    <span title="站点总字数">115k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:39</span>
+    <span title="站点阅读时长">1:45</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共37.5k字</span>
+  <span class="post-count">博客全站共40.9k字</span>
 </div>
 
     <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
