@@ -195,7 +195,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/21/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-0/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/02/dubbo/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -209,7 +209,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/10/21/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-0/" class="post-title-link" itemprop="url">设计模式Study-0</a>
+            <a href="/2021/11/02/dubbo/" class="post-title-link" itemprop="url">dubbo</a>
         </h2>
 
         <div class="post-meta">
@@ -221,45 +221,28 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-10-21 22:07:05" itemprop="dateCreated datePublished" datetime="2021-10-21T22:07:05+08:00">2021-10-21</time>
+              <time title="创建时间：2021-11-02 16:19:06" itemprop="dateCreated datePublished" datetime="2021-11-02T16:19:06+08:00">2021-11-02</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-10-23 19:40:37" itemprop="dateModified" datetime="2021-10-23T19:40:37+08:00">2021-10-23</time>
+                <time title="修改时间：2021-11-04 11:36:13" itemprop="dateModified" datetime="2021-11-04T11:36:13+08:00">2021-11-04</time>
               </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java%E8%BF%9B%E9%98%B6/" itemprop="url" rel="index"><span itemprop="name">Java进阶</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java%E8%BF%9B%E9%98%B6/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">设计模式</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java%E8%BF%9B%E9%98%B6/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%BC%80%E5%A7%8B/" itemprop="url" rel="index"><span itemprop="name">开始</span></a>
-                </span>
-            </span>
 
           
             <span class="post-meta-item" title="本文字数">
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
               </span>
-              <span>730</span>
+              <span>7.7k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
-              <span>1 分钟</span>
+              <span>7 分钟</span>
             </span>
 
         </div>
@@ -271,61 +254,142 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1><span id="设计模式七大原则">设计模式七大原则</span></h1><h3><span id="单一职责原则">单一职责原则</span></h3><p>通常在类级别实行单一职责，只有在类中方法足够少的情况下，才可以在方法级别保持单一职责原则。</p>
-<p><strong>用类来化解分支</strong></p>
-<p><img src="/2021/10/21/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-0/image-20211022104314536.png" alt="image-20211022104314536"></p>
-<p><img src="/2021/10/21/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-0/image-20211022102844895.png" alt="image-20211022102844895"><img src="/2021/10/21/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-0/image-20211022102908817.png" alt="image-20211022102908817"></p>
-<h3><span id="接口隔离原则">接口隔离原则</span></h3><p><strong>一个类对另一个类的依赖应该建立在最小的接口上</strong></p>
-<blockquote>
-<p>初始版本</p>
-</blockquote>
-<p><img src="/2021/10/21/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-0/image-20211022110421886.png" alt="image-20211022110421886"></p>
-<p>依赖关系示例图：</p>
-<p><img src="/2021/10/21/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-0/image-20211022110802941.png" alt="image-20211022110802941"></p>
-<blockquote>
-<p>改进版</p>
-<p><img src="/2021/10/21/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-0/image-20211022110528996.png" alt="image-20211022110528996"></p>
-</blockquote>
-<h3><span id="依赖倒转倒置原则">依赖倒转（倒置）原则</span></h3><p><img src="/2021/10/21/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-0/image-20211022112257188.png" alt="image-20211022112257188"></p>
-<p>设计理念：相对于细节（具体的实现类），抽象（接口，抽象类）的东西更<strong>稳定</strong>（优点见上图），以<strong>抽象为基础搭建的架构</strong>比<strong>以细节为架构</strong>要更稳定</p>
-<p>使用接口或抽象类的目的是<strong>制定好规范</strong>，不涉及<strong>具体的操作</strong>，把<strong>展现细节</strong>交给具体实现类去完成。</p>
-<p>细节应该<strong>依赖抽象</strong>，核心思想是<strong>面向接口编程</strong></p>
-<p>EXAMPLE:</p>
-<p>客户端：</p>
-<pre><code class="java">package 依赖倒转;
-
-import java.time.Period;
-
-public class Client &#123;
-    public static void main(String[] args) &#123;
-        Person person=new Person();
-        person.receive(new Email());
-        person.receive(new Weixin());
-    &#125;
-&#125;
+          <h1><span id="dubbo">Dubbo</span></h1><h2><span id="rpc框架">RPC框架</span></h2><p>RPC【Remote Procedure Call】是指远程过程调用，是一种进程间通信方式，他是一种技术的思想，而不是规范。</p>
+<p>Apache Dubbo (incubating) 是一款高性能、轻量级的开源Java RPC框架，它提供了三大核心能力：面向接口的远程方法调用，智能容错和负载均衡，以及服务自动注册和发现</p>
+<h2><span id="注册中心-zookeeperregistry">注册中心 zookeeper(Registry)</span></h2><p><img src="/2021/11/02/dubbo/image-20211102170838813.png" alt="image-20211102170838813"></p>
+<p><strong>服务提供者</strong>（<strong>Provider</strong>）：暴露服务的服务提供方，服务提供者在启动时，向注册中心注册自己提供的服务。</p>
+<p><strong>服务消费者</strong>（<strong>Consumer</strong>）: 调用远程服务的服务消费方，服务消费者在启动时，向注册中心订阅自己所需的服务，服务消费者，从提供者地址列表中，基于软负载均衡算法，选一台提供者进行调用，如果调用失败，再选另一台调用。</p>
+<p><strong>注册中心</strong>（<strong>Registry</strong>）：注册中心返回服务提供者地址列表给消费者，如果有变更，注册中心将基于长连接推送变更数据给消费者</p>
+<p><strong>监控中心</strong>（<strong>Monitor</strong>）：服务消费者和提供者，在内存中累计调用次数和调用时间，定时每分钟发送一次统计数据到监控中心</p>
+<h1><span id="dubbo配置">dubbo配置</span></h1><h2><span id="1-配置原则">1、配置原则</span></h2><p><img src="/2021/11/02/dubbo/wpsBCDE.tmp.png" alt="img"> </p>
+<p>JVM 启动 -D 参数优先，这样可以使用户在部署和启动时进行参数重写，比如在启动时需改变协议的端口。</p>
+<p>XML 次之，如果在 XML 中有配置，则 dubbo.properties 中的相应配置项无效。</p>
+<p>Properties 最后，相当于缺省值，只有 XML 没有配置时，dubbo.properties 的相应配置项才会生效，通常用于共享公共配置，比如应用名。</p>
+<h2><span id="2-重试次数">2、重试次数</span></h2><p>失败自动切换，当出现失败，重试其它服务器，但重试会带来更长延迟。可通过 retries=”2” 来设置重试次数(不含第一次)。</p>
+<p>重试次数配置如下</p>
+<pre><code class="xml">&lt;dubbo:service retries=&quot;2&quot; /&gt;
+或&lt;dubbo:reference retries=&quot;2&quot; /&gt;
+或&lt;dubbo:reference&gt;&lt;dubbo:method name=&quot;findFoo&quot; retries=&quot;2&quot; /&gt;&lt;/dubbo:reference&gt;
 </code></pre>
-<p>统一发信息接口：</p>
-<pre><code class="java">package 依赖倒转;
-
-interface IReceiver &#123;
-    public String getInfo();
-
-&#125;
+<h2><span id="3-超时时间">3、超时时间</span></h2><p>由于网络或服务端不可靠，会导致调用出现一种不确定的中间状态（超时）。为了避免超时导致客户端资源（线程）挂起耗尽，必须设置超时时间。</p>
+<h3><span id="1-dubbo消费端">1、Dubbo消费端</span></h3><pre><code class="xml">全局超时配置
+&lt;dubbo:consumer timeout=&quot;5000&quot; /&gt; 
+指定接口以及特定方法超时配置
+&lt;dubbo:reference interface=&quot;com.foo.BarService&quot; timeout=&quot;2000&quot;&gt;  
+    &lt;dubbo:method name=&quot;sayHello&quot; timeout=&quot;3000&quot; /&gt;
+&lt;/dubbo:reference&gt;
 </code></pre>
-<p>微信和email分别建立实体类实现统一发送信息接口，由此可以在上图客户端中实现功能。</p>
-<p><img src="/2021/10/21/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-0/image-20211022115039056.png" alt="image-20211022115039056"></p>
-<p><img src="/2021/10/21/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-0/image-20211022114045857.png" alt="image-20211022114045857"></p>
-<h3><span id="里氏替换原则">里氏替换原则</span></h3><p>引出：继承也有一些弊端：带来侵入性，增加了对象之间的耦合性。一个父类被多个子类继承时，当父类修改功能，则必须要考虑到所有的子类，而且修改后子类的功能会产生故障。</p>
-<p><img src="/2021/10/21/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-0/image-20211022122710402.png" alt="image-20211022122710402"></p>
-<p><img src="/2021/10/21/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-0/image-20211022122725461.png" alt="image-20211022122725461"></p>
-<p><img src="/2021/10/21/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-0/image-20211022122850226.png" alt="image-20211022122850226"></p>
-<p><img src="/2021/10/21/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-0/image-20211022122914008.png" alt="image-20211022122914008"></p>
-<h3><span id="开闭原则">开闭原则</span></h3><p>对扩展开放（提供方），对修改关闭（使用方）</p>
-<p>尽量添加代码而不去修改</p>
-<h3><span id="迪米特法则">迪米特法则</span></h3><p><img src="/2021/10/21/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-0/image-20211023183516689.png" alt="image-20211023183516689"></p>
-<p><img src="/2021/10/21/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-0/image-20211023183343984.png" alt="image-20211023183343984"></p>
-<h3><span id="合成复用原则">合成复用原则</span></h3><p>尽量使用合成或聚合的方式，不要使用继承，降低耦合度。</p>
-<h2><span id="设计原则核心思想">设计原则核心思想</span></h2><p><img src="/2021/10/21/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-0/Blog\source_posts\设计模式Study-0\image-20211023193922411.png" alt="image-20211023193922411"></p>
+<h3><span id="2-dubbo服务端">2、Dubbo服务端</span></h3><pre><code class="xml">全局超时配置&lt;dubbo:provider timeout=&quot;5000&quot; /&gt; 
+指定接口以及特定方法超时配置
+&lt;dubbo:provider interface=&quot;com.foo.BarService&quot; timeout=&quot;2000&quot;&gt;  &lt;dubbo:method name=&quot;sayHello&quot; timeout=&quot;3000&quot; /&gt;
+&lt;/dubbo:provider&gt;
+</code></pre>
+<h3><span id="3-配置原则">3、配置原则</span></h3><p>dubbo推荐在Provider上尽量多配置Consumer端属性：</p>
+<p>1、作服务的提供者，比服务使用方更清楚服务性能参数，如调用的超时时间，合理的重试次数，等等2、在Provider配置后，Consumer不配置则会使用Provider的配置值，即Provider配置可以作为Consumer的缺省值。否则，Consumer会使用Consumer端的全局设置，这对于Provider不可控的，并且往往是不合理的</p>
+<p>配置的覆盖规则：</p>
+<p>\1) 方法级配置别优于接口级别，即小Scope优先 </p>
+<p>\2) Consumer端配置 优于 Provider配置 优于 全局配置，</p>
+<p>\3) 最后是Dubbo Hard Code的配置值（见配置文档）</p>
+<p><img src="/2021/11/02/dubbo/wpsBCDF.tmp.png" alt="img"> </p>
+<h2><span id="4-版本号">4、版本号</span></h2><p>当一个接口实现，出现不兼容升级时，可以用版本号过渡，版本号不同的服务相互间不引用。</p>
+<p>可以按照以下的步骤进行版本迁移：</p>
+<p>在低压力时间段，先升级一半提供者为新版本</p>
+<p>再将所有消费者升级为新版本</p>
+<p>然后将剩下的一半提供者升级为新版本</p>
+<pre><code class="xml">老版本服务提供者配置：
+&lt;dubbo:service interface=&quot;com.foo.BarService&quot; version=&quot;1.0.0&quot; /&gt;
+新版本服务提供者配置：
+&lt;dubbo:service interface=&quot;com.foo.BarService&quot; version=&quot;2.0.0&quot; /&gt; 
+老版本服务消费者配置：&lt;dubbo:reference id=&quot;barService&quot; interface=&quot;com.foo.BarService&quot; version=&quot;1.0.0&quot; /&gt; 
+新版本服务消费者配置：&lt;dubbo:reference id=&quot;barService&quot; interface=&quot;com.foo.BarService&quot; version=&quot;2.0.0&quot; /&gt; 
+如果不需要区分版本，可以按照以下的方式配置：
+&lt;dubbo:reference id=&quot;barService&quot; interface=&quot;com.foo.BarService&quot; version=&quot;*&quot; /&gt;
+</code></pre>
+<h1><span id="三-高可用">三、高可用</span></h1><h2><span id="1-zookeeper宕机与dubbo直连">1、zookeeper宕机与dubbo直连</span></h2><p>现象：zookeeper注册中心宕机，还可以消费dubbo暴露的服务。</p>
+<p>原因：</p>
+<p>健壮性l 监控中心宕掉不影响使用，只是丢失部分采样数据l 数据库宕掉后，注册中心仍能通过缓存提供服务列表查询，但不能注册新服务l 注册中心对等集群，任意一台宕掉后，将自动切换到另一台l <strong>注册中心全部宕掉后，服务提供者和服务消费者仍能通过本地缓存通讯</strong>l 服务提供者无状态，任意一台宕掉后，不影响使用l 服务提供者全部宕掉后，服务消费者应用将无法使用，并无限次重连等待服务提供者恢复 </p>
+<p>高可用：通过设计，减少系统不能提供服务的时间；</p>
+<h2><span id="2-集群下dubbo负载均衡配置">2、集群下dubbo负载均衡配置</span></h2><p>在集群负载均衡时，Dubbo 提供了多种均衡策略，缺省为 random 随机调用。</p>
+<p>负载均衡策略</p>
+<p><strong>Random LoadBalance</strong>随机，按权重设置随机概率。在一个截面上碰撞的概率高，但调用量越大分布越均匀，而且按概率使用权重后也比较均匀，有利于动态调整提供者权重。<strong>RoundRobin LoadBalance</strong>轮循，按公约后的权重设置轮循比率。存在慢的提供者累积请求的问题，比如：第二台机器很慢，但没挂，当请求调到第二台时就卡在那，久而久之，所有请求都卡在调到第二台上。</p>
+<p><strong>LeastActive LoadBalance</strong>最少活跃调用数，相同活跃数的随机，活跃数指调用前后计数差。使慢的提供者收到更少请求，因为越慢的提供者的调用前后计数差会越大。<strong>ConsistentHash LoadBalance</strong>一致性 Hash，相同参数的请求总是发到同一提供者。当某一台提供者挂时，原本发往该提供者的请求，基于虚拟节点，平摊到其它提供者，不会引起剧烈变动。算法参见：<a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Consistent_hashing%E7%BC%BA%E7%9C%81%E5%8F%AA%E5%AF%B9%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8F%82%E6%95%B0">http://en.wikipedia.org/wiki/Consistent_hashing缺省只对第一个参数</a> Hash，如果要修改，请配置 &lt;dubbo:parameter key=”hash.arguments” value=”0,1” /&gt;缺省用 160 份虚拟节点，如果要修改，请配置 &lt;dubbo:parameter key=”hash.nodes” value=”320” /&gt;</p>
+<h2><span id="3-整合hystrix服务熔断与降级处理">3、整合hystrix，服务熔断与降级处理</span></h2><h3><span id="1-服务降级">1、服务降级</span></h3><p><strong>什么是服务降级？</strong></p>
+<p><strong>当服务器压力剧增的情况下，根据实际业务情况及流量，对一些服务和页面有策略的不处理或换种简单的方式处理，从而释放服务器资源以保证核心交易正常运作或高效运作。</strong></p>
+<p>可以通过服务降级功能临时屏蔽某个出错的非关键服务，并定义降级后的返回策略。</p>
+<p>向注册中心写入动态配置覆盖规则：</p>
+<pre><code class="java">RegistryFactory registryFactory = ExtensionLoader.getExtensionLoader(RegistryFactory.class).getAdaptiveExtension();Registry registry = registryFactory.getRegistry(URL.valueOf(&quot;zookeeper://10.20.153.10:2181&quot;));registry.register(URL.valueOf(&quot;override://0.0.0.0/com.foo.BarService?category=configurators&amp;dynamic=false&amp;application=foo&amp;mock=force:return+null&quot;));
+
+ 
+</code></pre>
+<p>其中：</p>
+<p>mock=force:return+null 表示消费方对该服务的方法调用都直接返回 null 值，不发起远程调用。用来屏蔽不重要服务不可用时对调用方的影响。</p>
+<p>还可以改为 mock=fail:return+null 表示消费方对该服务的方法调用在失败后，再返回 null 值，不抛异常。用来容忍不重要服务不稳定时对调用方的影响。</p>
+<h3><span id="2-集群容错">2、集群容错</span></h3><p>在集群调用失败时，Dubbo 提供了多种容错方案，缺省为 failover 重试。</p>
+<p><strong>集群容错模式</strong></p>
+<p><strong>Failover Cluster</strong>失败自动切换，当出现失败，重试其它服务器。通常用于读操作，但重试会带来更长延迟。可通过 retries=”2” 来设置重试次数(不含第一次)。 重试次数配置如下：&lt;dubbo:service retries=”2” /&gt;或&lt;dubbo:reference retries=”2” /&gt;或<a href="dubbo:reference">dubbo:reference</a>  &lt;dubbo:method name=”findFoo” retries=”2” /&gt; </p>
+<p><strong>Failfast Cluster</strong>快速失败，只发起一次调用，失败立即报错。通常用于非幂等性的写操作，比如新增记录。 </p>
+<p><strong>Failsafe Cluster</strong>失败安全，出现异常时，直接忽略。通常用于写入审计日志等操作。 <strong>Failback Cluster</strong>失败自动恢复，后台记录失败请求，定时重发。通常用于消息通知操作。 <strong>Forking Cluster</strong>并行调用多个服务器，只要一个成功即返回。通常用于实时性要求较高的读操作，但需要浪费更多服务资源。可通过 forks=”2” 来设置最大并行数。</p>
+<p> <strong>Broadcast Cluster</strong>广播调用所有提供者，逐个调用，任意一台报错则报错 [2]。通常用于通知所有提供者更新缓存或日志等本地资源信息。</p>
+<p> <strong>集群模式配置</strong>按照以下示例在服务提供方和消费方配置集群模式&lt;dubbo:service cluster=”failsafe” /&gt;或&lt;dubbo:reference cluster=”failsafe” /&gt;</p>
+<h3><span id="3-整合hystrix">3、整合hystrix</span></h3><p>Hystrix 旨在通过控制那些访问远程系统、服务和第三方库的节点，从而对延迟和故障提供更强大的容错能力。Hystrix具备拥有回退机制和断路器功能的线程和信号隔离，请求缓存和请求打包，以及监控和配置等功能</p>
+<h4><span id="1-配置spring-cloud-starter-netflix-hystrix"><strong>1、配置spring-cloud-starter-netflix-hystrix</strong></span></h4><p>spring boot官方提供了对hystrix的集成，直接在pom.xml里加入依赖：</p>
+<pre><code class="xml">    &lt;dependency&gt;      
+        &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;                    
+        &lt;artifactId&gt;spring-cloud-starter-netflix-hystrix&lt;/artifactId&gt;      
+        &lt;version&gt;1.4.4.RELEASE&lt;/version&gt;    
+    &lt;/dependency&gt;
+</code></pre>
+<p>然后在Application类上增加@EnableHystrix来启用hystrix starter：</p>
+<pre><code class="java">@SpringBootApplication
+@EnableHystrixpublic 
+class ProviderApplication &#123; 
+</code></pre>
+<h4><span id="2-配置provider端"><strong>2、配置Provider端</strong></span></h4><p>在Dubbo的Provider上增加@HystrixCommand配置，这样子调用就会经过Hystrix代理。</p>
+<pre><code class="java">@Service(version = &quot;1.0.0&quot;)
+public class HelloServiceImpl implements HelloService &#123;  
+    @HystrixCommand(commandProperties = &#123;   
+    @HystrixProperty(name = &quot;circuitBreaker.requestVolumeThreshold&quot;, value = &quot;10&quot;),   
+    @HystrixProperty(name = &quot;execution.isolation.thread.timeoutInMilliseconds&quot;, value = &quot;2000&quot;) &#125;)
+    @Override  
+    public String sayHello(String name) &#123;    
+        // System.out.println(&quot;async provider received: &quot; + name);    
+        // return &quot;annotation: hello, &quot; + name;    
+        throw new RuntimeException(&quot;Exception to show hystrix enabled.&quot;);  &#125;&#125;
+</code></pre>
+<h4><span id="3-配置consumer端"><strong>3、配置Consumer端</strong></span></h4><p>对于Consumer端，则可以增加一层method调用，并在method上配置@HystrixCommand。当调用出错时，会走到fallbackMethod = “reliable”的调用里。</p>
+<pre><code class="java"> @Reference(version = &quot;1.0.0&quot;) 
+ private HelloService demoService;  
+ @HystrixCommand(fallbackMethod = &quot;reliable&quot;)  
+ public String doSayHello(String name) &#123;    
+     return demoService.sayHello(name);  &#125;  
+ public String reliable(String name) &#123;    
+    return &quot;hystrix fallback value&quot;;  &#125;
+</code></pre>
+<h1><span id="四-dubbo原理">四、dubbo原理</span></h1><h2><span id="1-rpc原理">1、RPC原理</span></h2><p><img src="/2021/11/02/dubbo/wpsBCEF.tmp.jpg" alt="img"> </p>
+<p>一次完整的RPC调用流程（同步调用，异步另说）如下： <strong>1）服务消费方（client）调用以本地调用方式调用服务；</strong> 2）client stub接收到调用后负责将方法、参数等组装成能够进行网络传输的消息体； 3）client stub找到服务地址，并将消息发送到服务端； 4）server stub收到消息后进行解码； 5）server stub根据解码结果调用本地的服务； 6）本地服务执行并将结果返回给server stub； 7）server stub将返回结果打包成消息并发送至消费方； 8）client stub接收到消息，并进行解码； <strong>9）服务消费方得到最终结果。</strong>RPC框架的目标就是要2~8这些步骤都封装起来，这些细节对用户来说是透明的，不可见的。</p>
+<h2><span id="2-netty通信原理">2、netty通信原理</span></h2><p>Netty是一个异步事件驱动的网络应用程序框架， 用于快速开发可维护的高性能协议服务器和客户端。它极大地简化并简化了TCP和UDP套接字服务器等网络编程。</p>
+<p>BIO：(Blocking IO)</p>
+<p><img src="/2021/11/02/dubbo/wpsBCF0.tmp.jpg" alt="img"> </p>
+<p>NIO (Non-Blocking IO)</p>
+<p><img src="/2021/11/02/dubbo/wpsBCF1.tmp.jpg" alt="img"> </p>
+<p>Selector 一般称 为<strong>选择器</strong> ，也可以翻译为 <strong>多路复用器，</strong></p>
+<p>Connect（连接就绪）、Accept（接受就绪）、Read（读就绪）、Write（写就绪）</p>
+<p>Netty基本原理：</p>
+<p><img src="/2021/11/02/dubbo/wpsBCF2.tmp.jpg" alt="img"> </p>
+<h2><span id="3-dubbo原理">3、dubbo原理</span></h2><h3><span id="1-dubbo原理-框架设计">1、dubbo原理    -框架设计</span></h3><p><img src="/2021/11/02/dubbo/wpsBCF3.tmp.png" alt="img"> </p>
+<p>l config 配置层：对外配置接口，以 ServiceConfig, ReferenceConfig 为中心，可以直接初始化配置类，也可以通过 spring 解析配置生成配置类</p>
+<p>l proxy 服务代理层：服务接口透明代理，生成服务的客户端 Stub 和服务器端 Skeleton, 以 ServiceProxy 为中心，扩展接口为 ProxyFactory</p>
+<p>l registry 注册中心层：封装服务地址的注册与发现，以服务 URL 为中心，扩展接口为 RegistryFactory, Registry, RegistryService</p>
+<p>l cluster 路由层：封装多个提供者的路由及负载均衡，并桥接注册中心，以 Invoker 为中心，扩展接口为 Cluster, Directory, Router, LoadBalance</p>
+<p>l monitor 监控层：RPC 调用次数和调用时间监控，以 Statistics 为中心，扩展接口为 MonitorFactory, Monitor, MonitorService</p>
+<p>l protocol 远程调用层：封装 RPC 调用，以 Invocation, Result 为中心，扩展接口为 Protocol, Invoker, Exporter</p>
+<p>l exchange 信息交换层：封装请求响应模式，同步转异步，以 Request, Response 为中心，扩展接口为 Exchanger, ExchangeChannel, ExchangeClient, ExchangeServer</p>
+<p>l transport 网络传输层：抽象 mina 和 netty 为统一接口，以 Message 为中心，扩展接口为 Channel, Transporter, Client, Server, Codec</p>
+<p>l serialize 数据序列化层：可复用的一些工具，扩展接口为 Serialization, ObjectInput, ObjectOutput, ThreadPool</p>
+<h3><span id="2-dubbo原理-启动解析-加载配置信息">2、dubbo原理    -启动解析、加载配置信息</span></h3><p><img src="/2021/11/02/dubbo/wpsBD04.tmp.jpg" alt="img"> </p>
+<h3><span id="3-dubbo原理-服务暴露">3、dubbo原理    -服务暴露</span></h3><p><img src="/2021/11/02/dubbo/wpsBD05.tmp.png" alt="img"> </p>
+<h3><span id="4-dubbo原理-服务引用">4、dubbo原理    -服务引用</span></h3><p><img src="/2021/11/02/dubbo/wpsBD06.tmp.png" alt="img"> </p>
+<h3><span id="5-dubbo原理-服务调用">5、dubbo原理    -服务调用</span></h3><p><img src="/2021/11/02/dubbo/wpsBD07.tmp.png" alt="img"></p>
 
       
     </div>
@@ -347,7 +411,7 @@ interface IReceiver &#123;
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/20/NodeJS%E3%80%81Npm%E3%80%81Es6%E3%80%81Babel/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/25/%E5%90%B4%E5%A9%B7%E5%84%BF%E7%9A%84%E5%91%A8%E6%9C%AB%E9%87%87%E9%A3%8E/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -361,7 +425,7 @@ interface IReceiver &#123;
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/10/20/NodeJS%E3%80%81Npm%E3%80%81Es6%E3%80%81Babel/" class="post-title-link" itemprop="url">NodeJS、Npm、Es6、Babel</a>
+            <a href="/2021/10/25/%E5%90%B4%E5%A9%B7%E5%84%BF%E7%9A%84%E5%91%A8%E6%9C%AB%E9%87%87%E9%A3%8E/" class="post-title-link" itemprop="url">吴婷儿的周末采风</a>
         </h2>
 
         <div class="post-meta">
@@ -374,7 +438,16 @@ interface IReceiver &#123;
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-10-20 17:12:29 / 修改时间：17:26:11" itemprop="dateCreated datePublished" datetime="2021-10-20T17:12:29+08:00">2021-10-20</time>
+              <time title="创建时间：2021-10-25 14:53:15 / 修改时间：15:11:29" itemprop="dateCreated datePublished" datetime="2021-10-25T14:53:15+08:00">2021-10-25</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%94%9F%E6%B4%BB%E5%9B%AD%E5%9C%B0/" itemprop="url" rel="index"><span itemprop="name">生活园地</span></a>
+                </span>
             </span>
 
           
@@ -382,7 +455,7 @@ interface IReceiver &#123;
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
               </span>
-              <span>65</span>
+              <span>285</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -400,7 +473,37 @@ interface IReceiver &#123;
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1><span id="前端技能基础杂烩">前端技能基础杂烩</span></h1><p>学习文档地址：<a target="_blank" rel="noopener" href="https://www.kuangstudy.com/bbs/1351463043300708353">https://www.kuangstudy.com/bbs/1351463043300708353</a></p>
+          <h4><span id="2021-10-24">2021-10-24</span></h4><p>嘿嘿，先来一张试试手😁😁😁</p>
+<p><img src="/2021/10/25/%E5%90%B4%E5%A9%B7%E5%84%BF%E7%9A%84%E5%91%A8%E6%9C%AB%E9%87%87%E9%A3%8E/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20211025144914.jpg" alt="微信图片_20211025144914"></p>
+<p>这张，邻家小妹的感觉！！！👩‍🦰</p>
+<p><img src="/2021/10/25/%E5%90%B4%E5%A9%B7%E5%84%BF%E7%9A%84%E5%91%A8%E6%9C%AB%E9%87%87%E9%A3%8E/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20211025145201.jpg" alt="微信图片_20211025145201"></p>
+<p>说实话，这一张虽然很好看，但是属于只让我看的一种类型🤐🤐🤐</p>
+<p><img src="/2021/10/25/%E5%90%B4%E5%A9%B7%E5%84%BF%E7%9A%84%E5%91%A8%E6%9C%AB%E9%87%87%E9%A3%8E/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_202110251449141.jpg" alt="微信图片_202110251449141"></p>
+<p>哈哈，这张就很可爱啦~🤪🤪🤪</p>
+<p><img src="/2021/10/25/%E5%90%B4%E5%A9%B7%E5%84%BF%E7%9A%84%E5%91%A8%E6%9C%AB%E9%87%87%E9%A3%8E/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_202110251449142-16351451102662.jpg" alt="微信图片_202110251449142"></p>
+<p>很有港风文艺范的感觉</p>
+<p><img src="/2021/10/25/%E5%90%B4%E5%A9%B7%E5%84%BF%E7%9A%84%E5%91%A8%E6%9C%AB%E9%87%87%E9%A3%8E/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_202110251449143.jpg" alt="微信图片_202110251449143"></p>
+<p>吊带掉下来了😪😪😪</p>
+<p><img src="/2021/10/25/%E5%90%B4%E5%A9%B7%E5%84%BF%E7%9A%84%E5%91%A8%E6%9C%AB%E9%87%87%E9%A3%8E/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_202110251449144.jpg" alt="微信图片_202110251449144"></p>
+<p>假装自己在拍照系列😶😶😶👸👸👸</p>
+<p><img src="/2021/10/25/%E5%90%B4%E5%A9%B7%E5%84%BF%E7%9A%84%E5%91%A8%E6%9C%AB%E9%87%87%E9%A3%8E/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_202110251449145.jpg" alt="微信图片_202110251449145"></p>
+<p>这个也很好看！！！🥞🥞🥞</p>
+<p><img src="/2021/10/25/%E5%90%B4%E5%A9%B7%E5%84%BF%E7%9A%84%E5%91%A8%E6%9C%AB%E9%87%87%E9%A3%8E/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_202110251449146.jpg" alt="微信图片_202110251449146"></p>
+<p>回归可爱<strong>类型儿</strong>(✿◡‿◡)</p>
+<p><img src="/2021/10/25/%E5%90%B4%E5%A9%B7%E5%84%BF%E7%9A%84%E5%91%A8%E6%9C%AB%E9%87%87%E9%A3%8E/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_202110251449147.jpg" alt="微信图片_202110251449147"></p>
+<p>标准美照！！！🥩</p>
+<p><img src="/2021/10/25/%E5%90%B4%E5%A9%B7%E5%84%BF%E7%9A%84%E5%91%A8%E6%9C%AB%E9%87%87%E9%A3%8E/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_202110251449148.jpg" alt="微信图片_202110251449148"></p>
+<p>这个也是，同上。</p>
+<p><img src="/2021/10/25/%E5%90%B4%E5%A9%B7%E5%84%BF%E7%9A%84%E5%91%A8%E6%9C%AB%E9%87%87%E9%A3%8E/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_202110251452011.jpg" alt="微信图片_202110251452011"></p>
+<p>接下来这两张就是满满的欢乐气息啦！！！🛴🛴🛴🛴</p>
+<p><img src="/2021/10/25/%E5%90%B4%E5%A9%B7%E5%84%BF%E7%9A%84%E5%91%A8%E6%9C%AB%E9%87%87%E9%A3%8E/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_202110251452012.jpg" alt="微信图片_202110251452012"></p>
+<p><img src="/2021/10/25/%E5%90%B4%E5%A9%B7%E5%84%BF%E7%9A%84%E5%91%A8%E6%9C%AB%E9%87%87%E9%A3%8E/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_202110251452013.jpg" alt="微信图片_202110251452013"></p>
+<p>同样邻家小妹类型儿</p>
+<p><img src="/2021/10/25/%E5%90%B4%E5%A9%B7%E5%84%BF%E7%9A%84%E5%91%A8%E6%9C%AB%E9%87%87%E9%A3%8E/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_202110251452014.jpg" alt="微信图片_202110251452014"></p>
+<p>哎呀，这不是宝贝和她姨嘛，额，看错了看错了，不好意思，是宝贝和美丽温柔还带有一点点成熟气息的小静<strong>儿</strong>🤗🤗🤗</p>
+<p><img src="/2021/10/25/%E5%90%B4%E5%A9%B7%E5%84%BF%E7%9A%84%E5%91%A8%E6%9C%AB%E9%87%87%E9%A3%8E/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_202110251452015.jpg" alt="微信图片_202110251452015"></p>
+<p>拍了一下午照，憔悴的美😎</p>
+<p><img src="/2021/10/25/%E5%90%B4%E5%A9%B7%E5%84%BF%E7%9A%84%E5%91%A8%E6%9C%AB%E9%87%87%E9%A3%8E/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_202110251452016-16351451102663.jpg" alt="微信图片_202110251452016"></p>
 
       
     </div>
@@ -421,7 +524,7 @@ interface IReceiver &#123;
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -489,20 +592,20 @@ interface IReceiver &#123;
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-count">36</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-count">17</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-count">31</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -568,18 +671,18 @@ interface IReceiver &#123;
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">116k</span>
+    <span title="站点总字数">121k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:46</span>
+    <span title="站点阅读时长">1:50</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共41.4k字</span>
+  <span class="post-count">博客全站共43k字</span>
 </div>
 
     <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
