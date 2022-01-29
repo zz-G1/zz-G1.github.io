@@ -195,7 +195,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/02/dubbo/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/12/15/nginx/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -209,7 +209,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/11/02/dubbo/" class="post-title-link" itemprop="url">dubbo</a>
+            <a href="/2021/12/15/nginx/" class="post-title-link" itemprop="url">nginx</a>
         </h2>
 
         <div class="post-meta">
@@ -220,29 +220,23 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2021-11-02 16:19:06" itemprop="dateCreated datePublished" datetime="2021-11-02T16:19:06+08:00">2021-11-02</time>
+              <time title="创建时间：2021-12-15 12:22:56 / 修改时间：12:44:38" itemprop="dateCreated datePublished" datetime="2021-12-15T12:22:56+08:00">2021-12-15</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-11-04 11:36:13" itemprop="dateModified" datetime="2021-11-04T11:36:13+08:00">2021-11-04</time>
-              </span>
 
           
             <span class="post-meta-item" title="本文字数">
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
               </span>
-              <span>7.7k</span>
+              <span>40</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
-              <span>7 分钟</span>
+              <span>1 分钟</span>
             </span>
 
         </div>
@@ -254,142 +248,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1><span id="dubbo">Dubbo</span></h1><h2><span id="rpc框架">RPC框架</span></h2><p>RPC【Remote Procedure Call】是指远程过程调用，是一种进程间通信方式，他是一种技术的思想，而不是规范。</p>
-<p>Apache Dubbo (incubating) 是一款高性能、轻量级的开源Java RPC框架，它提供了三大核心能力：面向接口的远程方法调用，智能容错和负载均衡，以及服务自动注册和发现</p>
-<h2><span id="注册中心-zookeeperregistry">注册中心 zookeeper(Registry)</span></h2><p><img src="/2021/11/02/dubbo/image-20211102170838813.png" alt="image-20211102170838813"></p>
-<p><strong>服务提供者</strong>（<strong>Provider</strong>）：暴露服务的服务提供方，服务提供者在启动时，向注册中心注册自己提供的服务。</p>
-<p><strong>服务消费者</strong>（<strong>Consumer</strong>）: 调用远程服务的服务消费方，服务消费者在启动时，向注册中心订阅自己所需的服务，服务消费者，从提供者地址列表中，基于软负载均衡算法，选一台提供者进行调用，如果调用失败，再选另一台调用。</p>
-<p><strong>注册中心</strong>（<strong>Registry</strong>）：注册中心返回服务提供者地址列表给消费者，如果有变更，注册中心将基于长连接推送变更数据给消费者</p>
-<p><strong>监控中心</strong>（<strong>Monitor</strong>）：服务消费者和提供者，在内存中累计调用次数和调用时间，定时每分钟发送一次统计数据到监控中心</p>
-<h1><span id="dubbo配置">dubbo配置</span></h1><h2><span id="1-配置原则">1、配置原则</span></h2><p><img src="/2021/11/02/dubbo/wpsBCDE.tmp.png" alt="img"> </p>
-<p>JVM 启动 -D 参数优先，这样可以使用户在部署和启动时进行参数重写，比如在启动时需改变协议的端口。</p>
-<p>XML 次之，如果在 XML 中有配置，则 dubbo.properties 中的相应配置项无效。</p>
-<p>Properties 最后，相当于缺省值，只有 XML 没有配置时，dubbo.properties 的相应配置项才会生效，通常用于共享公共配置，比如应用名。</p>
-<h2><span id="2-重试次数">2、重试次数</span></h2><p>失败自动切换，当出现失败，重试其它服务器，但重试会带来更长延迟。可通过 retries=”2” 来设置重试次数(不含第一次)。</p>
-<p>重试次数配置如下</p>
-<pre><code class="xml">&lt;dubbo:service retries=&quot;2&quot; /&gt;
-或&lt;dubbo:reference retries=&quot;2&quot; /&gt;
-或&lt;dubbo:reference&gt;&lt;dubbo:method name=&quot;findFoo&quot; retries=&quot;2&quot; /&gt;&lt;/dubbo:reference&gt;
-</code></pre>
-<h2><span id="3-超时时间">3、超时时间</span></h2><p>由于网络或服务端不可靠，会导致调用出现一种不确定的中间状态（超时）。为了避免超时导致客户端资源（线程）挂起耗尽，必须设置超时时间。</p>
-<h3><span id="1-dubbo消费端">1、Dubbo消费端</span></h3><pre><code class="xml">全局超时配置
-&lt;dubbo:consumer timeout=&quot;5000&quot; /&gt; 
-指定接口以及特定方法超时配置
-&lt;dubbo:reference interface=&quot;com.foo.BarService&quot; timeout=&quot;2000&quot;&gt;  
-    &lt;dubbo:method name=&quot;sayHello&quot; timeout=&quot;3000&quot; /&gt;
-&lt;/dubbo:reference&gt;
-</code></pre>
-<h3><span id="2-dubbo服务端">2、Dubbo服务端</span></h3><pre><code class="xml">全局超时配置&lt;dubbo:provider timeout=&quot;5000&quot; /&gt; 
-指定接口以及特定方法超时配置
-&lt;dubbo:provider interface=&quot;com.foo.BarService&quot; timeout=&quot;2000&quot;&gt;  &lt;dubbo:method name=&quot;sayHello&quot; timeout=&quot;3000&quot; /&gt;
-&lt;/dubbo:provider&gt;
-</code></pre>
-<h3><span id="3-配置原则">3、配置原则</span></h3><p>dubbo推荐在Provider上尽量多配置Consumer端属性：</p>
-<p>1、作服务的提供者，比服务使用方更清楚服务性能参数，如调用的超时时间，合理的重试次数，等等2、在Provider配置后，Consumer不配置则会使用Provider的配置值，即Provider配置可以作为Consumer的缺省值。否则，Consumer会使用Consumer端的全局设置，这对于Provider不可控的，并且往往是不合理的</p>
-<p>配置的覆盖规则：</p>
-<p>\1) 方法级配置别优于接口级别，即小Scope优先 </p>
-<p>\2) Consumer端配置 优于 Provider配置 优于 全局配置，</p>
-<p>\3) 最后是Dubbo Hard Code的配置值（见配置文档）</p>
-<p><img src="/2021/11/02/dubbo/wpsBCDF.tmp.png" alt="img"> </p>
-<h2><span id="4-版本号">4、版本号</span></h2><p>当一个接口实现，出现不兼容升级时，可以用版本号过渡，版本号不同的服务相互间不引用。</p>
-<p>可以按照以下的步骤进行版本迁移：</p>
-<p>在低压力时间段，先升级一半提供者为新版本</p>
-<p>再将所有消费者升级为新版本</p>
-<p>然后将剩下的一半提供者升级为新版本</p>
-<pre><code class="xml">老版本服务提供者配置：
-&lt;dubbo:service interface=&quot;com.foo.BarService&quot; version=&quot;1.0.0&quot; /&gt;
-新版本服务提供者配置：
-&lt;dubbo:service interface=&quot;com.foo.BarService&quot; version=&quot;2.0.0&quot; /&gt; 
-老版本服务消费者配置：&lt;dubbo:reference id=&quot;barService&quot; interface=&quot;com.foo.BarService&quot; version=&quot;1.0.0&quot; /&gt; 
-新版本服务消费者配置：&lt;dubbo:reference id=&quot;barService&quot; interface=&quot;com.foo.BarService&quot; version=&quot;2.0.0&quot; /&gt; 
-如果不需要区分版本，可以按照以下的方式配置：
-&lt;dubbo:reference id=&quot;barService&quot; interface=&quot;com.foo.BarService&quot; version=&quot;*&quot; /&gt;
-</code></pre>
-<h1><span id="三-高可用">三、高可用</span></h1><h2><span id="1-zookeeper宕机与dubbo直连">1、zookeeper宕机与dubbo直连</span></h2><p>现象：zookeeper注册中心宕机，还可以消费dubbo暴露的服务。</p>
-<p>原因：</p>
-<p>健壮性l 监控中心宕掉不影响使用，只是丢失部分采样数据l 数据库宕掉后，注册中心仍能通过缓存提供服务列表查询，但不能注册新服务l 注册中心对等集群，任意一台宕掉后，将自动切换到另一台l <strong>注册中心全部宕掉后，服务提供者和服务消费者仍能通过本地缓存通讯</strong>l 服务提供者无状态，任意一台宕掉后，不影响使用l 服务提供者全部宕掉后，服务消费者应用将无法使用，并无限次重连等待服务提供者恢复 </p>
-<p>高可用：通过设计，减少系统不能提供服务的时间；</p>
-<h2><span id="2-集群下dubbo负载均衡配置">2、集群下dubbo负载均衡配置</span></h2><p>在集群负载均衡时，Dubbo 提供了多种均衡策略，缺省为 random 随机调用。</p>
-<p>负载均衡策略</p>
-<p><strong>Random LoadBalance</strong>随机，按权重设置随机概率。在一个截面上碰撞的概率高，但调用量越大分布越均匀，而且按概率使用权重后也比较均匀，有利于动态调整提供者权重。<strong>RoundRobin LoadBalance</strong>轮循，按公约后的权重设置轮循比率。存在慢的提供者累积请求的问题，比如：第二台机器很慢，但没挂，当请求调到第二台时就卡在那，久而久之，所有请求都卡在调到第二台上。</p>
-<p><strong>LeastActive LoadBalance</strong>最少活跃调用数，相同活跃数的随机，活跃数指调用前后计数差。使慢的提供者收到更少请求，因为越慢的提供者的调用前后计数差会越大。<strong>ConsistentHash LoadBalance</strong>一致性 Hash，相同参数的请求总是发到同一提供者。当某一台提供者挂时，原本发往该提供者的请求，基于虚拟节点，平摊到其它提供者，不会引起剧烈变动。算法参见：<a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Consistent_hashing%E7%BC%BA%E7%9C%81%E5%8F%AA%E5%AF%B9%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8F%82%E6%95%B0">http://en.wikipedia.org/wiki/Consistent_hashing缺省只对第一个参数</a> Hash，如果要修改，请配置 &lt;dubbo:parameter key=”hash.arguments” value=”0,1” /&gt;缺省用 160 份虚拟节点，如果要修改，请配置 &lt;dubbo:parameter key=”hash.nodes” value=”320” /&gt;</p>
-<h2><span id="3-整合hystrix服务熔断与降级处理">3、整合hystrix，服务熔断与降级处理</span></h2><h3><span id="1-服务降级">1、服务降级</span></h3><p><strong>什么是服务降级？</strong></p>
-<p><strong>当服务器压力剧增的情况下，根据实际业务情况及流量，对一些服务和页面有策略的不处理或换种简单的方式处理，从而释放服务器资源以保证核心交易正常运作或高效运作。</strong></p>
-<p>可以通过服务降级功能临时屏蔽某个出错的非关键服务，并定义降级后的返回策略。</p>
-<p>向注册中心写入动态配置覆盖规则：</p>
-<pre><code class="java">RegistryFactory registryFactory = ExtensionLoader.getExtensionLoader(RegistryFactory.class).getAdaptiveExtension();Registry registry = registryFactory.getRegistry(URL.valueOf(&quot;zookeeper://10.20.153.10:2181&quot;));registry.register(URL.valueOf(&quot;override://0.0.0.0/com.foo.BarService?category=configurators&amp;dynamic=false&amp;application=foo&amp;mock=force:return+null&quot;));
-
- 
-</code></pre>
-<p>其中：</p>
-<p>mock=force:return+null 表示消费方对该服务的方法调用都直接返回 null 值，不发起远程调用。用来屏蔽不重要服务不可用时对调用方的影响。</p>
-<p>还可以改为 mock=fail:return+null 表示消费方对该服务的方法调用在失败后，再返回 null 值，不抛异常。用来容忍不重要服务不稳定时对调用方的影响。</p>
-<h3><span id="2-集群容错">2、集群容错</span></h3><p>在集群调用失败时，Dubbo 提供了多种容错方案，缺省为 failover 重试。</p>
-<p><strong>集群容错模式</strong></p>
-<p><strong>Failover Cluster</strong>失败自动切换，当出现失败，重试其它服务器。通常用于读操作，但重试会带来更长延迟。可通过 retries=”2” 来设置重试次数(不含第一次)。 重试次数配置如下：&lt;dubbo:service retries=”2” /&gt;或&lt;dubbo:reference retries=”2” /&gt;或<a href="dubbo:reference">dubbo:reference</a>  &lt;dubbo:method name=”findFoo” retries=”2” /&gt; </p>
-<p><strong>Failfast Cluster</strong>快速失败，只发起一次调用，失败立即报错。通常用于非幂等性的写操作，比如新增记录。 </p>
-<p><strong>Failsafe Cluster</strong>失败安全，出现异常时，直接忽略。通常用于写入审计日志等操作。 <strong>Failback Cluster</strong>失败自动恢复，后台记录失败请求，定时重发。通常用于消息通知操作。 <strong>Forking Cluster</strong>并行调用多个服务器，只要一个成功即返回。通常用于实时性要求较高的读操作，但需要浪费更多服务资源。可通过 forks=”2” 来设置最大并行数。</p>
-<p> <strong>Broadcast Cluster</strong>广播调用所有提供者，逐个调用，任意一台报错则报错 [2]。通常用于通知所有提供者更新缓存或日志等本地资源信息。</p>
-<p> <strong>集群模式配置</strong>按照以下示例在服务提供方和消费方配置集群模式&lt;dubbo:service cluster=”failsafe” /&gt;或&lt;dubbo:reference cluster=”failsafe” /&gt;</p>
-<h3><span id="3-整合hystrix">3、整合hystrix</span></h3><p>Hystrix 旨在通过控制那些访问远程系统、服务和第三方库的节点，从而对延迟和故障提供更强大的容错能力。Hystrix具备拥有回退机制和断路器功能的线程和信号隔离，请求缓存和请求打包，以及监控和配置等功能</p>
-<h4><span id="1-配置spring-cloud-starter-netflix-hystrix"><strong>1、配置spring-cloud-starter-netflix-hystrix</strong></span></h4><p>spring boot官方提供了对hystrix的集成，直接在pom.xml里加入依赖：</p>
-<pre><code class="xml">    &lt;dependency&gt;      
-        &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;                    
-        &lt;artifactId&gt;spring-cloud-starter-netflix-hystrix&lt;/artifactId&gt;      
-        &lt;version&gt;1.4.4.RELEASE&lt;/version&gt;    
-    &lt;/dependency&gt;
-</code></pre>
-<p>然后在Application类上增加@EnableHystrix来启用hystrix starter：</p>
-<pre><code class="java">@SpringBootApplication
-@EnableHystrixpublic 
-class ProviderApplication &#123; 
-</code></pre>
-<h4><span id="2-配置provider端"><strong>2、配置Provider端</strong></span></h4><p>在Dubbo的Provider上增加@HystrixCommand配置，这样子调用就会经过Hystrix代理。</p>
-<pre><code class="java">@Service(version = &quot;1.0.0&quot;)
-public class HelloServiceImpl implements HelloService &#123;  
-    @HystrixCommand(commandProperties = &#123;   
-    @HystrixProperty(name = &quot;circuitBreaker.requestVolumeThreshold&quot;, value = &quot;10&quot;),   
-    @HystrixProperty(name = &quot;execution.isolation.thread.timeoutInMilliseconds&quot;, value = &quot;2000&quot;) &#125;)
-    @Override  
-    public String sayHello(String name) &#123;    
-        // System.out.println(&quot;async provider received: &quot; + name);    
-        // return &quot;annotation: hello, &quot; + name;    
-        throw new RuntimeException(&quot;Exception to show hystrix enabled.&quot;);  &#125;&#125;
-</code></pre>
-<h4><span id="3-配置consumer端"><strong>3、配置Consumer端</strong></span></h4><p>对于Consumer端，则可以增加一层method调用，并在method上配置@HystrixCommand。当调用出错时，会走到fallbackMethod = “reliable”的调用里。</p>
-<pre><code class="java"> @Reference(version = &quot;1.0.0&quot;) 
- private HelloService demoService;  
- @HystrixCommand(fallbackMethod = &quot;reliable&quot;)  
- public String doSayHello(String name) &#123;    
-     return demoService.sayHello(name);  &#125;  
- public String reliable(String name) &#123;    
-    return &quot;hystrix fallback value&quot;;  &#125;
-</code></pre>
-<h1><span id="四-dubbo原理">四、dubbo原理</span></h1><h2><span id="1-rpc原理">1、RPC原理</span></h2><p><img src="/2021/11/02/dubbo/wpsBCEF.tmp.jpg" alt="img"> </p>
-<p>一次完整的RPC调用流程（同步调用，异步另说）如下： <strong>1）服务消费方（client）调用以本地调用方式调用服务；</strong> 2）client stub接收到调用后负责将方法、参数等组装成能够进行网络传输的消息体； 3）client stub找到服务地址，并将消息发送到服务端； 4）server stub收到消息后进行解码； 5）server stub根据解码结果调用本地的服务； 6）本地服务执行并将结果返回给server stub； 7）server stub将返回结果打包成消息并发送至消费方； 8）client stub接收到消息，并进行解码； <strong>9）服务消费方得到最终结果。</strong>RPC框架的目标就是要2~8这些步骤都封装起来，这些细节对用户来说是透明的，不可见的。</p>
-<h2><span id="2-netty通信原理">2、netty通信原理</span></h2><p>Netty是一个异步事件驱动的网络应用程序框架， 用于快速开发可维护的高性能协议服务器和客户端。它极大地简化并简化了TCP和UDP套接字服务器等网络编程。</p>
-<p>BIO：(Blocking IO)</p>
-<p><img src="/2021/11/02/dubbo/wpsBCF0.tmp.jpg" alt="img"> </p>
-<p>NIO (Non-Blocking IO)</p>
-<p><img src="/2021/11/02/dubbo/wpsBCF1.tmp.jpg" alt="img"> </p>
-<p>Selector 一般称 为<strong>选择器</strong> ，也可以翻译为 <strong>多路复用器，</strong></p>
-<p>Connect（连接就绪）、Accept（接受就绪）、Read（读就绪）、Write（写就绪）</p>
-<p>Netty基本原理：</p>
-<p><img src="/2021/11/02/dubbo/wpsBCF2.tmp.jpg" alt="img"> </p>
-<h2><span id="3-dubbo原理">3、dubbo原理</span></h2><h3><span id="1-dubbo原理-框架设计">1、dubbo原理    -框架设计</span></h3><p><img src="/2021/11/02/dubbo/wpsBCF3.tmp.png" alt="img"> </p>
-<p>l config 配置层：对外配置接口，以 ServiceConfig, ReferenceConfig 为中心，可以直接初始化配置类，也可以通过 spring 解析配置生成配置类</p>
-<p>l proxy 服务代理层：服务接口透明代理，生成服务的客户端 Stub 和服务器端 Skeleton, 以 ServiceProxy 为中心，扩展接口为 ProxyFactory</p>
-<p>l registry 注册中心层：封装服务地址的注册与发现，以服务 URL 为中心，扩展接口为 RegistryFactory, Registry, RegistryService</p>
-<p>l cluster 路由层：封装多个提供者的路由及负载均衡，并桥接注册中心，以 Invoker 为中心，扩展接口为 Cluster, Directory, Router, LoadBalance</p>
-<p>l monitor 监控层：RPC 调用次数和调用时间监控，以 Statistics 为中心，扩展接口为 MonitorFactory, Monitor, MonitorService</p>
-<p>l protocol 远程调用层：封装 RPC 调用，以 Invocation, Result 为中心，扩展接口为 Protocol, Invoker, Exporter</p>
-<p>l exchange 信息交换层：封装请求响应模式，同步转异步，以 Request, Response 为中心，扩展接口为 Exchanger, ExchangeChannel, ExchangeClient, ExchangeServer</p>
-<p>l transport 网络传输层：抽象 mina 和 netty 为统一接口，以 Message 为中心，扩展接口为 Channel, Transporter, Client, Server, Codec</p>
-<p>l serialize 数据序列化层：可复用的一些工具，扩展接口为 Serialization, ObjectInput, ObjectOutput, ThreadPool</p>
-<h3><span id="2-dubbo原理-启动解析-加载配置信息">2、dubbo原理    -启动解析、加载配置信息</span></h3><p><img src="/2021/11/02/dubbo/wpsBD04.tmp.jpg" alt="img"> </p>
-<h3><span id="3-dubbo原理-服务暴露">3、dubbo原理    -服务暴露</span></h3><p><img src="/2021/11/02/dubbo/wpsBD05.tmp.png" alt="img"> </p>
-<h3><span id="4-dubbo原理-服务引用">4、dubbo原理    -服务引用</span></h3><p><img src="/2021/11/02/dubbo/wpsBD06.tmp.png" alt="img"> </p>
-<h3><span id="5-dubbo原理-服务调用">5、dubbo原理    -服务调用</span></h3><p><img src="/2021/11/02/dubbo/wpsBD07.tmp.png" alt="img"></p>
+          <h1><span id="nginx学习">nginx学习</span></h1><p>反向代理（代理服务器端 ）</p>
+<p>负载均衡</p>
+<p>高性能</p>
+<p>各项功能通过配置文件进行配置</p>
 
       
     </div>
@@ -411,7 +273,7 @@ public class HelloServiceImpl implements HelloService &#123;
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/25/%E5%90%B4%E5%A9%B7%E5%84%BF%E7%9A%84%E5%91%A8%E6%9C%AB%E9%87%87%E9%A3%8E/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/12/07/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -425,7 +287,7 @@ public class HelloServiceImpl implements HelloService &#123;
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/10/25/%E5%90%B4%E5%A9%B7%E5%84%BF%E7%9A%84%E5%91%A8%E6%9C%AB%E9%87%87%E9%A3%8E/" class="post-title-link" itemprop="url">吴婷儿的周末采风</a>
+            <a href="/2021/12/07/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B2/" class="post-title-link" itemprop="url">谷粒学院项目历程2</a>
         </h2>
 
         <div class="post-meta">
@@ -436,17 +298,23 @@ public class HelloServiceImpl implements HelloService &#123;
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-10-25 14:53:15 / 修改时间：15:11:29" itemprop="dateCreated datePublished" datetime="2021-10-25T14:53:15+08:00">2021-10-25</time>
+              <time title="创建时间：2021-12-07 11:02:07" itemprop="dateCreated datePublished" datetime="2021-12-07T11:02:07+08:00">2021-12-07</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-01-19 17:36:25" itemprop="dateModified" datetime="2022-01-19T17:36:25+08:00">2022-01-19</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%94%9F%E6%B4%BB%E5%9B%AD%E5%9C%B0/" itemprop="url" rel="index"><span itemprop="name">生活园地</span></a>
+                  <a href="/categories/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/" itemprop="url" rel="index"><span itemprop="name">项目实战</span></a>
                 </span>
             </span>
 
@@ -455,13 +323,13 @@ public class HelloServiceImpl implements HelloService &#123;
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
               </span>
-              <span>285</span>
+              <span>7k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
-              <span>1 分钟</span>
+              <span>6 分钟</span>
             </span>
 
         </div>
@@ -473,37 +341,298 @@ public class HelloServiceImpl implements HelloService &#123;
     <div class="post-body" itemprop="articleBody">
 
       
-          <h4><span id="2021-10-24">2021-10-24</span></h4><p>嘿嘿，先来一张试试手😁😁😁</p>
-<p><img src="/2021/10/25/%E5%90%B4%E5%A9%B7%E5%84%BF%E7%9A%84%E5%91%A8%E6%9C%AB%E9%87%87%E9%A3%8E/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20211025144914.jpg" alt="微信图片_20211025144914"></p>
-<p>这张，邻家小妹的感觉！！！👩‍🦰</p>
-<p><img src="/2021/10/25/%E5%90%B4%E5%A9%B7%E5%84%BF%E7%9A%84%E5%91%A8%E6%9C%AB%E9%87%87%E9%A3%8E/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20211025145201.jpg" alt="微信图片_20211025145201"></p>
-<p>说实话，这一张虽然很好看，但是属于只让我看的一种类型🤐🤐🤐</p>
-<p><img src="/2021/10/25/%E5%90%B4%E5%A9%B7%E5%84%BF%E7%9A%84%E5%91%A8%E6%9C%AB%E9%87%87%E9%A3%8E/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_202110251449141.jpg" alt="微信图片_202110251449141"></p>
-<p>哈哈，这张就很可爱啦~🤪🤪🤪</p>
-<p><img src="/2021/10/25/%E5%90%B4%E5%A9%B7%E5%84%BF%E7%9A%84%E5%91%A8%E6%9C%AB%E9%87%87%E9%A3%8E/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_202110251449142-16351451102662.jpg" alt="微信图片_202110251449142"></p>
-<p>很有港风文艺范的感觉</p>
-<p><img src="/2021/10/25/%E5%90%B4%E5%A9%B7%E5%84%BF%E7%9A%84%E5%91%A8%E6%9C%AB%E9%87%87%E9%A3%8E/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_202110251449143.jpg" alt="微信图片_202110251449143"></p>
-<p>吊带掉下来了😪😪😪</p>
-<p><img src="/2021/10/25/%E5%90%B4%E5%A9%B7%E5%84%BF%E7%9A%84%E5%91%A8%E6%9C%AB%E9%87%87%E9%A3%8E/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_202110251449144.jpg" alt="微信图片_202110251449144"></p>
-<p>假装自己在拍照系列😶😶😶👸👸👸</p>
-<p><img src="/2021/10/25/%E5%90%B4%E5%A9%B7%E5%84%BF%E7%9A%84%E5%91%A8%E6%9C%AB%E9%87%87%E9%A3%8E/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_202110251449145.jpg" alt="微信图片_202110251449145"></p>
-<p>这个也很好看！！！🥞🥞🥞</p>
-<p><img src="/2021/10/25/%E5%90%B4%E5%A9%B7%E5%84%BF%E7%9A%84%E5%91%A8%E6%9C%AB%E9%87%87%E9%A3%8E/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_202110251449146.jpg" alt="微信图片_202110251449146"></p>
-<p>回归可爱<strong>类型儿</strong>(✿◡‿◡)</p>
-<p><img src="/2021/10/25/%E5%90%B4%E5%A9%B7%E5%84%BF%E7%9A%84%E5%91%A8%E6%9C%AB%E9%87%87%E9%A3%8E/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_202110251449147.jpg" alt="微信图片_202110251449147"></p>
-<p>标准美照！！！🥩</p>
-<p><img src="/2021/10/25/%E5%90%B4%E5%A9%B7%E5%84%BF%E7%9A%84%E5%91%A8%E6%9C%AB%E9%87%87%E9%A3%8E/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_202110251449148.jpg" alt="微信图片_202110251449148"></p>
-<p>这个也是，同上。</p>
-<p><img src="/2021/10/25/%E5%90%B4%E5%A9%B7%E5%84%BF%E7%9A%84%E5%91%A8%E6%9C%AB%E9%87%87%E9%A3%8E/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_202110251452011.jpg" alt="微信图片_202110251452011"></p>
-<p>接下来这两张就是满满的欢乐气息啦！！！🛴🛴🛴🛴</p>
-<p><img src="/2021/10/25/%E5%90%B4%E5%A9%B7%E5%84%BF%E7%9A%84%E5%91%A8%E6%9C%AB%E9%87%87%E9%A3%8E/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_202110251452012.jpg" alt="微信图片_202110251452012"></p>
-<p><img src="/2021/10/25/%E5%90%B4%E5%A9%B7%E5%84%BF%E7%9A%84%E5%91%A8%E6%9C%AB%E9%87%87%E9%A3%8E/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_202110251452013.jpg" alt="微信图片_202110251452013"></p>
-<p>同样邻家小妹类型儿</p>
-<p><img src="/2021/10/25/%E5%90%B4%E5%A9%B7%E5%84%BF%E7%9A%84%E5%91%A8%E6%9C%AB%E9%87%87%E9%A3%8E/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_202110251452014.jpg" alt="微信图片_202110251452014"></p>
-<p>哎呀，这不是宝贝和她姨嘛，额，看错了看错了，不好意思，是宝贝和美丽温柔还带有一点点成熟气息的小静<strong>儿</strong>🤗🤗🤗</p>
-<p><img src="/2021/10/25/%E5%90%B4%E5%A9%B7%E5%84%BF%E7%9A%84%E5%91%A8%E6%9C%AB%E9%87%87%E9%A3%8E/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_202110251452015.jpg" alt="微信图片_202110251452015"></p>
-<p>拍了一下午照，憔悴的美😎</p>
-<p><img src="/2021/10/25/%E5%90%B4%E5%A9%B7%E5%84%BF%E7%9A%84%E5%91%A8%E6%9C%AB%E9%87%87%E9%A3%8E/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_202110251452016-16351451102663.jpg" alt="微信图片_202110251452016"></p>
+          <h1><span id="谷粒学院项目">谷粒学院项目</span></h1><h2><span id="redis">redis</span></h2><p>由于客户端首页访问量比较大，所以集成一下redis</p>
+<p>当需要把分页参数和querywapper作为参数在sql语句中进行查询时，需要在mapper层加**@Param(Constants.WAPPER)**注解</p>
+<p><img src="/2021/12/07/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B2/image-20211208113652994.png" alt="image-20211208113652994"></p>
+<p><img src="/2021/12/07/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B2/image-20211208114512577.png" alt="image-20211208114512577"></p>
+<p><strong>@Param(Constants.WAPPER)<strong>相当于</strong>@Param(“ew”)</strong></p>
+<p><img src="/2021/12/07/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B2/image-20211208113823141.png" alt="image-20211208113823141"></p>
+<p>${ew.customSqlSegment}这个语句会自动把分页和querywapper参数传到sql查询内</p>
+<p>在使用oss上传图片时，在前端直接调用后端接口，在前端直接给url赋值，附带moudle属性</p>
+<p><img src="/2021/12/07/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B2/image-20211208131741706.png" alt="image-20211208131741706"></p>
+<h2><span id="注册页面获取验证码前端部分">注册页面获取验证码前端部分</span></h2><p><img src="/2021/12/07/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B2/image-20211209174045597.png" alt="image-20211209174045597"></p>
+<pre><code class="vue">// 倒计时
+    timeDown() &#123;
+      this.codeText = this.second
+
+      // 定义计时器
+      const timer = setInterval(() =&gt; &#123;
+        this.codeText--
+        if (this.codeText &lt; 1) &#123;
+          clearInterval(timer)
+          this.codeText = &#39;获取验证码&#39;
+          this.sending = false
+          this.second = 60
+        &#125;
+        // console.log(new Date())
+      &#125;, 1000)
+    &#125;,
+</code></pre>
+<h2><span id="用户身份认证">用户身份认证</span></h2><ul>
+<li>传统方式为单一服务器模式。</li>
+</ul>
+<ul>
+<li>单点登录（sso）：在多个应用系统中，只需要登录一次，就可以访问其他相互信任的应用系统。</li>
+</ul>
+<p><img src="/2021/12/07/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B2/346672f4-9c52-42bf-8fa3-464bf34a8873.jpg" alt="img"></p>
+<p>使用redis和认证中心</p>
+<p><strong>优点 ：</strong>  </p>
+<p>用户身份信息独立管理，更好的分布式管理。可以自己扩展安全策略</p>
+<p><strong>缺点：</strong></p>
+<p>认证服务器访问压力较大，session的可用性和一致性为矛盾性质，服务器也有性能瓶颈</p>
+<ul>
+<li>token模式   sso模式的一种演变</li>
+</ul>
+<p><img src="/2021/12/07/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B2/0.9709434306629741.png" alt="img"></p>
+<p><strong>优点：</strong></p>
+<ul>
+<li>无状态： token是无状态，session是有状态的</li>
+<li>基于标准化：你的API可以采用标准化的 JSON Web Token (JWT)</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>占用带宽</li>
+<li>无法在服务器端销毁</li>
+</ul>
+<p><img src="/2021/12/07/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B2/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM3MTI2MTc1,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p>token详细学习</p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/24825a2683e6">什么是token - 简书 (jianshu.com)</a></p>
+<h2><span id="jwt">JWT</span></h2><p><strong>JWT头部</strong>分是一个描述JWT元数据的JSON对象</p>
+<pre><code class="json">&#123;
+  &quot;alg&quot;: &quot;HS256&quot;,
+  &quot;typ&quot;: &quot;JWT&quot;
+&#125;
+</code></pre>
+<p><strong>有效载荷部分</strong>，是JWT的主体内容部分，也是一个JSON对象，包含需要传递的数据。 JWT指定七个默认字段供选择。</p>
+<pre><code class="json">iss: jwt签发者
+sub: 主题
+aud: 接收jwt的一方
+exp: jwt的过期时间，这个过期时间必须要大于签发时间
+nbf: 定义在什么时间之前，该jwt都是不可用的.
+iat: jwt的签发时间
+jti: jwt的唯一身份标识，主要用来作为一次性token,从而回避重放攻击。
+</code></pre>
+<p>不要在这一部分放隐私数据</p>
+<p><strong>签名哈希</strong>部分是对上面两部分数据签名，通过指定的算法生成哈希，以确保数据不会被篡改。</p>
+<pre><code class="json">HMACSHA256(base64UrlEncode(header) + &quot;.&quot; + base64UrlEncode(claims), secret)
+</code></pre>
+<p><strong>Base64URL算法</strong></p>
+<p>如前所述，JWT头和有效载荷序列化的算法都用到了Base64URL。该算法和常见Base64算法类似，稍有差别。</p>
+<p>作为令牌的JWT可以放在URL中（例如api.example/?token=xxx）。 Base64中用的三个字符是”+”，”/“和”=”，由于在URL中有特殊含义，因此Base64URL中对他们做了替换：”=”去掉，”+”用”-“替换，”/“用”_”替换，这就是Base64URL算法。</p>
+<p><strong>注意：</strong>base64编码，并不是加密，只是把明文信息变成了不可见的字符串。但是其实只要用一些工具就可以把base64编码解成明文，所以不要在JWT中放入涉及私密的信息</p>
+<h2><span id="后端生成token-根据token获取信息">后端生成token 根据token获取信息</span></h2><p>1.引入依赖</p>
+<pre><code class="xml">&lt;dependencies&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;io.jsonwebtoken&lt;/groupId&gt;
+        &lt;artifactId&gt;jjwt&lt;/artifactId&gt;
+    &lt;/dependency&gt;
+
+    &lt;dependency&gt;
+        &lt;groupId&gt;joda-time&lt;/groupId&gt;
+        &lt;artifactId&gt;joda-time&lt;/artifactId&gt;
+    &lt;/dependency&gt;
+&lt;/dependencies&gt;
+</code></pre>
+<p>2.工具类</p>
+<pre><code class="java">/**
+     * stoken
+     * @param jwtInfo
+     * @param expire
+     * @return
+     */
+    public static String getJwtToken(JwtInfo jwtInfo, int expire)&#123;
+
+        String JwtToken = Jwts.builder()
+                .setHeaderParam(&quot;typ&quot;, &quot;JWT&quot;)
+                .setHeaderParam(&quot;alg&quot;, &quot;HS256&quot;)
+                .setSubject(&quot;guli-user&quot;)//主题
+                .setIssuedAt(new Date())//颁发时间
+                .setExpiration(DateTime.now().plusSeconds(expire).toDate())//过期时间
+                .claim(&quot;id&quot;, jwtInfo.getId())//用户id
+                .claim(&quot;nickname&quot;, jwtInfo.getNickname())//用户昵称
+                .claim(&quot;avatar&quot;, jwtInfo.getAvatar())//用户头像
+                .signWith(SignatureAlgorithm.HS256, getKeyInstance())
+                .compact();
+
+        return JwtToken;
+    &#125;
+/**
+ * 根据token获取会员id
+ * @param request
+ * @return
+ */
+public static JwtInfo getMemberIdByJwtToken(HttpServletRequest request) &#123;
+    String jwtToken = request.getHeader(&quot;token&quot;);
+    if(StringUtils.isEmpty(jwtToken)) return null;
+    Jws&lt;Claims&gt; claimsJws =  Jwts.parser().setSigningKey(getKeyInstance()).parseClaimsJws(jwtToken);
+    Claims claims = claimsJws.getBody();
+    JwtInfo jwtInfo = new JwtInfo(claims.get(&quot;id&quot;).toString(), 
+                                  claims.get(&quot;nickname&quot;).toString(), 
+                                  claims.get(&quot;avatar&quot;).toString());
+    return jwtInfo;
+&#125;
+</code></pre>
+<p>JwtInfo为根据token获取的用户信息，注意：不能放有敏感信息</p>
+<h2><span id="前端登录功能">前端登录功能</span></h2><p>token在cookie中，前端header携带cookie返回后端</p>
+<pre><code class="vue">// 登录
+submitLogin() &#123;
+// 执行远程登录接口调用
+loginApi.submitLogin(this.user).then(response =&gt; &#123;
+// 将JWT写进cookie
+cookie.set(&#39;guli_jwt_token&#39;, response.data.token, &#123; domain: &#39;localhost&#39; &#125;)
+// 跳转到网站的首页面
+window.location.href = &#39;/&#39;
+&#125;)
+&#125;
+</code></pre>
+<p><strong>{ domain: ‘localhost’ }</strong>  cookie的第三个参数</p>
+<p>设置可以共享cookie的父域名</p>
+<h2><span id="创建dtodata-transfer-object服务和服务之间的数据传输对象">创建DTO（Data Transfer Object）：服务和服务之间的数据传输对象</span></h2><p>LEFT JOIN 关键字会从左表 (table_name1) 那里返回所有的行，即使在右表 (table_name2) 中没有匹配的行。</p>
+<h3><span id="left-join-关键字语法">LEFT JOIN 关键字语法</span></h3><pre><code class="sql">SELECT column_name(s)
+FROM table_name1
+LEFT JOIN table_name2 
+ON table_name1.column_name=table_name2.column_name
+</code></pre>
+<p>serviceimpl层中 this.remove和baseMapper.delete所达成的效果是一样的</p>
+<p><img src="/2021/12/07/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B2/image-20211214115329754-16394540114113.png" alt="image-20211214115329754"></p>
+<p><img src="/2021/12/07/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B2/image-20211214115259908-16394539816312.png" alt="image-20211214115259908"></p>
+<p>只是this调用删除方法返回布尔值</p>
+<h2><span id="微信支付">微信支付</span></h2><p><img src="/2021/12/07/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B2/image-20211215113757450.png" alt="image-20211215113757450"></p>
+<h3><span id="内网穿透">内网穿透</span></h3><p>使用ngrock</p>
+<p><img src="/2021/12/07/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B2/image-20211215132549706.png" alt="image-20211215132549706"></p>
+<p><img src="/2021/12/07/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B2/image-20211215132522036.png" alt="image-20211215132522036"></p>
+<p>微信回调需要访问到local host</p>
+<p>根据微信返回的二维码url地址生成二维码  </p>
+<p>前端生成：npm install <a href="mailto:&#118;&#117;&#101;&#45;&#113;&#114;&#x69;&#111;&#117;&#115;&#108;&#x79;&#x40;&#49;&#x2e;&#49;&#x2e;&#49;">&#118;&#117;&#101;&#45;&#113;&#114;&#x69;&#111;&#117;&#115;&#108;&#x79;&#x40;&#49;&#x2e;&#49;&#x2e;&#49;</a></p>
+<p>处理一个幂等性，防止重复调用不必要的方法</p>
+<pre><code class="java">//接口调用的幂等性：无论接口被调用多少次，最后所影响的结果都是一致的
+if(order.getStatus() == 0)&#123;
+    //更新订单状态
+    orderService.updateOrderStatus(notifyMap);
+&#125;
+</code></pre>
+<h2><span id="api服务网关">API服务网关</span></h2><p>使用springcloudgateway作为网关</p>
+<pre><code class="xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-cloud-starter-gateway&lt;/artifactId&gt;
+&lt;/dependency&gt;
+</code></pre>
+<pre><code class="yaml">spring:
+  profiles:
+    active: dev # 环境设置
+  application:
+    name: infrastructure-apigateway # 服务名
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848 # nacos服务地址
+    gateway:
+      discovery:
+        locator:
+          enabled: true # gateway可以发现nacos中的微服务
+      routes:  
+      - id: service-edu
+        uri: lb://service-edu
+        predicates:
+        - Path=/user/**, /*/edu/**
+        filters:
+        - SetStatus=250 #修改返回状态码
+</code></pre>
+<p>predicates为断言，有路径断言，时间断言，远程IP断言，cookie断言，header断言，Query请求断言，路由权重断言</p>
+<p>uri配置，如果服务器使用集群模式，自动运用负载均衡模式进行配置</p>
+<h3><span id="处理跨域问题">处理跨域问题</span></h3><pre><code class="java">@Configuration
+public class CorsConfig &#123;
+
+    @Bean
+    public CorsWebFilter corsFilter() &#123;
+
+        CorsConfiguration config = new CorsConfiguration();
+        config.addAllowedMethod(&quot;*&quot;);
+        config.addAllowedOrigin(&quot;*&quot;);
+        config.addAllowedHeader(&quot;*&quot;);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource(new PathPatternParser());
+        source.registerCorsConfiguration(&quot;/**&quot;, config);
+
+        return new CorsWebFilter(source);
+    &#125;
+&#125;
+</code></pre>
+<p>有了config配置之后需把@CrossOrigin屏蔽掉</p>
+<h3><span id="自定义全局过滤器">自定义全局过滤器</span></h3><p><img src="/2021/12/07/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B2/image-20211217174019270.png" alt="image-20211217174019270"></p>
+<p>未登录状态下购买课程显示network error</p>
+<p>可哟话用户体验，未登录状态下点击购买的话会直接跳转到登录页面</p>
+<h2><span id="遇到问题">遇到问题</span></h2><p><img src="/2021/12/07/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B2/image-20211220131709314.png" alt="image-20211220131709314"></p>
+<p>配置了双跨域问题</p>
+<p><strong>原因：</strong>controller类上加了@CrossOrigin 注解，在网关配置中又配置了跨域问题</p>
+<p><strong>解决方法：</strong>去掉@CrossOrigin 注解，保留网关配置</p>
+<p>问题：404</p>
+<p><img src="/2021/12/07/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B2/20190620105924821.png" alt="img"></p>
+<p><strong>原因：</strong>控制类中的mapping没有和网关配置中的path完全匹配</p>
+<p><img src="/2021/12/07/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B2/Blog\source_posts\谷粒学院项目历程2\image-20211220134104612.png" alt="image-20211220134104612"></p>
+<p><strong>解决方法：</strong>完全匹配就好</p>
+<h2><span id="配置中心-nacos-config">配置中心  nacos config</span></h2><p>导入依赖</p>
+<p>远程配置中心的配置优先生效</p>
+<p>配置动态刷新：<strong>在controller类上添加@RefershScope注解</strong></p>
+<p>多环境配置:</p>
+<p>在bootstrap.yml中配置环境</p>
+<p><img src="/2021/12/07/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B2/image-20211220143121397.png" alt="image-20211220143121397"></p>
+<p>然后在nacos配置中心新建配置文件，命名规则为  <strong>服务名-环境.yaml</strong></p>
+<p>可以用名称空间做微服务隔离，结合多环境配置使用</p>
+<p>单独配置各种服务参数</p>
+<p><img src="/2021/12/07/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B2/image-20211220144514397.png" alt="image-20211220144514397"></p>
+<p>然后在nacos配置中心新增配置文件</p>
+<h2><span id="权限配置">权限配置</span></h2><h3><span id="递归操作">递归操作</span></h3><h4><span id="eg获取全部菜单">eg：获取全部菜单</span></h4><pre><code class="java">//获取全部菜单
+    @Override
+    public List&lt;Permission&gt; queryAllMenuGuli() &#123;
+        //1 查询菜单表所有数据
+        QueryWrapper&lt;Permission&gt; wrapper = new QueryWrapper&lt;&gt;();
+        wrapper.orderByDesc(&quot;id&quot;);
+        List&lt;Permission&gt; permissionList = baseMapper.selectList(wrapper);
+        //2 把查询所有菜单list集合按照要求进行封装
+        List&lt;Permission&gt; resultList = bulidPermission(permissionList);
+        return resultList;
+    &#125;
+//把返回所有菜单list集合进行封装的方法
+    public static List&lt;Permission&gt; bulidPermission(List&lt;Permission&gt; permissionList) &#123;
+
+        //创建list集合，用于数据最终封装
+        List&lt;Permission&gt; finalNode = new ArrayList&lt;&gt;();
+        //把所有菜单list集合遍历，得到顶层菜单 pid=0菜单，设置level是1
+        for(Permission permissionNode : permissionList) &#123;
+            //得到顶层菜单 pid=0菜单
+            if(&quot;0&quot;.equals(permissionNode.getPid())) &#123;
+                //设置顶层菜单的level是1
+                permissionNode.setLevel(1);
+                //根据顶层菜单，向里面进行查询子菜单，封装到finalNode里面
+                finalNode.add(selectChildren(permissionNode,permissionList));
+            &#125;
+        &#125;
+        return finalNode;
+    &#125;
+
+    private static Permission selectChildren(Permission permissionNode, List&lt;Permission&gt; permissionList) &#123;
+        //1 因为向一层菜单里面放二层菜单，二层里面还要放三层，把对象初始化
+        permissionNode.setChildren(new ArrayList&lt;Permission&gt;());
+
+        //2 遍历所有菜单list集合，进行判断比较，比较id和pid值是否相同
+        for(Permission it : permissionList) &#123;
+            //判断 id和pid值是否相同
+            if(permissionNode.getId().equals(it.getPid())) &#123;
+                //把父菜单的level值+1
+                int level = permissionNode.getLevel()+1;
+                it.setLevel(level);
+                //如果children为空，进行初始化操作
+                if(permissionNode.getChildren() == null) &#123;
+                    permissionNode.setChildren(new ArrayList&lt;Permission&gt;());
+                &#125;
+                //把查询出来的子菜单放到父菜单里面
+                permissionNode.getChildren().add(selectChildren(it,permissionList));
+            &#125;
+        &#125;
+        return permissionNode;
+    &#125;
+</code></pre>
 
       
     </div>
@@ -524,7 +653,7 @@ public class HelloServiceImpl implements HelloService &#123;
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -592,20 +721,20 @@ public class HelloServiceImpl implements HelloService &#123;
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-count">42</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-count">19</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-count">36</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -662,7 +791,7 @@ public class HelloServiceImpl implements HelloService &#123;
 <div class="copyright">
   
   &copy; Fri Aug 20 2021 08:00:00 GMT+0800 (GMT+08:00) – 
-  <span itemprop="copyrightYear">2021</span>
+  <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -671,18 +800,18 @@ public class HelloServiceImpl implements HelloService &#123;
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">121k</span>
+    <span title="站点总字数">187k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:50</span>
+    <span title="站点阅读时长">2:50</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共43k字</span>
+  <span class="post-count">博客全站共70.9k字</span>
 </div>
 
     <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>

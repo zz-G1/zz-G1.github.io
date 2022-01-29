@@ -195,7 +195,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/31/equals%E5%92%8C/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/15/Restful%E8%AF%A6%E8%A7%A3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -209,7 +209,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/08/31/equals%E5%92%8C/" class="post-title-link" itemprop="url">equals和==</a>
+            <a href="/2021/09/15/Restful%E8%AF%A6%E8%A7%A3/" class="post-title-link" itemprop="url">Restful详解</a>
         </h2>
 
         <div class="post-meta">
@@ -222,16 +222,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-08-31 20:47:28 / 修改时间：20:53:56" itemprop="dateCreated datePublished" datetime="2021-08-31T20:47:28+08:00">2021-08-31</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Javase/" itemprop="url" rel="index"><span itemprop="name">Javase</span></a>
-                </span>
+              <time title="创建时间：2021-09-15 21:28:35 / 修改时间：22:02:53" itemprop="dateCreated datePublished" datetime="2021-09-15T21:28:35+08:00">2021-09-15</time>
             </span>
 
           
@@ -239,13 +230,13 @@
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
               </span>
-              <span>172</span>
+              <span>3.9k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
-              <span>1 分钟</span>
+              <span>4 分钟</span>
             </span>
 
         </div>
@@ -257,10 +248,136 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1><span id="equals和">equals和==</span></h1><p><strong>很简单：</strong></p>
-<p>​             equals在比较字符串常量时比较的是内容，对于非字符串对象是比较指向对象所否相同；</p>
-<p>​             ==比较的是内存首地址，因为在String中对equals方法进行了重写，而在object中没有，equals和==所比较的都是所在内存的首地址</p>
-<p><strong>注意：</strong>比较基本类型只可用==，比较基本类型的包装类型时可以用equals，比较的是内容</p>
+          <h2><span id="资源与uri">资源与URI</span></h2><p>REST全称是表述性状态转移，那究竟指的是什么的表述? 其实指的就是资源。</p>
+<p>要让一个资源可以被识别，需要有个唯一标识，在Web中这个唯一标识就是URI(Uniform Resource Identifier)。</p>
+<h3><span id="uri的设计技巧">URI的设计技巧</span></h3><ul>
+<li>使用_或-来让URI可读性更好  <strong>例子</strong>：<a target="_blank" rel="noopener" href="http://www.oschina.net/news/38119/oschina-translate-reward-plan">http://www.oschina.net/news/38119/oschina-translate-reward-plan</a></li>
+<li>使用/来表示资源的层级关系  <strong>例子</strong>：/orders/2012/10可以用来表示2012年10月的订单记录。</li>
+<li>使用?用来过滤资源  <strong>例子</strong>：很多人只是把?简单的当做是参数的传递，很容易造成URI过于复杂、难以理解。可以把?用于对资源的过滤， 例如/git/git/pulls用来表示git项目的所有推入请求，而/pulls?state=closed用来表示git项目中已经关闭的推入请求， 这种URL通常对应的是一些特定条件的查询结果或算法运算结果。</li>
+<li>,或;可以用来表示同级资源的关系 <strong>例子</strong>：例如哪天github可以比较某个文件在随意两次提交记录之间的差异，或许可以用；连接两个文件。</li>
+</ul>
+<h2><span id="统一资源接口">统一资源接口</span></h2><p>RESTful架构应该遵循统一接口原则，统一接口包含了一组受限的预定义的操作，不论什么样的资源，都是通过使用相同的接口进行资源的访问。接口应该使用标准的HTTP方法如GET，PUT和POST，并遵循这些方法的语义。</p>
+<p>如果按照HTTP方法的语义来暴露资源，那么接口将会拥有安全性和幂等性的特性，例如GET和HEAD请求都是安全的， 无论请求多少次，都不会改变服务器状态。而GET、HEAD、PUT和DELETE请求都是幂等的，无论对资源操作多少次， 结果总是一样的，后面的请求并不会产生比第一次更多的影响。</p>
+<h3><span id="资源的表述">资源的表述</span></h3><p>上面提到，客户端通过HTTP方法可以获取资源，是吧? 不，确切的说，客户端获取的只是资源的表述而已。 资源在外界的具体呈现，可以有多种表述(或成为表现、表示)形式，在客户端和服务端之间传送的也是资源的表述，而不是资源本身。 例如文本资源可以采用html、xml、json等格式，图片可以使用PNG或JPG展现出来。</p>
+<p>资源的表述包括数据和描述数据的元数据，例如，HTTP头”Content-Type” 就是这样一个元数据属性。</p>
+<p>那么客户端如何知道服务端提供哪种表述形式呢?</p>
+<p>答案是可以通过HTTP内容协商，客户端可以通过Accept头请求一种特定格式的表述，服务端则通过Content-Type告诉客户端资源的表述形式。</p>
+<p>以github为例，请求某组织资源的json格式的表述形式:</p>
+<p><img src="/2021/09/15/Restful%E8%AF%A6%E8%A7%A3/291731048886033.jpg" alt="291731048886033"></p>
+<p>假如github也能够支持xml格式的表述格式，那么结果就是这样的:</p>
+<p><img src="/2021/09/15/Restful%E8%AF%A6%E8%A7%A3/291731045756062.jpg" alt="291731045756062"></p>
+<h2><span id="springmvc实现restful服务">SpringMVC实现restful服务:</span></h2><p>SpringMVC原生态的支持了REST风格的架构设计</p>
+<p>所涉及到的注解:</p>
+<p>---@RequestMapping<br> ---@PathVariable<br> ---@ResponseBody</p>
+<pre><code class="java">package cn.itcast.mybatis.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import cn.itcast.mybatis.pojo.User;
+import cn.itcast.mybatis.service.NewUserService;
+
+@RequestMapping(&quot;restful/user&quot;)
+@Controller
+public class RestUserController &#123;
+
+@Autowired
+private NewUserService newUserService;
+
+/**
+ * 根据用户id查询用户数据
+ * 
+ * @param id
+ * @return
+ */
+@RequestMapping(value = &quot;&#123;id&#125;&quot;, method = RequestMethod.GET)
+@ResponseBody
+public ResponseEntity&lt;User&gt; queryUserById(@PathVariable(&quot;id&quot;) Long id) &#123;
+    try &#123;
+        User user = this.newUserService.queryUserById(id);
+        if (null == user) &#123;
+            // 资源不存在，响应404
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        &#125;
+        // 200
+        // return ResponseEntity.status(HttpStatus.OK).body(user);
+        return ResponseEntity.ok(user);
+    &#125; catch (Exception e) &#123;
+        e.printStackTrace();
+    &#125;
+    // 500
+    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+&#125;
+
+/**
+ * 新增用户
+ * 
+ * @param user
+ * @return
+ */
+@RequestMapping(method = RequestMethod.POST)
+public ResponseEntity&lt;Void&gt; saveUser(User user) &#123;
+    try &#123;
+        this.newUserService.saveUser(user);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    &#125; catch (Exception e) &#123;
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+    &#125;
+    // 500
+    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+&#125;
+
+/**
+ * 更新用户资源
+ * 
+ * @param user
+ * @return
+ */
+@RequestMapping(method = RequestMethod.PUT)
+public ResponseEntity&lt;Void&gt; updateUser(User user) &#123;
+    try &#123;
+        this.newUserService.updateUser(user);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    &#125; catch (Exception e) &#123;
+        e.printStackTrace();
+    &#125;
+    // 500
+    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+&#125;
+
+/**
+ * 删除用户资源
+ * 
+ * @param user
+ * @return
+ */
+@RequestMapping(method = RequestMethod.DELETE)
+public ResponseEntity&lt;Void&gt; deleteUser(@RequestParam(value = &quot;id&quot;, defaultValue = &quot;0&quot;) Long id) &#123;
+    try &#123;
+        if (id.intValue() == 0) &#123;
+            // 请求参数有误
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        &#125;
+        this.newUserService.deleteUserById(id);
+        // 204
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    &#125; catch (Exception e) &#123;
+        e.printStackTrace();
+    &#125;
+    // 500
+    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+&#125;
+&#125;
+</code></pre>
+<p>出自：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/7893169a7c93">RESTful接口详解 - 简书 (jianshu.com)</a></p>
 
       
     </div>
@@ -282,7 +399,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/31/%E5%A0%86%E5%92%8C%E6%A0%88-%E5%A3%B9/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/13/java%E5%9B%9B%E7%A7%8D%E7%BA%BF%E7%A8%8B%E6%B1%A0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -296,7 +413,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/08/31/%E5%A0%86%E5%92%8C%E6%A0%88-%E5%A3%B9/" class="post-title-link" itemprop="url">堆和栈(壹)</a>
+            <a href="/2021/09/13/java%E5%9B%9B%E7%A7%8D%E7%BA%BF%E7%A8%8B%E6%B1%A0/" class="post-title-link" itemprop="url">java四种线程池</a>
         </h2>
 
         <div class="post-meta">
@@ -309,7 +426,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-08-31 09:54:07 / 修改时间：14:43:25" itemprop="dateCreated datePublished" datetime="2021-08-31T09:54:07+08:00">2021-08-31</time>
+              <time title="创建时间：2021-09-13 17:02:09 / 修改时间：17:21:09" itemprop="dateCreated datePublished" datetime="2021-09-13T17:02:09+08:00">2021-09-13</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -317,7 +434,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/javase/" itemprop="url" rel="index"><span itemprop="name">javase</span></a>
+                  <a href="/categories/%E7%BA%BF%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">线程</span></a>
                 </span>
             </span>
 
@@ -326,7 +443,7 @@
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
               </span>
-              <span>1.2k</span>
+              <span>604</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -344,100 +461,43 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1><span id="堆和栈的区别">堆和栈的区别😍</span></h1><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/ibelieve618/p/6380328.html">在自学开发的老司机</a></p>
-<p>看过上面的博文自己来总结一下：</p>
-<p><strong>什么是局部变量：</strong>定义在函数中的变量、定义在函数中的参数上的变量、定义在for循环内部的变量</p>
+          <h2><span id="普通创建线程new-thead弊端">普通创建线程(new Thead)弊端</span></h2><pre><code class="Java">new Thread(new Runnable() &#123;
+ 
+@Override
+public void run() &#123;
+// TODO Auto-generated method stub
+&#125;
+&#125;).start();
+</code></pre>
+<p>new Thread弊端如下：</p>
+<p>Java提供的四种线程池好处如下：</p>
 <table>
 <thead>
 <tr>
-<th align="center"></th>
-<th align="center">栈</th>
-<th align="center">堆</th>
+<th align="center">Java四种线程</th>
+<th align="center">new Thread</th>
 </tr>
 </thead>
 <tbody><tr>
-<td align="center">存放</td>
-<td align="center">函数中定义的基本类型变量，局部变量，对象的引用变量</td>
-<td align="center">new创建的对象和数组</td>
+<td align="center">重复利用存在的线程，减少对象创建，消亡的开销，性能佳</td>
+<td align="center">每次new Thread新建对象性能差</td>
 </tr>
 <tr>
-<td align="center">垃圾回收</td>
-<td align="center">数数据一执行完毕，变量会立即释放，节约内存空间</td>
-<td align="center">堆内存中的实体不再被指向时，JVM启动垃圾回收机制，自动清除（Java的优点）</td>
+<td align="center">可有效控制最大并发线程数，提高系统资源的使用率</td>
+<td align="center">线程缺乏统一管理，可能无限制创建新线程，相互之间争夺资源，导致死机</td>
 </tr>
 <tr>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center">其中所有实体都有内存地址值，实体用来封装数据，都有默认初始值</td>
+<td align="center">提供定时执行、定期执行、单线程、并发数控制等功能。</td>
+<td align="center">缺乏更多功能如：定时执行，定期执行，线程中断</td>
 </tr>
 </tbody></table>
-<h2><span id="使用6个例子来加深理解">使用6个例子来加深理解：</span></h2><h3><span id="壹">壹：</span></h3><pre><code class="java">main()
-　　int x=1;
-show ()
-　　int x=2
-</code></pre>
-<p>main函数和show函数内都定义了x变量，jvm在栈内分配空间，两者互不影响</p>
-<p><strong>详细过程</strong>：</p>
-<p>1—主函数为入口jvm先执行，在栈内存开辟空间，存放int类型变量x,同时赋值1；</p>
-<p>2—接下来执行show函数，在栈内存中开辟新空间，存放int类型变量x，同时赋值2；</p>
-<p>3—show()执行完毕，变量X立即释放，空间消失。但是main函数空间依然存在，不收影响。</p>
-<p><img src="/2021/08/31/%E5%A0%86%E5%92%8C%E6%A0%88-%E5%A3%B9/image-20210831104241503.png"></p>
-<hr>
-<h3><span id="贰">贰：</span></h3><pre><code class="java">main()
-    int[] x=new int[3];
-    x[0]=20;
-  
-</code></pre>
-<p><strong>详细过程</strong>:</p>
-<p>1—老样子，main为入口，jvm在栈内存中开辟一个空间存放x变量（局部变量）   同时在堆内存中也开辟一个空间，用来x指向的int数组。此时所有元素均为赋值但是都有默认初始值；</p>
-<p>2—-执行x[0]=20</p>
-<p>​       即将在堆内存中将20赋给第一个数组元素，到现在为止，数组的三个元素分别为20，0，0；</p>
-<img src="/2021/08/31/%E5%A0%86%E5%92%8C%E6%A0%88-%E5%A3%B9/image-20210831105527840.png" alt="image-20210831105527840">
-
-<hr>
-<h3><span id="叁">叁：</span></h3><pre><code class="Java">main()
-　　int[] x=new int[3];
-　　x[0]=20
-　　x=null;
-</code></pre>
-<p><strong>详细过程</strong>:</p>
-<p>1-2与上相同</p>
-<p>3—执行x=null</p>
-<p>​      null表示空值，即X的引用数组内存地址0x0045被删除了，在栈内引用不了了。同时，由于堆中的数组不再被X使用，被jvm视为垃圾，启动垃圾回收机制，不定时自定删除。</p>
-<p><img src="/2021/08/31/%E5%A0%86%E5%92%8C%E6%A0%88-%E5%A3%B9/image-20210831110142264.png" alt="image-20210831110142264"></p>
-<hr>
-<h3><span id="肆">肆：</span></h3><pre><code class="Java">main()
-　　int[] x=new int[3];
-　　int[] y=x;
-　　y[1]=100
-　　x=null
-</code></pre>
-<p><strong>详细过程</strong>:</p>
-<p> 1—与贰的第一步相同</p>
-<p> 2—执行int [] y=x;</p>
-<p>​      在栈内新开内存存放y变量，同时将0x0045赋给y，所以y也指向了堆内存中的同一个数组</p>
-<p> 3—执行y[1]=100</p>
-<p>​       即在堆中将100赋给[1]这个数组元素，现在数组中的元素值为0，100，0；</p>
-<p> 4—执行x=null</p>
-<p>​       则变量x不再指向栈内存中的数组。但是y仍然指向数组，所以数组不消失</p>
-<p><img src="/2021/08/31/%E5%A0%86%E5%92%8C%E6%A0%88-%E5%A3%B9/image-20210831141750764.png" alt="image-20210831141750764"></p>
-<hr>
-<h3><span id="伍">伍：</span></h3><pre><code class="java">Car c=new Car;
-c.color=&quot;bule&quot;;
-Car c1=new Car;
-c1.num=5
-</code></pre>
-<p>都引用new Car,但两个不同的对象会产生两个不同的实体</p>
-<p><img src="/2021/08/31/%E5%A0%86%E5%92%8C%E6%A0%88-%E5%A3%B9/image-20210831142206084.png" alt="image-20210831142206084"></p>
-<hr>
-<h3><span id="陆">陆：</span></h3><pre><code class="java">Car c=new Car;
-c.color=&quot;green&quot;;
-Car c1=c;
-c1.num=5
-</code></pre>
-<p>c1=c，相当于复制一份对象，两个对象在堆中的内存地址一样，指向同一个实体，修改一个两个对象的属性都修改。</p>
-<p><img src="/2021/08/31/%E5%A0%86%E5%92%8C%E6%A0%88-%E5%A3%B9/image-20210831111340998.png" alt="image-20210831111340998"></p>
-<p>想宝贝的第好几天👩‍❤️‍💋‍👩👯‍♂️👩🏼‍🤝‍👩🏻</p>
+<h2><span id="java线程池">Java线程池</span></h2><p>Java通过Executors提供四种线程池，分别为：</p>
+<ul>
+<li>newCachedThreadPool创建一个可缓存线程池，如果线程池长度超过处理需要，可灵活回收空闲线程，若无可回收，则新建线程。</li>
+<li>newFixedThreadPool 创建一个定长线程池，可控制线程最大并发数，超出的线程会在队列中等待。</li>
+<li>newScheduledThreadPool 创建一个定长线程池，支持定时及周期性任务执行。</li>
+<li>newSingleThreadExecutor 创建一个单线程化的线程池，它只会用唯一的工作线程来执行任务，保证所有任务按照指定顺序(FIFO, LIFO, 优先级)执行。</li>
+</ul>
 
       
     </div>
@@ -458,7 +518,7 @@ c1.num=5
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/13/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><span class="page-number current">14</span><a class="page-number" href="/page/15/">15</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/15/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/13/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><span class="page-number current">14</span><a class="page-number" href="/page/15/">15</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" href="/page/15/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -526,20 +586,20 @@ c1.num=5
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-count">42</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-count">19</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-count">36</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -596,7 +656,7 @@ c1.num=5
 <div class="copyright">
   
   &copy; Fri Aug 20 2021 08:00:00 GMT+0800 (GMT+08:00) – 
-  <span itemprop="copyrightYear">2021</span>
+  <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -605,18 +665,18 @@ c1.num=5
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">121k</span>
+    <span title="站点总字数">187k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:50</span>
+    <span title="站点阅读时长">2:50</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共43k字</span>
+  <span class="post-count">博客全站共70.9k字</span>
 </div>
 
     <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>

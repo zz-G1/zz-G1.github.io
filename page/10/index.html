@@ -195,7 +195,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/18/%E6%8B%A6%E6%88%AA%E5%99%A8%E4%B8%8E%E8%BF%87%E6%BB%A4%E5%99%A8/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/20/NodeJS%E3%80%81Npm%E3%80%81Es6%E3%80%81Babel/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -209,7 +209,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/09/18/%E6%8B%A6%E6%88%AA%E5%99%A8%E4%B8%8E%E8%BF%87%E6%BB%A4%E5%99%A8/" class="post-title-link" itemprop="url">拦截器与过滤器</a>
+            <a href="/2021/10/20/NodeJS%E3%80%81Npm%E3%80%81Es6%E3%80%81Babel/" class="post-title-link" itemprop="url">NodeJS、Npm、Es6、Babel</a>
         </h2>
 
         <div class="post-meta">
@@ -220,24 +220,9 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2021-09-18 20:46:41" itemprop="dateCreated datePublished" datetime="2021-09-18T20:46:41+08:00">2021-09-18</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-09-20 20:48:17" itemprop="dateModified" datetime="2021-09-20T20:48:17+08:00">2021-09-20</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/spring-mvc/" itemprop="url" rel="index"><span itemprop="name">spring mvc</span></a>
-                </span>
+              <time title="创建时间：2021-10-20 17:12:29 / 修改时间：17:26:11" itemprop="dateCreated datePublished" datetime="2021-10-20T17:12:29+08:00">2021-10-20</time>
             </span>
 
           
@@ -245,7 +230,7 @@
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
               </span>
-              <span>1.4k</span>
+              <span>65</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -263,64 +248,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1><span id="拦截器与过滤器">拦截器与过滤器</span></h1><ul>
-<li><p>过滤器还得配置静态资源过滤，拦截器只会拦截访问的控制器方法，如访问静态资源是不会拦截的</p>
-</li>
-<li><p>拦截器是AOP思想的具体运用，是springmvc框架自己的，使用了springmvc框架的工程才能使用b</p>
-</li>
-<li><p>继承拦截器不许重写，继承过滤器需要重写方法</p>
-</li>
-</ul>
-<p>在web-INF下的所有页面只能通过controller或者servlet访问</p>
-<h2><span id="实现拦截器">实现拦截器</span></h2><p>定义个性化拦截器</p>
-<ol>
-<li><p>实现拦截器接口</p>
-<pre><code class="java">package com.zz.config;
-
-import org.springframework.web.servlet.HandlerInterceptor;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
-public class LoignIntercepter implements HandlerInterceptor &#123;
-    @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception &#123;
-        HttpSession httpSession= request.getSession();
-        System.out.println(&quot;uri&quot;+request.getRequestURI());
-
-        //如跳转的是登录页面
-        if(request.getRequestURI().contains(&quot;login&quot;))&#123;
-            return true;
-        &#125;
-
-
-        if(httpSession.getAttribute(&quot;userlogininfo&quot;)!=null)&#123;
-            return true;
-        &#125;
-        //执行到这里说明用户没有登陆
-        // 用户没有登陆就跳转到登陆页面
-        request.getRequestDispatcher(&quot;/WEB-INF/jsp/login.jsp&quot;).forward(request,response);
-        return false;
-    &#125;
-&#125;
-</code></pre>
-</li>
-<li><p>在applicationcontext.xml里配置</p>
-<pre><code class="java">&lt;mvc:interceptors&gt;
-        &lt;mvc:interceptor&gt;
-            &lt;!--包括这个请求下所有的请求--&gt;
-            &lt;mvc:mapping path=&quot;/**&quot;/&gt;
-            &lt;bean class=&quot;com.zz.config.MyInterceptor&quot;/&gt;
-        &lt;/mvc:interceptor&gt;
-        &lt;mvc:interceptor&gt;
-            &lt;mvc:mapping path=&quot;/**&quot;/&gt;
-            &lt;bean class=&quot;com.zz.config.LoignIntercepter&quot;/&gt;
-        &lt;/mvc:interceptor&gt;
-    &lt;/mvc:interceptors&gt;
-</code></pre>
-</li>
-</ol>
+          <h1><span id="前端技能基础杂烩">前端技能基础杂烩</span></h1><p>学习文档地址：<a target="_blank" rel="noopener" href="https://www.kuangstudy.com/bbs/1351463043300708353">https://www.kuangstudy.com/bbs/1351463043300708353</a></p>
 
       
     </div>
@@ -342,7 +270,7 @@ public class LoignIntercepter implements HandlerInterceptor &#123;
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/18/ajax%E6%80%BB%E7%BB%93/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/16/mybatisPlus/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -356,7 +284,7 @@ public class LoignIntercepter implements HandlerInterceptor &#123;
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/09/18/ajax%E6%80%BB%E7%BB%93/" class="post-title-link" itemprop="url">ajax总结</a>
+            <a href="/2021/10/16/mybatisPlus/" class="post-title-link" itemprop="url">mybatisPlus</a>
         </h2>
 
         <div class="post-meta">
@@ -368,14 +296,14 @@ public class LoignIntercepter implements HandlerInterceptor &#123;
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-09-18 19:35:00" itemprop="dateCreated datePublished" datetime="2021-09-18T19:35:00+08:00">2021-09-18</time>
+              <time title="创建时间：2021-10-16 16:50:45" itemprop="dateCreated datePublished" datetime="2021-10-16T16:50:45+08:00">2021-10-16</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-10-13 17:04:21" itemprop="dateModified" datetime="2021-10-13T17:04:21+08:00">2021-10-13</time>
+                <time title="修改时间：2021-10-18 14:18:40" itemprop="dateModified" datetime="2021-10-18T14:18:40+08:00">2021-10-18</time>
               </span>
 
           
@@ -383,7 +311,7 @@ public class LoignIntercepter implements HandlerInterceptor &#123;
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
               </span>
-              <span>3.1k</span>
+              <span>2.9k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -401,120 +329,197 @@ public class LoignIntercepter implements HandlerInterceptor &#123;
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1><span id="ajax">Ajax</span></h1><p>现在对Ajax的理解就是简简单单地优化用户体验</p>
-<p>Ajax的核心是XMLHttpRequest对象(XHR)。XHR为向服务器发送请求和解析服务器响应提供了接口。能够以异步方式从服务器获取新数据。</p>
-<p>jQuery 提供多个与 AJAX 有关的方法。</p>
-<p><strong>实现异步验证用户名</strong></p>
-<p>新建一个maven项目，增加web支持，<strong>配置好tomcat服务器</strong>（就配置这破玩意二花了我两天！！！！！！！如有问题：首先新建一个项目，不要再原项目下新建一个modle；接下来就是配置好tomcat的deployment）</p>
-<p><img src="/2021/09/18/ajax%E6%80%BB%E7%BB%93/image-20210918194117558.png" alt="image-20210918194117558"></p>
-<img src="/2021/09/18/ajax%E6%80%BB%E7%BB%93/image-20210918194214940.png" alt="image-20210918194214940" style="zoom: 50%;">
+          <h1><span id="mybatisplus">mybatisPlus</span></h1><p><img src="/2021/10/16/mybatisPlus/image-20211016165647437.png" alt="image-20211016165647437"></p>
+<h2><span id="入门">入门</span></h2><p>mapper接口文件继承<strong>basemapper</strong>，记得加参数要显示查询对象类型</p>
+<pre><code class="java">//继承Basemapper就可以不编写xml文件了
+@Repository//代表是持久层
+public interface UserMapper extends BaseMapper&lt;User&gt; &#123;
 
-<p>如没有Artifact，点击加号把现项目以war包形式发布，点击🆗即可。</p>
-<p><img src="/2021/09/18/ajax%E6%80%BB%E7%BB%93/image-20210918194435095.png" alt="image-20210918194435095"></p>
-<p><img src="/2021/09/18/ajax%E6%80%BB%E7%BB%93/image-20210918194456928.png" alt="image-20210918194456928"></p>
-<p>如项目部署成功访问controller显示500，原因可能是spring版本和tomcat版本不匹配，我的之前有问题的就是因为用的是tomcat6，换成tomcat9就好了。还有还有：：：：<strong>记得在project structure里面的artifacts项里配置lib目录</strong>。</p>
-<h2><span id="言归正传">言归正传</span></h2><p>开始实现功能了🧨🧨🧨🎠🎠🎠🎊🎊🎊</p>
-<p>实现效果简单的来说就是输入账号名和密码，当鼠标离开输入框也就是失去焦点，页面会自动显示正确或错误/<img src="/2021/09/18/ajax%E6%80%BB%E7%BB%93/image-20210918195233626.png" alt="image-20210918195233626"></p>
-<p><img src="/2021/09/18/ajax%E6%80%BB%E7%BB%93/image-20210918195314836.png" alt="image-20210918195314836"></p>
-<p>首先编写controller层（UserController）</p>
-<ul>
-<li>记得控制类前要加@Restcontroller注解，就会以json形式返回前台数据</li>
-</ul>
-<pre><code class="java">package com.zz.controller;
+&#125;
+</code></pre>
+<p>注意：🧨🧨🧨🧨🧨要在主启动类下配置扫描的mapper包下所有的接口</p>
+<pre><code class="java">@MapperScan(&quot;com.zz.mybatisplus.mapper&quot;)
+</code></pre>
+<p>🎇🎇🎇🎇🎇🎇</p>
+<h2><span id="日志配置">日志配置</span></h2><p>为了查看sql语句运用情况</p>
+<pre><code class="yml">mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+</code></pre>
+<p>结果：</p>
+<p><img src="/2021/10/16/mybatisPlus/image-20211016173856822.png" alt="image-20211016173856822"></p>
+<h2><span id></span></h2><h2><span id="主键生成策略">主键生成策略</span></h2><p>雪花算法</p>
+<blockquote>
+<p>默认 ID_WORKER 全局唯一id</p>
+</blockquote>
+<pre><code class="java">
+/**
+ * &lt;p&gt;
+ * 生成ID类型枚举类
+ * &lt;/p&gt;
+ *
+ * @author hubin
+ * @since 2015-11-10
+ */
+@Getter
+public enum IdType &#123;
+    /**
+     * 数据库ID自增
+     */
+    AUTO(0),
+    /**
+     * 该类型为未设置主键类型
+     */
+    NONE(1),
+    /**
+     * 用户输入ID
+     * 该类型可以通过自己注册自动填充插件进行填充
+     */
+    INPUT(2),
 
-import com.zz.pojo.User;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.HttpMediaTypeException;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+    /* 以下3种类型、只有当插入对象ID 为空，才自动填充。 */
+    /**
+     * 全局唯一ID (idWorker)
+     */
+    ID_WORKER(3),
+    /**
+     * 全局唯一ID (UUID)
+     */
+    UUID(4),
+    /**
+     * 字符串全局唯一ID (idWorker 的字符串表示)
+     */
+    ID_WORKER_STR(5);
 
-import javax.security.auth.login.CredentialException;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+    private int key;
 
-@RestController
-public class AjaxController &#123;
-
-   
-
-    @RequestMapping(&quot;/a3&quot;)
-    public String ajax3(String name,String pwd)&#123;
-        String msg = &quot;&quot;;
-        //模拟数据库中存在数据
-        if (name!=null)&#123;
-            if (&quot;admin&quot;.equals(name))&#123;
-                msg = &quot;OK&quot;;
-            &#125;else &#123;
-                msg = &quot;用户名输入错误&quot;;
-            &#125;
-        &#125;
-        if (pwd!=null)&#123;
-            if (&quot;123456&quot;.equals(pwd))&#123;
-                msg = &quot;OK&quot;;
-            &#125;else &#123;
-                msg = &quot;密码输入有误&quot;;
-            &#125;
-        &#125;
-        return msg; //由于@RestController注解，将msg转成json格式返回
+    IdType(int key) &#123;
+        this.key = key;
     &#125;
 &#125;
 </code></pre>
-<p>然后从网上下载jquery，放在项目的web包中，然后编写login.jsp页面</p>
-<pre><code class="jsp">&lt;%@ page contentType=&quot;text/html;charset=UTF-8&quot; language=&quot;java&quot; %&gt;
-&lt;html&gt;
-&lt;head&gt;
-  &lt;title&gt;ajax&lt;/title&gt;
-  &lt;script src=&quot;$&#123;pageContext.request.contextPath&#125;/statics/js/jquery.js&quot;&gt;&lt;/script&gt;
-  &lt;script&gt;
-
-    function a1()&#123;
-      $.post(&#123;
-        url:&quot;$&#123;pageContext.request.contextPath&#125;/a3&quot;,
-        data:&#123;&#39;name&#39;:$(&quot;#name&quot;).val()&#125;,
-        success:function (data) &#123;
-          if (data.toString()==&#39;OK&#39;)&#123;
-            $(&quot;#userInfo&quot;).css(&quot;color&quot;,&quot;green&quot;);
-          &#125;else &#123;
-            $(&quot;#userInfo&quot;).css(&quot;color&quot;,&quot;red&quot;);
-          &#125;
-          $(&quot;#userInfo&quot;).html(data);
-        &#125;
-      &#125;);
-    &#125;
-    function a2()&#123;
-      $.post(&#123;
-        url:&quot;$&#123;pageContext.request.contextPath&#125;/a3&quot;,
-        data:&#123;&#39;pwd&#39;:$(&quot;#pwd&quot;).val()&#125;,
-        success:function (data) &#123;
-          if (data.toString()==&#39;OK&#39;)&#123;
-            $(&quot;#pwdInfo&quot;).css(&quot;color&quot;,&quot;green&quot;);
-          &#125;else &#123;
-            $(&quot;#pwdInfo&quot;).css(&quot;color&quot;,&quot;red&quot;);
-          &#125;
-          $(&quot;#pwdInfo&quot;).html(data);
-        &#125;
-      &#125;);
-    &#125;
-
-  &lt;/script&gt;
-&lt;/head&gt;
-&lt;body&gt;
-&lt;p&gt;
-  用户名:&lt;input type=&quot;text&quot; id=&quot;name&quot; onblur=&quot;a1()&quot;/&gt;
-  &lt;span id=&quot;userInfo&quot;&gt;&lt;/span&gt;
-&lt;/p&gt;
-&lt;p&gt;
-  密码:&lt;input type=&quot;text&quot; id=&quot;pwd&quot; onblur=&quot;a2()&quot;/&gt;
-  &lt;span id=&quot;pwdInfo&quot;&gt;&lt;/span&gt;
-&lt;/p&gt;
-&lt;/body&gt;
-&lt;/html&gt;
+<p><img src="/2021/10/16/mybatisPlus/image-20211017192539524.png" alt="image-20211017192539524"></p>
+<blockquote>
+<p>主键自增</p>
+</blockquote>
+<p>实体类字段上 </p>
+<pre><code class="java">@TableId(type = IdType.AUTO)
 </code></pre>
-<p>到现在启动服务器就可以看到啦，成功后在浏览器查看时每失去焦点时都会向后台发送请求，也是<strong>Ajax的独特之处，把主动权交给了前端。</strong></p>
-<p>放一下项目结构图吧</p>
-<p><img src="/2021/09/18/ajax%E6%80%BB%E7%BB%93/image-20210918200158409.png" alt="image-20210918200158409"></p>
+<p>数据库字段一定要是自增！</p>
+<h2><span id="更新操作"><img src="/2021/10/16/mybatisPlus/image-20211017193225402.png">更新操作</span></h2><p>参数为对象</p>
+<pre><code class="java">@Test
+    void test1()&#123;
+        User user=new User(6,&quot;gzz&quot;,89,&quot;1614399965@qq.com&quot;);
+        userMapper.updateById(user);
+    &#125;
+</code></pre>
+<h2><span id="自动填充时间">自动填充时间</span></h2><p>1.数据库管理工具设置</p>
+<p>2.代码级别设置</p>
+<blockquote>
+<p>实体类字段属性上需要增加注解</p>
+</blockquote>
+<p><img src="/2021/10/16/mybatisPlus/image-20211017200938069.png" alt="image-20211017200938069"></p>
+<p>实现自己的处理器</p>
+<pre><code class="java">@Slf4j
+@Component//把自己的处理器添加到IOC容器中
+public class My implements MetaObjectHandler &#123;
+    @Override
+    public void insertFill(MetaObject metaObject) &#123;
+
+        log.debug(&quot;=================insertFill被调用==================&quot;);
+        this.setFieldValByName(&quot;createTime&quot;,new Date(),metaObject);
+        this.setFieldValByName(&quot;updateTime&quot;,new Date(),metaObject);
+    &#125;
+
+    @Override
+    public void updateFill(MetaObject metaObject) &#123;
+        log.debug(&quot;==========updateFill被调用====================&quot;);
+        this.setFieldValByName(&quot;updateTime&quot;,new Date(),metaObject);
+    &#125;
+&#125;
+</code></pre>
+<p>结果查看：</p>
+<p><img src="/2021/10/16/mybatisPlus/image-20211017201647403.png" alt="image-20211017201647403"></p>
+<h2><span id></span></h2><h2><span id="乐观锁">乐观锁</span></h2><p>原理：</p>
+<p>  取出记录时，获取当前 version</p>
+<p> 更新时，带上这个version </p>
+<p>  执行更新时， set version = newVersion where version = oldVersion 如果version不对，就更新失败</p>
+<pre><code class="sql">乐观锁：1、先查询，获得版本号 version = 1
+-- A
+update user set name = &quot;kuangshen&quot;, version = version + 1
+where id = 2 and version = 1
+-- B 线程抢先完成，这个时候 version = 2，会导致 A 修改失败！
+update user set name = &quot;kuangshen&quot;, version = version + 1
+where id = 2 and version = 1
+</code></pre>
+<p><img src="/2021/10/16/mybatisPlus/image-20211017211514770.png" alt="image-20211017211514770"></p>
+<p>数据库增加<strong>version</strong>字段，默认为一</p>
+<p>实体类加对应的字段，增加对应的注解</p>
+<pre><code class="java">@Version//乐观锁
+private Integer version;
+</code></pre>
+<p>注册组件</p>
+<pre><code class="java">@MapperScan(&quot;com.zz.mybatisplus.mapper&quot;)
+@EnableTransactionManagement//自动管理事务
+@Configuration
+public class Myconfig &#123;
+
+    //注册乐观锁插件
+    @Bean
+     public OptimisticLockerInterceptor optimisticLockerInterceptor()&#123;
+        return new OptimisticLockerInterceptor();
+    &#125;
+&#125;
+</code></pre>
+<p>测试</p>
+<pre><code class="Java"> //测试乐观锁
+    @Test
+    void test3()&#123;
+        // 线程 1
+        User user = userMapper.selectById(1L);
+        user.setName(&quot;zz111&quot;);
+
+        // 模拟另外一个线程执行了插队操作
+        User user2 = userMapper.selectById(1L);
+        user2.setName(&quot;zz222&quot;);
+
+        userMapper.updateById(user2);
+        userMapper.updateById(user);//如果没有乐观锁就会覆盖插队线程的值
+    &#125;
+
+</code></pre>
+<p>结果可以看到名字更新最终结果为zz222</p>
+<p><img src="/2021/10/16/mybatisPlus/image-20211017212009400.png" alt="image-20211017212009400"></p>
+<h2><span id></span></h2><h2><span id="逻辑删除">逻辑删除</span></h2><p>1.</p>
+<p>数据库添加逻辑删除字段，默认为0<img src="/2021/10/16/mybatisPlus/image-20211018134702720.png" alt="image-20211018134702720"></p>
+<p>2.</p>
+<p>实体类添加注解和属性</p>
+<pre><code class="java">@TableLogic//逻辑删除
+private Integer deleted;
+</code></pre>
+<p>3.</p>
+<p><strong>配置</strong></p>
+<p>注册逻辑删除组件</p>
+<pre><code class="java">  //逻辑删除
+    @Bean
+    public ISqlInjector sqlInjector()&#123;
+        return new LogicSqlInjector();
+    &#125;
+</code></pre>
+<pre><code class="yml">mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  #逻辑删除配置
+  global-config:
+    db-config:
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+</code></pre>
+<p>体验：<img src="/2021/10/16/mybatisPlus/image-20211018134947771.png" alt="image-20211018134947771"></p>
+<p><img src="/2021/10/16/mybatisPlus/image-20211018135228638.png" alt="image-20211018135228638"></p>
+<p>可以看出实际是把deleted字段的值变为一，之后再查询的时候SQL语句会自动根据deleted=0来过滤，可以看下图</p>
+<p><img src="/2021/10/16/mybatisPlus/image-20211018135453151.png" alt="image-20211018135453151"></p>
+<h2><span id></span></h2><h2><span id="条件构造器">条件构造器</span></h2><p>实例在项目测试用例中查看</p>
 
       
     </div>
@@ -535,7 +540,7 @@ public class AjaxController &#123;
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/9/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/11/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/9/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" href="/page/11/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -603,20 +608,20 @@ public class AjaxController &#123;
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-count">42</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-count">19</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-count">36</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -673,7 +678,7 @@ public class AjaxController &#123;
 <div class="copyright">
   
   &copy; Fri Aug 20 2021 08:00:00 GMT+0800 (GMT+08:00) – 
-  <span itemprop="copyrightYear">2021</span>
+  <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -682,18 +687,18 @@ public class AjaxController &#123;
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">121k</span>
+    <span title="站点总字数">187k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:50</span>
+    <span title="站点阅读时长">2:50</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共43k字</span>
+  <span class="post-count">博客全站共70.9k字</span>
 </div>
 
     <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>

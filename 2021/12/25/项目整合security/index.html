@@ -30,8 +30,14 @@
 <meta property="og:description" content="整合securitysecurity流程核心过滤器  UsernamePasswordAuthenticationFilter:负责处理我们在登陆页面填写了用户名密码后的登陆请求。入门案例的认证工作主要由它负责。 ExceptionTranslationFilter：处理过滤器链中抛出的任何AccessDeniedException和AuthenticationException 。 Filter">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/2021/12/25/%E9%A1%B9%E7%9B%AE%E6%95%B4%E5%90%88security/image-20211214144425527-16404064926651.png">
+<meta property="og:image" content="http://example.com/2021/12/25/%E9%A1%B9%E7%9B%AE%E6%95%B4%E5%90%88security/image-20220120162733957.png">
+<meta property="og:image" content="http://example.com/2021/12/25/%E9%A1%B9%E7%9B%AE%E6%95%B4%E5%90%88security/image-20220120161410796.png">
+<meta property="og:image" content="http://example.com/2021/12/25/%E9%A1%B9%E7%9B%AE%E6%95%B4%E5%90%88security/image-20220120162121198.png">
+<meta property="og:image" content="http://example.com/2021/12/25/%E9%A1%B9%E7%9B%AE%E6%95%B4%E5%90%88security/image-20220120162046037.png">
+<meta property="og:image" content="http://example.com/2021/12/25/%E9%A1%B9%E7%9B%AE%E6%95%B4%E5%90%88security/image-20220120170457804.png">
+<meta property="og:image" content="http://example.com/2021/12/25/%E9%A1%B9%E7%9B%AE%E6%95%B4%E5%90%88security/image-20220120212933077.png">
 <meta property="article:published_time" content="2021-12-25T04:22:22.000Z">
-<meta property="article:modified_time" content="2021-12-25T04:50:08.943Z">
+<meta property="article:modified_time" content="2022-01-20T13:29:42.294Z">
 <meta property="article:author" content="Gzz">
 <meta property="article:tag" content="security">
 <meta name="twitter:card" content="summary">
@@ -225,10 +231,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-12-25 12:22:22 / 修改时间：12:50:08" itemprop="dateCreated datePublished" datetime="2021-12-25T12:22:22+08:00">2021-12-25</time>
+              <time title="创建时间：2021-12-25 12:22:22" itemprop="dateCreated datePublished" datetime="2021-12-25T12:22:22+08:00">2021-12-25</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-01-20 21:29:42" itemprop="dateModified" datetime="2022-01-20T21:29:42+08:00">2022-01-20</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -251,13 +263,13 @@
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
               </span>
-              <span>407</span>
+              <span>1.7k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
-              <span>1 分钟</span>
+              <span>2 分钟</span>
             </span>
 
         </div>
@@ -275,18 +287,71 @@
 <p><strong>ExceptionTranslationFilter：</strong>处理过滤器链中抛出的任何AccessDeniedException和AuthenticationException 。</p>
 <p><strong>FilterSecurityInterceptor：</strong>负责权限校验的过滤器。</p>
 <p>​    </p>
-<h2><span id="解决">解决</span></h2><p>登录</p>
+<h2><span id="解决面向接口开发">解决（面向接口开发）</span></h2><p>登录</p>
 <p>​    ①自定义登录接口  </p>
 <p>​                调用ProviderManager的方法进行认证 如果认证通过生成jwt</p>
 <p>​                把用户信息存入redis中</p>
 <p>​    ②自定义UserDetailsService </p>
 <p>​                在这个实现类中去查询数据库</p>
+<pre><code class="java">/**
+ * &lt;p&gt;
+ * 自定义userDetailsService - 认证用户详情
+ * &lt;/p&gt;
+ *
+ * @author qy
+ * @since 2019-11-08
+ */
+@Service(&quot;userDetailsService&quot;)
+public class UserDetailsServiceImpl implements UserDetailsService &#123;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private PermissionService permissionService;
+
+    /***
+     * 根据账号获取用户信息
+     * @param username:
+     * @return: org.springframework.security.core.userdetails.UserDetails
+     */
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException &#123;
+        // 从数据库中取出用户信息
+        User user = userService.selectByUsername(username);
+
+        // 判断用户是否存在
+        if (null == user)&#123;
+            //throw new UsernameNotFoundException(&quot;用户名不存在！&quot;);
+        &#125;
+        // 返回UserDetails实现类
+        com.atguigu.serurity.entity.User curUser = new com.atguigu.serurity.entity.User();
+        BeanUtils.copyProperties(user,curUser);
+
+        List&lt;String&gt; authorities = permissionService.selectPermissionValueByUserId(user.getId());
+        SecurityUser securityUser = new SecurityUser(curUser);
+        securityUser.setPermissionValueList(authorities);
+        return securityUser;
+    &#125;
+
+&#125;
+</code></pre>
 <p>校验：</p>
 <p>​    ①定义Jwt认证过滤器</p>
 <p>​                获取token</p>
 <p>​                解析token获取其中的userid</p>
 <p>​                从redis中获取用户信息</p>
 <p>​                存入SecurityContextHolder</p>
+<p><img src="/2021/12/25/%E9%A1%B9%E7%9B%AE%E6%95%B4%E5%90%88security/image-20220120162733957.png" alt="image-20220120162733957"></p>
+<h3><span id="具体思路">具体思路：</span></h3><p>因为系统的模块众多，每个模块都需要就进行认证与授权，所以选择基于<strong>token</strong>的形式进行认证与授权，用户根据用户名密码认证成功，然后获取当前用户角色的一系列权限值，并以<strong>用户名为key</strong>，权限列表为value的形式存入redis缓存中，根据用户名相关信息生成token返回，浏览器将token记录到cookie中，每次调用api接口都默认<strong>将token携带到header请求头中</strong>，Spring-security解析header头获取token信息，<strong>解析token获取当前用户名</strong>，根据用户名就可以从redis中获取<strong>权限列表</strong>，这样Spring-security就能够判断当前请求是否有权限访问。</p>
+<p><img src="/2021/12/25/%E9%A1%B9%E7%9B%AE%E6%95%B4%E5%90%88security/image-20220120161410796.png" alt="image-20220120161410796"></p>
+<p>获取权限部分：</p>
+<p>SercurityUser类中：</p>
+<p><img src="/2021/12/25/%E9%A1%B9%E7%9B%AE%E6%95%B4%E5%90%88security/image-20220120162121198.png" alt="image-20220120162121198"></p>
+<p><img src="/2021/12/25/%E9%A1%B9%E7%9B%AE%E6%95%B4%E5%90%88security/image-20220120162046037.png" alt="image-20220120162046037"></p>
+<p>往所需权限管理的模块中引入依赖：</p>
+<p><img src="/2021/12/25/%E9%A1%B9%E7%9B%AE%E6%95%B4%E5%90%88security/image-20220120170457804.png" alt="image-20220120170457804"></p>
+<p><img src="/2021/12/25/%E9%A1%B9%E7%9B%AE%E6%95%B4%E5%90%88security/image-20220120212933077.png" alt="image-20220120212933077"></p>
 
     </div>
 
@@ -369,7 +434,10 @@
     <a href="/2021/12/22/%E5%AE%9E%E4%B9%A0%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%95/" rel="prev" title="实习开发记录">
       <i class="fa fa-chevron-left"></i> 实习开发记录
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2021/12/29/spring/" rel="next" title="spring">
+      spring <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -428,7 +496,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">整合security</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.1.</span> <span class="nav-text">security流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.2.</span> <span class="nav-text">解决</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">整合security</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.1.</span> <span class="nav-text">security流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.2.</span> <span class="nav-text">解决（面向接口开发）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.2.1.</span> <span class="nav-text">具体思路：</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -444,20 +512,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-count">42</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-count">19</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-count">36</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -514,7 +582,7 @@
 <div class="copyright">
   
   &copy; Fri Aug 20 2021 08:00:00 GMT+0800 (GMT+08:00) – 
-  <span itemprop="copyrightYear">2021</span>
+  <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -523,18 +591,18 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">121k</span>
+    <span title="站点总字数">187k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:50</span>
+    <span title="站点阅读时长">2:50</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共43k字</span>
+  <span class="post-count">博客全站共70.9k字</span>
 </div>
 
     <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
