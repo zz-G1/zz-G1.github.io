@@ -22,16 +22,17 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="显示字符集编码  mysql架构 数据库引擎： 引擎对比：   SQL性能下降的原因 查询语句写的差。 索引失效：索引建了，但是没有用上。 关联 查询太多join（设计缺陷或者不得已的需求）。 服务器调优以及各个参数的设置（缓冲、线程数等）。  机读顺序 七种JOIN理论 &#x2F;* 1 *&#x2F; SELECT &lt;select_list&gt; FROM TableA A LEFT JOIN Tab">
+  <meta name="description" content="[TOC]  显示字符集编码  mysql架构 逻辑架构  Client :提供连接MySQL服务器功能的常用工具集 Server :MySQL实例，真正提供数据存储和数据处理功能的MySQL服务器进程 mysqld:MySQL服务器守护程序，在后台运行。它管理着客户端请求。mysqld是一个多线程的进程，允许多个会话连接，端口监听连接，管理MySQL实例 MySQL memory allocat">
 <meta property="og:type" content="article">
 <meta property="og:title" content="mysql优化">
 <meta property="og:url" content="http://example.com/2022/01/17/mysql%E4%BC%98%E5%8C%96/index.html">
 <meta property="og:site_name" content="香饽饽">
-<meta property="og:description" content="显示字符集编码  mysql架构 数据库引擎： 引擎对比：   SQL性能下降的原因 查询语句写的差。 索引失效：索引建了，但是没有用上。 关联 查询太多join（设计缺陷或者不得已的需求）。 服务器调优以及各个参数的设置（缓冲、线程数等）。  机读顺序 七种JOIN理论 &#x2F;* 1 *&#x2F; SELECT &lt;select_list&gt; FROM TableA A LEFT JOIN Tab">
+<meta property="og:description" content="[TOC]  显示字符集编码  mysql架构 逻辑架构  Client :提供连接MySQL服务器功能的常用工具集 Server :MySQL实例，真正提供数据存储和数据处理功能的MySQL服务器进程 mysqld:MySQL服务器守护程序，在后台运行。它管理着客户端请求。mysqld是一个多线程的进程，允许多个会话连接，端口监听连接，管理MySQL实例 MySQL memory allocat">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220117114857930.png">
 <meta property="og:image" content="http://example.com/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220117121933893.png">
 <meta property="og:image" content="http://example.com/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220125173346275.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190311133729340.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzMzNzQ1MTAy,size_16,color_FFFFFF,t_70">
 <meta property="og:image" content="http://example.com/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220125173524623.png">
 <meta property="og:image" content="http://example.com/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220125173746074.png">
 <meta property="og:image" content="http://example.com/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220125174645385.png">
@@ -44,18 +45,36 @@
 <meta property="og:image" content="http://example.com/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220126112731024.png">
 <meta property="og:image" content="http://example.com/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220126113400563.png">
 <meta property="og:image" content="https://camo.githubusercontent.com/585e16bba5e6911f7d81728ab9731894fd6631963a028f79d6f327d50109b42d/68747470733a2f2f696d672d626c6f672e6373646e696d672e636e2f32303230303830313233333133343933312e706e673f782d6f73732d70726f636573733d696d6167652f77617465726d61726b2c747970655f5a6d46755a33706f5a57356e6147567064476b2c736861646f775f31302c746578745f6148523063484d364c7939696247396e4c6d4e7a5a473475626d56304c314a796157356e6231383d2c73697a655f31362c636f6c6f725f4646464646462c745f3730">
-<meta property="og:image" content="https://camo.githubusercontent.com/af1e0597f62f629e8ba87d79d6297371bdc277d81764759cf5b71c828d17ae32/68747470733a2f2f696d672d626c6f672e6373646e696d672e636e2f32303230303830333133343135343136322e706e673f782d6f73732d70726f636573733d696d6167652f77617465726d61726b2c747970655f5a6d46755a33706f5a57356e6147567064476b2c736861646f775f31302c746578745f6148523063484d364c7939696247396e4c6d4e7a5a473475626d56304c314a796157356e6231383d2c73697a655f31362c636f6c6f725f4646464646462c745f3730">
-<meta property="og:image" content="https://camo.githubusercontent.com/56ce8afcc1cd7f087865200545bfa51bd816a8a17d7009ea16671b4d04816cf7/68747470733a2f2f696d672d626c6f672e6373646e696d672e636e2f32303230303830333133343534393931342e706e67">
-<meta property="og:image" content="https://camo.githubusercontent.com/28dd8243d541f134f8f809f075f1cd6874bb59572916e1ccacebcdcaaa12e5e6/68747470733a2f2f696d672d626c6f672e6373646e696d672e636e2f32303230303830333133353232383934352e706e67">
-<meta property="og:image" content="https://camo.githubusercontent.com/03db6d5572b7c3bc6751f6ca23b1adf5b7a29114c8ef267eb5e9a1f69a08f64a/68747470733a2f2f696d672d626c6f672e6373646e696d672e636e2f32303230303830333134303534323931322e706e67">
-<meta property="og:image" content="https://camo.githubusercontent.com/b376f7631bc044d648ea335946db5ab23c8d1e1e2f21b838d4589df87bd31cee/68747470733a2f2f696d672d626c6f672e6373646e696d672e636e2f32303230303830333134303935313830332e706e67">
-<meta property="og:image" content="https://camo.githubusercontent.com/d685273f061f276a50830f79a10afdc652705dd91e09678185779c28d1054efa/68747470733a2f2f696d672d626c6f672e6373646e696d672e636e2f32303230303830333134333535373138372e706e67">
-<meta property="og:image" content="https://camo.githubusercontent.com/98351261a6a2fc6afb3c2eff158568aed21b745ad15b1bb545ffb8ed838584b0/68747470733a2f2f696d672d626c6f672e6373646e696d672e636e2f32303230303830333134343432393334392e706e67">
-<meta property="og:image" content="https://camo.githubusercontent.com/a4c2cf4a2f3745f7281fa5abeb0ceeb96c68da201d0899e55eeb0478710847fb/68747470733a2f2f696d672d626c6f672e6373646e696d672e636e2f32303230303830333134353033303539372e706e67">
-<meta property="og:image" content="https://camo.githubusercontent.com/9dcd7591ba18a63cc467bb82a603bbcb1a89793f61de5de0710a6126b54bf380/68747470733a2f2f696d672d626c6f672e6373646e696d672e636e2f32303230303830333136303633313738362e706e67">
-<meta property="og:image" content="https://camo.githubusercontent.com/f9108f20d0c1b7412e1b6158bd50761dbbd264453aa7ac3e0af28189f6ffe18f/68747470733a2f2f696d672d626c6f672e6373646e696d672e636e2f32303230303830333136313031333838302e706e67">
+<meta property="og:image" content="http://example.com/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220129211613525.png">
+<meta property="og:image" content="http://example.com/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220129210757192.png">
+<meta property="og:image" content="http://example.com/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220129213500083.png">
+<meta property="og:image" content="http://example.com/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220129213519241.png">
+<meta property="og:image" content="http://example.com/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220129214319416.png">
+<meta property="og:image" content="http://example.com/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220129214725701.png">
+<meta property="og:image" content="http://example.com/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220129214743296.png">
+<meta property="og:image" content="http://example.com/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220129215115964.png">
+<meta property="og:image" content="http://example.com/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220129215318710.png">
+<meta property="og:image" content="http://example.com/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220129215436042.png">
+<meta property="og:image" content="http://example.com/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220129215703969.png">
+<meta property="og:image" content="http://example.com/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220130195042549.png">
+<meta property="og:image" content="http://example.com/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220130195317676.png">
+<meta property="og:image" content="http://example.com/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220130202619301.png">
+<meta property="og:image" content="http://example.com/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220130203429755.png">
+<meta property="og:image" content="http://example.com/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220130203719338.png">
+<meta property="og:image" content="http://example.com/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220130203842786.png">
+<meta property="og:image" content="http://example.com/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220130203749391.png">
+<meta property="og:image" content="http://example.com/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220130205238614.png">
+<meta property="og:image" content="http://example.com/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220130222810515.png">
+<meta property="og:image" content="http://example.com/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220130223926414.png">
+<meta property="og:image" content="http://example.com/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220130224127150.png">
+<meta property="og:image" content="http://example.com/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220130224520085.png">
+<meta property="og:image" content="http://example.com/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220130224447994.png">
+<meta property="og:image" content="http://example.com/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220130224928257.png">
+<meta property="og:image" content="http://example.com/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220130225213417.png">
+<meta property="og:image" content="http://example.com/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220130225125971.png">
+<meta property="og:image" content="http://example.com/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220130225352233.png">
 <meta property="article:published_time" content="2022-01-17T03:04:24.000Z">
-<meta property="article:modified_time" content="2022-01-29T09:54:03.252Z">
+<meta property="article:modified_time" content="2022-02-01T02:58:58.936Z">
 <meta property="article:author" content="Gzz">
 <meta property="article:tag" content="优化">
 <meta name="twitter:card" content="summary">
@@ -257,7 +276,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-01-29 17:54:03" itemprop="dateModified" datetime="2022-01-29T17:54:03+08:00">2022-01-29</time>
+                <time title="修改时间：2022-02-01 10:58:58" itemprop="dateModified" datetime="2022-02-01T10:58:58+08:00">2022-02-01</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -299,11 +318,25 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220117114857930.png" alt="image-20220117114857930"></p>
+        <p>[TOC]</p>
+<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220117114857930.png" alt="image-20220117114857930"></p>
 <p>显示字符集编码</p>
 <p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220117121933893.png" alt="image-20220117121933893"></p>
-<h2><span id="mysql架构">mysql架构</span></h2><p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220125173346275.png" alt="image-20220125173346275"></p>
-<h3><span id="数据库引擎">数据库引擎：</span></h3><p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220125173524623.png" alt="image-20220125173524623"></p>
+<h1><span id="mysql架构">mysql架构</span></h1><p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220125173346275.png" alt="image-20220125173346275"></p>
+<h2><span id="逻辑架构">逻辑架构</span></h2><p><img src="https://img-blog.csdnimg.cn/20190311133729340.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzMzNzQ1MTAy,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<ul>
+<li><strong>Client :</strong><br>提供连接MySQL服务器功能的常用工具集</li>
+<li><strong>Server :</strong><br>MySQL实例，真正提供数据存储和数据处理功能的MySQL服务器进程</li>
+<li><strong>mysqld:</strong><br>MySQL服务器守护程序，在后台运行。它管理着客户端请求。mysqld是一个多线程的进程，允许多个会话连接，端口监听连接，管理MySQL实例</li>
+<li><strong>MySQL memory allocation:</strong><br>MySQL的要求的内存空间是动态的，比如 <code>innodb_buffer_pool_size (from 5.7.5), key_buffer_size</code>。每个会话都有独一无二的执行计划，我们只能共享同一会话域内的数据集。</li>
+<li><strong>SESSION</strong><br>为每个客户端连接分配一个会话，动态分配和回收。用于查询处理，每个会话同时具备一个缓冲区。每个会话是作为一个线程执行的</li>
+<li><strong>Parser</strong><br>检测SQL语句语法，为每条SQL语句生成<code>SQL_ID</code>，用户认证也发生在这个阶段</li>
+<li><strong>Optimizer</strong><br>创造一个有效率的执行计划（根据具体的存储引擎）。它将会重写查询语句。比如：InnoDB有共享缓冲区，所以，优化器会首先从预先缓存的数据中提取。使用 table statistics optimizer将会为SQL查询生成一个执行计划。用户权限检查也发生在这个阶段。</li>
+<li><strong>Metadata cache</strong><br>缓存对象元信息和统计信息</li>
+<li><strong>Query cache</strong><br>共享在内存中的完全一样的查询语句。如果完全相同的查询在缓存命中，MySQL服务器会直接从缓存中去检索结果。缓存是会话间共享的，所以为一个客户生成的结果集也能为另一个客户所用。查询缓存基于<code>SQL_ID</code>。将SELECT语句写入视图就是查询缓存最好的例子。</li>
+<li><strong>key cache</strong><br>缓存表索引。<code>MySQL keys</code>是索引。如果索引数据量小，它将缓存索引结构和叶子节点（存储索引数据）。如果索引很大，它只会缓存索引结构，通常供<strong>MyISAM存储引擎</strong>使用</li>
+</ul>
+<h2><span id="数据库引擎">数据库引擎：</span></h2><p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220125173524623.png" alt="image-20220125173524623"></p>
 <p>引擎对比：</p>
 <p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220125173746074.png" alt="image-20220125173746074"></p>
 <p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220125174645385.png" alt="image-20220125174645385"></p>
@@ -356,7 +389,7 @@ SELECT &lt;select_list&gt; FROM TableA A RIGHT JOIN TableB B ON A.Key = B.Key WH
 <p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220126112731024.png" alt="image-20220126112731024"></p>
 <p>返回所有记录</p>
 <p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220126113400563.png" alt="image-20220126113400563"></p>
-<h2><span id></span></h2><h2><span id="索引">索引</span></h2><p>索引的本质：<strong>索引是排好序的快速查找数据结构。</strong></p>
+<h2><span id></span></h2><h1><span id="索引">索引</span></h1><p>索引的本质：<strong>索引是排好序的快速查找数据结构。</strong></p>
 <p><strong>重点：索引会影响到MySQL查找(WHERE的查询条件)和排序(ORDER BY)两大功能！</strong></p>
 <p><strong>除了数据本身之外，数据库还维护着一个满足特定查找算法的数据结构，这些数据结构以某种方式指向数据，这样就可以在这些数据结构的基础上实现高级查找算法，这种数据结构就是索引。</strong></p>
 <p>一般来说，索引本身也很大，不可能全部存储在内存中，因此索引往往以索引文件的形式存储在磁盘上</p>
@@ -487,12 +520,20 @@ No query specified
 </blockquote>
 <p><code>select_type</code>：数据查询的类型，主要是用于区别，普通查询、联合查询、子查询等的复杂查询。</p>
 <ul>
-<li><code>SIMPLE</code>：简单的<code>SELECT</code>查询，查询中不包含子查询或者<code>UNION </code>。</li>
-<li><code>PRIMARY</code>：查询中如果包含任何复杂的子部分，最外层查询则被标记为<code>PRIMARY</code>。</li>
-<li><code>SUBQUERY</code>：在<code>SELECT</code>或者<code>WHERE</code>子句中包含了子查询。</li>
-<li><code>DERIVED</code>：在<code>FROM</code>子句中包含的子查询被标记为<code>DERIVED(衍生)</code>，MySQL会递归执行这些子查询，把结果放在临时表中。</li>
-<li><code>UNION</code>：如果第二个<code>SELECT</code>出现在<code>UNION</code>之后，则被标记为<code>UNION</code>；若<code>UNION</code>包含在<code>FROM</code>子句的子查询中，外层<code>SELECT</code>将被标记为<code>DERIVED</code>。</li>
-<li><code>UNION RESULT</code>：从<code>UNION</code>表获取结果的<code>SELECT</code>。</li>
+<li><p><code>SIMPLE</code>：简单的<code>SELECT</code>查询，查询中不包含子查询或者<code>UNION </code>。</p>
+</li>
+<li><p><code>PRIMARY</code>：查询中如果包含任何复杂的子部分，最外层查询则被标记为<code>PRIMARY</code>。</p>
+</li>
+<li><p><code>SUBQUERY</code>：在<code>SELECT</code>或者<code>WHERE</code>子句中包含了子查询。</p>
+</li>
+<li><p><code>DERIVED</code>：在<code>FROM</code>子句中包含的子查询被标记为<code>DERIVED(衍生)</code>，MySQL会递归执行这些子查询，把结果放在临时表中。</p>
+</li>
+<li><p><code>UNION</code>：如果第二个<code>SELECT</code>出现在<code>UNION</code>之后，则被标记为<code>UNION</code>；若<code>UNION</code>包含在<code>FROM</code>子句的子查询中，外层<code>SELECT</code>将被标记为<code>DERIVED</code>。</p>
+</li>
+<li><p><code>UNION RESULT</code>：从<code>UNION</code>表获取结果的<code>SELECT</code>。</p>
+<p><strong>eg:</strong></p>
+<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220129211613525.png" alt="image-20220129211613525"></p>
+</li>
 </ul>
 <blockquote>
 <p>type</p>
@@ -519,7 +560,7 @@ No query specified
 </blockquote>
 <p><code>key_len</code>：表示索引中使用的字节数，可通过该列计算查询中使用的索引的长度。<code>key_len</code>显示的值为索引字段的最大可能长度，并非实际使用长度，即<code>key_len</code>是根据表定义计算而得，不是通过表内检索出的。在不损失精度的情况下，长度越短越好。</p>
 <p><code>key_len</code>计算规则：<strong><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_34930488/article/details/102931490">https://blog.csdn.net/qq_34930488/article/details/102931490</a></strong></p>
-<pre><code class="sql">mysql&gt; desc pms_category;
+<pre><code class="sql">mysql&gt; desc category;
 +---------------+------------+------+-----+---------+----------------+
 | Field         | Type       | Null | Key | Default | Extra          |
 +---------------+------------+------+-----+---------+----------------+
@@ -536,11 +577,11 @@ No query specified
 9 rows in set (0.00 sec)
 
 
-mysql&gt; explain select cat_id from pms_category where cat_id between 10 and 20 \G;
+mysql&gt; explain select cat_id from category where cat_id between 10 and 20 \G;
 *************************** 1. row ***************************
            id: 1
   select_type: SIMPLE
-        table: pms_category
+        table: category
    partitions: NULL
          type: range
 possible_keys: PRIMARY
@@ -568,11 +609,11 @@ possible_keys: PRIMARY
 <li><code>Using filesort</code>：说明MySQL会对数据使用一个外部的索引排序，而不是按照表内的索引顺序进行读取。<strong>MySQL中无法利用索引完成的排序操作成为”文件内排序”。</strong></li>
 </ul>
 <pre><code class="sql"># 排序没有使用索引
-mysql&gt; explain select name from pms_category where name=&#39;Tangs&#39; order by cat_level \G
+mysql&gt; explain select name from category where name=&#39;Tangs&#39; order by cat_level \G
 *************************** 1. row ***************************
            id: 1
   select_type: SIMPLE
-        table: pms_category
+        table: category
    partitions: NULL
          type: ref
 possible_keys: idx_name_parentCid_catLevel
@@ -587,11 +628,11 @@ possible_keys: idx_name_parentCid_catLevel
 #~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
 # 排序使用到了索引
 
-mysql&gt; explain select name from pms_category where name=&#39;Tangs&#39; order by parent_cid,cat_level\G
+mysql&gt; explain select name from category where name=&#39;zz&#39; order by parent_cid,cat_level\G
 *************************** 1. row ***************************
            id: 1
   select_type: SIMPLE
-        table: pms_category
+        table: category
    partitions: NULL
          type: ref
 possible_keys: idx_name_parentCid_catLevel
@@ -610,11 +651,11 @@ possible_keys: idx_name_parentCid_catLevel
 <pre><code class="sql"># 覆盖索引
 # 就是select的数据列只用从索引中就能够取得，不必从数据表中读取，换句话说查询列要被所使用的索引覆盖。
 # 注意：如果要使用覆盖索引，一定不能写SELECT *，要写出具体的字段。
-mysql&gt; explain select cat_id from pms_category \G;
+mysql&gt; explain select cat_id from category \G;
 *************************** 1. row ***************************
            id: 1
   select_type: SIMPLE
-        table: pms_category
+        table: category
    partitions: NULL
          type: index
 possible_keys: NULL       
@@ -631,7 +672,7 @@ possible_keys: NULL
 <li><code>Using join buffer</code>：使用了连接缓存。</li>
 <li><code>impossible where</code>：<code>WHERE</code>子句的值总是false，不能用来获取任何元组。</li>
 </ul>
-<pre><code class="sql">mysql&gt; explain select name from pms_category where name = &#39;zs&#39; and name = &#39;ls&#39;\G
+<pre><code class="sql">mysql&gt; explain select name from staffs where name = &#39;zz&#39; and name = &#39;cc&#39;\G
 *************************** 1. row ***************************
            id: 1
   select_type: SIMPLE
@@ -647,32 +688,22 @@ possible_keys: NULL
         Extra: Impossible WHERE   # 不可能字段同时查到两个名字
 1 row in set, 1 warning (0.00 sec)
 </code></pre>
-<h1><span id="9索引分析">9.索引分析</span></h1><h2><span id="91单表索引分析">9.1.单表索引分析</span></h2><blockquote>
+<h2><span id="mysql中explain的extra字段值using-index和using-whereusing-index和using-where以及using-index-condition的区别">MySQL中Explain的Extra字段值Using index和Using where；Using index和Using where以及Using index condition的区别</span></h2><p> 在分别介绍以上四个值之前，我们需要知道，MySQL的架构分成了server层和存储引擎层（storage engine），server层通过调用存储引擎层来返回数据。       </p>
+<p>其中Using index表示查询的列被索引覆盖，因而无需再回表（如果你不知道啥叫回表，请参见第3篇博客）查询，因而效率较高。例如：select id from test where id = 5;其中id为主键。</p>
+<p>​    Using where;Using index表示查询的列被索引覆盖，且where筛选条件是索引列前导列的一个范围，或者是索引列的非前导列，例如：select id from test where id &gt; 5;。很明显，效率也很高。</p>
+<p>​    Using where表示查询的列未被索引覆盖，且where筛选条件是索引列前导列的一个范围，或者是索引列的非前导列，或者是非索引列，例如：select * from test where id &gt; 30; 。因为未被索引覆盖，所以需要回表，因而性能比前两者差。</p>
+<p>​    Extra为null表示查询的列未被索引覆盖，且where筛选条件是索引的前导列，这意味着用到了索引，但是部分字段未被索引覆盖，必须通过“回表”来实现，因而性能也比前两者差。</p>
+<p>​    Using index condition是MySQL 5.6中引入的一种新特性，叫做Index Condition Pushdown(ICP)，是一种在存储引擎层使用索引过滤数据的一种优化方式。这里的“下推” 是指将原来在server层进行的table filter中可以进行index filter的部分，在引擎层面使用index filter进行处理，不再需要回表进行table filter。使用ICP可以减少存储引擎层返回需要被index filter过滤掉的行记录，省去了存储引擎访问基表的次数以及MySQL服务器访问存储引擎的次数。Using index condition仅适用于二级索引，原因是ICP的目的是减少全行读取的次数，从而减少IO操作。而对于innodb聚集索引，完整的记录已被读入到innodb缓冲区，在这种情况下，ICP不会减少io，所以ICP只适用于二级索引，一般发生在查询字段无法被二级索引覆盖的场景，该场景下往往需要回表。通过ICP，可以减少存储引擎返回的行记录，从而减少了IO操作</p>
+<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220129210757192.png" alt="image-20220129210757192"></p>
+<h1><span id="索引分析">索引分析</span></h1><h2><span id="单表索引分析">单表索引分析</span></h2><blockquote>
 <p>数据准备</p>
 </blockquote>
-<pre><code>DROP TABLE IF EXISTS `article`;
-
-CREATE TABLE IF NOT EXISTS `article`(
-`id` INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT &#39;主键&#39;,
-`author_id` INT(10) UNSIGNED NOT NULL COMMENT &#39;作者id&#39;,
-`category_id` INT(10) UNSIGNED NOT NULL COMMENT &#39;分类id&#39;,
-`views` INT(10) UNSIGNED NOT NULL COMMENT &#39;被查看的次数&#39;,
-`comments` INT(10) UNSIGNED NOT NULL COMMENT &#39;回帖的备注&#39;,
-`title` VARCHAR(255) NOT NULL COMMENT &#39;标题&#39;,
-`content` VARCHAR(255) NOT NULL COMMENT &#39;正文内容&#39;
-) COMMENT &#39;文章&#39;;
-
-INSERT INTO `article`(`author_id`, `category_id`, `views`, `comments`, `title`, `content`) VALUES(1,1,1,1,&#39;1&#39;,&#39;1&#39;);
-INSERT INTO `article`(`author_id`, `category_id`, `views`, `comments`, `title`, `content`) VALUES(2,2,2,2,&#39;2&#39;,&#39;2&#39;);
-INSERT INTO `article`(`author_id`, `category_id`, `views`, `comments`, `title`, `content`) VALUES(3,3,3,3,&#39;3&#39;,&#39;3&#39;);
-INSERT INTO `article`(`author_id`, `category_id`, `views`, `comments`, `title`, `content`) VALUES(1,1,3,3,&#39;3&#39;,&#39;3&#39;);
-INSERT INTO `article`(`author_id`, `category_id`, `views`, `comments`, `title`, `content`) VALUES(1,1,4,4,&#39;4&#39;,&#39;4&#39;);
+<pre><code>
 </code></pre>
 <blockquote>
 <p>案例：查询<code>category_id</code>为1且<code>comments</code>大于1的情况下，<code>views</code>最多的<code>article_id</code>。</p>
 </blockquote>
-<p>1、编写SQL语句并查看SQL执行计划。</p>
-<pre><code># 1、sql语句
+<pre><code class="sql"># 1、sql语句
 SELECT id,author_id FROM article WHERE category_id = 1 AND comments &gt; 1 ORDER BY views DESC LIMIT 1;
 
 # 2、sql执行计划
@@ -682,7 +713,7 @@ mysql&gt; EXPLAIN SELECT id,author_id FROM article WHERE category_id = 1 AND com
   select_type: SIMPLE
         table: article
    partitions: NULL
-         type: ALL
+         type: ALL  #最坏的情况
 possible_keys: NULL
           key: NULL
       key_len: NULL
@@ -693,65 +724,57 @@ possible_keys: NULL
 1 row in set, 1 warning (0.00 sec)
 </code></pre>
 <p>2、创建索引<code>idx_article_ccv</code>。</p>
-<pre><code>CREATE INDEX idx_article_ccv ON article(category_id,comments,views);
+<pre><code class="sql">CREATE INDEX idx_article_ccv ON article(category_id,comments,views);
 </code></pre>
 <p>3、查看当前索引。</p>
-<p><a target="_blank" rel="noopener" href="https://camo.githubusercontent.com/af1e0597f62f629e8ba87d79d6297371bdc277d81764759cf5b71c828d17ae32/68747470733a2f2f696d672d626c6f672e6373646e696d672e636e2f32303230303830333133343135343136322e706e673f782d6f73732d70726f636573733d696d6167652f77617465726d61726b2c747970655f5a6d46755a33706f5a57356e6147567064476b2c736861646f775f31302c746578745f6148523063484d364c7939696247396e4c6d4e7a5a473475626d56304c314a796157356e6231383d2c73697a655f31362c636f6c6f725f4646464646462c745f3730"><img src="https://camo.githubusercontent.com/af1e0597f62f629e8ba87d79d6297371bdc277d81764759cf5b71c828d17ae32/68747470733a2f2f696d672d626c6f672e6373646e696d672e636e2f32303230303830333133343135343136322e706e673f782d6f73732d70726f636573733d696d6167652f77617465726d61726b2c747970655f5a6d46755a33706f5a57356e6147567064476b2c736861646f775f31302c746578745f6148523063484d364c7939696247396e4c6d4e7a5a473475626d56304c314a796157356e6231383d2c73697a655f31362c636f6c6f725f4646464646462c745f3730" alt="show index"></a></p>
+<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220129213500083.png" alt="image-20220129213500083"></p>
 <p>4、查看现在SQL语句的执行计划。</p>
-<p><a target="_blank" rel="noopener" href="https://camo.githubusercontent.com/56ce8afcc1cd7f087865200545bfa51bd816a8a17d7009ea16671b4d04816cf7/68747470733a2f2f696d672d626c6f672e6373646e696d672e636e2f32303230303830333133343534393931342e706e67"><img src="https://camo.githubusercontent.com/56ce8afcc1cd7f087865200545bfa51bd816a8a17d7009ea16671b4d04816cf7/68747470733a2f2f696d672d626c6f672e6373646e696d672e636e2f32303230303830333133343534393931342e706e67" alt="explain"></a></p>
-<p>我们发现，创建符合索引<code>idx_article_ccv</code>之后，虽然解决了全表扫描的问题，但是在<code>order by</code>排序的时候没有用到索引，MySQL居然还是用的<code>Using filesort</code>，为什么？</p>
+<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220129213519241.png" alt="image-20220129213519241"></p>
+<p>发现创建符合索引<code>idx_article_ccv</code>之后，虽然解决了全表扫描的问题，但是在<code>order by</code>排序的时候没有用到索引，MySQL居然还是用的**<code>Using filesort</code>**</p>
 <p>5、我们试试把SQL修改为<code>SELECT id,author_id FROM article WHERE category_id = 1 AND comments = 1 ORDER BY views DESC LIMIT 1;</code>看看SQL的执行计划。</p>
-<p><a target="_blank" rel="noopener" href="https://camo.githubusercontent.com/28dd8243d541f134f8f809f075f1cd6874bb59572916e1ccacebcdcaaa12e5e6/68747470733a2f2f696d672d626c6f672e6373646e696d672e636e2f32303230303830333133353232383934352e706e67"><img src="https://camo.githubusercontent.com/28dd8243d541f134f8f809f075f1cd6874bb59572916e1ccacebcdcaaa12e5e6/68747470733a2f2f696d672d626c6f672e6373646e696d672e636e2f32303230303830333133353232383934352e706e67" alt="explain"></a></p>
-<p>推论：当<code>comments &gt; 1</code>的时候<code>order by</code>排序<code>views</code>字段索引就用不上，但是当<code>comments = 1</code>的时候<code>order by</code>排序<code>views</code>字段索引就可以用上！！！<strong>所以，范围之后的索引会失效。</strong></p>
+<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220129214319416.png" alt="image-20220129214319416"></p>
+<p>推论：当<code>comments &gt; 1</code>的时候<code>order by</code>排序<code>views</code>字段索引就用不上，但是当<code>comments = 1</code>的时候<code>order by</code>排序<code>views</code>字段索引就可以用上！！！</p>
+<p><strong>所以，范围值使索引失效。</strong></p>
 <p>6、我们现在知道<strong>范围之后的索引会失效</strong>，原来的索引<code>idx_article_ccv</code>最后一个字段<code>views</code>会失效，那么我们如果删除这个索引，创建<code>idx_article_cv</code>索引呢？？？？</p>
-<pre><code>/* 创建索引 idx_article_cv */
+<pre><code class="sql">/* 创建索引 idx_article_cv */
 CREATE INDEX idx_article_cv ON article(category_id,views);
 </code></pre>
 <p>查看当前的索引</p>
-<p><a target="_blank" rel="noopener" href="https://camo.githubusercontent.com/03db6d5572b7c3bc6751f6ca23b1adf5b7a29114c8ef267eb5e9a1f69a08f64a/68747470733a2f2f696d672d626c6f672e6373646e696d672e636e2f32303230303830333134303534323931322e706e67"><img src="https://camo.githubusercontent.com/03db6d5572b7c3bc6751f6ca23b1adf5b7a29114c8ef267eb5e9a1f69a08f64a/68747470733a2f2f696d672d626c6f672e6373646e696d672e636e2f32303230303830333134303534323931322e706e67" alt="show index"></a></p>
+<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220129214725701.png" alt="image-20220129214725701"></p>
 <p>7、当前索引是<code>idx_article_cv</code>，来看一下SQL执行计划。</p>
-<p><a target="_blank" rel="noopener" href="https://camo.githubusercontent.com/b376f7631bc044d648ea335946db5ab23c8d1e1e2f21b838d4589df87bd31cee/68747470733a2f2f696d672d626c6f672e6373646e696d672e636e2f32303230303830333134303935313830332e706e67"><img src="https://camo.githubusercontent.com/b376f7631bc044d648ea335946db5ab23c8d1e1e2f21b838d4589df87bd31cee/68747470733a2f2f696d672d626c6f672e6373646e696d672e636e2f32303230303830333134303935313830332e706e67" alt="explain"></a></p>
-<h2><span id="92两表索引分析">9.2.两表索引分析</span></h2><blockquote>
+<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220129214743296.png" alt="image-20220129214743296"></p>
+<p>成功了</p>
+<h2><span id="两表索引分析">两表索引分析</span></h2><blockquote>
 <p>数据准备</p>
+<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220129215115964.png" alt="image-20220129215115964"></p>
 </blockquote>
-<pre><code>DROP TABLE IF EXISTS `class`;
-DROP TABLE IF EXISTS `book`;
-
-CREATE TABLE IF NOT EXISTS `class`(
-`id` INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT &#39;主键&#39;,
-`card` INT(10) UNSIGNED NOT NULL COMMENT &#39;分类&#39; 
-) COMMENT &#39;商品类别&#39;;
-
-CREATE TABLE IF NOT EXISTS `book`(
-`bookid` INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT &#39;主键&#39;,
-`card` INT(10) UNSIGNED NOT NULL COMMENT &#39;分类&#39;
-) COMMENT &#39;书籍&#39;;
+<pre><code>
 </code></pre>
 <blockquote>
 <p>两表连接查询的SQL执行计划</p>
 </blockquote>
 <p>1、不创建索引的情况下，SQL的执行计划。</p>
-<p><a target="_blank" rel="noopener" href="https://camo.githubusercontent.com/d685273f061f276a50830f79a10afdc652705dd91e09678185779c28d1054efa/68747470733a2f2f696d672d626c6f672e6373646e696d672e636e2f32303230303830333134333535373138372e706e67"><img src="https://camo.githubusercontent.com/d685273f061f276a50830f79a10afdc652705dd91e09678185779c28d1054efa/68747470733a2f2f696d672d626c6f672e6373646e696d672e636e2f32303230303830333134333535373138372e706e67" alt="explain"></a></p>
-<p><code>book</code>和<code>class</code>两张表都是没有使用索引，全表扫描，那么如果进行优化，索引是创建在<code>book</code>表还是创建在<code>class</code>表呢？下面进行大胆的尝试！</p>
+<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220129215318710.png" alt="image-20220129215318710"></p>
+<p><code>book</code>和<code>class</code>两张表都是没有使用索引，全表扫描，那么如果进行优化，索引是创建在<code>book</code>表还是创建在<code>class</code>表</p>
 <p>2、左表(<code>book</code>表)创建索引。</p>
 <p>创建索引<code>idx_book_card</code></p>
-<pre><code>/* 在book表创建索引 */
+<pre><code class="sql">/* 在book表创建索引 */
 CREATE INDEX idx_book_card ON book(card);
 </code></pre>
 <p>在<code>book</code>表中有<code>idx_book_card</code>索引的情况下，查看SQL执行计划</p>
-<p><a target="_blank" rel="noopener" href="https://camo.githubusercontent.com/98351261a6a2fc6afb3c2eff158568aed21b745ad15b1bb545ffb8ed838584b0/68747470733a2f2f696d672d626c6f672e6373646e696d672e636e2f32303230303830333134343432393334392e706e67"><img src="https://camo.githubusercontent.com/98351261a6a2fc6afb3c2eff158568aed21b745ad15b1bb545ffb8ed838584b0/68747470733a2f2f696d672d626c6f672e6373646e696d672e636e2f32303230303830333134343432393334392e706e67" alt="explain"></a></p>
+<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220129215436042.png" alt="image-20220129215436042"></p>
 <p>3、删除<code>book</code>表的索引，右表(<code>class</code>表)创建索引。</p>
 <p>创建索引<code>idx_class_card</code></p>
-<pre><code>/* 在class表创建索引 */
+<pre><code class="sql">/* 在class表创建索引 */
 CREATE INDEX idx_class_card ON class(card);
 </code></pre>
 <p>在<code>class</code>表中有<code>idx_class_card</code>索引的情况下，查看SQL执行计划</p>
-<p><a target="_blank" rel="noopener" href="https://camo.githubusercontent.com/a4c2cf4a2f3745f7281fa5abeb0ceeb96c68da201d0899e55eeb0478710847fb/68747470733a2f2f696d672d626c6f672e6373646e696d672e636e2f32303230303830333134353033303539372e706e67"><img src="https://camo.githubusercontent.com/a4c2cf4a2f3745f7281fa5abeb0ceeb96c68da201d0899e55eeb0478710847fb/68747470733a2f2f696d672d626c6f672e6373646e696d672e636e2f32303230303830333134353033303539372e706e67" alt="explain"></a></p>
+<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220129215703969.png" alt="image-20220129215703969"></p>
 <p><strong>由此可见，左连接将索引创建在右表上更合适，右连接将索引创建在左表上更合适。</strong></p>
-<h2><span id="93三张表索引分析">9.3.三张表索引分析</span></h2><blockquote>
+<h2><span id="三张表索引分析">三张表索引分析</span></h2><blockquote>
 <p>数据准备</p>
 </blockquote>
-<pre><code>DROP TABLE IF EXISTS `phone`;
+<pre><code class="sql">DROP TABLE IF EXISTS `phone`;
 
 CREATE TABLE IF NOT EXISTS `phone`(
 `phone_id` INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT &#39;主键&#39;,
@@ -762,23 +785,75 @@ CREATE TABLE IF NOT EXISTS `phone`(
 <p>三表连接查询SQL优化</p>
 </blockquote>
 <p>1、不加任何索引，查看SQL执行计划。</p>
-<p><a target="_blank" rel="noopener" href="https://camo.githubusercontent.com/9dcd7591ba18a63cc467bb82a603bbcb1a89793f61de5de0710a6126b54bf380/68747470733a2f2f696d672d626c6f672e6373646e696d672e636e2f32303230303830333136303633313738362e706e67"><img src="https://camo.githubusercontent.com/9dcd7591ba18a63cc467bb82a603bbcb1a89793f61de5de0710a6126b54bf380/68747470733a2f2f696d672d626c6f672e6373646e696d672e636e2f32303230303830333136303633313738362e706e67" alt="explain"></a></p>
+<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220130195042549.png" alt="image-20220130195042549"></p>
 <p>2、根据两表查询优化的经验，左连接需要在右表上添加索引，所以尝试在<code>book</code>表和<code>phone</code>表上添加索引。</p>
-<pre><code>/* 在book表创建索引 */
+<pre><code class="sql">/* 在book表创建索引 */
 CREATE INDEX idx_book_card ON book(card);
 
 /* 在phone表上创建索引 */
 CREATE INDEX idx_phone_card ON phone(card);
 </code></pre>
 <p>再次执行SQL的执行计划</p>
-<p><a target="_blank" rel="noopener" href="https://camo.githubusercontent.com/f9108f20d0c1b7412e1b6158bd50761dbbd264453aa7ac3e0af28189f6ffe18f/68747470733a2f2f696d672d626c6f672e6373646e696d672e636e2f32303230303830333136313031333838302e706e67"><img src="https://camo.githubusercontent.com/f9108f20d0c1b7412e1b6158bd50761dbbd264453aa7ac3e0af28189f6ffe18f/68747470733a2f2f696d672d626c6f672e6373646e696d672e636e2f32303230303830333136313031333838302e706e67" alt="explain"></a></p>
-<h2><span id="94结论">9.4.结论</span></h2><p><code>JOIN</code>语句的优化：</p>
+<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220130195317676.png" alt="image-20220130195317676"></p>
+<h2><span id="结论">结论</span></h2><p><code>JOIN</code>语句的优化：</p>
 <ul>
 <li>尽可能减少<code>JOIN</code>语句中的<code>NestedLoop</code>（嵌套循环）的总次数：<strong>永远都是小的结果集驱动大的结果集</strong>。</li>
 <li>优先优化<code>NestedLoop</code>的内层循环。</li>
 <li>保证<code>JOIN</code>语句中被驱动表上<code>JOIN</code>条件字段已经被索引。</li>
 <li>当无法保证被驱动表的<code>JOIN</code>条件字段被索引且内存资源充足的前提下，不要太吝惜<code>Join Buffer</code> 的设置。</li>
 </ul>
+<h1><span id="索引失效">索引失效</span></h1><p>建表：</p>
+<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220130202619301.png" alt="image-20220130202619301"></p>
+<p>建立索引 </p>
+<pre><code class="sql">ALTER TABLE staffs ADD INDEX index_staffs_nameAgePos(`name`,`age`,`pos`);
+</code></pre>
+<p>查看效果</p>
+<p>三条查询语句</p>
+<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220130203429755.png" alt="image-20220130203429755"></p>
+<p>只有长度在变化，其他都是好的</p>
+<h2><span id="索引失效应该避免"><strong>索引失效（应该避免）</strong></span></h2><h3><span id="从左开始且不跳列才不会失效"><strong>从左开始且不跳列才不会失效</strong></span></h3><ul>
+<li>最佳左前缀法则 - 如果索引了多列，要遵守最左前缀法则。指的是查询从索引的<strong>最左前列开始并且不跳过复合索引中间列</strong>。</li>
+</ul>
+<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220130203719338.png" alt="image-20220130203719338"></p>
+<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220130203842786.png" alt="image-20220130203842786"></p>
+<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220130203749391.png" alt="image-20220130203749391"></p>
+<p>key_len不对，索引失效，不符合最佳左前缀</p>
+<h3><span id="索引列上不做额外操作才不会失效">索引列上不做额外操作才不会失效</span></h3><p>不在索引列上做任何操作（计算、函数、（自动or手动）类型转换），会导致索引失效而转向全表扫描。</p>
+<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220130205238614.png" alt="image-20220130205238614"></p>
+<h3><span id="少用gtltbetweenand等结构">少用&gt;，&lt;，between…and等结构</span></h3><ul>
+<li>存储引擎不能使用索引中<code>范围条件右边的列</code>。（就是&gt;，&lt;，between…and）</li>
+</ul>
+<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220130222810515.png" alt="image-20220130222810515"></p>
+<h3><span id="减少select">减少select *</span></h3><ul>
+<li>尽量使用覆盖索引（只访问索引的查询（索引列和查询列一致））<br>区别在于extra，索引的不同，速度不一样</li>
+</ul>
+<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220130223926414.png" alt="image-20220130223926414"></p>
+<h3><span id="不用-is-null-is-not-null">不用 is null, is not null</span></h3><ul>
+<li>is null, is not null 也无法使用索引。</li>
+</ul>
+<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220130224127150.png" alt="image-20220130224127150"></p>
+<h3><span id="模糊查询">模糊查询</span></h3><ul>
+<li>like以通配符开头（’%abc…’），mysql索引失效会变成全表扫描的操作。</li>
+<li><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220130224520085.png" alt="image-20220130224520085"></li>
+</ul>
+<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220130224447994.png" alt="image-20220130224447994"></p>
+<p>只有xx%前缀查询才不会失效</p>
+<p>解决方法：</p>
+<p>把*替换为索引的字段值（id可以不加索引）</p>
+<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220130224928257.png" alt="image-20220130224928257"></p>
+<h3><span id="类型要正确">类型要正确</span></h3><p>即使类型不正确也可以查询，但是底层会帮你转换类型，在判断，但会浪费时间，索引直接失效，变成了全表查询</p>
+<ul>
+<li><p>字符串不加单引号索引失效。</p>
+</li>
+<li><p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220130225213417.png" alt="image-20220130225213417"></p>
+<p>把*替换为字段值会好些</p>
+</li>
+</ul>
+<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220130225125971.png" alt="image-20220130225125971"></p>
+<h3><span id="不用or关键字就不会失效">不用or关键字就不会失效</span></h3><ul>
+<li>少用or，用它来连接时会索引失效。</li>
+</ul>
+<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220130225352233.png" alt="image-20220130225352233"></p>
 
     </div>
 
@@ -923,7 +998,7 @@ CREATE INDEX idx_phone_card ON phone(card);
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">mysql架构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.1.</span> <span class="nav-text">数据库引擎：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">SQL性能下降的原因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">机读顺序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">七种JOIN理论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">6.</span> <span class="nav-text">索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">7.</span> <span class="nav-text">MySQL索引分类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">8.</span> <span class="nav-text">MySQL索引数据结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">9.</span> <span class="nav-text">哪些情况不要建索引</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number"></span> <span class="nav-text">性能分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">EXPLAIN简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">EXPLAIN字段</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number"></span> <span class="nav-text">9.索引分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">9.1.单表索引分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">9.2.两表索引分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">9.3.三张表索引分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">9.4.结论</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">mysql架构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.1.</span> <span class="nav-text">逻辑架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.2.</span> <span class="nav-text">数据库引擎：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.3.</span> <span class="nav-text">SQL性能下降的原因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.4.</span> <span class="nav-text">机读顺序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.5.</span> <span class="nav-text">七种JOIN理论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.6.</span> <span class="nav-text"></span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">索引</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">2.1.</span> <span class="nav-text">MySQL索引分类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">2.2.</span> <span class="nav-text">MySQL索引数据结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">2.3.</span> <span class="nav-text">哪些情况不要建索引</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">性能分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">3.1.</span> <span class="nav-text">EXPLAIN简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">3.2.</span> <span class="nav-text">EXPLAIN字段</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">3.3.</span> <span class="nav-text">MySQL中Explain的Extra字段值Using index和Using where；Using index和Using where以及Using index condition的区别</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">索引分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">4.1.</span> <span class="nav-text">单表索引分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">4.2.</span> <span class="nav-text">两表索引分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">4.3.</span> <span class="nav-text">三张表索引分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">4.4.</span> <span class="nav-text">结论</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">索引失效</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">5.1.</span> <span class="nav-text">索引失效（应该避免）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">5.1.1.</span> <span class="nav-text">从左开始且不跳列才不会失效</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">5.1.2.</span> <span class="nav-text">索引列上不做额外操作才不会失效</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">5.1.3.</span> <span class="nav-text">少用&gt;，&lt;，between…and等结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">5.1.4.</span> <span class="nav-text">减少select *</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">5.1.5.</span> <span class="nav-text">不用 is null, is not null</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">5.1.6.</span> <span class="nav-text">模糊查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">5.1.7.</span> <span class="nav-text">类型要正确</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">5.1.8.</span> <span class="nav-text">不用or关键字就不会失效</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -1018,7 +1093,7 @@ CREATE INDEX idx_phone_card ON phone(card);
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">187k</span>
+    <span title="站点总字数">188k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
@@ -1029,7 +1104,7 @@ CREATE INDEX idx_phone_card ON phone(card);
   </div>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共70.9k字</span>
+  <span class="post-count">博客全站共72.2k字</span>
 </div>
 
     <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
