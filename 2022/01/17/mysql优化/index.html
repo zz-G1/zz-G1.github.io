@@ -73,8 +73,29 @@
 <meta property="og:image" content="http://example.com/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220130225213417.png">
 <meta property="og:image" content="http://example.com/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220130225125971.png">
 <meta property="og:image" content="http://example.com/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220130225352233.png">
+<meta property="og:image" content="http://example.com/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220201190057941.png">
+<meta property="og:image" content="http://example.com/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220201190132165.png">
+<meta property="og:image" content="http://example.com/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220201190200564.png">
+<meta property="og:image" content="http://example.com/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220201190228297.png">
+<meta property="og:image" content="http://example.com/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220201190243309.png">
+<meta property="og:image" content="http://example.com/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220201190317209.png">
+<meta property="og:image" content="http://example.com/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220201190613078.png">
+<meta property="og:image" content="http://example.com/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220201195817005.png">
+<meta property="og:image" content="http://example.com/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220201200304494.png">
+<meta property="og:image" content="http://example.com/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220204121522497.png">
+<meta property="og:image" content="http://example.com/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220204122519176.png">
+<meta property="og:image" content="http://example.com/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220204123846471.png">
+<meta property="og:image" content="http://example.com/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220204195232493.png">
+<meta property="og:image" content="http://example.com/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220204210832085.png">
+<meta property="og:image" content="http://example.com/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220206120852097.png">
+<meta property="og:image" content="http://example.com/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220206120949041.png">
+<meta property="og:image" content="http://example.com/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220206211546434.png">
+<meta property="og:image" content="http://example.com/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220206223240669.png">
+<meta property="og:image" content="http://example.com/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220206224230948.png">
+<meta property="og:image" content="http://example.com/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220206224728944.png">
+<meta property="og:image" content="http://example.com/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220207212800265.png">
 <meta property="article:published_time" content="2022-01-17T03:04:24.000Z">
-<meta property="article:modified_time" content="2022-02-01T02:58:58.936Z">
+<meta property="article:modified_time" content="2022-02-07T14:21:42.758Z">
 <meta property="article:author" content="Gzz">
 <meta property="article:tag" content="优化">
 <meta name="twitter:card" content="summary">
@@ -276,7 +297,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-02-01 10:58:58" itemprop="dateModified" datetime="2022-02-01T10:58:58+08:00">2022-02-01</time>
+                <time title="修改时间：2022-02-07 22:21:42" itemprop="dateModified" datetime="2022-02-07T22:21:42+08:00">2022-02-07</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -300,13 +321,13 @@
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
               </span>
-              <span>12k</span>
+              <span>22k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
-              <span>11 分钟</span>
+              <span>20 分钟</span>
             </span>
 
         </div>
@@ -822,6 +843,7 @@ CREATE INDEX idx_phone_card ON phone(card);
 <p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220130205238614.png" alt="image-20220130205238614"></p>
 <h3><span id="少用gtltbetweenand等结构">少用&gt;，&lt;，between…and等结构</span></h3><ul>
 <li>存储引擎不能使用索引中<code>范围条件右边的列</code>。（就是&gt;，&lt;，between…and）</li>
+<li>范围条件右边的索引失效</li>
 </ul>
 <p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220130222810515.png" alt="image-20220130222810515"></p>
 <h3><span id="减少select">减少select *</span></h3><ul>
@@ -854,6 +876,329 @@ CREATE INDEX idx_phone_card ON phone(card);
 <li>少用or，用它来连接时会索引失效。</li>
 </ul>
 <p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220130225352233.png" alt="image-20220130225352233"></p>
+<h1><span id="面试常考">面试常考</span></h1><p><strong>建表</strong></p>
+<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220201190057941.png" alt="image-20220201190057941"></p>
+<p><strong>建立索引</strong></p>
+<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220201190132165.png" alt="image-20220201190132165"></p>
+<p><strong>explain</strong></p>
+<p><strong>正常顺序</strong></p>
+<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220201190200564.png" alt="image-20220201190200564"></p>
+<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220201190228297.png" alt="image-20220201190228297"></p>
+<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220201190243309.png" alt="image-20220201190243309"></p>
+<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220201190317209.png" alt="image-20220201190317209"></p>
+<p><strong>乱序</strong></p>
+<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220201190613078.png" alt="image-20220201190613078"></p>
+<p>打乱顺序mysql的最左前缀原则仍符合，因为mysql有优化器会帮你查询是否匹配</p>
+<p><strong>范围</strong></p>
+<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220201195817005.png" alt="image-20220201195817005"></p>
+<p>如果开始限定范围<br>第一条会用到3个索引，前两个用来查找，c3用来排序<br>第二条用到了4个索引，前3个用来查找，c4用来排序</p>
+<p>因为mysql引擎会优化第二个sql语句在底层已经变成</p>
+<p><strong>explain select * from test03 where c1=’a1’ and c2=’a2’ and c3=’a3’ and c4&gt;’a4’;</strong></p>
+<p><strong>使用order by</strong><br>下面那个例子都是一样的<br>前两个都是在查找，第三个只是在排序，到了这里就已经断了，所以c4可有可无</p>
+<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220201200304494.png" alt="image-20220201200304494"></p>
+<p>如果使用c4排序，会出现Using filesort。，因为优化器会给你文件排序（因为中间跳了一个）</p>
+<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220204121522497.png" alt="image-20220204121522497"></p>
+<p>这个也会出现Using filesort，因为顺序颠倒了</p>
+<pre><code class="sql"> explain select * from test03 where c1=&#39;a1&#39; and c5=&#39;a5&#39; order by c3,c2;
+</code></pre>
+<p>这个就不会出现filesort，因为c2的值已经确认了</p>
+<p> <img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220204122519176.png" alt="image-20220204122519176"></p>
+<p>groupby之前必排序，规则和orderby差不多</p>
+<p>模糊查询</p>
+<p>%在左边会导致索引失效，在右边可以不失效</p>
+<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220204123846471.png" alt="image-20220204123846471"></p>
+<h2><span id="总结">总结</span></h2><p>对于单键索引，尽量选择针对当前query过滤性更好的索引。<br>在选择组合索引的时候，当前Query中过滤性最好的字段在索引字段顺序中，位置越靠前越好。<br>在选择组合索引的时候，尽量选择可以能够包含当前query中的where字句中更多字段的索引。<br>尽可能通过分析统计信息和调整query的写法来达到选择合适索引的目的。</p>
+<p>口诀：</p>
+<p><strong>全值匹配我最爱， 最左前缀要遵守；</strong></p>
+<p><strong>带头大哥不能死， 中间兄弟不能断；</strong></p>
+<p><strong>索引列上少计算， 范围之后全失效；</strong></p>
+<p><strong>LIKE 百分写最右， 覆盖索引不写 <code>\*</code>；</strong></p>
+<p><strong>不等空值还有 OR， 索引影响要注意；</strong></p>
+<p><strong>VAR 引号不可丢， SQL 优化有诀窍。</strong></p>
+<h1><span id="查询截取分析">查询截取分析</span></h1><h2><span id="sql调优过程">SQL调优过程：</span></h2><p>观察，至少跑1天，看看生产的慢SQL情况。<br>开启慢查询日志，设置阙值，比如超过5秒钟的就是慢SQL，并将它抓取出来。<br>explain + 慢SQL分析。<br>show profile。<br>运维经理 or DBA，进行SQL数据库服务器的参数调优。</p>
+<h2><span id="总结">总结：</span></h2><p>慢查询的开启并捕获<br>explain + 慢SQL分析<br>show profile查询SQL在Mysql服务器里面的执行细节和生命周期情况<br>SQL数据库服务器的参数调优。</p>
+<h2><span id="in和exists的区别">in和exists的区别</span></h2><h3><span id="小表驱动大表">小表驱动大表</span></h3><p>RBO原理：</p>
+<p>当B表的数据集必须小于A表的数据集时，用in优于exists。</p>
+<p> <strong>select * from A where id in (select id from B)</strong><br> 等价于:<br> <strong>for select id from B</strong><br> <strong>for select * from A where A.id = B.id</strong><br> 当A表的数据集系小于B表的数据集时，用exists优于in</p>
+<p> <strong>select * from A where exists (select 1 from B where B.id = A.id)</strong><br> 等价于：<br> <strong>for select * from A</strong><br> <strong>for select * from B where B.id = A.id</strong></p>
+<h3><span id="关于exists的关键字">关于exists的关键字</span></h3><p>该语法可以理解为：将主查询的数据，放到子查询中做条件验证，根据验证结果（TRUE或FALSE）来决定主查询的数据结果是否得以保留。</p>
+<p>提示</p>
+<p>EXSTS(subquey)只返回TRUE或FALSE，因此子查询中的SELECT * 也可以是 SELECT 1 或select ‘X’，官方说法是实际执行时会忽略SELECT清单，因此没有区别。<br>EXISTS子查询的实际执行过程可能经过了优化而不是我们理解上的逐条对比，如果担忧效率问题，可进行实际检验以确定是否有效率问题。<br>EXISTS子查询往往也可以用条件表达式，其他子查询或者JOIN来替代，何种最优需要具体问题具体分析<br>3.2 OrderBy优化<br>ORDER BY子句，尽量使用Index方式排序，避免使用FileSort方式排序</p>
+<p>建立一张表以及一个索引</p>
+<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220204195232493.png" alt="image-20220204195232493"></p>
+<p>如果索引的时候也是按照顺序，两种情况都是一样的</p>
+<p>但是索引的时候不按顺序<br>就会出现这样的情况</p>
+<h2><span id="mysql支持二种方式的排序filesort和lindex">MySQL支持二种方式的排序：FileSort和lIndex</span></h2><p>Index效率高，它指MySQL扫描索引本身完成排序，FileSort方式效率较低。</p>
+<h4><span id="order-by满足两情况会使用index方式排序">ORDER BY满足两情况，会使用Index方式排序：</span></h4><p><strong>1.ORDER BY语句使用索引最左前列。</strong><br><strong>2</strong>.<strong>使用where子句与Order BY子句条件列组合满足索引最左前列。</strong><br>如果不在索引列上，mysql的filesort有两种算法：<strong>双路排序、单路排序</strong></p>
+<blockquote>
+<p>双路排序：MySQL4.1之前是使用双路排序，字面意思就是两次扫描磁盘，最终得到数据，读取行指针和OrderBy列，对他们进行排序，然后扫描已经排序好的列表，按照列表中的值重新从列表中读对应的数据输出。<br>从磁盘取排序字段，在buffer进行排序，再从磁盘取其他字段。取一批数据，要对磁盘进行了两次扫描，众所周知，I\O是很耗时的，所以在mysql4.1之后，出现了第二种改进的算法，就是单路排序。</p>
+</blockquote>
+<blockquote>
+<p>单路排序：从磁盘读取查询需要的所有列，按照order by列在buffer对它们进行排序，然后扫描排序压的列表进行输出，它的效率更快一些，避免了第二次读取数据。并且把随机IO变成了顺序IO,但是它会使用更多的空间，因为它把每一行都保存在内存中了。<br>但是用单路有问题</p>
+</blockquote>
+<p>在sort_buffer中，单路排序比双路排序要多占用很多空间，因为单路排序是把所有字段都取出,所以有可能取出的数据的总大小超出了sort_buffer的容量，导致每次只能取sort_buffer容量大小的数据，进行排序（创建tmp文件，多路合并)，排完再取取sort_buffer容量大小，再排……从而多次I/O。<br>本来想省一次I/O操作，反而导致了大量的I/O操作，反而得不偿失。</p>
+<h4><span id="优化策略">优化策略</span></h4><p>1.增大sort_buffer_size参数的设置<br>2.增大max_length_for_sort_data参数的设置<br>3.为什么设置sort_buffer_size、max_length_for_sort_data参数能优化排序？</p>
+<p>主要是因为可以提高Order By的速度</p>
+<h4><span id="具体原因如下">具体原因如下：</span></h4><p>Order by时select * 是一个Query需要的字段，这点非常重要。在这里的影响是;</p>
+<p>当Query的字段大小总和小于max_length_for_sort_data而且排序字段不是TEXT|BLOB类型时，会用改进后的算法——单路排序，否则用老算法——多路排序。<br>两种算法的数据都有可能超出sort_buffer的容量，超出之后，会创建tmp文件进行合并排序，导致多次IO，但是用单路排序算法的风险会更大一些，所以要提高sort_buffer__size。<br>尝试提高sort_buffer_size，不管用哪种算法，提高这个参数都会提高效率，当然，要根据系统的能力去提高，因为这个参数是针对每个进程的。<br>尝试提高max_length_for_sort_data，提高这个参数，会增加用改进算法的概率。但是如果设的太高，数据总容量超出sort_buffer_size的概率就增大，明显症状是高的磁盘I/O活动和低的处理器使用率。</p>
+<pre><code>
+</code></pre>
+<h3><span id="小结">小结</span></h3><p>为排序使用索引</p>
+<p>MySql两种排序方式∶文件排序 或 扫描有序索引排序</p>
+<p>MySql能为 排序 与 查询 使用相同的索引</p>
+<p>创建复合索引 a_b_c (a, b, c)</p>
+<p>order by能使用索引最左前缀</p>
+<pre><code class="sql">ORDER BY a
+ORDER BY a, b
+ORDER BY a, b, c
+ORDER BY a DESC, b DESC, c DESC
+</code></pre>
+<p>如果WHERE使用素引的最左前缀定义为常量，则order by能使用索引</p>
+<pre><code class="sql">WHERE a = const ORDER BY b,c
+WHERE a = const AND b = const ORDER BY c
+WHERE a = const ORDER BY b, c
+WHERE a = const AND b &gt; const ORDER BY b, c
+</code></pre>
+<p>不能使用索引进行排序的情况</p>
+<pre><code class="sql">ORDER BY a ASC, b DESC, c DESC //排序不—致
+WHERE g = const ORDER BY b, c //产丢失a索引
+WHERE a = const ORDER BY c //产丢失b索引
+WHERE a = const ORDER BY a, d //d不是素引的一部分
+WHERE a in (…) ORDER BY b, c //对于排序来说,多个相等条件也是范围查询
+</code></pre>
+<h2><span id="groupby优化">GroupBy优化</span></h2><p>GroupBy优化（和order by差不多）</p>
+<p>group by实质是先排序后进行分组，遵照索引建的最佳左前缀。<br>当无法使用索引列，增大max_length_for_sort_data参数的设置 + 增大sort_buffer_size参数的设置。<br>where高于having，能写在where限定的条件就不要去having限定了。</p>
+<h2><span id="慢查询日志">慢查询日志</span></h2><p>MySQL的慢查询日志是MySQL提供的一种日志记录，它用来记录在MySQL中响应时间超过阀值的语句，具体指运行时间超过long_query_time值的SQL，则会被记录到慢查询日志中。long_query_time的默认值为10，意思是运行10秒以上的语句。<br>由他来查看哪些SQL超出了我们的最大忍耐时间值，比如一条sql执行超过5秒钟，我们就算慢SQL，希望能收集超过5秒的sql，结合之前explain进行全面分析<br>默认情况下，MySQL数据库没有开启慢查询日速，需要我们手动来设置这个参数。</p>
+<p>一般不建议启动该参数，因为开启慢查询日志会或多或少带来一定的性能影响。慢查询日志支持将日志记录写入文件。</p>
+<p>通过如下命令进行操作</p>
+<p>查看日志是否开启</p>
+<pre><code class="sql">SHOW VARIABLES LIKE &#39;%slow_query_log%&#39;;
+</code></pre>
+<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220204210832085.png" alt="image-20220204210832085"></p>
+<p>开启 set global slow_query_log=1，只对当前数据库生效，默认关闭的<br>结果如下</p>
+<p><strong>永久生效</strong><br>修改配置文件my.cnf<br>[mysqld]下增加或修改参数slow_query_log和slow_query_log_file后，然后重启MySQL服务器。也即将如下两行配置进my.cnf文件</p>
+<pre><code class="ABAP">slow_query_log =1
+slow_query_log_file=/var/lib/manongyanjiuseng-slow.log
+</code></pre>
+<p>关于慢查询的参数slow_query_log_file，它指定慢查询日志文件的存放路径，系统默认会给一个缺省的文件host_name-slow.log（如果没有指定参数slow_query_log_file的话）</p>
+<h3><span id="什么样的数据会放到慢查询日志">什么样的数据会放到慢查询日志</span></h3><p>需要设置一个多长的时间段就会放到日志中<br>这个是由参数long_query_time控制，默认情况下long_query_time的值为10秒</p>
+<p>命令：</p>
+<pre><code class="sql">SHOW VARIABLES LIKE &#39;long_query_time%&#39;;
+</code></pre>
+<p>运行时间正好等于long_query_time的情况，并不会被记录下来，需大于</p>
+<p>设置阈值时间后还需要重启才可以生效 </p>
+<pre><code class="sql">set global long_query_time=3;
+</code></pre>
+<p>查询当前系统中有多少条慢查询记录 </p>
+<pre><code class="sql">show global status like &#39;%Slow_queries%&#39;;
+</code></pre>
+<p>如果在配置文件中设置阈值<br>具体配置如下</p>
+<p>[mysqld]下配置:</p>
+<pre><code class="sql">slow_query_log=1;
+slow_query_log_file=/var/lib/mysql/atguigu-slow.log
+long_query_time=3;
+log_output=FILE;
+</code></pre>
+<h2><span id="结合工具进行分析mysqldumpslow">==结合工具进行分析mysqldumpslow ==</span></h2><p>在生产环境中，如果要手工分析日志，查找、分析SQL，显然是个体力活，MySQL提供了日志分析工具mysqldumpslow。</p>
+<p>查看mysqldumpslow的帮助信息，mysqldumpslow –help。</p>
+<h3><span id="工作常用参考">工作常用参考</span></h3><pre><code class="sh">得到返回记录集最多的10个SQL ，
+mysqldumpslow -s r -t 10 /var/lib/mysql/atguigu-slow.log
+得到访问次数最多的10个SQL，
+mysqldumpslow -s c -t 10 /var/lib/mysql/atguigu-slow.log
+得到按照时间排序的前10条里面含有左连接的查询语句，
+mysqldumpslow -s t -t 10 -g &quot;left join&quot; /var/lib/mysql/atguigu-slow.log
+另外建议在使用这些命令时结合│和more 使用，否则有可能出现爆屏情况，
+mysqldumpslow -s r-t 10 /ar/lib/mysql/atguigu-slow.log | more
+</code></pre>
+<p>3.5 批量插入数据脚本<br>为了更好的展示<br>先建立一张表</p>
+<pre><code class="sql">create database bigData;
+use bigData;
+
+CREATE TABLE dept(
+    id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    deptno MEDIUMINT UNSIGNED NOT NULL DEFAULT 0,
+    dname VARCHAR(20)NOT NULL DEFAULT &quot;&quot;,
+    loc VARCHAR(13) NOT NULL DEFAULT &quot;&quot;
+)ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+CREATE TABLE emp(
+    id int unsigned primary key auto_increment,
+    empno mediumint unsigned not null default 0,
+    ename varchar(20) not null default &quot;&quot;,
+    job varchar(9) not null default &quot;&quot;,
+    mgr mediumint unsigned not null default 0,
+    hiredate date not null,
+    sal decimal(7,2) not null,
+    comm decimal(7,2) not null,
+    deptno mediumint unsigned not null default 0
+)ENGINE=INNODB DEFAULT CHARSET=utf8;
+</code></pre>
+<p>开启了可以创建存储函数的权限，主要是这个功能</p>
+<p>设置参数<strong>log_bin_trust_function_creators</strong></p>
+<pre><code class="sql">show variables like &#39;log_bin_trust_function_creators&#39;;
+set global log_bin_trust_function_creators=1;
+</code></pre>
+<p>这是在终端上输入的<br>但是重启后会失效</p>
+<p>如果要配置永久的，需要在配置文件上配置</p>
+<p>windows下my.ini[mysqld]加上</p>
+<pre><code class="sh">log_bin_trust_function_creators=1
+</code></pre>
+<p>linux下/etc/my.cnf 下my.cnf[mysqld]加上</p>
+<pre><code class="sh">log_bin_trust_function_creators=1
+</code></pre>
+<p>创建函数，保证每条数据都不同</p>
+<p>随机产生字符串</p>
+<pre><code class="sql">delimiter $$ # 两个 $$ 表示结束
+create function rand_string(n int) returns varchar(255)
+begin
+    declare chars_str varchar(100) default &#39;abcdefghijklmnopqrstuvwxyz&#39;;
+    declare return_str varchar(255) default &#39;&#39;;
+    declare i int default 0;
+    while i &lt; n do
+        set return_str = concat(return_str,substring(chars_str,floor(1+rand()*52),1));
+        set i=i+1;
+    end while;
+    return return_str;
+end $$
+</code></pre>
+<p>执行完语句后，在终端上输入select rand_string(2)$$;，要以$$结尾</p>
+<p>随机产生部门编号    </p>
+<pre><code class="sql">delimiter $$
+create function rand_num() returns int(5)
+begin
+    declare i int default 0;
+    set i=floor(100+rand()*10);
+    return i;
+end $$
+</code></pre>
+<p>执行完语句后，在终端上输入select rand_num()$$，要以$$结尾</p>
+<p>创建存储过程，创建往emp表中插入数据的存储过程</p>
+<pre><code class="sql">delimiter $$
+create procedure insert_emp(in start int(10),in max_num int(10))
+begin
+    declare i int default 0;
+    set autocommit = 0;
+    repeat
+        set i = i+1;
+        insert into emp(empno,ename,job,mgr,hiredate,sal,comm,deptno) values((start+i),rand_string(6),&#39;salesman&#39;,0001,curdate(),2000,400,rand_num());
+        until i=max_num
+        end repeat;
+    commit;
+end $$
+</code></pre>
+<p>创建往dept表中插入数据的存储过程</p>
+<pre><code class="sql">delimiter $$
+create procedure insert_dept(in start int(10),in max_num int(10))
+begin
+    declare i int default 0;
+    set autocommit = 0;
+    repeat
+        set i = i+1;
+        insert into dept(deptno,dname,loc) values((start+i),rand_string(10),rand_string(8));
+        until i=max_num
+        end repeat;
+    commit;
+end $$
+</code></pre>
+<p>调用存储过程<br>往dept表中插入数据</p>
+<pre><code class="sql">DELIMITER ;
+CALL insert_dept(100, 10);
+</code></pre>
+<p>往emp表中插入50万数据</p>
+<pre><code class="sql">DELIMITER ;
+CALL insert_emp(100001, 500000);
+</code></pre>
+<h2><span id="show-profile">Show Profile</span></h2><p>Show Profile是mysql提供可以用来分析当前会话中语句执行的资源消耗情况。可以用于SQL的调优的测量</p>
+<p>默认情况下，参数处于关闭状态，并保存最近15次的运行结果。</p>
+<p>查看当前状态是否开启了， </p>
+<pre><code class="sql">show variables like &#39;profiling&#39;;
+</code></pre>
+<p>开启 ，</p>
+<pre><code class="sql">set profiling=on;
+</code></pre>
+<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220206120852097.png" alt="image-20220206120852097"></p>
+<p>通过执行show profiles;</p>
+<ul>
+<li><p>诊断SQL，show profile cpu,block io for query 上一步前面的问题SQL数字号码;<br>例如</p>
+<pre><code class="sql">show profile cpu,block io for query 3;
+</code></pre>
+<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220206120949041.png" alt="image-20220206120949041"></p>
+</li>
+</ul>
+<p>具体的参数介绍</p>
+<blockquote>
+<p>ALL：显示所有的开销信息。</p>
+</blockquote>
+<blockquote>
+<p>BLOCK IO：显示块lO相关开销。<br>CONTEXT SWITCHES ：上下文切换相关开销。<br>CPU：显示CPU相关开销信息。<br>IPC：显示发送和接收相关开销信息。<br>MEMORY：显示内存相关开销信息。<br>PAGE FAULTS：显示页面错误相关开销信息。<br>SOURCE：显示和Source_function，Source_file，Source_line相关的开销信息。<br>SWAPS：显示交换次数相关开销的信息。<br>在查询该文件的时候如果出现了这些一定要特别注意</p>
+</blockquote>
+<h3><span id="不理想字段">不理想字段</span></h3><p><strong>converting HEAP to MyISAM</strong> 查询结果太大，内存都不够用了往磁盘上搬了。<br><strong>Creating tmp table</strong> 创建临时表，拷贝数据到临时表，用完再删除<br><strong>Copying to tmp table on disk</strong> 把内存中临时表复制到磁盘，危险!<br>locked</p>
+<h2><span id="全局查询日志">全局查询日志</span></h2><p>General log默认不开启的原因有两个：</p>
+<p>日志将会非常大，对磁盘是一个很大的压力。因为所有的操作都会被记录下来。<br>对MySQL数据的性能有一定的影响。</p>
+<p>不要在生产环境开启这个功能。</p>
+<ul>
+<li><p>开启</p>
+<pre><code>set global general_log=1
+</code></pre>
+<p>#记录日志文件的路径</p>
+<pre><code>general_log_file=/path/logfile
+</code></pre>
+<p>#输出格式</p>
+<pre><code>log_output=FILE
+</code></pre>
+</li>
+</ul>
+<p>查看状态是否开启，<strong>show variables like ‘general_log’;</strong></p>
+<pre><code class="sql">set global general_log=1;
+set global log_output=&#39;TABLE&#39;;
+</code></pre>
+<p>log_output=‘FILE‘表示将日志存入文件,默认值是‘FILE‘</p>
+<p>log_output=‘TABLE‘表示将日志存入数据库,这样日志信息就会被写入到mysql.slow_log表中.</p>
+<p>所编写的sql语句，将会记录到mysql库里的geneial_log表，可以用下面的命令查看：</p>
+<p>select * from mysql.general_log;</p>
+<p>查出来会有输出语句</p>
+<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220206211546434.png" alt="image-20220206211546434"></p>
+<h2><span id="锁机制">锁机制</span></h2><h3><span id="从读写来分">从读写来分</span></h3><p>读锁：可共同读</p>
+<p>写锁：不可共同写，在任务完成前，会阻断其他读锁和写锁</p>
+<p>表锁：</p>
+<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220206223240669.png" alt="image-20220206223240669"></p>
+<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220206224230948.png" alt="image-20220206224230948"></p>
+<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220206224728944.png" alt="image-20220206224728944"></p>
+<p>innoDB索引失效行锁会切换为表锁</p>
+<h3><span id="间隙锁的危害">间隙锁的危害</span></h3><blockquote>
+<p>什么是间隙锁？</p>
+</blockquote>
+<p>当我们用范围条件而不是相等条件检索数据，并请求共享或者排他锁时，<code>InnoDB</code>会给符合条件的已有数据记录的索引项加锁，对于键值在条件范文内但并不存在的记录，叫做”间隙(GAP)”。</p>
+<p><code>InnoDB</code>也会对这个”间隙”加锁，这种锁的机制就是所谓的”间隙锁”。</p>
+<blockquote>
+<p>间隙锁的危害</p>
+</blockquote>
+<p>因为<code>Query</code>执行过程中通过范围查找的话，他会锁定整个范围内所有的索引键值，即使这个键值不存在。</p>
+<p>间隙锁有一个比较致命的缺点，就是<strong>当锁定一个范围的键值后，即使某些不存在的键值也会被无辜的锁定，而造成在锁定的时候无法插入锁定键值范围内的任何数据。</strong>在某些场景下这可能会対性能造成很大的危害。</p>
+<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220207212800265.png" alt="image-20220207212800265"></p>
+<h3><span id="行锁">行锁</span></h3><pre><code class="sql">SELECT .....FOR UPDATE`在锁定某一行后，其他写操作会被阻塞，直到锁定的行被`COMMIT
+</code></pre>
+<h3><span id="行锁分析">行锁分析</span></h3><pre><code class="sql">mysql&gt; SHOW STATUS LIKE &#39;innodb_row_lock%&#39;;
++-------------------------------+-------+
+| Variable_name                 | Value |
++-------------------------------+-------+
+| Innodb_row_lock_current_waits | 0     |
+| Innodb_row_lock_time          | 11131 |
+| Innodb_row_lock_time_avg      | 11131 |
+| Innodb_row_lock_time_max      | 11131 |
+| Innodb_row_lock_waits         | 1     |
++-------------------------------+-------+
+5 rows in set (0.00 sec)
+</code></pre>
+<ul>
+<li><code>Innodb_row_lock_current_waits</code>：当前正在等待锁定的数量。</li>
+<li><code>Innodb_row_lock_time</code>：从系统启动到现在锁定总时间长度（重要）。</li>
+<li><code>Innodb_row_lock_time_avg</code>：每次等待所花的平均时间（重要）。</li>
+<li><code>Innodb_row_lock_time_max</code>：从系统启动到现在等待最长的一次所花的时间。</li>
+<li><code>Innodb_row_lock_waits</code>：系统启动后到现在总共等待的次数（重要）。</li>
+</ul>
+<p>尤其是当等待次数很高，而且每次等待时长也不小的时候，我们就需要分析系统中为什么会有如此多的等待，然后根据分析结果着手制定优化策略。</p>
+<h2><span id="主从复制">主从复制</span></h2><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/phpstudy2015-6/p/6485819.html">https://www.cnblogs.com/phpstudy2015-6/p/6485819.html</a></p>
 
     </div>
 
@@ -998,7 +1343,7 @@ CREATE INDEX idx_phone_card ON phone(card);
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">mysql架构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.1.</span> <span class="nav-text">逻辑架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.2.</span> <span class="nav-text">数据库引擎：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.3.</span> <span class="nav-text">SQL性能下降的原因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.4.</span> <span class="nav-text">机读顺序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.5.</span> <span class="nav-text">七种JOIN理论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.6.</span> <span class="nav-text"></span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">索引</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">2.1.</span> <span class="nav-text">MySQL索引分类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">2.2.</span> <span class="nav-text">MySQL索引数据结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">2.3.</span> <span class="nav-text">哪些情况不要建索引</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">性能分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">3.1.</span> <span class="nav-text">EXPLAIN简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">3.2.</span> <span class="nav-text">EXPLAIN字段</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">3.3.</span> <span class="nav-text">MySQL中Explain的Extra字段值Using index和Using where；Using index和Using where以及Using index condition的区别</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">索引分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">4.1.</span> <span class="nav-text">单表索引分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">4.2.</span> <span class="nav-text">两表索引分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">4.3.</span> <span class="nav-text">三张表索引分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">4.4.</span> <span class="nav-text">结论</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">索引失效</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">5.1.</span> <span class="nav-text">索引失效（应该避免）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">5.1.1.</span> <span class="nav-text">从左开始且不跳列才不会失效</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">5.1.2.</span> <span class="nav-text">索引列上不做额外操作才不会失效</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">5.1.3.</span> <span class="nav-text">少用&gt;，&lt;，between…and等结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">5.1.4.</span> <span class="nav-text">减少select *</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">5.1.5.</span> <span class="nav-text">不用 is null, is not null</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">5.1.6.</span> <span class="nav-text">模糊查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">5.1.7.</span> <span class="nav-text">类型要正确</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">5.1.8.</span> <span class="nav-text">不用or关键字就不会失效</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">mysql架构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.1.</span> <span class="nav-text">逻辑架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.2.</span> <span class="nav-text">数据库引擎：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.3.</span> <span class="nav-text">SQL性能下降的原因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.4.</span> <span class="nav-text">机读顺序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.5.</span> <span class="nav-text">七种JOIN理论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.6.</span> <span class="nav-text"></span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">索引</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">2.1.</span> <span class="nav-text">MySQL索引分类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">2.2.</span> <span class="nav-text">MySQL索引数据结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">2.3.</span> <span class="nav-text">哪些情况不要建索引</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">性能分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">3.1.</span> <span class="nav-text">EXPLAIN简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">3.2.</span> <span class="nav-text">EXPLAIN字段</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">3.3.</span> <span class="nav-text">MySQL中Explain的Extra字段值Using index和Using where；Using index和Using where以及Using index condition的区别</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">索引分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">4.1.</span> <span class="nav-text">单表索引分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">4.2.</span> <span class="nav-text">两表索引分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">4.3.</span> <span class="nav-text">三张表索引分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">4.4.</span> <span class="nav-text">结论</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">索引失效</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">5.1.</span> <span class="nav-text">索引失效（应该避免）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">5.1.1.</span> <span class="nav-text">从左开始且不跳列才不会失效</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">5.1.2.</span> <span class="nav-text">索引列上不做额外操作才不会失效</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">5.1.3.</span> <span class="nav-text">少用&gt;，&lt;，between…and等结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">5.1.4.</span> <span class="nav-text">减少select *</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">5.1.5.</span> <span class="nav-text">不用 is null, is not null</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">5.1.6.</span> <span class="nav-text">模糊查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">5.1.7.</span> <span class="nav-text">类型要正确</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">5.1.8.</span> <span class="nav-text">不用or关键字就不会失效</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">6.</span> <span class="nav-text">面试常考</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">6.1.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">7.</span> <span class="nav-text">查询截取分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">7.1.</span> <span class="nav-text">SQL调优过程：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">7.2.</span> <span class="nav-text">总结：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">7.3.</span> <span class="nav-text">in和exists的区别</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">7.3.1.</span> <span class="nav-text">小表驱动大表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">7.3.2.</span> <span class="nav-text">关于exists的关键字</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">7.4.</span> <span class="nav-text">MySQL支持二种方式的排序：FileSort和lIndex</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">7.4.0.1.</span> <span class="nav-text">ORDER BY满足两情况，会使用Index方式排序：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">7.4.0.2.</span> <span class="nav-text">优化策略</span></a></li><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">7.4.0.3.</span> <span class="nav-text">具体原因如下：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">7.4.1.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">7.5.</span> <span class="nav-text">GroupBy优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">7.6.</span> <span class="nav-text">慢查询日志</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">7.6.1.</span> <span class="nav-text">什么样的数据会放到慢查询日志</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">7.7.</span> <span class="nav-text">&#x3D;&#x3D;结合工具进行分析mysqldumpslow &#x3D;&#x3D;</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">7.7.1.</span> <span class="nav-text">工作常用参考</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">7.8.</span> <span class="nav-text">Show Profile</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">7.8.1.</span> <span class="nav-text">不理想字段</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">7.9.</span> <span class="nav-text">全局查询日志</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">7.10.</span> <span class="nav-text">锁机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">7.10.1.</span> <span class="nav-text">从读写来分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">7.10.2.</span> <span class="nav-text">间隙锁的危害</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">7.10.3.</span> <span class="nav-text">行锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">7.10.4.</span> <span class="nav-text">行锁分析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">7.11.</span> <span class="nav-text">主从复制</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -1027,7 +1372,7 @@ CREATE INDEX idx_phone_card ON phone(card);
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">36</span>
+        <span class="site-state-item-count">35</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1093,18 +1438,18 @@ CREATE INDEX idx_phone_card ON phone(card);
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">188k</span>
+    <span title="站点总字数">197k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:50</span>
+    <span title="站点阅读时长">2:59</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共72.2k字</span>
+  <span class="post-count">博客全站共76.6k字</span>
 </div>
 
     <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
