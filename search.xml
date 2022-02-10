@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>ArrayList扩容机制</title>
+      <link href="/2022/02/09/ArrayList%E6%89%A9%E5%AE%B9%E6%9C%BA%E5%88%B6/"/>
+      <url>/2022/02/09/ArrayList%E6%89%A9%E5%AE%B9%E6%9C%BA%E5%88%B6/</url>
+      
+        <content type="html"><![CDATA[<p>源码解析：<a href="https://snailclimb.gitee.io/javaguide/#/docs/java/collection/arraylist-source-code?id=_2-arraylist-%e6%a0%b8%e5%bf%83%e6%ba%90%e7%a0%81%e8%a7%a3%e8%af%bb">https://snailclimb.gitee.io/javaguide/#/docs/java/collection/arraylist-source-code?id=_2-arraylist-%e6%a0%b8%e5%bf%83%e6%ba%90%e7%a0%81%e8%a7%a3%e8%af%bb</a></p><h1><span id="1构造函数">1.构造函数</span></h1><p>有三种</p><p><img src="/2022/02/09/ArrayList%E6%89%A9%E5%AE%B9%E6%9C%BA%E5%88%B6/image-20220209130002676.png" alt="image-20220209130002676"></p><p>说第一种无参构造，默认初始容量为10</p><h1><span id="2add函数">2.add函数</span></h1><pre><code class="java">    /**     * 将指定的元素追加到此列表的末尾。     */    public boolean add(E e) &#123;   //添加元素之前，先调用ensureCapacityInternal方法        ensureCapacityInternal(size + 1);  // Increments modCount!!        //这里看到ArrayList添加元素的实质就相当于为数组赋值        elementData[size++] = e;        return true;    &#125;</code></pre><p>进入add方法后调用<strong>ensureCapacityInternal</strong> 方法，进入<strong>ensureCapacityInternal</strong>方法后初始化容量，然后调用<strong>ensureExplicitCapacity</strong>判断是否需要扩容，</p><p>，<strong>grow</strong>方法是实现扩容的方法，需要扩容则扩大1.5位，使用位运算。然后调用<strong>Arrays.copyOf</strong>方法将<strong>elementData</strong>数组指向新的内存空间<strong>newCapacity</strong>的连续空间<br>从此方法中我们可以清晰的看出其实<strong>ArrayList</strong>扩容的本质就是计算出新的扩容数组的<strong>size</strong>后实例化，并将原有数组内容复制到新数组中去。</p><pre><code class="java">  //得到最小扩容量    private void ensureCapacityInternal(int minCapacity) &#123;        //第二次调用ensureCapacityInternal方法后if判断后为假，因为不是空数组了        if (elementData == DEFAULTCAPACITY_EMPTY_ELEMENTDATA) &#123;              // 获取默认的容量和传入参数的较大值            minCapacity = Math.max(DEFAULT_CAPACITY, minCapacity);        &#125;        ensureExplicitCapacity(minCapacity);    &#125;  //判断是否需要扩容    private void ensureExplicitCapacity(int minCapacity) &#123;        modCount++;        // overflow-conscious code        if (minCapacity - elementData.length &gt; 0)            //调用grow方法进行扩容，调用此方法代表已经开始扩容了            grow(minCapacity);    &#125;</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> javase </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>JVM</title>
       <link href="/2022/01/28/JVM/"/>
       <url>/2022/01/28/JVM/</url>

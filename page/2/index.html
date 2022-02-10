@@ -195,6 +195,335 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/21/Stream%E6%B5%81/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Gzz">
+      <meta itemprop="description" content="只要开始就不算晚">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="香饽饽">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/01/21/Stream%E6%B5%81/" class="post-title-link" itemprop="url">Stream流</a>
+        </h2>
+
+        <div class="post-meta">
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-01-21 20:32:33" itemprop="dateCreated datePublished" datetime="2022-01-21T20:32:33+08:00">2022-01-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-01-23 12:28:06" itemprop="dateModified" datetime="2022-01-23T12:28:06+08:00">2022-01-23</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java%E8%BF%9B%E9%98%B6/" itemprop="url" rel="index"><span itemprop="name">Java进阶</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+              <span>6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1><span id="stream流">Stream流</span></h1><p><strong>自我感觉是一流的形式传递操作，上一个操作返回的结果放到下一个</strong></p>
+<p><strong>可以被用来对集合或数组进行链状流式的操作</strong></p>
+<p>可以先写出匿名内部类的形式，然后再快捷转换为lambda表达式</p>
+<p><strong>eg:</strong></p>
+<pre><code class="java">// 我们可以调用getAuthors方法获取到作家的集合。现在需要打印所有年龄小于18的作家的名字，并且要注意去重。
+ getAuthors()
+         .stream()
+         .distinct()
+         .filter(author -&gt; author.getAge()&lt;18)
+         .forEach(author -&gt; System.out.println(author.getName()));
+</code></pre>
+<h2><span id="操作种类">操作种类</span></h2><h3><span id="创建流">创建流</span></h3><pre><code class="java">//创建流,有两种方式
+public static void test01()&#123;
+    Integer[] list=&#123;1,2,3,4,5&#125;;
+    Stream&lt;Integer&gt; stream=Arrays.stream(list);
+    Stream&lt;Integer&gt; stream1 = Stream.of(list);
+    stream.distinct().filter(integer -&gt; integer&lt;3).forEach(integer -&gt; System.out.println(integer));
+    stream1.distinct().filter(integer -&gt; integer&lt;3).forEach(integer -&gt; System.out.println(integer));
+&#125;
+</code></pre>
+<h3><span id="中间操作">中间操作</span></h3><h5><span id="filter">filter</span></h5><p>​    可以对流中的元素进行条件过滤，符合过滤条件的才能继续留在流中。</p>
+<h5><span id="map">map</span></h5><p>​    可以把对流中的元素进行计算或转换。</p>
+<pre><code class="java">public static void test03()&#123;
+    //输出作者的描述
+    getAuthors()
+            .stream()
+            .map(Author::getIntro)
+            .forEach(author-&gt; System.out.println(author));
+&#125;
+</code></pre>
+<p><img src="/2022/01/21/Stream%E6%B5%81/image-20220121213239914.png" alt="image-20220121213239914"></p>
+<h5><span id="distinct">distinct</span></h5><p>​    可以去除流中的重复元素。</p>
+<h5><span id="sorted">sorted</span></h5><p>​    可以对流中的元素进行排序，排序规则可自定义。</p>
+<pre><code class="java">public static void test04()&#123;
+    //按年龄升序的顺序排列
+    getAuthors()
+            .stream()
+            .distinct()
+            .sorted(new Comparator&lt;Author&gt;() &#123;
+                @Override
+                public int compare(Author o1, Author o2) &#123;
+                    return o1.getAge()- o2.getAge();
+                &#125;
+            &#125;)
+            .forEach(author -&gt; System.out.println(author));
+&#125;
+</code></pre>
+<p><img src="/2022/01/21/Stream%E6%B5%81/image-20220121213640079.png" alt="image-20220121213640079"></p>
+<p><strong>注意：如果调用空参的sorted()方法，需要流中的元素是实现了Comparable。</strong></p>
+<h5><span id="limit">limit</span></h5><p>​    可以设置流的最大长度，超出的部分将被抛弃。</p>
+<pre><code class="java">//实现输出年龄最小的两个人
+public static void test05()&#123;
+    getAuthors()
+            .stream()
+            .distinct()
+            .sorted()//这里实体类实现了Comparable接口
+            .limit(2)
+            .forEach(author -&gt; System.out.println(author));
+&#125;
+</code></pre>
+<p><img src="/2022/01/21/Stream%E6%B5%81/image-20220121214448565.png" alt="image-20220121214448565"></p>
+<h5><span id="skip">skip</span></h5><p>​    跳过流中的前n个元素，返回剩下的元素</p>
+<p>跳过年龄最小的</p>
+<p><img src="/2022/01/21/Stream%E6%B5%81/image-20220121214634846.png" alt="image-20220121214634846"></p>
+<h5><span id="flatmap">flatMap</span></h5><p>​    map只能把一个对象转换成另一个对象来作为流中的元素。而flatMap可以把一个对象转换成多个对象作为流中的元素。</p>
+<h3><span id="终结操作">终结操作</span></h3><h5><span id="foreach">forEach</span></h5><p>​    对流中的元素进行遍历操作，我们通过传入的参数去指定对遍历到的元素进行什么具体操作。</p>
+<h5><span id="count">count</span></h5><p>​    可以用来获取当前流中元素的个数。</p>
+<p>例子：</p>
+<p>​    打印这些作家的所出书籍的数目，注意删除重复元素。</p>
+<pre><code class="java">//        打印这些作家的所出书籍的数目，注意删除重复元素。
+        List&lt;Author&gt; authors = getAuthors();
+
+        long count = authors.stream()
+                .flatMap(author -&gt; author.getBooks().stream())
+                .distinct()
+                .count();
+        System.out.println(count);
+</code></pre>
+<h5><span id="maxampmin">max&amp;min</span></h5><p>​    可以用来获取流中的最值。</p>
+<p>例子：</p>
+<p>​    分别获取这些作家的所出书籍的最高分和最低分并打印。</p>
+<pre><code class="java">        public static void test09()&#123;
+        //    分别获取这些作家的所出书籍的最高分和最低分并打印。
+        List&lt;Author&gt; authors = getAuthors();
+        Optional&lt;Integer&gt; max = authors.stream()
+                .flatMap(author -&gt; author.getBooks().stream())
+                .map(book -&gt; book.getScore())
+                .max(new Comparator&lt;Integer&gt;() &#123;
+                    @Override
+                    public int compare(Integer o1, Integer o2) &#123;
+                        return o1-o2;
+                    &#125;
+                &#125;);
+
+        Optional&lt;Integer&gt; min = authors.stream()
+                .flatMap(author -&gt; author.getBooks().stream())
+                .map(book -&gt; book.getScore())
+                .min((score1, score2) -&gt; score1 - score2);
+        System.out.println(max.get());
+        System.out.println(min.get());
+    &#125;
+</code></pre>
+<h5><span id="collect">collect</span></h5><p>​    把当前流转换成一个集合。</p>
+<p>例子：</p>
+<p>​    获取一个存放所有作者名字的List集合。</p>
+<pre><code class="java">public static void test10()&#123;
+        //        获取一个存放所有作者名字的List集合。
+        List&lt;Author&gt; authors=getAuthors();
+        List&lt;String&gt; names=authors.stream()
+                .distinct()
+                .map(author -&gt; author.getName())
+                .collect(Collectors.toList());
+        System.out.println(names);
+    &#125;
+</code></pre>
+<p>​    获取一个所有书名的Set集合。</p>
+<p><img src="/2022/01/21/Stream%E6%B5%81/Stream%E6%B5%81image-20220123122758892.png" alt="image-20220123122758892"></p>
+<p>​    获取一个Map集合，map的key为作者名，value为List<book></book></p>
+<pre><code class="java">//        获取一个Map集合，map的key为作者名，value为List&lt;Book&gt;
+        List&lt;Author&gt; authors = getAuthors();
+
+        Map&lt;String, List&lt;Book&gt;&gt; map = authors.stream()
+                .distinct()
+                .collect(Collectors.toMap(author -&gt; author.getName(), author -&gt; author.getBooks()));
+
+        System.out.println(map);
+</code></pre>
+<h5><span id="查找与匹配">查找与匹配</span></h5><h6><span id="anymatch">anyMatch</span></h6><p>​    可以用来判断是否有任意符合匹配条件的元素，结果为boolean类型。</p>
+<p>例子：</p>
+<p>​    判断是否有年龄在29以上的作家</p>
+<pre><code class="java">//        判断是否有年龄在29以上的作家
+        List&lt;Author&gt; authors = getAuthors();
+        boolean flag = authors.stream()
+                .anyMatch(author -&gt; author.getAge() &gt; 29);
+        System.out.println(flag);
+</code></pre>
+<h6><span id="allmatch">allMatch</span></h6><p>​    可以用来判断是否都符合匹配条件，结果为boolean类型。如果都符合结果为true，否则结果为false。</p>
+<p>例子：</p>
+<p>​    判断是否所有的作家都是成年人</p>
+<pre><code class="java">//        判断是否所有的作家都是成年人
+        List&lt;Author&gt; authors = getAuthors();
+        boolean flag = authors.stream()
+                .allMatch(author -&gt; author.getAge() &gt;= 18);
+        System.out.println(flag);
+</code></pre>
+<h6><span id="nonematch">noneMatch</span></h6><p>​    可以判断流中的元素是否都不符合匹配条件。如果都不符合结果为true，否则结果为false</p>
+<p>例子：</p>
+<p>​    判断作家是否都没有超过100岁的。</p>
+<pre><code class="java">//        判断作家是否都没有超过100岁的。
+        List&lt;Author&gt; authors = getAuthors();
+
+        boolean b = authors.stream()
+                .noneMatch(author -&gt; author.getAge() &gt; 100);
+
+        System.out.println(b);
+</code></pre>
+<h6><span id="findany">findAny</span></h6><p>​    获取流中的任意一个元素。该方法没有办法保证获取的一定是流中的第一个元素。</p>
+<p>例子：</p>
+<p>​    获取任意一个年龄大于18的作家，如果存在就输出他的名字</p>
+<pre><code class="java">//        获取任意一个年龄大于18的作家，如果存在就输出他的名字
+        List&lt;Author&gt; authors = getAuthors();
+        Optional&lt;Author&gt; optionalAuthor = authors.stream()
+                .filter(author -&gt; author.getAge()&gt;18)
+                .findAny();
+
+        optionalAuthor.ifPresent(author -&gt; System.out.println(author.getName()));
+</code></pre>
+<h6><span id="findfirst">findFirst</span></h6><p>​    获取流中的第一个元素。</p>
+<p>例子：</p>
+<p>​    获取一个年龄最小的作家，并输出他的姓名。</p>
+<pre><code class="java">//        获取一个年龄最小的作家，并输出他的姓名。
+        List&lt;Author&gt; authors = getAuthors();
+        Optional&lt;Author&gt; first = authors.stream()
+                .sorted((o1, o2) -&gt; o1.getAge() - o2.getAge())
+                .findFirst();
+
+        first.ifPresent(author -&gt; System.out.println(author.getName()));
+</code></pre>
+<h5><span id="reduce归并">reduce归并</span></h5><p>​    对流中的数据按照你指定的计算方式计算出一个结果。（缩减操作）</p>
+<p>​    reduce的作用是把stream中的元素给组合起来，我们可以传入一个初始值，它会按照我们的计算方式依次拿流中的元素和初始化值进行计算，计算结果再和后面的元素计算。</p>
+<p>​    reduce两个参数的重载形式内部的计算方式如下：</p>
+<pre><code class="java">T result = identity;
+for (T element : this stream)
+    result = accumulator.apply(result, element)
+return result;
+</code></pre>
+<p>​    其中identity就是我们可以通过方法参数传入的初始值，accumulator的apply具体进行什么计算也是我们通过方法参数来确定的。</p>
+<p>例子：</p>
+<p>​    使用reduce求所有作者年龄的和</p>
+<pre><code class="java">//        使用reduce求所有作者年龄的和
+        List&lt;Author&gt; authors = getAuthors();
+        Integer sum = authors.stream()
+                .distinct()
+                .map(author -&gt; author.getAge())
+                .reduce(0, (result, element) -&gt; result + element);
+        System.out.println(sum);
+</code></pre>
+<p>​    使用reduce求所有作者中年龄的最大值</p>
+<pre><code class="java">//        使用reduce求所有作者中年龄的最大值
+        List&lt;Author&gt; authors = getAuthors();
+        Integer max = authors.stream()
+                .map(author -&gt; author.getAge())
+                .reduce(Integer.MIN_VALUE, (result, element) -&gt; result &lt; element ? element : result);
+
+        System.out.println(max);
+</code></pre>
+<p>​    使用reduce求所有作者中年龄的最小值</p>
+<pre><code class="java">//        使用reduce求所有作者中年龄的最小值
+        List&lt;Author&gt; authors = getAuthors();
+        Integer min = authors.stream()
+                .map(author -&gt; author.getAge())
+                .reduce(Integer.MAX_VALUE, (result, element) -&gt; result &gt; element ? element : result);
+        System.out.println(min);
+</code></pre>
+<p>​    reduce一个参数的重载形式内部的计算</p>
+<pre><code class="java">      boolean foundAny = false;
+     T result = null;
+     for (T element : this stream) &#123;
+         if (!foundAny) &#123;
+             foundAny = true;
+             result = element;
+         &#125;
+         else
+             result = accumulator.apply(result, element);
+     &#125;
+     return foundAny ? Optional.of(result) : Optional.empty();
+</code></pre>
+<p>​    如果用一个参数的重载方法去求最小值代码如下：</p>
+<pre><code class="java">        //        使用reduce求所有作者中年龄的最小值
+        List&lt;Author&gt; authors = getAuthors();
+        Optional&lt;Integer&gt; minOptional = authors.stream()
+                .map(author -&gt; author.getAge())
+                .reduce((result, element) -&gt; result &gt; element ? element : result);
+        minOptional.ifPresent(age-&gt; System.out.println(age));
+</code></pre>
+<h3><span id="35-注意事项">3.5 注意事项</span></h3><ul>
+<li>惰性求值（如果没有终结操作，没有中间操作是不会得到执行的）</li>
+<li>流是一次性的（一旦一个流对象经过一个终结操作后。这个流就不能再被使用）</li>
+<li>不会影响原数据（我们在流中可以多数据做很多处理。但是正常情况下是不会影响原来集合中的元素的。这往往也是我们期望的）</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/20/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -270,83 +599,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/20/JAVASE/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Gzz">
-      <meta itemprop="description" content="只要开始就不算晚">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="香饽饽">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/01/20/JAVASE/" class="post-title-link" itemprop="url">JAVASE</a>
-        </h2>
-
-        <div class="post-meta">
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-01-20 09:59:25" itemprop="dateCreated datePublished" datetime="2022-01-20T09:59:25+08:00">2022-01-20</time>
-            </span>
-
-          
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-              <span>0</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          
-      
-    </div>
-
-    
-    
-    
-
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -414,7 +670,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">42</span>
+          <span class="site-state-item-count">43</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -493,18 +749,18 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">197k</span>
+    <span title="站点总字数">198k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:59</span>
+    <span title="站点阅读时长">3:01</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共76.6k字</span>
+  <span class="post-count">博客全站共77k字</span>
 </div>
 
     <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>

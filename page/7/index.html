@@ -195,6 +195,578 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/11/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Gzz">
+      <meta itemprop="description" content="只要开始就不算晚">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="香饽饽">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/11/11/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B/" class="post-title-link" itemprop="url">谷粒学院项目历程</a>
+        </h2>
+
+        <div class="post-meta">
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-11-11 16:52:17" itemprop="dateCreated datePublished" datetime="2021-11-11T16:52:17+08:00">2021-11-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-12-06 21:34:56" itemprop="dateModified" datetime="2021-12-06T21:34:56+08:00">2021-12-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/" itemprop="url" rel="index"><span itemprop="name">项目实战</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+              <span>12k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+              <span>11 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1><span id="谷粒学院项目">谷粒学院项目</span></h1><h2><span id="搭建环境">搭建环境</span></h2><p>了解到非业务流程开发正好符合我之前影像系统开发的某些功能，原来是以这个名词来进行概括</p>
+<h3><span id="项目总体架构">项目总体架构</span></h3><ul>
+<li><input disabled type="checkbox"> common 模块的公共配置</li>
+<li><input disabled type="checkbox"> canal_client 数据库同步模块（统计同步数据）</li>
+<li><input disabled type="checkbox"> infrastructure：基础服务模块父节点</li>
+<li><input disabled type="checkbox"> service api接口服务父节点</li>
+<li><input disabled type="checkbox"> node.js做BFF层</li>
+</ul>
+<p>父项目只管理依赖的版本，就做到了按需加载依赖，而且版本统一</p>
+<p><dependencymanagement>用于父项目中对子项目进行统一依赖管理</dependencymanagement></p>
+<p>遇到问题：IDEA中删除模块后，重新创建同名模块，显示已存在该模块</p>
+<p>解决：</p>
+<p><strong>1.在项目区单击右键找到load/Unload Modules…unload出问题的模块就可以</strong></p>
+<p><img src="/2021/11/11/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xleHVlaXQ=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<h3><span id="后台业务接口配置">后台业务接口配置</span></h3><h4><span id></span></h4><p><img src="/2021/11/11/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B/image-20211112190716874.png" alt="image-20211112190716874"></p>
+<h3><span id="设置统一返回结果">设置统一返回结果：</span></h3><pre><code class="java">@Data
+@ApiModel(value = &quot;全局统一返回结果&quot;)
+public class R &#123;
+
+    @ApiModelProperty(value = &quot;是否成功&quot;)
+    private Boolean success;
+
+    @ApiModelProperty(value = &quot;返回码&quot;)
+    private Integer code;
+
+    @ApiModelProperty(value = &quot;返回消息&quot;)
+    private String message;
+
+    @ApiModelProperty(value = &quot;返回数据&quot;)
+    private Map&lt;String, Object&gt; data = new HashMap&lt;String, Object&gt;();
+
+    public R()&#123;&#125;
+
+    public static R ok()&#123;
+        R r = new R();
+        r.setSuccess(ResultCodeEnum.SUCCESS.getSuccess());
+        r.setCode(ResultCodeEnum.SUCCESS.getCode());
+        r.setMessage(ResultCodeEnum.SUCCESS.getMessage());
+        return r;
+    &#125;
+
+    public static R error()&#123;
+        R r = new R();
+        r.setSuccess(ResultCodeEnum.UNKNOWN_REASON.getSuccess());
+        r.setCode(ResultCodeEnum.UNKNOWN_REASON.getCode());
+        r.setMessage(ResultCodeEnum.UNKNOWN_REASON.getMessage());
+        return r;
+    &#125;
+
+    public static R setResult(ResultCodeEnum resultCodeEnum)&#123;
+        R r = new R();
+        r.setSuccess(resultCodeEnum.getSuccess());
+        r.setCode(resultCodeEnum.getCode());
+        r.setMessage(resultCodeEnum.getMessage());
+        return r;
+    &#125;
+
+    public R success(Boolean success)&#123;
+        this.setSuccess(success);
+        return this;
+    &#125;
+
+    public R message(String message)&#123;
+        this.setMessage(message);
+        return this;
+    &#125;
+
+    public R code(Integer code)&#123;
+        this.setCode(code);
+        return this;
+    &#125;
+
+    public R data(String key, Object value)&#123;
+        this.data.put(key, value);
+        return this;
+    &#125;
+
+    public R data(Map&lt;String, Object&gt; map)&#123;
+        this.setData(map);
+        return this;
+    &#125;
+&#125;
+</code></pre>
+<h4><span id="各种状态信息返回码是由我们前端使用的vue框架决定的">各种状态信息，返回码是由我们前端使用的VUE框架决定的</span></h4><pre><code class="Java">@Getter
+@ToString
+public enum ResultCodeEnum &#123;
+
+    SUCCESS(true, 20000,&quot;成功&quot;),
+    UNKNOWN_REASON(false, 20001, &quot;未知错误&quot;),
+
+    BAD_SQL_GRAMMAR(false, 21001, &quot;sql语法错误&quot;),
+    JSON_PARSE_ERROR(false, 21002, &quot;json解析异常&quot;),
+    PARAM_ERROR(false, 21003, &quot;参数不正确&quot;),
+
+    FILE_UPLOAD_ERROR(false, 21004, &quot;文件上传错误&quot;),
+    FILE_DELETE_ERROR(false, 21005, &quot;文件刪除错误&quot;),
+    EXCEL_DATA_IMPORT_ERROR(false, 21006, &quot;Excel数据导入错误&quot;),
+
+    VIDEO_UPLOAD_ALIYUN_ERROR(false, 22001, &quot;视频上传至阿里云失败&quot;),
+    VIDEO_UPLOAD_TOMCAT_ERROR(false, 22002, &quot;视频上传至业务服务器失败&quot;),
+    VIDEO_DELETE_ALIYUN_ERROR(false, 22003, &quot;阿里云视频文件删除失败&quot;),
+    FETCH_VIDEO_UPLOADAUTH_ERROR(false, 22004, &quot;获取上传地址和凭证失败&quot;),
+    REFRESH_VIDEO_UPLOADAUTH_ERROR(false, 22005, &quot;刷新上传地址和凭证失败&quot;),
+    FETCH_PLAYAUTH_ERROR(false, 22006, &quot;获取播放凭证失败&quot;),
+
+    URL_ENCODE_ERROR(false, 23001, &quot;URL编码失败&quot;),
+    ILLEGAL_CALLBACK_REQUEST_ERROR(false, 23002, &quot;非法回调请求&quot;),
+    FETCH_ACCESSTOKEN_FAILD(false, 23003, &quot;获取accessToken失败&quot;),
+    FETCH_USERINFO_ERROR(false, 23004, &quot;获取用户信息失败&quot;),
+    LOGIN_ERROR(false, 23005, &quot;登录失败&quot;),
+
+    COMMENT_EMPTY(false, 24006, &quot;评论内容必须填写&quot;),
+
+    PAY_RUN(false, 25000, &quot;支付中&quot;),
+    PAY_UNIFIEDORDER_ERROR(false, 25001, &quot;统一下单错误&quot;),
+    PAY_ORDERQUERY_ERROR(false, 25002, &quot;查询支付结果错误&quot;),
+
+    ORDER_EXIST_ERROR(false, 25003, &quot;课程已购买&quot;),
+
+    GATEWAY_ERROR(false, 26000, &quot;服务不能访问&quot;),
+
+    CODE_ERROR(false, 28000, &quot;验证码错误&quot;),
+
+    LOGIN_PHONE_ERROR(false, 28009, &quot;手机号码不正确&quot;),
+    LOGIN_MOBILE_ERROR(false, 28001, &quot;账号不正确&quot;),
+    LOGIN_PASSWORD_ERROR(false, 28008, &quot;密码不正确&quot;),
+    LOGIN_DISABLED_ERROR(false, 28002, &quot;该用户已被禁用&quot;),
+    REGISTER_MOBLE_ERROR(false, 28003, &quot;手机号已被注册&quot;),
+    LOGIN_AUTH(false, 28004, &quot;需要登录&quot;),
+    LOGIN_ACL(false, 28005, &quot;没有权限&quot;),
+    SMS_SEND_ERROR(false, 28006, &quot;短信发送失败&quot;),
+    SMS_SEND_ERROR_BUSINESS_LIMIT_CONTROL(false, 28007, &quot;短信发送过于频繁&quot;);
+
+
+    private Boolean success;
+
+    private Integer code;
+
+    private String message;
+
+    ResultCodeEnum(Boolean success, Integer code, String message) &#123;
+        this.success = success;
+        this.code = code;
+        this.message = message;
+    &#125;
+&#125;
+</code></pre>
+<p>遇到问题：<strong>pom文件变橘红</strong>：idea没有识别，我们可以通过右键pom.xml文件选择Add as Maven Poject 来解决</p>
+<p>​                    <strong>pom文件变灰</strong>：打开setting，搜索ignored<img src="/2021/11/11/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B/image-20211112212242759.png" alt="image-20211112212242759"></p>
+<h3><span id="定义前端查询的对象">定义前端查询的对象</span></h3><p>讲师：</p>
+<pre><code class="java">public class TeacherQueryVo implements Serializable &#123;
+    private static final long serialVersionUID = 1L;
+
+    @ApiModelProperty(value = &quot;讲师姓名&quot;)
+    private String name;
+
+    @ApiModelProperty(value = &quot;讲师级别&quot;)
+    private Integer level;
+
+    @ApiModelProperty(value = &quot;开始时间&quot;)
+    private String joinDateBegin;
+
+    @ApiModelProperty(value = &quot;结束时间&quot;)
+    private String joinDateEnd;
+&#125;
+</code></pre>
+<p>关于设置自动填充类</p>
+<p>如果没有设置的话，save方法前端以json形式返回后台数据中没有创建时间和更新时间，但是数据库中两字段为必填字段，程序就会报错</p>
+<p><img src="/2021/11/11/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B/image-20211113135408082.png" alt="image-20211113135408082"></p>
+<p>所以就要设置自动配置handler类</p>
+<pre><code class="Java">@Component
+public class CommonMetaObjectHandler implements MetaObjectHandler &#123;
+
+    @Override
+    public void insertFill(MetaObject metaObject) &#123;
+        this.setFieldValByName(&quot;gmtCreate&quot;, new Date(), metaObject);
+        this.setFieldValByName(&quot;gmtModified&quot;, new Date(), metaObject);
+    &#125;
+
+    @Override
+    public void updateFill(MetaObject metaObject) &#123;
+        this.setFieldValByName(&quot;gmtModified&quot;, new Date(), metaObject);
+    &#125;
+&#125;
+</code></pre>
+<h3><span id="定义统一异常处理器">定义统一异常处理器</span></h3><p>因为要返回前台，所以要统一异常处理，并以json格式返回</p>
+<pre><code class="Java">@ControllerAdvice
+@Slf4j
+public class GlobalExceptionHandler &#123;
+
+    @ExceptionHandler(Exception.class)
+    @ResponseBody
+    public R error(Exception e)&#123;
+//        e.printStackTrace();
+        log.error(ExceptionUtils.getMessage(e));
+        return R.error();
+    &#125;
+
+    @ExceptionHandler(BadSqlGrammarException.class)
+    @ResponseBody
+    public R error(BadSqlGrammarException e)&#123;
+        log.error(ExceptionUtils.getMessage(e));
+        return R.setResult(ResultCodeEnum.BAD_SQL_GRAMMAR);
+    &#125;
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    @ResponseBody
+    public R error(HttpMessageNotReadableException e)&#123;
+        log.error(ExceptionUtils.getMessage(e));
+        return R.setResult(ResultCodeEnum.JSON_PARSE_ERROR);
+    &#125;
+&#125;
+</code></pre>
+<h2><span id="前端">前端</span></h2><p>vue axios</p>
+<p>跨域问题：@crossOrigin</p>
+<p>npm</p>
+<p><strong>安装生产环境依赖</strong>：npm install –save-dev  ***</p>
+<p>或者 npm i -D ***</p>
+<p>安装全局依赖：npm install –global ***</p>
+<p>webpack进行项目打包 ，创建webpack.config.js文件：</p>
+<pre><code class="js">const path = require(&quot;path&quot;) //Node.js内置模块
+
+module.exports = &#123;
+    entry: &#39;./src/main.js&#39;, //配置入口文件
+    output: &#123;
+        path: path.resolve(__dirname, &#39;./dist&#39;), //输出路径，__dirname：当前文件所在路径
+        filename: &#39;bundle.js&#39; //输出文件
+    &#125;,
+    module: &#123;
+        rules: [  
+            &#123;  
+                test: /\.css$/,    //打包规则应用到以css结尾的文件上
+                use: [&#39;style-loader&#39;, &#39;css-loader&#39;]
+            &#125;  
+        ]  
+    &#125;
+&#125;
+</code></pre>
+<p>然后执行webpack –mode=development命令</p>
+<p><img src="/2021/11/11/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B/image-20211116160418094.png" alt="image-20211116160418094"></p>
+<p>webpack压缩</p>
+<p>执行webpack –mode=production命令</p>
+<p>之后这些命令都会集成在脚本里，直接执行脚本就可以了</p>
+<p>webpack打包css</p>
+<p>安装两个依赖</p>
+<pre><code class="js">&quot;devDependencies&quot;: &#123;
+  &quot;css-loader&quot;: &quot;^3.5.2&quot;,
+  &quot;style-loader&quot;: &quot;^1.1.3&quot;
+&#125;
+</code></pre>
+<p>然后在webpak.config.js文件中加上以下配置</p>
+<pre><code class="js">module: &#123;
+        rules: [  
+            &#123;  
+                test: /\.css$/,    //打包规则应用到以css结尾的文件上
+                use: [&#39;style-loader&#39;, &#39;css-loader&#39;]
+            &#125;  
+        ]  
+    &#125;
+</code></pre>
+<p>页面渲染流程：创建路由–创建API–创建页面组件</p>
+<p><img src="/2021/11/11/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B/image-20211118111357610.png" alt="image-20211118111357610"></p>
+<p>遇到问题：<br>回显页切到新增页表单没有更新，两个页面通用一个表单，两个页面切换没有更新，因为vue会组件复用</p>
+<p><img src="/2021/11/11/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B/image-20211118113144519.png" alt="image-20211118113144519"></p>
+<p><img src="/2021/11/11/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B/image-20211118113800410.png" alt="image-20211118113800410"></p>
+<p>需要在appmain中进行配置</p>
+<p><img src="/2021/11/11/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B/image-20211118114000851.png" alt="image-20211118114000851"></p>
+<pre><code class="vue">&lt;template&gt;
+  &lt;section class=&quot;app-main&quot;&gt;
+    &lt;transition name=&quot;fade-transform&quot; mode=&quot;out-in&quot;&gt;
+      &lt;!-- or name=&quot;fade&quot; --&gt;
+      &lt;!-- 如果为路由出口定义一个唯一key值，那么组件会被强制重新渲染 --&gt;
+      &lt;router-view :key=&quot;key&quot;/&gt;
+      &lt;!-- 如果路由指向的页面组件是同一个，那么路由出口显示的页面组件不会重新被渲染 --&gt;
+      &lt;!--      &lt;router-view/&gt;--&gt;
+    &lt;/transition&gt;
+  &lt;/section&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default &#123;
+  name: &#39;AppMain&#39;,
+
+  // 计算属性
+  computed: &#123;
+    key() &#123;
+      return this.$route.name !== undefined ? this.$route.name + +new Date() : this.$route + +new Date()
+    &#125;
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<p>计算属性效率很高</p>
+<h2><span id="自定义异常">自定义异常</span></h2><p>更为灵活</p>
+<p>一般情况下自定义异常类型都为运行时异常，继承RuntimeException</p>
+<h2><span id="注册中心和服务容错">注册中心和服务容错</span></h2><h3><span id="nacos">nacos</span></h3><p>使用它充当注册中心</p>
+<h3><span id="使用jmeter测试并发">使用JMeter测试并发</span></h3><p>服务之间的雪崩效应</p>
+<p><img src="/2021/11/11/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B/image-20211124224106908.png" alt="image-20211124224106908"></p>
+<h3><span id="容错方案">容错方案</span></h3><p>隔离，超时，限流，熔断，降级        经典容错组件：Spring Cloud Hystrix、Sentinel。</p>
+<h4><span id="隔离">隔离</span></h4><p>线程池隔离和信号量隔离</p>
+<h4><span id="超时">超时</span></h4><p>所有的接口调用必须设置超时时间，不设置超时时间请求有可能陷入长期等待，甚至有可能导致整个服务不可用</p>
+<h4><span id="限流"><strong>限流</strong></span></h4><p>限流即流量限制，或者高大上一点，叫做流量整形，限流的目的是在遇到流量高峰期或者流量突增（流量尖刺）时，把流量速率限制在系统所能接受的合理范围之内，不至于让系统被高流量击垮。限流可以保证系统在调用量猛增时的基本可用性，目前有几种常见的限流方式：</p>
+<p>1）通过限制单位时间段内调用量来限流</p>
+<p>2）通过限制系统的并发调用程度来限流</p>
+<p>3）使用漏桶（Leaky Bucket）算法来进行限流</p>
+<p>4）使用令牌桶（Token Bucket）算法来进行限流</p>
+<h4><span id="熔断">熔断</span></h4><p>当下游服务因访问压力过大而响应变慢或失败，上游服务为了保护系统整体可用性，可以暂时切断对下游服务的调用，这种牺牲局部，保全整体的措施就叫做熔断</p>
+<h4><span id="降级">降级</span></h4><p>为服务提供一个托底方案，一旦服务无法正常调用，就使用托底方案</p>
+<h3><span id="sentinel">sentinel</span></h3><p>新增流控规则</p>
+<img src="/2021/11/11/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B/image-20211125222458818.png" alt="image-20211125222458818" style="zoom:150%;">
+
+<p><img src="/2021/11/11/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B/image-20211125222525377.png" alt="image-20211125222525377"></p>
+<p>在swaager中快速点击try，一秒超过两次的话就会出现下面的情况</p>
+<p><img src="/2021/11/11/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B/image-20211125222651777.png" alt="image-20211125222651777"></p>
+<p><strong>流量控制</strong></p>
+<p><strong>保证自己不被上游服务压垮</strong></p>
+<p>流量控制在网络传输中是一个常用的概念，它用于调整网络包的发送数据。然而，从系统稳定性角度考虑，在处理请求的速度上，也有非常多的讲究。任意时间到来的请求往往是随机不可控的，而系统的处理能力是有限的。我们需要根据系统的处理能力对流量进行控制。Sentinel 作为一个调配器，可以根据需要把随机的请求调整成合适的形状，简单来说，就是Sentinel可以根据具体的需求来对不同的请求定义不同的控制策略。如下图所示：</p>
+<p><img src="/2021/11/11/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Nob25nYmFvemhvbmc=,size_16,color_FFFFFF,t_70#pic_center" alt="img"></p>
+<p>Sentinel 的设计理念是让您自由选择控制的角度，并进行灵活组合，从而达到想要的效果。主要的控制方向如下：</p>
+<ul>
+<li><p>资源的调用关系，例如资源的调用链路，资源和资源之间的关系；</p>
+</li>
+<li><p>运行指标，例如 QPS、线程池、系统负载等；</p>
+</li>
+<li><p>控制的效果，例如直接限流、冷启动、排队等。</p>
+</li>
+</ul>
+<p><strong>熔断降级</strong></p>
+<p><strong>保证自己不被下游服务压垮</strong></p>
+<p> 什么是熔断降级<br> 简单来说就是负载保护，不让服务器因为过多的并发而瘫痪。除了流量控制以外，降低调用链路中的不稳定资源也是 Sentinel 的使命之一。由于调用关系的复杂性，如果调用链路中的某个资源出现了不稳定，最终会导致请求发生堆积。这个问题和 Hystrix 里面描述的问题是一样的。</p>
+<p><img src="/2021/11/11/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Nob25nYmFvemhvbmc=,size_16,color_FFFFFF,t_70#pic_center-16378508600642" alt="在这里插入图片描述"></p>
+<p>Sentinel 和 Hystrix 的原则是一致的: 当调用链路中某个资源出现不稳定，例如，表现为 timeout，异常比例升高的时候，则对这个资源的调用进行限制，并让请求快速失败，避免影响到其它的资源，最终产生雪崩的效果。</p>
+<p><strong>Sentinel熔断降级设计理念</strong><br>在限制的手段上，Sentinel 和 Hystrix 采取了完全不一样的方法。<br>Hystrix 通过线程池的方式，来对依赖(在我们的概念中对应资源)进行了隔离。这样做的好处是资源和资源之间做到了最彻底的隔离。缺点是除了增加了线程切换的成本，还需要预先给各个资源做线程池大小的分配。<br>Sentinel 对这个问题采取了两种手段:</p>
+<p>1.<strong>通过并发线程数进行限制</strong><br>和资源池隔离的方法不同，Sentinel 通过限制资源并发线程的数量，来减少不稳定资源对其它资源的影响。这样不但没有线程切换的损耗，也不需要您预先分配线程池的大小。当某个资源出现不稳定的情况下，例如响应时间变长，对资源的直接影响就是会造成线程数的逐步堆积。当线程数在特定资源上堆积到一定的数量之后，对该资源的新请求就会被拒绝。堆积的线程完成任务后才开始继续接收请求。</p>
+<p>2.<strong>通过响应时间对资源进行降级</strong><br>除了对并发线程数进行控制以外，Sentinel 还可以通过响应时间来快速降级不稳定的资源。当依赖的资源出现响应时间过长后，所有对该资源的访问都会被直接拒绝，直到过了指定的时间窗口之后才重新恢复。</p>
+<p><strong>负载保护</strong><br>Sentinel 同时提供系统维度的自适应保护能力。防止雪崩，是系统防护中重要的一环。当系统负载较高的时候，如果还持续让请求进入，可能会导致系统崩溃，无法响应。在集群环境下，网络负载均衡会把本应这台机器承载的流量转发到其它的机器上去。如果这个时候其它的机器也处在一个边缘状态的时候，这个增加的流量就会导致这台机器也崩溃，最后导致整个集群不可用。<br>针对这个情况，Sentinel 提供了对应的保护机制，让系统的入口流量和系统的负载达到一个平衡，保证系统在能力范围之内处理最多的请求。</p>
+<h2><span id="遇到问题">遇到问题：</span></h2><p>项目进行打包时没有把xml文件打包进去，导致运行sql语句时报错</p>
+<p>解决方案：<br>pom.xml文件中配置</p>
+<pre><code class="xml">&lt;build&gt;
+    &lt;resources&gt;
+        &lt;resource&gt;
+            &lt;directory&gt;src/main/java&lt;/directory&gt;
+            &lt;includes&gt;
+                &lt;include&gt;**/*.xml&lt;/include&gt;
+            &lt;/includes&gt;
+            &lt;filtering&gt;false&lt;/filtering&gt;
+        &lt;/resource&gt;
+    &lt;/resources&gt;
+&lt;/build&gt;
+</code></pre>
+<p>然后再在application.yml文件中配置：</p>
+<p><img src="/2021/11/11/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B/image-20211127215103746.png" alt="image-20211127215103746"></p>
+<p><strong>com.aliyun.oss.ClientException: UnknownHost</strong></p>
+<p>没联网！！！🤐🤐🤐</p>
+<h2><span id="数据库优化课程管理">数据库优化（课程管理）</span></h2><p>纵向拆表</p>
+<p><img src="/2021/11/11/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B/image-20211128195950279.png" alt="image-20211128195950279"></p>
+<p>由于有一列长文本字段数据过多，展示课程列表时并不需要这种庞杂繁多的信息，所以拆表可优化性能。</p>
+<p>因为edu_course_description和edu_course为一对一关系，所以edu_course_description的主键生成策略应该跟随edu_course的主键生成策略。</p>
+<pre><code class="Java">@ApiModelProperty(value = &quot;讲师ID&quot;)
+@TableId(value = &quot;id&quot;, type = IdType.NONE)
+private String id;
+</code></pre>
+<pre><code class="java">private BigDecimal price;
+</code></pre>
+<p>使用bigdecimal定义价格，避免精度丢失</p>
+<p>快速赋予值</p>
+<pre><code class="Java">BeanUtils.copyProperties( 给予=&gt;courseInfoForm, 接受=&gt;course);
+</code></pre>
+<p>前段课程类别</p>
+<p><img src="/2021/11/11/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B/image-20211128212211788.png" alt="image-20211128212211788"></p>
+<p><img src="/2021/11/11/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B/image-20211128212227154.png" alt="image-20211128212227154"></p>
+<p>可以使用两种方式加载资源</p>
+<p>一次性加载（适合数据量不大）</p>
+<p>延迟加载（适合数据量大，移动端考虑到流量问题）</p>
+<h2><span id="多表联查">多表联查</span></h2><p>使用外联查询，因为不需查询出所有列</p>
+<pre><code class="xml">&lt;sql id=&quot;columns&quot;&gt;
+    c.id,
+  c.title,
+  c.lesson_num AS lessonNum,
+  CONVERT(c.price, DECIMAL(8,2)) AS price,
+  c.cover,
+  c.buy_count AS buyCount,
+  c.view_count AS viewCount,
+  c.status,
+  c.gmt_create AS gmtCreate,
+
+  t.name AS teacherName,
+
+  s1.title AS subjectParentTitle,
+  s2.title AS subjectTitle
+&lt;/sql&gt;
+&lt;sql id=&quot;tables&quot;&gt;
+    edu_course c
+    LEFT JOIN edu_teacher t ON c.teacher_id = t.id
+    LEFT JOIN edu_subject s1 ON c.subject_parent_id = s1.id
+    LEFT JOIN edu_subject s2 ON c.subject_id = s2.id
+&lt;/sql&gt;
+&lt;select id=&quot;selectPageByCourseQueryVo&quot; resultType=&quot;com.atguigu.guli.service.edu.entity.vo.CourseVo&quot;&gt;
+    SELECT &lt;include refid=&quot;columns&quot; /&gt;
+    FROM &lt;include refid=&quot;tables&quot; /&gt;
+    $&#123;ew.customSqlSegment&#125; 
+&lt;/select&gt;
+</code></pre>
+<p>当我们需要把组装的querywapper传到mapper让mybatis自动查询时</p>
+<p>1.<img src="/2021/11/11/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B/image-20211129204210637.png" alt="image-20211129204210637"></p>
+<p>2.<img src="/2021/11/11/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B/image-20211129204255198.png" alt="image-20211129204255198"></p>
+<h4><span id="删除业务">删除业务：</span></h4><pre><code class="java"> 数据库中外键约束的设置：
+ 互联网分布式项目中不允许使用外键与级联更新，一切设计级联的操作不要依赖数据库层，要在业务层解决
+ &lt;p&gt;
+ 如果业务层解决级联删除功能
+ 那么先删除子表数据，再删除父表数据
+</code></pre>
+<h2><span id="章节管理部分">章节管理部分</span></h2><p>优化嵌套查询回显嵌套列表</p>
+<p>优化sql语句</p>
+<p>方案1为显示课程分类列表时使用的sql查询方法，查询效率低</p>
+<p>方案2为在业务层解决这个问题，直接sql查询两次得出全部的数据然后在进行组装 </p>
+<p><img src="/2021/11/11/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B/image-20211202142759148.png" alt="image-20211202142759148"></p>
+<h2><span id="视频上传服务">视频上传服务</span></h2><p>本地仓库导入jar包</p>
+<pre><code class="cmd">mvn install:install-file -DgroupId=com.aliyun -DartifactId=aliyun-sdk-vod-upload -Dversion=1.4.11 -Dpackaging=jar -Dfile=aliyun-java-vod-upload-1.4.11.jar
+</code></pre>
+<h2><span id="前端渲染和服务器端渲染">前端渲染和服务器端渲染</span></h2><h3><span id="1-什么是服务端渲染">1、什么是服务端渲染</span></h3><p>服务端渲染又称SSR (Server Side Render)是在服务端完成页面的内容渲染，而不是在客户端完成页面内容的渲染。</p>
+<p>SSR并不是前端特有的技术，我们学习过的JSP技术和Thymeleaf技术就是典型的SSR</p>
+<p><img src="/2021/11/11/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B/a9b7b10a8fbfe2d36ee20f807a174a75.png" alt="img"></p>
+<p>服务端渲染的特点：</p>
+<ul>
+<li>在服务端生成html网页的dom元素</li>
+<li>客户端（浏览器）只负责显示dom元素内容</li>
+</ul>
+<h3><span id="2-什么是客户端渲染">2、什么是客户端渲染</span></h3><p>客户端（浏览器） 使用AJAX向服务端发起http请 求，获取到了想要的数据，开始渲染html网页，生成dom元素，并最终将网页内容展示给用户。</p>
+<p><img src="/2021/11/11/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B/aa49e5a9caa4641002d5608cd5acd136.png" alt="img"></p>
+<p>客户端渲染的特点：</p>
+<ul>
+<li>在服务端只是给客户端响应的了数据，而不是html网页</li>
+<li>客户端（浏览器）负责获取服务端的数据生成dom元素</li>
+</ul>
+<h2><span id="3-两种方式各有什么优缺点">3、两种方式各有什么优缺点？</span></h2><p><strong>客户端渲染：</strong> </p>
+<ol>
+<li><p>缺点：不利于网站进行SEO，因为网站大量使用javascript技术，不利于搜索引擎抓取网页。 </p>
+</li>
+<li><p>优点：客户端负责渲染，用户体验性好，服务端只提供数据不用关心用户界面的内容，有利于提高服务端的开发效率。 </p>
+</li>
+<li><p>适用场景：对SEO没有要求的系统，比如后台管理类的系统，如电商后台管理，用户管理等。</p>
+</li>
+</ol>
+<p> <strong>服务端渲染：</strong> </p>
+<ol>
+<li><p>优点：有利于SEO，网站通过href的url将搜索引擎直接引到服务端，服务端提供优质的网页内容给搜索引擎。</p>
+</li>
+<li><p>缺点：服务端完成一部分客户端的工作，通常完成一个需求需要修改客户端和服务端的代码，开发效率低，不利于系统的稳定性。</p>
+</li>
+<li><p>适用场景：对SEO有要求的系统，比如：门户首页、商品详情页面等。</p>
+</li>
+</ol>
+<p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1046667">浅析前端渲染与服务端渲染 - 云+社区 - 腾讯云 (tencent.com)</a></p>
+<p>那就需要一个组件来既利于seo，又利于用户体验</p>
+<h2><span id="nuxtjs">Nuxt.js</span></h2><p>在这里指的服务器端是前端服务器</p>
+<p>Nuxt.js 是一个基于 Vue.js 的轻量级应用框架,可以用来创建服务端渲染 (SSR) 应用，也可充当静态站点引擎生成静态站点应用,具有优雅的代码结构分层和热加载等特性</p>
+<p>具体代码实例：</p>
+<pre><code class="vue">  // 服务器端渲染方案：
+  // 异步数据获取：在前端服务器端执行，爬虫直接在页面就可以爬到具体关键字信息
+  asyncData() &#123;
+    return teacherApi.getList().then(response =&gt; &#123;
+      return &#123;
+        items: response.data.items
+      &#125;
+    &#125;)
+  &#125;
+
+// 客户端渲染方案
+//   data() &#123;
+//     return &#123;
+//       items: []
+//     &#125;
+//   &#125;,
+
+//   created() &#123;
+//     teacherApi.getList().then(response =&gt; &#123;
+//       this.items = response.data.items
+//     &#125;)
+//   &#125;
+</code></pre>
+<h2><span id="前端url组装参数">前端url组装参数</span></h2><p>使用queryString组件组装</p>
+<p><img src="/2021/11/11/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B/Blog\source_posts\谷粒学院项目历程\image-20211206213423909.png" alt="image-20211206213423909"></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/08/%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -347,789 +919,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/04/Redis/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Gzz">
-      <meta itemprop="description" content="只要开始就不算晚">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="香饽饽">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/11/04/Redis/" class="post-title-link" itemprop="url">Redis</a>
-        </h2>
-
-        <div class="post-meta">
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-11-04 11:37:46" itemprop="dateCreated datePublished" datetime="2021-11-04T11:37:46+08:00">2021-11-04</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-11-08 14:24:16" itemprop="dateModified" datetime="2021-11-08T14:24:16+08:00">2021-11-08</time>
-              </span>
-
-          
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-              <span>14k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-              <span>12 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1><span id="redis">Redis</span></h1><p><img src="/2021/11/04/Redis/image-20211104130443874.png" alt="image-20211104130443874"></p>
-<p>因为没有指定配置文件</p>
-<p>需配置</p>
-<pre><code>redis-server redis.windows.conf
-</code></pre>
-<p>之后自动启动</p>
-<h2><span id="测试性能"><strong>测试性能</strong></span></h2><pre><code class="bash">redis-benchmark -p 6379 -c 100 -n 10000
-</code></pre>
-<p><img src="/2021/11/04/Redis/image-20211104140217226.png" alt="image-20211104140217226"></p>
-<p><img src="/2021/11/04/Redis/image-20211104140647780.png" alt="image-20211104140647780"></p>
-<h2><span id="基础概念">基础概念：</span></h2><p><img src="/2021/11/04/Redis/image-20211104141011197.png" alt="image-20211104141011197"></p>
-<p><img src="/2021/11/04/Redis/image-20211104141230255.png" alt="image-20211104141230255"></p>
-<p>清空当前数据库：flushdb</p>
-<p>清空全部数据库：flushall</p>
-<blockquote>
-<p>redis是单线程的</p>
-</blockquote>
-<p>redis的瓶颈是机器的内存和网络的带宽，用单线程既然可以实现，就用单线程了</p>
-<blockquote>
-<p>为什么单线程还这么快呢</p>
-</blockquote>
-<p>redis是将所有的数据全部放在内存中，所以说用单线程操作效率最高，多线程（cpu上下文会切换：耗时的操作），对于内存系统来说，如果没有上下文切换效率就是最高的！多次读写都是在一个cpu上，在内存情况下，这个就是最佳的选择。</p>
-<h1><span id="五大数据类型">五大数据类型</span></h1><h3><span id="redis-key">redis-key</span></h3><pre><code class="bash">#移除name key
-move name 1
-</code></pre>
-<p><img src="/2021/11/04/Redis/image-20211104143325041.png" alt="image-20211104143325041"></p>
-<pre><code class="bash">#设置过期时间
-expire name 10 
-</code></pre>
-<p><img src="/2021/11/04/Redis/image-20211104143636111.png" alt="image-20211104143636111"></p>
-<p>查看剩余过期时间：ttl name;</p>
-<pre><code class="bash">#查看键的类型
-type name
-</code></pre>
-<p><img src="/2021/11/04/Redis/image-20211104143922548.png" alt="image-20211104143922548"></p>
-<h3><span id="string">String</span></h3><p><img src="/2021/11/04/Redis/image-20211104144412464.png" alt="image-20211104144412464"></p>
-<p>如果append后的键不存在就创建一个，相当于set</p>
-<p><img src="/2021/11/04/Redis/image-20211104145142401.png" alt="image-20211104145142401"></p>
-<blockquote>
-<p>获取一部分值</p>
-</blockquote>
-<p><img src="/2021/11/04/Redis/image-20211104145422840.png" alt="image-20211104145422840"></p>
-<blockquote>
-<p>获取全部的值 </p>
-</blockquote>
-<p><img src="/2021/11/04/Redis/image-20211104145501629.png" alt="image-20211104145501629"></p>
-<blockquote>
-<p>替换值</p>
-</blockquote>
-<p><img src="/2021/11/04/Redis/image-20211104145749240.png" alt="image-20211104145749240"></p>
-<blockquote>
-<p>setex 设置过期时间</p>
-<p>setnx 如果没有这个键就设置值成功，如果已存在这个键就设置不成功（在分布式锁中常应用 ）</p>
-</blockquote>
-<p><img src="/2021/11/04/Redis/image-20211104150144398.png" alt="image-20211104150144398"></p>
-<blockquote>
-<p>批量设置键和值，批量获取值</p>
-</blockquote>
-<p><img src="/2021/11/04/Redis/image-20211104150700175.png" alt="image-20211104150700175"></p>
-<blockquote>
-<p>msetnx 具有原子性</p>
-</blockquote>
-<p>设置对象，以json字符串的形式</p>
-<p><img src="/2021/11/04/Redis/image-20211104151319002.png" alt="image-20211104151319002"></p>
-<blockquote>
-<p>getset</p>
-</blockquote>
-<p><img src="/2021/11/04/Redis/image-20211104151448797.png" alt="image-20211104151448797"></p>
-<h3><span id="list">List</span></h3><p>在redis中，list可以被我们玩成栈，队列，阻塞队列</p>
-<blockquote>
-<p>lpush 放进列表数据</p>
-<p>lrange 取出指定位置的数据，可以看出下标是倒着来的。</p>
-</blockquote>
-<p><img src="/2021/11/04/Redis/image-20211104152112654.png" alt="image-20211104152112654"></p>
-<p>说明rpush把值放在了队列的最后面</p>
-<p><img src="/2021/11/04/Redis/image-20211104152548954.png" alt="image-20211104152548954"></p>
-<blockquote>
-<p>从列表中移除值，可以分为移除左边的和右边的</p>
-</blockquote>
-<p><img src="/2021/11/04/Redis/image-20211104153013118.png" alt="image-20211104153013118"></p>
-<blockquote>
-<p>通过下标获取值</p>
-</blockquote>
-<p><img src="/2021/11/04/Redis/image-20211104153153183.png" alt="image-20211104153153183"></p>
-<blockquote>
-<p>获取列表长度</p>
-</blockquote>
-<p>llen</p>
-<blockquote>
-<p>移除指定的值,可指定数量</p>
-</blockquote>
-<p><img src="/2021/11/04/Redis/image-20211104153655790.png" alt="image-20211104153655790"></p>
-<blockquote>
-<p>通过下标截取指定的长度</p>
-</blockquote>
-<p><img src="/2021/11/04/Redis/image-20211104154058106.png" alt="image-20211104154058106"></p>
-<blockquote>
-<p>移除列表的最后一个元素，将他移动到新列表中</p>
-</blockquote>
-<p><img src="/2021/11/04/Redis/image-20211104154308321.png" alt="image-20211104154308321"></p>
-<blockquote>
-<p>更新指定位置的值</p>
-</blockquote>
-<p><img src="/2021/11/04/Redis/image-20211104154722495.png" alt="image-20211104154722495"></p>
-<p><img src="/2021/11/04/Redis/image-20211104155347613.png" alt="image-20211104155347613"></p>
-<h3><span id="set">set</span></h3><p><img src="/2021/11/04/Redis/image-20211104155948255.png" alt="image-20211104155948255"></p>
-<p><img src="/2021/11/04/Redis/image-20211104160159057.png" alt="image-20211104160159057"></p>
-<p><img src="/2021/11/04/Redis/image-20211104160308656.png" alt="image-20211104160308656"></p>
-<p><img src="/2021/11/04/Redis/image-20211104160609153.png" alt="image-20211104160500757"></p>
-<p><img src="/2021/11/04/Redis/image-20211104161114018.png" alt="image-20211104161114018"></p>
-<h3><span id="hash">hash</span></h3><p>Map集合，key-map，那时候这个值是一个map集合，本质和String类型没有太大区别，还是一个简单的key-vlaue</p>
-<p><img src="/2021/11/04/Redis/image-20211104162116587.png" alt="image-20211104162116587"></p>
-<p>获取hash表的内容长度</p>
-<p><img src="/2021/11/04/Redis/image-20211104162829439.png" alt="image-20211104162829439"></p>
-<p>获取所有的field和所有的值</p>
-<p><img src="/2021/11/04/Redis/image-20211104163226493.png" alt="image-20211104163226493"></p>
-<p>hash更适合于对象的存储</p>
-<h3><span id="zset有序集合">Zset（有序集合）</span></h3><p><strong>排列</strong></p>
-<p><img src="/2021/11/04/Redis/image-20211104170955039.png" alt="image-20211104170955039"></p>
-<p>显示工资小于2000的工资排列</p>
-<p><img src="/2021/11/04/Redis/image-20211104171308530.png" alt="image-20211104171308530"></p>
-<p>移除指定元素</p>
-<p><img src="/2021/11/04/Redis/image-20211104172219379.png" alt="image-20211104172219379"></p>
-<p>获取集合中的个数</p>
-<pre><code class="bash">zcard salary
-</code></pre>
-<p>获取指定区间的成员数量</p>
-<p><img src="/2021/11/04/Redis/image-20211104173454977.png" alt="image-20211104173454977"></p>
-<p>总结：</p>
-<p><img src="/2021/11/04/Redis/image-20211104175033465.png" alt="image-20211104175033465"></p>
-<h1><span id="三种特殊数据类型">三种特殊数据类型</span></h1><h2><span id="geospatial地理位置">Geospatial(地理位置)</span></h2><blockquote>
-<p>geoadd 添加地理位置</p>
-</blockquote>
-<pre><code class="bash">geoadd key longitude latitude member [longitude latitude member ...]
-</code></pre>
-<blockquote>
-<p>geopos获得地理位置详细信息</p>
-</blockquote>
-<pre><code class="bash">geopos key member [member ...]
-</code></pre>
-<blockquote>
-<p>geodist获得两个地点之间的距离，可在后面追加获得结果的单位 km m</p>
-</blockquote>
-<pre><code class="bash">geodist key member1 member2 [unit]
-</code></pre>
-<blockquote>
-<p>georadius获得以某一点经纬度为圆心，一定距离为半径之内的元素</p>
-</blockquote>
-<pre><code class="bash">georadius key longitude latitude radius m|km|ft|mi [WITHCOORD] [WITHDIST] [WITHHASH] [COUNT count] [ASC
-</code></pre>
-<blockquote>
-<p>georadiusbymember获得某一成员为圆心，一定距离为半径之内的元素</p>
-</blockquote>
-<blockquote>
-<p>geo底层的实现原理是zset，可以使用zset命令来操作geo</p>
-</blockquote>
-<h2><span id="hyperloglog">hyperloglog</span></h2><p>统计基数</p>
-<p>可以用作网站的UV（一个人访问网站多次，但是还是算作一个人）</p>
-<p>传统的方式是用set，如果存储量太大的话就比较麻烦</p>
-<blockquote>
-<p>测试</p>
-</blockquote>
-<p><img src="/2021/11/04/Redis/image-20211105221008371.png" alt="image-20211105221008371"></p>
-<h2><span id="bitmaps">bitmaps</span></h2><blockquote>
-<p>位存储</p>
-</blockquote>
-<p>位图，是数据结构，都是操作二进制为来进行操作，只有0和1两个状态</p>
-<p>统计一周的打卡情况</p>
-<p><img src="/2021/11/04/Redis/image-20211105221855488.png" alt="image-20211105221855488"></p>
-<p>查看某一天的打卡情况</p>
-<p><img src="/2021/11/04/Redis/image-20211105222028892.png" alt="image-20211105222028892"></p>
-<p>查看打卡了几天</p>
-<pre><code class="bash">127.0.0.1:6379&gt; bitcount si
-(integer) 2
-</code></pre>
-<h1><span id="事务">事务</span></h1><p>本质：一组命令的集合，所有命令都会被序列化，执行过程中，按照顺序执行</p>
-<p><strong>redis单挑命令保存原子性，但是事务不保证原子性，没有隔离级别的概念</strong></p>
-<p>所有命令在事务中，并不被直接执行，只有发起执行命令的时候才被执行</p>
-<ol>
-<li>开启事务</li>
-<li>命令入队</li>
-<li>执行事务</li>
-</ol>
-<blockquote>
-<p>正常执行事务</p>
-</blockquote>
-<pre><code class="bash">127.0.0.1:6379&gt; multi #开启事务
-OK
-127.0.0.1:6379&gt; set k1 v1
-QUEUED
-127.0.0.1:6379&gt; set k2 v2
-QUEUED
-127.0.0.1:6379&gt; get k2
-QUEUED
-127.0.0.1:6379&gt; set k3 v3
-QUEUED
-127.0.0.1:6379&gt; exec#执行事务
-1) OK
-2) OK
-3) &quot;v2&quot;
-4) OK
-127.0.0.1:6379&gt;
-</code></pre>
-<blockquote>
-<p>放弃事务</p>
-</blockquote>
-<p>discard</p>
-<blockquote>
-<p>编译型异常（代码有问题），事务中所有命令都不会被执行</p>
-<pre><code class="bash">127.0.0.1:6379&gt; get k1
-(nil)
-127.0.0.1:6379&gt; multi
-OK
-127.0.0.1:6379&gt; set k1 v1
-QUEUED
-127.0.0.1:6379&gt; set k2 v2
-QUEUED
-127.0.0.1:6379&gt; getset k3
-(error) ERR wrong number of arguments for &#39;getset&#39; command
-127.0.0.1:6379&gt; get k1
-QUEUED
-127.0.0.1:6379&gt; exec
-(error) EXECABORT Transaction discarded because of previous errors.#所有事务不会被运行
-127.0.0.1:6379&gt;
-</code></pre>
-</blockquote>
-<blockquote>
-<p>运行时异常（1/0），其他命令正常执行，错误命令抛出异常 </p>
-</blockquote>
-<pre><code class="bash">127.0.0.1:6379&gt; multi
-OK
-127.0.0.1:6379&gt; incr k1#字符串不会加1
-QUEUED
-127.0.0.1:6379&gt; get k1
-QUEUED
-127.0.0.1:6379&gt; exec
-1) (error) ERR value is not an integer or out of range#属于运行时异常
-2) &quot;v1&quot; #正常执行
-127.0.0.1:6379&gt;
-</code></pre>
-<h2><span id="监控">监控</span></h2><h4><span id="乐观锁">乐观锁</span></h4><p>获取version，比较version</p>
-<blockquote>
-<p>监视：</p>
-</blockquote>
-<p>watch key [key …]</p>
-<p>执行之前，另外一个线程如果修改了我们的值，事务就会执行失败，就要放弃监视，然后重新监视</p>
-<blockquote>
-<p>放弃监视</p>
-</blockquote>
-<p>unwatch key</p>
-<h1><span id></span></h1><h1><span id="jedis">Jedis</span></h1><p>配置依赖</p>
-<pre><code class="xml">&lt;dependencies&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;redis.clients&lt;/groupId&gt;
-            &lt;artifactId&gt;jedis&lt;/artifactId&gt;
-            &lt;version&gt;3.2.0&lt;/version&gt;
-        &lt;/dependency&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;com.alibaba&lt;/groupId&gt;
-            &lt;artifactId&gt;fastjson&lt;/artifactId&gt;
-            &lt;version&gt;1.2.62&lt;/version&gt;
-        &lt;/dependency&gt;
-      
-    &lt;/dependencies&gt;
-</code></pre>
-<p>创建连接进行测试</p>
-<pre><code class="java">Jedis jedis=new Jedis(&quot;127.0.0.1&quot;, 6379);
-System.out.println(jedis.ping());
-</code></pre>
-<h1><span id="springboot整合">springboot整合</span></h1><p>底层为lettuce：采用netty，实例可以在多个线程中共享，不存在线程不安全的情况，NIO模式 </p>
-<p>jeids采用直连，多线程不安全，如想避免不安全，就使用jedis pool连接池,BIO模式</p>
-<p>操作各种基本类型</p>
-<p><img src="/2021/11/04/Redis/image-20211106154640957.png" alt="image-20211106154640957"></p>
-<p>获得链接，操作数据库</p>
-<p><img src="/2021/11/04/Redis/image-20211106154840090.png" alt="image-20211106154840090"></p>
-<h2><span id="序列化">序列化</span></h2><p>放入对象需序列化</p>
-<pre><code class="java">@Configuration
-public class RedisConfig &#123;
-
-    //编写自己的redisTemplate
-    @Bean
-    @SuppressWarnings(&quot;all&quot;)
-
-    public RedisTemplate&lt;String, Object&gt; redisTemplate(RedisConnectionFactory redisConnectionFactory)throws UnknownHostException &#123;
-
-        RedisTemplate&lt;String,Object&gt; redisTemplate=new RedisTemplate&lt;&gt;();
-        redisTemplate.setConnectionFactory(redisConnectionFactory);
-
-        //Json序列化配置
-        Jackson2JsonRedisSerializer jackson2JsonRedisSerializer=new Jackson2JsonRedisSerializer(Object.class);
-        ObjectMapper objectMapper=new ObjectMapper();
-        objectMapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
-        objectMapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
-        jackson2JsonRedisSerializer.setObjectMapper(objectMapper);
-
-        //String的序列化
-        StringRedisSerializer stringRedisSerializer=new StringRedisSerializer();
-
-        //key采用String的序列化方式
-        redisTemplate.setKeySerializer(stringRedisSerializer);
-        //Hash的序列化方式也采用String的方式
-        redisTemplate.setHashKeySerializer(stringRedisSerializer);
-        //value序列化方式采用jackson
-        redisTemplate.setValueSerializer(jackson2JsonRedisSerializer);
-        redisTemplate.afterPropertiesSet();
-        return redisTemplate;
-    &#125;
-&#125;
-</code></pre>
-<p>———————–固定配置模板</p>
-<h1><span id="redisconf详解">Redis.conf详解</span></h1><p><img src="/2021/11/04/Redis/image-20211106221030918.png" alt="image-20211106221030918"></p>
-<p>对大小写不敏感</p>
-<blockquote>
-<p>包含</p>
-<p><img src="/2021/11/04/Redis/image-20211106221148896.png" alt="image-20211106221148896"></p>
-<p>可包含多个配置文件</p>
-</blockquote>
-<blockquote>
-<p>网络</p>
-</blockquote>
-<pre><code class="bash">bind 127.0.0.1
-protected-mode yes #保护模式
-port 6379 #默认端口
-</code></pre>
-<p>绑定的IP</p>
-<blockquote>
-<p>通用</p>
-</blockquote>
-<pre><code class="bash"># NOT SUPPORTED ON WINDOWS daemonize no 
-#window端不支持此配置，配置此项须在linux端
-daemonize yes #以守护进程的方式运行，默认是no，我们需要自己开启为yes
-
-# NOT SUPPORTED ON WINDOWS pidfile /var/run/redis.pid
-#如果指定为后台方式运行，则需指定pid文件
-pidfile /var/run/redis.pid
-
-#日志级别
-# debug (a lot of information, useful for development/testing)
-# verbose (many rarely useful info, but not a mess like the debug level)
-# notice (moderately verbose, what you want in production probably)
-# warning (only very important / critical messages are logged)
-loglevel notice
-
-
-logfile &quot;&quot; #日志文件位置
-databases 16 #默认数据库数量
-</code></pre>
-<blockquote>
-<p>快照</p>
-</blockquote>
-<p>持久化：在规定时间内，执行了多少次操作则会持久化到文件.rdb .aof</p>
-<p>reids是内存数据库，如果没有持久化，那么数据断电即失。</p>
-<pre><code class="bash">save 900 1 #如果900s内，有一个key进行了修改，我们将进行持久化操作。以下皆同
-save 300 10
-save 60 10000
-
-stop-writes-on-bgsave-error yes#持久化出错，redis是否还继续工作
-rdbcompression yes#是否压缩rdb文件
-rdbchecksum yes #保存rdb文件的时候，进行错误的检查校验
-dir ./ #rdb文件的保存目录
-</code></pre>
-<blockquote>
-<p>安全</p>
-</blockquote>
-<pre><code class="bash">127.0.0.1:6379&gt; ping
-PONG
-127.0.0.1:6379&gt; config set requirepass 1234 #设置密码
-OK
-127.0.0.1:6379&gt; config get requirepass
-(error) NOAUTH Authentication required.
-127.0.0.1:6379&gt; auth 1234 #登录
-OK
-127.0.0.1:6379&gt; config get requirepass
-1) &quot;requirepass&quot;
-2) &quot;1234&quot;
-127.0.0.1:6379&gt;
-</code></pre>
-<p><img src="/2021/11/04/Redis/image-20211107174514097.png" alt="image-20211107174514097"></p>
-<blockquote>
-<p>客户端连接相关</p>
-</blockquote>
-<pre><code class="bash"># maxclients 10000a 最大客户端数量
-# maxmemory &lt;bytes&gt; 最大内存限制
-# maxmemory-policy noeviction 内存到达极限值的处理策略
-</code></pre>
-<h4><span id="maxmemory-policy-六种方式"><strong>maxmemory-policy 六种方式</strong></span></h4><p><strong>1、volatile-lru：</strong>只对设置了过期时间的key进行LRU（默认值）</p>
-<p><strong>2、allkeys-lru ：</strong> 删除lru算法的key</p>
-<p><strong>3、volatile-random：</strong>随机删除即将过期key</p>
-<p><strong>4、allkeys-random：</strong>随机删除</p>
-<p><strong>5、volatile-ttl ：</strong> 删除即将过期的</p>
-<p><strong>6、noeviction ：</strong> 永不过期，返回错误</p>
-<h1><span id="redis持久化">Redis持久化</span></h1><p><strong>RDB：Redis Databases</strong></p>
-<h2><span id="什么是rdb">什么是RDB</span></h2><hr>
-<p>在指定时间间隔后，将内存中的数据集快照写入数据库 ；在恢复时候，直接读取快照文件，进行数据的恢复 ；</p>
-<p><img src="/2021/11/04/Redis/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzg3MzIyNw==,size_16,color_FFFFFF,t_70-16362795898172" alt="在这里插入图片描述"></p>
-<p>默认情况下， Redis 将数据库快照保存在名字为 dump.rdb的二进制文件中。文件名可以在配置文件中进行自定义。</p>
-<h3><span id="工作原理">工作原理</span></h3><hr>
-<p>在进行 <strong><code>RDB</code></strong> 的时候，**<code>redis</code>** 的主线程是不会做 <strong><code>io</code></strong> 操作的，主线程会 <strong><code>fork</code></strong> 一个子线程来完成该操作；</p>
-<ol>
-<li>Redis 调用forks。同时拥有父进程和子进程。</li>
-<li>子进程将数据集写入到一个临时 RDB 文件中。</li>
-<li>当子进程完成对新 RDB 文件的写入时，Redis 用新 RDB 文件替换原来的 RDB 文件，并删除旧的 RDB 文件。</li>
-</ol>
-<p>这种工作方式使得 Redis 可以从写时复制（copy-on-write）机制中获益(因为是使用子进程进行写操作，而父进程依然可以接收来自客户端的请求。)</p>
-<p><img src="/2021/11/04/Redis/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzg3MzIyNw==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-<h3><span id="触发机制">触发机制</span></h3><hr>
-<ol>
-<li>save的规则满足的情况下，会自动触发rdb原则</li>
-<li>执行flushall命令，也会触发我们的rdb原则</li>
-<li>退出redis，也会自动产生rdb文件</li>
-</ol>
-<h3><span id="优缺点">优缺点</span></h3><p><strong>优点：</strong></p>
-<ol>
-<li>适合大规模的数据恢复</li>
-<li>对数据的完整性要求不高</li>
-</ol>
-<p><strong>缺点：</strong></p>
-<ol>
-<li>需要一定的时间间隔进行操作，如果redis意外宕机了，这个最后一次修改的数据就没有了。</li>
-<li>fork进程的时候，会占用一定的内容空间。</li>
-</ol>
-<h2><span id="aof">AOF</span></h2><p><strong>Append Only File</strong></p>
-<p>将我们所有的命令都记录下来，history，恢复的时候就把这个文件全部再执行一遍</p>
-<blockquote>
-<p>以日志的形式来记录每个写的操作，将Redis执行过的所有指令记录下来（读操作不记录），只许追加文件但不可以改写文件，redis启动之初会读取该文件重新构建数据，换言之，redis重启的话就根据日志文件的内容将写指令从前到后执行一次以完成数据的恢复工作。</p>
-</blockquote>
-<h3><span id="什么是aof">什么是AOF</span></h3><p>快照功能（RDB）并不是非常耐久（durable）： 如果 Redis 因为某些原因而造成故障停机， 那么服务器将丢失最近写入、以及未保存到快照中的那些数据。 从 1.1 版本开始， Redis 增加了一种完全耐久的持久化方式： AOF 持久化。</p>
-<p>如果要使用AOF，需要修改配置文件：</p>
-<p><img src="/2021/11/04/Redis/20200513215247113.png" alt="在这里插入图片描述"></p>
-<p><code>appendonly no yes</code>则表示启用AOF</p>
-<p>默认是不开启的，我们需要手动配置，然后重启redis，就可以生效了！</p>
-<p>如果这个aof文件有错位，这时候redis是启动不起来的，我需要修改这个aof文件</p>
-<p>redis给我们提供了一个工具<code>redis-check-aof --fix</code></p>
-<blockquote>
-<p>优点和缺点</p>
-</blockquote>
-<pre><code class="bash">123456appendonly yes  # 默认是不开启aof模式的，默认是使用rdb方式持久化的，在大部分的情况下，rdb完全够用
-appendfilename &quot;appendonly.aof&quot;
-
-# appendfsync always # 每次修改都会sync 消耗性能
-appendfsync everysec # 每秒执行一次 sync 可能会丢失这一秒的数据
-# appendfsync no # 不执行 sync ,这时候操作系统自己同步数据，速度最快
-</code></pre>
-<p><strong>优点</strong></p>
-<ol>
-<li>每一次修改都会同步，文件的完整性会更加好</li>
-<li>每秒同步一次，可能会丢失一秒的数据</li>
-<li>从不同步，效率最高</li>
-</ol>
-<p><strong>缺点</strong></p>
-<ol>
-<li>相对于数据文件来说，aof远远大于rdb，修复速度比rdb慢！</li>
-<li>Aof运行效率也要比rdb慢，所以我们redis默认的配置就是rdb持久化</li>
-</ol>
-<h2><span id="rdb和aop选择">RDB和AOP选择</span></h2><h3><span id="rdb优势与劣势">RDB优势与劣势</span></h3><h4><span id="优势">优势</span></h4><ul>
-<li>适合大规模的数据恢复</li>
-<li>对数据完整性和一致性要求不高</li>
-</ul>
-<h4><span id="劣势">劣势</span></h4><ul>
-<li><p>在一定间隔时间做一次备份，所以如果redis意外down掉的话，就会丢失最后一次快照后的所有修改。</p>
-</li>
-<li><p>Fork的时候，内存中的数据被<code>克隆</code>了一份，<code>大致2倍</code>的膨胀性能需要考虑</p>
-</li>
-</ul>
-<h3><span id="aof优势劣势">AOF优势/劣势</span></h3><h4><span id="优势">优势</span></h4><ul>
-<li>每次修改同步：appendfsync always同步持久化，每次发生数据变更会被立即记录到磁盘，性能较差但数据完整性比较好</li>
-<li>每秒同步：appendfsync everysec异步操作，每秒记录，如果一秒内宕机，仅一秒内的数据丢失</li>
-</ul>
-<h4><span id="劣势">劣势</span></h4><ul>
-<li>相同数据集的数据而言aof文件要远大于rdb文件，恢复速度慢于rdb</li>
-<li>Aof运行效率要慢于rdb,每秒同步策略效率较好，不同步效率和rdb相同</li>
-</ul>
-<h3><span id="如何选择使用哪种持久化方式">如何选择使用哪种持久化方式？</span></h3><p>一般来说， 如果想达到足以媲美 PostgreSQL 的数据安全性， 你应该同时使用两种持久化功能。</p>
-<p>如果你非常关心你的数据， 但仍然可以承受数分钟以内的数据丢失， 那么你可以只使用 RDB 持久化。</p>
-<p>有很多用户都只使用 AOF 持久化， 但并不推荐这种方式： 因为定时生成 RDB 快照（snapshot）非常便于进行数据库备份， 并且 RDB 恢复数据集的速度也要比 AOF 恢复的速度要快。</p>
-<h1><span id="redis发布订阅">Redis发布订阅</span></h1><blockquote>
-<p>订阅</p>
-</blockquote>
-<pre><code class="bash">subscribe hongdou
-Reading messages... (press Ctrl-C to quit)
-1) &quot;subscribe&quot;
-2) &quot;hongdou&quot;
-3) (integer) 1
-</code></pre>
-<blockquote>
-<p>发布</p>
-<pre><code class="bash">127.0.0.1:6379&gt; publish hongdou hahaha
-(integer) 1
-</code></pre>
-<p>结果：</p>
-<pre><code class="原理">1) &quot;message&quot;
-2) &quot;hongdou&quot;
-3) &quot;hahaha&quot;
-</code></pre>
-</blockquote>
-<h3><span id="原理">原理</span></h3><p>每个 Redis 服务器进程都维持着一个表示服务器状态的 redis.h/redisServer 结构， 结构的 pubsub_channels 属性是一个字典， 这个字典就用于保存订阅频道的信息，其中，字典的键为正在被订阅的频道， 而字典的值则是一个链表， 链表中保存了所有订阅这个频道的客户端。</p>
-<p><img src="/2021/11/04/Redis/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzg3MzIyNw==,size_16,color_FFFFFF,t_70-16362932182646" alt="在这里插入图片描述"></p>
-<p>客户端订阅，就被链接到对应频道的链表的尾部，退订则就是将客户端节点从链表中移除。</p>
-<h3><span id="缺点">缺点</span></h3><ol>
-<li>如果一个客户端订阅了频道，但自己读取消息的速度却不够快的话，那么不断积压的消息会使redis输出缓冲区的体积变得越来越大，这可能使得redis本身的速度变慢，甚至直接崩溃。</li>
-<li>这和数据传输可靠性有关，如果在订阅方断线，那么他将会丢失所有在短线期间发布者发布的消息。</li>
-</ol>
-<h3><span id="应用">应用</span></h3><ol>
-<li>消息订阅：公众号订阅，微博关注等等（起始更多是使用消息队列来进行实现）</li>
-<li>多人在线聊天室。</li>
-</ol>
-<p>稍微复杂的场景，我们就会使用消息中间件MQ处理。</p>
-<h1><span id="redis主从复制">Redis主从复制</span></h1><h3><span id="概念">概念</span></h3><p> 主从复制，是指将一台Redis服务器的数据，复制到其他的Redis服务器。前者称为主节点（Master/Leader）,后者称为从节点（Slave/Follower）， 数据的复制是<strong>单向</strong>的！只能由主节点复制到从节点（主节点以写为主、从节点以读为主）。</p>
-<p><strong>默认情况下，每台Redis服务器都是主节点</strong>，<strong>一个主节点可以有0个或者多个从节点，但每个从节点只能由一个主节点。</strong></p>
-<h3><span id="作用">作用</span></h3><ol>
-<li>数据冗余：主从复制实现了数据的热备份，是持久化之外的一种数据冗余的方式。</li>
-<li>故障恢复：当主节点故障时，从节点可以暂时替代主节点提供服务，是一种服务冗余的方式</li>
-<li>负载均衡：在主从复制的基础上，配合读写分离，由主节点进行写操作，从节点进行读操作，分担服务器的负载；尤其是在多读少写的场景下，通过多个从节点分担负载，提高并发量。</li>
-<li>高可用基石：主从复制还是哨兵和集群能够实施的基础。</li>
-</ol>
-<h3><span id="为什么使用集群">为什么使用集群</span></h3><ol>
-<li>单台服务器难以负载大量的请求</li>
-<li>单台服务器故障率高，系统崩坏概率大</li>
-<li>单台服务器内存容量有限。</li>
-</ol>
-<h3><span id="环境配置">环境配置</span></h3><p>我们在讲解配置文件的时候，注意到有一个<code>replication</code>模块 (见Redis.conf中第8条)</p>
-<p>查看当前库的信息：<code>info replication</code></p>
-<pre><code class="bash">123456789101112127.0.0.1:6379&gt; info replication
-# Replication
-role:master # 角色
-connected_slaves:0 # 从机数量
-master_replid:3b54deef5b7b7b7f7dd8acefa23be48879b4fcff
-master_replid2:0000000000000000000000000000000000000000
-master_repl_offset:0
-second_repl_offset:-1
-repl_backlog_active:0
-repl_backlog_size:1048576
-repl_backlog_first_byte_offset:0
-repl_backlog_histlen:0
-</code></pre>
-<p>既然需要启动多个服务，就需要多个配置文件。每个配置文件对应修改以下信息：</p>
-<ul>
-<li><p>端口号</p>
-</li>
-<li><p>pid文件名</p>
-</li>
-<li><p>日志文件名</p>
-</li>
-<li><p>rdb文件名</p>
-</li>
-</ul>
-<h5><span id="注意window配置方法">注意：window配置方法：</span></h5><p>开启多个端口服务器<br>1.配置文件<br>将redis.windows-service.conf复制一份，改名为相应文件，并更改配置文件中的端口为指定端口，以6380为例</p>
-<p>port 6380</p>
-<p>2.安装服务<br><strong>redis-server –service-install –service-name redis_6380 redis.windows-service-6380.conf</strong><br>3.启动服务<br><strong>redis-server –service-start –service-name redis_6380</strong><br>4.停止服务<br><strong>redis-server –service-stop –service-name redis_6380</strong><br>5.卸载服务<br><strong>redis-server –service-uninstall –service-name redis_6380</strong></p>
-<p>指定端口启动客户端：<br><strong>redis.cli -p 端口号</strong></p>
-<p><img src="/2021/11/04/Redis/image-20211108113934528.png" alt="image-20211108113934528"></p>
-<p><strong>启动单机多服务集群：</strong></p>
-<p><img src="/2021/11/04/Redis/20200513215610163.png" alt="在这里插入图片描述"></p>
-<h3><span id="一主二从配置">一主二从配置</span></h3><p>默认情况下，每台Redis服务器都是主节点；一般情况下只用配置从机就好了！</p>
-<p>认老大！一主（79）二从（80，81）</p>
-<p>使用<code>SLAVEOF host port</code>就可以为从机配置主机了。</p>
-<p><img src="/2021/11/04/Redis/image-20211108114239188.png" alt="image-20211108114239188"></p>
-<p><img src="/2021/11/04/Redis/image-20211108114323436.png" alt="image-20211108114323436"></p>
-<p>主机截图：</p>
-<p><img src="/2021/11/04/Redis/image-20211108114407873.png" alt="image-20211108114407873"></p>
-<p>使用命令搭建是暂时的，真实开发中应该在从机的配置文件中进行配置，这样的话是永久的。</p>
-<p><img src="/2021/11/04/Redis/image-20211108114911108.png" alt="image-20211108114911108"></p>
-<h4><span id="规则">规则</span></h4><p>从机只能读，不能写，主机可读可写但是多用于写。</p>
-<p>当主机断电宕机后，默认情况下从机的角色不会发生变化 ，集群中只是失去了写操作，当主机恢复以后，又会连接上从机恢复原状。</p>
-<p>当从机断电宕机后，若不是使用配置文件配置的从机，再次启动后作为主机是无法获取之前主机的数据的，若此时重新配置称为从机，又可以获取到主机的所有数据。这里就要提到一个同步原理</p>
-<blockquote>
-<p>复制原理</p>
-</blockquote>
-<p>从机成功连接到主机后会发送一个同步命令</p>
-<p>主机接到命令，启动后台存盘进程，同时收集所有的收到用于修改数据集命令，在后台进程执行完毕之后，主机将整个数据文件传送到从机，完成一次完全同步</p>
-<p><strong>全量复制</strong>：第一次连接时，获取主机的全部数据</p>
-<p><strong>增量复制</strong>：每次更新数据同步到从机</p>
-<h3><span id="层层链路">层层链路</span></h3><p>主机从机成链路式连接</p>
-<p>如果主机断开了连接，我们可以使用<code>SLAVEOF no one</code>让自己变成主机！其他的节点就可以手动连接到最新的主节点</p>
-<blockquote>
-<p>哨兵模式的全部配置</p>
-</blockquote>
-<p>完整的哨兵模式配置文件 sentinel.conf</p>
-<pre><code class="bash">12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970# Example sentinel.conf
- 
-# 哨兵sentinel实例运行的端口 默认26379
-port 26379
- 
-# 哨兵sentinel的工作目录
-dir /tmp
- 
-# 哨兵sentinel监控的redis主节点的 ip port 
-# master-name  可以自己命名的主节点名字 只能由字母A-z、数字0-9 、这三个字符&quot;.-_&quot;组成。
-# quorum 当这些quorum个数sentinel哨兵认为master主节点失联 那么这时 客观上认为主节点失联了
-# sentinel monitor &lt;master-name&gt; &lt;ip&gt; &lt;redis-port&gt; &lt;quorum&gt;
-sentinel monitor mymaster 127.0.0.1 6379 1
- 
-# 当在Redis实例中开启了requirepass foobared 授权密码 这样所有连接Redis实例的客户端都要提供密码
-# 设置哨兵sentinel 连接主从的密码 注意必须为主从设置一样的验证密码
-# sentinel auth-pass &lt;master-name&gt; &lt;password&gt;
-sentinel auth-pass mymaster MySUPER--secret-0123passw0rd
- 
- 
-# 指定多少毫秒之后 主节点没有应答哨兵sentinel 此时 哨兵主观上认为主节点下线 默认30秒
-# sentinel down-after-milliseconds &lt;master-name&gt; &lt;milliseconds&gt;
-sentinel down-after-milliseconds mymaster 30000
- 
-# 这个配置项指定了在发生failover主备切换时最多可以有多少个slave同时对新的master进行 同步，
-这个数字越小，完成failover所需的时间就越长，
-但是如果这个数字越大，就意味着越 多的slave因为replication而不可用。
-可以通过将这个值设为 1 来保证每次只有一个slave 处于不能处理命令请求的状态。
-# sentinel parallel-syncs &lt;master-name&gt; &lt;numslaves&gt;
-sentinel parallel-syncs mymaster 1
- 
- 
- 
-# 故障转移的超时时间 failover-timeout 可以用在以下这些方面： 
-#1. 同一个sentinel对同一个master两次failover之间的间隔时间。
-#2. 当一个slave从一个错误的master那里同步数据开始计算时间。直到slave被纠正为向正确的master那里同步数据时。
-#3.当想要取消一个正在进行的failover所需要的时间。  
-#4.当进行failover时，配置所有slaves指向新的master所需的最大时间。不过，即使过了这个超时，slaves依然会被正确配置为指向master，但是就不按parallel-syncs所配置的规则来了
-# 默认三分钟
-# sentinel failover-timeout &lt;master-name&gt; &lt;milliseconds&gt;
-sentinel failover-timeout mymaster 180000
- 
-# SCRIPTS EXECUTION
- 
-#配置当某一事件发生时所需要执行的脚本，可以通过脚本来通知管理员，例如当系统运行不正常时发邮件通知相关人员。
-#对于脚本的运行结果有以下规则：
-#若脚本执行后返回1，那么该脚本稍后将会被再次执行，重复次数目前默认为10
-#若脚本执行后返回2，或者比2更高的一个返回值，脚本将不会重复执行。
-#如果脚本在执行过程中由于收到系统中断信号被终止了，则同返回值为1时的行为相同。
-#一个脚本的最大执行时间为60s，如果超过这个时间，脚本将会被一个SIGKILL信号终止，之后重新执行。
- 
-#通知型脚本:当sentinel有任何警告级别的事件发生时（比如说redis实例的主观失效和客观失效等等），将会去调用这个脚本，
-#这时这个脚本应该通过邮件，SMS等方式去通知系统管理员关于系统不正常运行的信息。调用该脚本时，将传给脚本两个参数，
-#一个是事件的类型，
-#一个是事件的描述。
-#如果sentinel.conf配置文件中配置了这个脚本路径，那么必须保证这个脚本存在于这个路径，并且是可执行的，否则sentinel无法正常启动成功。
-#通知脚本
-# sentinel notification-script &lt;master-name&gt; &lt;script-path&gt;
-  sentinel notification-script mymaster /var/redis/notify.sh
- 
-# 客户端重新配置主节点参数脚本
-# 当一个master由于failover而发生改变时，这个脚本将会被调用，通知相关的客户端关于master地址已经发生改变的信息。
-# 以下参数将会在调用脚本时传给脚本:
-# &lt;master-name&gt; &lt;role&gt; &lt;state&gt; &lt;from-ip&gt; &lt;from-port&gt; &lt;to-ip&gt; &lt;to-port&gt;
-# 目前&lt;state&gt;总是“failover”,
-# &lt;role&gt;是“leader”或者“observer”中的一个。 
-# 参数 from-ip, from-port, to-ip, to-port是用来和旧的master和新的master(即旧的slave)通信的
-# 这个脚本应该是通用的，能被多次调用，不是针对性的。
-# sentinel client-reconfig-script &lt;master-name&gt; &lt;script-path&gt;
-sentinel client-reconfig-script mymaster /var/redis/reconfig.sh
-</code></pre>
-<h2><span id="缓存穿透与雪崩">缓存穿透与雪崩</span></h2><h3><span id="缓存穿透查不到">缓存穿透（查不到）</span></h3><blockquote>
-<p>概念</p>
-</blockquote>
-<p>在默认情况下，用户请求数据时，会先在缓存(Redis)中查找，若没找到即缓存未命中，再在数据库中进行查找，数量少可能问题不大，可是一旦大量的请求数据（例如秒杀场景）缓存都没有命中的话，就会全部转移到数据库上，造成数据库极大的压力，就有可能导致数据库崩溃。网络安全中也有人恶意使用这种手段进行攻击被称为洪水攻击。</p>
-<blockquote>
-<p>解决方案</p>
-</blockquote>
-<p><strong>布隆过滤器</strong></p>
-<p>对所有可能查询的参数以Hash的形式存储，以便快速确定是否存在这个值，在控制层先进行拦截校验，校验不通过直接打回，减轻了存储系统的压力。</p>
-<p><img src="/2021/11/04/Redis/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzg3MzIyNw==,size_16,color_FFFFFF,t_70-16363526192282" alt="在这里插入图片描述"></p>
-<p><strong>缓存空对象</strong></p>
-<p>一次请求若在缓存和数据库中都没找到，就在缓存中方一个空对象用于处理后续这个请求。</p>
-<p><img src="/2021/11/04/Redis/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzg3MzIyNw==,size_16,color_FFFFFF,t_70-16363526320984" alt="在这里插入图片描述"></p>
-<p> 这样做有一个缺陷：存储空对象也需要空间，大量的空对象会耗费一定的空间，存储效率并不高。解决这个缺陷的方式就是设置较短过期时间</p>
-<p>即使对空值设置了过期时间，还是会存在缓存层和存储层的数据会有一段时间窗口的不一致，这对于需要保持一致性的业务会有影响。</p>
-<h3><span id="缓存击穿量太大缓存过期">缓存击穿（量太大，缓存过期）</span></h3><blockquote>
-<p>概念</p>
-</blockquote>
-<p> 相较于缓存穿透，缓存击穿的目的性更强，一个存在的key，在缓存过期的一刻，同时有大量的请求，这些请求都会击穿到DB，造成瞬时DB请求量大、压力骤增。这就是缓存被击穿，只是针对其中某个key的缓存不可用而导致击穿，但是其他的key依然可以使用缓存响应。</p>
-<p> 比如热搜排行上，一个热点新闻被同时大量访问就可能导致缓存击穿。</p>
-<blockquote>
-<p>解决方案</p>
-</blockquote>
-<ol>
-<li><p><strong>设置热点数据永不过期</strong></p>
-<p>这样就不会出现热点数据过期的情况，但是当Redis内存空间满的时候也会清理部分数据，而且此种方案会占用空间，一旦热点数据多了起来，就会占用部分空间。</p>
-</li>
-<li><p><strong>加互斥锁(分布式锁)</strong></p>
-<p>在访问key之前，采用SETNX（set if not exists）来设置另一个短期key来锁住当前key的访问，访问结束再删除该短期key。保证同时刻只有一个线程访问。这样对锁的要求就十分高。</p>
-</li>
-</ol>
-<h3><span id="缓存雪崩">缓存雪崩</span></h3><blockquote>
-<p>概念</p>
-</blockquote>
-<p>大量的key设置了相同的过期时间，导致在缓存在同一时刻全部失效，造成瞬时DB请求量大、压力骤增，引起雪崩。</p>
-<p><img src="/2021/11/04/Redis/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzg3MzIyNw==,size_16,color_FFFFFF,t_70-16363526462886" alt="在这里插入图片描述"></p>
-<blockquote>
-<p>解决方案</p>
-</blockquote>
-<ul>
-<li><p>redis高可用</p>
-<p>这个思想的含义是，既然redis有可能挂掉，那我多增设几台redis，这样一台挂掉之后其他的还可以继续工作，其实就是搭建的集群</p>
-</li>
-<li><p>限流降级</p>
-<p>这个解决方案的思想是，在缓存失效后，通过加锁或者队列来控制读数据库写缓存的线程数量。比如对某个key只允许一个线程查询数据和写缓存，其他线程等待。</p>
-</li>
-<li><p>数据预热</p>
-<p>数据加热的含义就是在正式部署之前，我先把可能的数据先预先访问一遍，这样部分可能大量访问的数据就会加载到缓存中。在即将发生大并发访问前手动触发加载缓存不同的key，设置不同的过期时间，让缓存失效的时间点尽量均匀。</p>
-</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/6/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" href="/page/8/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/6/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/8/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1197,7 +990,7 @@ sentinel client-reconfig-script mymaster /var/redis/reconfig.sh
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">42</span>
+          <span class="site-state-item-count">43</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1276,18 +1069,18 @@ sentinel client-reconfig-script mymaster /var/redis/reconfig.sh
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">197k</span>
+    <span title="站点总字数">198k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:59</span>
+    <span title="站点阅读时长">3:01</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共76.6k字</span>
+  <span class="post-count">博客全站共77k字</span>
 </div>
 
     <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>

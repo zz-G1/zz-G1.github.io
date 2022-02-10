@@ -195,6 +195,89 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/28/%E7%82%B9%E9%A4%90%E7%B3%BB%E7%BB%9F%E5%BC%80%E5%8F%91%E6%97%A5%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Gzz">
+      <meta itemprop="description" content="只要开始就不算晚">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="香饽饽">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/09/28/%E7%82%B9%E9%A4%90%E7%B3%BB%E7%BB%9F%E5%BC%80%E5%8F%91%E6%97%A5%E8%AE%B0/" class="post-title-link" itemprop="url">点餐系统开发日记</a>
+        </h2>
+
+        <div class="post-meta">
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-09-28 20:23:05 / 修改时间：21:09:09" itemprop="dateCreated datePublished" datetime="2021-09-28T20:23:05+08:00">2021-09-28</time>
+            </span>
+
+          
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+              <span>309</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1><span id="开发日记">开发日记</span></h1><h2><span id="day1">Day1</span></h2><p>设计数据库</p>
+<p><strong>decimal</strong> 用来设计物品的单价</p>
+<p>decimal是MySQL中存在的精准数据类型，语法格式“DECIMAL(M,D)”。其中，M是数字的最大数（精度），其范围为“1～65”，默认值是10；D是小数点右侧数字的数目（标度），其范围是“0～30”，但不得超过M。</p>
+<p><img src="/2021/09/28/%E7%82%B9%E9%A4%90%E7%B3%BB%E7%BB%9F%E5%BC%80%E5%8F%91%E6%97%A5%E8%AE%B0/image-20210928205416256.png" alt="image-20210928205416256"></p>
+<p>key加索引 key的用途：主要是用来加快查询速度的。</p>
+<p><img src="/2021/09/28/%E7%82%B9%E9%A4%90%E7%B3%BB%E7%BB%9F%E5%BC%80%E5%8F%91%E6%97%A5%E8%AE%B0/image-20210928210730121.png"></p>
+<p>更新时数据库时自动更新更新时间 就用  <strong>on update current_timestamp</strong></p>
+<pre><code class="sql">`update_time` timestamp not null default current_timestamp on update current_timestamp comment &#39;修改时间&#39;,
+</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/26/Spring-boot%E9%9A%8F%E8%AE%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -710,709 +793,10 @@ public void sendEmailTo()&#123;
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/21/Mybatis%E5%85%A5%E9%97%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Gzz">
-      <meta itemprop="description" content="只要开始就不算晚">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="香饽饽">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/09/21/Mybatis%E5%85%A5%E9%97%A8/" class="post-title-link" itemprop="url">Mybatis入门</a>
-        </h2>
-
-        <div class="post-meta">
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-09-21 13:36:49" itemprop="dateCreated datePublished" datetime="2021-09-21T13:36:49+08:00">2021-09-21</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-01-27 21:48:05" itemprop="dateModified" datetime="2022-01-27T21:48:05+08:00">2022-01-27</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/About%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index"><span itemprop="name">About数据库</span></a>
-                </span>
-            </span>
-
-          
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-              <span>15k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-              <span>13 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1><span id="mybatis入门笔记">mybatis入门笔记</span></h1><h2><span id="sql注入问题">sql注入问题</span></h2><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/loveyoulx/p/9526068.html">mybatis 学习笔记：mybatis SQL注入问题 - 小_小星 - 博客园 (cnblogs.com)</a></p>
-<h2><span id="第一个项目搭建流程">第一个项目搭建流程</span></h2><ol>
-<li><p>搭建实验数据库</p>
-</li>
-<li><p>导入mybatis相关jar包</p>
-<pre><code class="java">&lt;dependency&gt;
-            &lt;groupId&gt;mysql&lt;/groupId&gt;
-            &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;
-            &lt;version&gt;5.1.47&lt;/version&gt;
-        &lt;/dependency&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.mybatis&lt;/groupId&gt;
-            &lt;artifactId&gt;mybatis&lt;/artifactId&gt;
-            &lt;version&gt;3.5.4&lt;/version&gt;
-        &lt;/dependency&gt;
-</code></pre>
-</li>
-<li><p>编写mybatis核心配置文件</p>
-<p><strong><!--千万注意配置mapper映射--></strong></p>
-</li>
-</ol>
-<pre><code class="java">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
-&lt;!DOCTYPE configuration
-        PUBLIC &quot;-//mybatis.org//DTD Config 3.0//EN&quot;
-        &quot;http://mybatis.org/dtd/mybatis-3-config.dtd&quot;&gt;
-&lt;configuration&gt;
-    &lt;environments default=&quot;development&quot;&gt;
-        &lt;environment id=&quot;development&quot;&gt;
-            &lt;transactionManager type=&quot;JDBC&quot;&gt;&lt;/transactionManager&gt;
-            &lt;dataSource type=&quot;POOLED&quot;&gt;
-             &lt;property name=&quot;driver&quot; value=&quot;com.mysql.jdbc.Driver&quot;/&gt;
-             &lt;property name=&quot;url&quot; value=&quot;jdbc:mysql://localhost:3306/mybatis?useSSL=false&amp;amp;useUnicode=false&amp;amp;characterEncoding=utf8&quot;/&gt;
-             &lt;property name=&quot;username&quot; value=&quot;root&quot;/&gt;
-             &lt;property name=&quot;password&quot; value=&quot;root&quot;/&gt;
-            &lt;/dataSource&gt;
-        &lt;/environment&gt;
-    &lt;/environments&gt;
-    
-    &lt;!--千万注意配置mapper映射--&gt;
-    &lt;mappers&gt;
-        &lt;mapper resource=&quot;com/zz/Userdao/UserMapper.xml&quot;/&gt;
-    &lt;/mappers&gt;
-&lt;/configuration&gt;
-</code></pre>
-<p>4.编写mybatis工具类（目的：获取sqlsession）</p>
-<pre><code class="java">package com.zz.utils;
-
-import org.apache.ibatis.io.Resources;
-import org.apache.ibatis.session.Configuration;
-import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-
-import javax.annotation.Resource;
-import java.io.InputStream;
-
-public class MybatisUtil &#123;
-    private static SqlSessionFactory sqlSessionFactory;
-    static &#123;
-        try&#123;
-            String resource=&quot;mybatis-config.xml&quot;;
-            InputStream inputStream= Resources.getResourceAsStream(resource);
-            Configuration config;
-            sqlSessionFactory=new SqlSessionFactoryBuilder().build(inputStream);
-        &#125;catch (Exception e)&#123;
-            e.printStackTrace();
-        &#125;
-    &#125;
-    //获取sqlsesion连接
-    public static SqlSession getSqlSession()&#123;
-        return sqlSessionFactory.openSession();
-    &#125;
-&#125;
-</code></pre>
-<p>5.创建实体类</p>
-<pre><code class="java">package com.zz.pojo;
-
-public class User &#123;
-
-    int id;
-
-    public User() &#123;
-    &#125;
-
-    @Override
-    public String toString() &#123;
-        return &quot;User&#123;&quot; +
-                &quot;id=&quot; + id +
-                &quot;, name=&#39;&quot; + name + &#39;\&#39;&#39; +
-                &quot;, pwd=&quot; + pwd +
-                &#39;&#125;&#39;;
-    &#125;
-
-    public User(int id, String name, int pwd) &#123;
-        this.id = id;
-        this.name = name;
-        this.pwd = pwd;
-    &#125;
-
-    public void setId(int id) &#123;
-        this.id = id;
-    &#125;
-
-    public void setName(String name) &#123;
-        this.name = name;
-    &#125;
-
-    public void setPwd(int pwd) &#123;
-        this.pwd = pwd;
-    &#125;
-
-    public int getId() &#123;
-        return id;
-    &#125;
-
-    public String getName() &#123;
-        return name;
-    &#125;
-
-    public int getPwd() &#123;
-        return pwd;
-    &#125;
-
-    String name;
-    int pwd;
-&#125;
-</code></pre>
-<p>6.编写mapper.xml</p>
-<p><strong>UserMapper</strong></p>
-<pre><code class="java">package com.zz.UserMapper;
-
-import com.zz.pojo.User;
-
-import java.util.List;
-
-public interface UserMapper &#123;
-    List&lt;User&gt; selectAll();
-&#125;
-</code></pre>
-<p><strong>UserMapper.xml</strong></p>
-<pre><code class="java">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
-&lt;!DOCTYPE mapper
-        PUBLIC &quot;-//mybatis.org//DTD Config 3.0//EN&quot;
-        &quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;&gt;
-
-&lt;mapper namespace=&quot;com.zz.UserMapper.UserMapper&quot;&gt;
-    &lt;select id=&quot;selectAll&quot; resultType=&quot;com.zz.pojo.User&quot;&gt;
-        select * from mybatis.user
-    &lt;/select&gt;
-&lt;/mapper&gt;
-</code></pre>
-<p>7.测试</p>
-<pre><code class="java">import com.zz.UserMapper.UserMapper;
-import com.zz.pojo.User;
-import com.zz.utils.MybatisUtil;
-import org.apache.ibatis.session.SqlSession;
-import org.junit.Test;
-
-import java.util.List;
-
-public class test &#123;
-    @Test
-    public void select()&#123;
-        SqlSession session= MybatisUtil.getSqlSession();
-        List&lt;User&gt; list=session.getMapper(UserMapper.class).selectAll();
-        for(User u:list)&#123;
-            System.out.println(u);
-        &#125;
-    &#125;
-&#125;
-</code></pre>
-<p>8.结果</p>
-<p><img src="/2021/09/21/Mybatis%E5%85%A5%E9%97%A8/image-20210921140953500.png" alt="image-20210921140953500"></p>
-<p>增删改需要提交事务：sqlsession.commit()</p>
-<h2><span id="万能map">万能Map</span></h2><p>假设实体类，或数据库中的表，字段或参数过多时，应当使用map</p>
-<p>步骤：🎇🎇🎇🎇</p>
-<p> 1.在接口中添加方法</p>
-<pre><code class="java">public int updateUser(Map&lt;String, Object&gt; map);
-</code></pre>
-<p>2.在mapper.xml中添加</p>
-<pre><code class="java">&lt;update id=&quot;updateUser&quot; parameterType=&quot;map&quot;&gt;
-        update mybatis.user set name=#&#123;uname&#125;, pwd=#&#123;pwds&#125; where id=#&#123;id&#125;
-&lt;/update&gt;
-</code></pre>
-<p><img src="/2021/09/21/Mybatis%E5%85%A5%E9%97%A8/image-20210921210742855.png" alt="image-20210921210742855"></p>
-<p>用map作为参数的好处就是便利，箭头所指元素捷克在定义map时自己定义，而参数为User实体类时，这些参数皆需要和在定义实体类时一样</p>
-<p>3.测试</p>
-<pre><code class="java"> Map&lt;String, Object&gt; map=new HashMap&lt;String, Object&gt;();
-
-        map.put(&quot;id&quot;,1);
-        map.put(&quot;uname&quot;,&quot;sadsada&quot;);
-        map.put(&quot;pwds&quot;,4646464);
-        System.out.println(u.updateUser(map));
-</code></pre>
-<p>成功！</p>
-<h2><span id="模糊查询">模糊查询</span></h2><p><img src="/2021/09/21/Mybatis%E5%85%A5%E9%97%A8/image-20210921212535801.png" alt="image-20210921212535801"></p>
-<h2><span id="结果集映射">结果集映射</span></h2><p>场景：实体类中属性名与数据库表中字段不匹配 如：数据库中为pwd，实体类中为password</p>
-<p>解决方法：</p>
-<p>​    1.</p>
-<pre><code class="java">&lt;select id=&quot;selectUser&quot; resultType=&quot;com.zz.pojo.User&quot;&gt;
-        select id,name,pwd as password from mybatis.user;
-    &lt;/select&gt;
-</code></pre>
-<p>​    2.使用结果集映射(ResultMap)</p>
-<p><img src="/2021/09/21/Mybatis%E5%85%A5%E9%97%A8/image-20210922173708063.png" alt="image-20210922173708063"></p>
-<h2><span id="日志">日志</span></h2><h3><span id="log4j">Log4j</span></h3><p>  1.导包</p>
-<pre><code class="java">&lt;dependency&gt;
-            &lt;groupId&gt;log4j&lt;/groupId&gt;
-            &lt;artifactId&gt;log4j&lt;/artifactId&gt;
-            &lt;version&gt;1.2.17&lt;/version&gt;
-        &lt;/dependency&gt;
-</code></pre>
-<p>2.配置文件编写logj.properties</p>
-<pre><code class="java">#将等级为DEBUG的日志信息输出到console和file这两个目的地，console和file的定义在下面的代码
-log4j.rootLogger=DEBUG,console,file
-
-#控制台输出的相关设置
-log4j.appender.console = org.apache.log4j.ConsoleAppender
-log4j.appender.console.Target = System.out
-log4j.appender.console.Threshold=DEBUG
-log4j.appender.console.layout = org.apache.log4j.PatternLayout
-log4j.appender.console.layout.ConversionPattern=[%c]-%m%n
-
-#文件输出的相关设置
-log4j.appender.file = org.apache.log4j.RollingFileAppender
-log4j.appender.file.File=./log/zz.log
-log4j.appender.file.MaxFileSize=10mb
-log4j.appender.file.Threshold=DEBUG
-log4j.appender.file.layout=org.apache.log4j.PatternLayout
-log4j.appender.file.layout.ConversionPattern=[%p][%d&#123;yy-MM-dd&#125;][%c]%m%n
-
-#日志输出级别
-log4j.logger.org.mybatis=DEBUG
-log4j.logger.java.sql=DEBUG
-log4j.logger.java.sql.Statement=DEBUG
-log4j.logger.java.sql.ResultSet=DEBUG
-log4j.logger.java.sql.PreparedStatement=DEBUG
-</code></pre>
-<p>3.setting设置日志实现<img src="/2021/09/21/Mybatis%E5%85%A5%E9%97%A8/image-20210922185902309.png" alt="image-20210922185902309"></p>
-<p>4.实现</p>
-<pre><code class="java">public class test &#123;
-    static Logger logger=Logger.getLogger(test.class);
-    @Test
-    public void select()&#123;
-        logger.info(&quot;info：进入selectUser方法&quot;);
-        logger.debug(&quot;debug：进入selectUser方法&quot;);
-        logger.error(&quot;error: 进入selectUser方法&quot;);
-        SqlSession session= MybatisUtil.getSqlSession();
-        List&lt;User&gt; list=session.getMapper(UserMapper.class).selectAll();
-        for(User u:list)&#123;
-            System.out.println(u);
-        &#125;
-        session.close();
-    &#125;
-&#125;
-</code></pre>
-<h2><span id="分页">分页</span></h2><p>如果查询大量数据的时候，我们往往使用分页进行查询，也就是每次处理小部分数据，这样对数据库压力就在可控范围内。</p>
-<h3><span id="limit实现分页">limit实现分页</span></h3><pre><code class="java">#语法
-SELECT * FROM table LIMIT stratIndex，pageSize
-
-SELECT * FROM table LIMIT 5,10; // 检索记录行 6-15  
-
-#为了检索从某一个偏移量到记录集的结束所有的记录行，可以指定第二个参数为 -1：   
-SELECT * FROM table LIMIT 95,-1; // 检索记录行 96-last.  
-
-#如果只给定一个参数，它表示返回最大的记录行数目：   
-SELECT * FROM table LIMIT 5; //检索前 5 个记录行  
-
-#换句话说，LIMIT n 等价于 LIMIT 0,n。
-</code></pre>
-<p><strong>步骤：</strong></p>
-<p>1、修改Mapper文件</p>
-<pre><code class="java">&lt;select id=&quot;selectUser&quot; parameterType=&quot;map&quot; resultType=&quot;user&quot;&gt;
-  select * from user limit #&#123;startIndex&#125;,#&#123;pageSize&#125;
-&lt;/select&gt;
-</code></pre>
-<p>2、Mapper接口，参数为map</p>
-<pre><code class="java">//选择全部用户实现分页
-List&lt;User&gt; selectUser(Map&lt;String,Integer&gt; map);
-</code></pre>
-<p>3、在测试类中传入参数测试</p>
-<ul>
-<li>推断：起始位置 =  （当前页面 - 1 ） * 页面大小</li>
-</ul>
-<pre><code class="java">//分页查询 , 两个参数startIndex , pageSize
-@Test
-public void testSelectUser() &#123;
-   SqlSession session = MybatisUtils.getSession();
-   UserMapper mapper = session.getMapper(UserMapper.class);
-
-   int currentPage = 1;  //第几页
-   int pageSize = 2;  //每页显示几个
-   Map&lt;String,Integer&gt; map = new HashMap&lt;String,Integer&gt;();
-   map.put(&quot;startIndex&quot;,(currentPage-1)*pageSize);
-   map.put(&quot;pageSize&quot;,pageSize);
-
-   List&lt;User&gt; users = mapper.selectUser(map);
-
-   for (User user: users)&#123;
-       System.out.println(user);
-  &#125;
-
-   session.close();
-&#125;
-</code></pre>
-<p><img src="/2021/09/21/Mybatis%E5%85%A5%E9%97%A8/Blog\source_posts\Mybatis入门\image-20210922195302374.png" alt="image-20210922195302374"></p>
-<h2><span id="mybatis详细的执行流程">Mybatis详细的执行流程</span></h2><p><img src="/2021/09/21/Mybatis%E5%85%A5%E9%97%A8/640" alt="图片"></p>
-<h2><span id="使用注解开发">使用注解开发</span></h2><p>【注意点：增删改一定记得对事务的处理】</p>
-<pre><code class="java"> //获取sqlsesion连接
-    public static SqlSession getSqlSession()&#123;
-        return sqlSessionFactory.openSession(true);
-    &#125;//事务自动提交
-&#125;
-</code></pre>
-<blockquote>
-<p>#与$的区别</p>
-</blockquote>
-<ul>
-<li><p>#{} 的作用主要是替换预编译语句(PrepareStatement)中的占位符? 【推荐使用】可以防止sql注入</p>
-<pre><code>INSERT INTO user (name) VALUES (#&#123;name&#125;);
-INSERT INTO user (name) VALUES (?);
-</code></pre>
-</li>
-<li><p>${} 的作用是直接进行字符串替换</p>
-<pre><code>INSERT INTO user (name) VALUES (&#39;$&#123;name&#125;&#39;);
-INSERT INTO user (name) VALUES (&#39;kuangshen&#39;);
-</code></pre>
-</li>
-</ul>
-<h2><span id="多对一处理">多对一处理</span></h2><p><img src="/2021/09/21/Mybatis%E5%85%A5%E9%97%A8/image-20210923213727143.png" alt="image-20210923213727143"></p>
-<p><img src="/2021/09/21/Mybatis%E5%85%A5%E9%97%A8/image-20210923213749558.png" alt="image-20210923213749558"></p>
-<p>创建两张表：Student，Teacher</p>
-<pre><code class="java">//获取所有学生及对应老师的信息
-    List&lt;Student&gt; getStudents();
-</code></pre>
-<p>mapper.xml文件编写</p>
-<p>按查询嵌套处理</p>
-<pre><code class="sql">&lt;select id=&quot;getStudents&quot; resultMap=&quot;StudentTeacher&quot;&gt;
-        select * from student
-&lt;/select&gt;
-&lt;resultMap id=&quot;StudentTeacher&quot; type=&quot;com.zz.pojo.Student&quot;&gt;
-        &lt;!--association关联属性 property属性名 javaType属性类型 column在多的一方的表中的列名--&gt;
-        &lt;association property=&quot;teacher&quot;  column=&quot;tid&quot; javaType=&quot;com.zz.pojo.Teacher&quot; select=&quot;getTeacher&quot;/&gt;
-&lt;/resultMap&gt;
-
-
-&lt;select id=&quot;getTeacher&quot; resultType=&quot;com.zz.pojo.Teacher&quot;&gt;
-        select * from teacher where id= #&#123;id&#125;
-&lt;/select&gt;
-</code></pre>
-<p>按结果嵌套处理</p>
-<pre><code class="sql"> &lt;select id=&quot;getStudents2&quot; resultMap=&quot;StudentTeacher2&quot; &gt;
-        select s.id sid, s.name sname , t.name tname
-        from student s,teacher t
-        where s.tid = t.id
-    &lt;/select&gt;
-
-    &lt;resultMap id=&quot;StudentTeacher2&quot; type=&quot;com.zz.pojo.Student&quot;&gt;
-        &lt;id property=&quot;id&quot; column=&quot;sid&quot;/&gt;
-        &lt;result property=&quot;name&quot; column=&quot;sname&quot;/&gt;
-        &lt;!--关联对象property 关联对象在Student实体类中的属性--&gt;
-        &lt;association property=&quot;teacher&quot; javaType=&quot;com.zz.pojo.Teacher&quot;&gt;
-            &lt;result property=&quot;name&quot; column=&quot;tname&quot;/&gt;
-        &lt;/association&gt;
-    &lt;/resultMap&gt;
-</code></pre>
-<h2><span id="一对多处理">一对多处理</span></h2><p><strong>按结果嵌套处理</strong></p>
-<p>Teacher</p>
-<pre><code class="java">@Data
-public class Teacher &#123;
-    private int id;
-    private String name;
-    //一个老师多个学生
-    private List&lt;Student&gt; students;
-&#125;
-</code></pre>
-<p>TeacherMapper.xml</p>
-<pre><code class="sql">&lt;!--
-    思路:
-        1. 从学生表和老师表中查出学生id，学生姓名，老师姓名
-        2. 对查询出来的操作做结果集映射
-            1. 集合的话，使用collection！
-                JavaType和ofType都是用来指定对象类型的
-                JavaType是用来指定pojo中属性的类型
-                ofType指定的是映射到list集合属性中pojo的类型。
-    --&gt;
-    &lt;select id=&quot;getTeacher&quot; resultMap=&quot;TeacherStudent&quot;&gt;
-        select s.id sid, s.name sname , t.name tname, t.id tid
-        from student s,teacher t
-        where s.tid = t.id and t.id=#&#123;id&#125;
-    &lt;/select&gt;
-    &lt;resultMap id=&quot;TeacherStudent&quot; type=&quot;Teacher&quot;&gt;
-        &lt;result  property=&quot;name&quot; column=&quot;tname&quot;/&gt;
-        &lt;collection property=&quot;students&quot; ofType=&quot;Student&quot;&gt;
-            &lt;result property=&quot;id&quot; column=&quot;sid&quot; /&gt;
-            &lt;result property=&quot;name&quot; column=&quot;sname&quot; /&gt;
-            &lt;result property=&quot;tid&quot; column=&quot;tid&quot; /&gt;
-        &lt;/collection&gt;
-    &lt;/resultMap&gt;
-</code></pre>
-<p><strong>按查询嵌套处理</strong></p>
-<pre><code class="sql">&lt;select id=&quot;getTeacher2&quot; resultMap=&quot;TeacherStudent2&quot;&gt;
-        select * from teacher where id=#&#123;id&#125;
-    &lt;/select&gt;
-    &lt;!--column是一对多的外键 , 写的是一的主键的列名--&gt;
-    &lt;resultMap id=&quot;TeacherStudent2&quot; type=&quot;Teacher&quot;&gt;
-        &lt;collection property=&quot;students&quot; javaType=&quot;ArrayList&quot; ofType=&quot;Student&quot; column=&quot;id&quot; select=&quot;getStudentByTeacherId&quot;/&gt;
-    &lt;/resultMap&gt;
-
-    &lt;select id=&quot;getStudentByTeacherId&quot; resultType=&quot;Student&quot;&gt;
-        select * from student where tid=#&#123;id&#125;
-    &lt;/select&gt;
-</code></pre>
-<blockquote>
-<p>小结</p>
-</blockquote>
-<p>1、关联-association</p>
-<p>2、集合-collection</p>
-<p>3、所以association是用于一对一和多对一，而collection是用于一对多的关系</p>
-<p>4、JavaType和ofType都是用来指定对象类型的</p>
-<ul>
-<li>JavaType是用来指定pojo中属性的类型</li>
-<li>ofType指定的是映射到list集合属性中pojo的类型。</li>
-</ul>
-<h2><span id="动态sql">动态SQL</span></h2><blockquote>
-<p>if 语句</p>
-</blockquote>
-<p><strong>需求：根据作者名字和博客名字来查询博客！如果作者名字为空，那么只根据博客名字查询，反之，则根据作者名来查询</strong></p>
-<pre><code class="sql">&lt;!--需求1：
-根据作者名字和博客名字来查询博客！
-如果作者名字为空，那么只根据博客名字查询，反之，则根据作者名来查询
-select * from blog where title = #&#123;title&#125; and author = #&#123;author&#125;
---&gt;
-&lt;select id=&quot;queryBlogIf&quot; parameterType=&quot;map&quot; resultType=&quot;blog&quot;&gt;
-  select * from blog where
-   &lt;if test=&quot;title != null&quot;&gt;
-      title = #&#123;title&#125;
-   &lt;/if&gt;
-   &lt;if test=&quot;author != null&quot;&gt;
-      and author = #&#123;author&#125;
-   &lt;/if&gt;
-&lt;/select&gt;
-</code></pre>
-<p>如果title为空的话，sql语句为错误语句，那就用到where</p>
-<blockquote>
-<p>Where</p>
-</blockquote>
-<p>修改上面的SQL语句；</p>
-<pre><code class="sql">&lt;select id=&quot;queryBlogIf&quot; parameterType=&quot;map&quot; resultType=&quot;blog&quot;&gt;
-  select * from blog
-   &lt;where&gt;
-       &lt;if test=&quot;title != null&quot;&gt;
-          title = #&#123;title&#125;
-       &lt;/if&gt;
-       &lt;if test=&quot;author != null&quot;&gt;
-          and author = #&#123;author&#125;
-       &lt;/if&gt;
-   &lt;/where&gt;
-&lt;/select&gt;
-</code></pre>
-<p>这个“where”标签会知道如果它包含的标签中有返回值的话，它就插入一个‘where’。此外，如果标签返回的内容是以AND 或OR 开头的，则它会剔除掉。</p>
-<blockquote>
-<p>Trim</p>
-</blockquote>
-<p>和where功能一样，还可以去除多余的逗号</p>
-<p><img src="/2021/09/21/Mybatis%E5%85%A5%E9%97%A8/image-20211011190142894.png" alt="image-20211011190142894"></p>
-<p>如红框里的note为null，则sql语句错误</p>
-<p>加了<trim>则会避免出错，会自动把role_name后面的逗号去掉，从而sql语句不会出错</trim></p>
-<blockquote>
-<p>Set</p>
-</blockquote>
-<p>1、编写接口方法</p>
-<pre><code>int updateBlog(Map map);
-</code></pre>
-<p>2、sql配置文件</p>
-<pre><code class="sql">&lt;!--注意set是用的逗号隔开--&gt;
-&lt;update id=&quot;updateBlog&quot; parameterType=&quot;map&quot;&gt;
-  update blog
-     &lt;set&gt;
-         &lt;if test=&quot;title != null&quot;&gt;
-            title = #&#123;title&#125;,
-         &lt;/if&gt;
-         &lt;if test=&quot;author != null&quot;&gt;
-            author = #&#123;author&#125;
-         &lt;/if&gt;
-     &lt;/set&gt;
-  where id = #&#123;id&#125;;
-&lt;/update&gt;
-</code></pre>
-<blockquote>
-<p>choose语句</p>
-</blockquote>
-<p>有时候，我们不想用到所有的查询条件，只想选择其中的一个，查询条件有一个满足即可，使用 choose 标签可以解决此类问题</p>
-<p>1、编写接口方法</p>
-<pre><code class="sql">List&lt;Blog&gt; queryBlogChoose(Map map);
-</code></pre>
-<p>2、sql配置文件</p>
-<pre><code class="sql">&lt;select id=&quot;queryBlogChoose&quot; parameterType=&quot;map&quot; resultType=&quot;blog&quot;&gt;
-  select * from blog
-   &lt;where&gt;
-       &lt;choose&gt;
-           &lt;when test=&quot;title != null&quot;&gt;
-                title = #&#123;title&#125;
-           &lt;/when&gt;
-           &lt;when test=&quot;author != null&quot;&gt;
-              and author = #&#123;author&#125;
-           &lt;/when&gt;
-           &lt;otherwise&gt;
-              and views = #&#123;views&#125;
-           &lt;/otherwise&gt;
-       &lt;/choose&gt;
-   &lt;/where&gt;
-&lt;/select&gt;
-</code></pre>
-<p>3、测试类</p>
-<pre><code class="sql">@Test
-public void testQueryBlogChoose()&#123;
-   SqlSession session = MybatisUtils.getSession();
-   BlogMapper mapper = session.getMapper(BlogMapper.class);
-
-   HashMap&lt;String, Object&gt; map = new HashMap&lt;String, Object&gt;();
-   map.put(&quot;title&quot;,&quot;Java如此简单&quot;);
-   map.put(&quot;author&quot;,&quot;狂神说&quot;);
-   map.put(&quot;views&quot;,9999);
-   List&lt;Blog&gt; blogs = mapper.queryBlogChoose(map);
-
-   System.out.println(blogs);
-
-   session.close();
-&#125;
-</code></pre>
-<p>如只查询阅览量为9999的书籍则改成<img src="/2021/09/21/Mybatis%E5%85%A5%E9%97%A8/image-20210924195725942.png" alt="image-20210924195725942"></p>
-<blockquote>
-<p>SQL片段</p>
-</blockquote>
-<p>可能某个 sql 语句我们用的特别多，为了增加代码的重用性，简化代码，将这些代码抽取出来，然后使用时直接调用。</p>
-<p><strong>提取SQL片段：</strong></p>
-<pre><code class="sql">&lt;sql id=&quot;if-title-author&quot;&gt;
-   &lt;if test=&quot;title != null&quot;&gt;
-      title = #&#123;title&#125;
-   &lt;/if&gt;
-   &lt;if test=&quot;author != null&quot;&gt;
-      and author = #&#123;author&#125;
-   &lt;/if&gt;
-&lt;/sql&gt;
-</code></pre>
-<p><strong>引用SQL片段：</strong></p>
-<pre><code class="sql">&lt;select id=&quot;queryBlogIf&quot; parameterType=&quot;map&quot; resultType=&quot;blog&quot;&gt;
-  select * from blog
-   &lt;where&gt;
-       &lt;!-- 引用 sql 片段，如果refid 指定的不在本文件中，那么需要在前面加上 namespace --&gt;
-       &lt;include refid=&quot;if-title-author&quot;&gt;&lt;/include&gt;
-       &lt;!-- 在这里还可以引用其他的 sql 片段 --&gt;
-   &lt;/where&gt;
-&lt;/select&gt;
-</code></pre>
-<p>注意：</p>
-<p>①、最好基于 单表来定义 sql 片段，提高片段的可重用性</p>
-<p>②、在 sql 片段中不要包括 where</p>
-<h2><span id="缓存">缓存</span></h2><p>一级缓存：也叫本地缓存：</p>
-<ul>
-<li>与数据库同一次会话期间查询到的数据会放在本地缓存中。</li>
-<li>以后如果需要获取相同的数据，直接从缓存中拿，没必须再去查询数据库；</li>
-</ul>
-<p>例如：Sqlsession </p>
-<p>体验：测试在一个session中查询两次相同记录，第二次直接从缓存访问，不去访问数据库</p>
-<p><img src="/2021/09/21/Mybatis%E5%85%A5%E9%97%A8/image-20210924203651727.png" alt="image-20210924203651727"></p>
-<p><img src="/2021/09/21/Mybatis%E5%85%A5%E9%97%A8/image-20210924203701534.png" alt="image-20210924203701534"></p>
-<p>一级缓存失效的四种情况:</p>
-<p>1、sqlSession不同</p>
-<p>2、sqlSession相同，查询条件不同</p>
-<p>3、sqlSession相同，两次查询之间执行了增删改操作！</p>
-<p>4、sqlSession相同，手动清除一级缓存</p>
-<pre><code class="java">session.clearCache();//手动清除缓存
-</code></pre>
-<p><strong>一级缓存就是一个map</strong></p>
-<blockquote>
-<p>二级缓存</p>
-</blockquote>
-<ul>
-<li><p>二级缓存也叫全局缓存，一级缓存作用域太低了，所以诞生了二级缓存</p>
-</li>
-<li><p>基于namespace级别的缓存，一个名称空间，对应一个二级缓存；</p>
-</li>
-<li><p>工作机制</p>
-</li>
-<li><ul>
-<li>一个会话查询一条数据，这个数据就会被放在当前会话的一级缓存中；</li>
-<li>如果当前会话关闭了，这个会话对应的一级缓存就没了；但是我们想要的是，会话关闭了，一级缓存中的数据被保存到二级缓存中；</li>
-<li>新的会话查询信息，就可以从二级缓存中获取内容；</li>
-<li>不同的mapper查出的数据会放在自己对应的缓存（map）中；</li>
-</ul>
-</li>
-</ul>
-<p>简单地来说：二级缓存就是为了想从缓存中查询一级缓存中没有的东西（个人理解）</p>
-<blockquote>
-<p>使用步骤</p>
-</blockquote>
-<p>1、开启全局缓存 【mybatis-config.xml】</p>
-<pre><code class="java">&lt;setting name=&quot;cacheEnabled&quot; value=&quot;true&quot;/&gt;
-</code></pre>
-<p>2、去每个mapper.xml中配置使用二级缓存，这个配置非常简单；【xxxMapper.xml】</p>
-<pre><code class="java">&lt;cache/&gt;
-</code></pre>
-<h2><span id="延迟加载">延迟加载</span></h2><p>Mybatis 是否支持延迟加载？如果支持，它的实现原理是什么？</p>
-<p>答：</p>
-<p>1）Mybatis 仅支持 association 关联对象和 collection 关联集合对象的延迟加载，association指的就是一对一，collection 指的就是一对多查询。在 Mybatis 配置文件中，可以配置是否启用延迟加载 lazyLoadingEnabled=true|false。 </p>
-<p>2）它的原理是，使用 CGLIB 创建目标对象的代理对象，当调用目标方法时，进入拦截器方法，比如调用 a.getB().getName()，拦截器 invoke()方法发现 a.getB()是 null 值，那么就会单独发送事先保存好的查询关联 B 对象的 sql，把 B 查询上来，然后调用 a.setB(b)，于是 a 的对象 b 属性就有值了，接着完成 a.getB().getName()方法的调用。这就是延迟加载的基本原理</p>
-<p>总结：延迟加载就是<strong>按需加载</strong>，在需要查询的时候再去查询，使用延迟加载<strong>可以避免表连接查询</strong>，<strong>表连接查询比单表查询的效率低</strong>，<strong>但是它需要多次与数据库进行交互</strong>，所以延迟加载并不是万能的，使用需谨慎。</p>
-<p>详细学习：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq754772661/article/details/114931516">https://blog.csdn.net/qq754772661/article/details/114931516</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/11/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" href="/page/13/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/11/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/13/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1480,7 +864,7 @@ public void testQueryBlogChoose()&#123;
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">42</span>
+          <span class="site-state-item-count">43</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1559,18 +943,18 @@ public void testQueryBlogChoose()&#123;
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">197k</span>
+    <span title="站点总字数">198k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:59</span>
+    <span title="站点阅读时长">3:01</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共76.6k字</span>
+  <span class="post-count">博客全站共77k字</span>
 </div>
 
     <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
