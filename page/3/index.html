@@ -195,7 +195,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/20/JAVASE/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/28/JVM/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -209,7 +209,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/01/20/JAVASE/" class="post-title-link" itemprop="url">JAVASE</a>
+            <a href="/2022/01/28/JVM/" class="post-title-link" itemprop="url">JVM</a>
         </h2>
 
         <div class="post-meta">
@@ -221,7 +221,23 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2022-01-20 09:59:25" itemprop="dateCreated datePublished" datetime="2022-01-20T09:59:25+08:00">2022-01-20</time>
+              <time title="创建时间：2022-01-28 12:05:46" itemprop="dateCreated datePublished" datetime="2022-01-28T12:05:46+08:00">2022-01-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-02-12 17:00:06" itemprop="dateModified" datetime="2022-02-12T17:00:06+08:00">2022-02-12</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java%E8%BF%9B%E9%98%B6/" itemprop="url" rel="index"><span itemprop="name">Java进阶</span></a>
+                </span>
             </span>
 
           
@@ -229,13 +245,13 @@
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
               </span>
-              <span>0</span>
+              <span>42k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
-              <span>1 分钟</span>
+              <span>39 分钟</span>
             </span>
 
         </div>
@@ -247,7 +263,2136 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          
+          <hr>
+<h1><span id="jvm">JVM</span></h1><h2><span id="一-什么是jvm">一、什么是JVM</span></h2><h3><span id="定义">定义</span></h3><p>Java Virtual Machine，JAVA程序的<strong>运行环境</strong>（JAVA二进制字节码的运行环境）</p>
+<h3><span id="好处">好处</span></h3><ul>
+<li>一次编写，到处运行</li>
+<li>自动内存管理，垃圾回收机制</li>
+<li>数组下标越界检查</li>
+</ul>
+<h3><span id="比较">比较</span></h3><p>JVM JRE JDK的区别</p>
+<p><img src="/2022/01/28/JVM/image-20220128120907409.png" alt="image-20220128120907409"></p>
+<h2><span id="二-内存结构">二、内存结构</span></h2><h3><span id="整体架构"><strong>整体架构</strong></span></h3><p><a target="_blank" rel="noopener" href="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608150440.png"><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608150440.png" alt="img"></a></p>
+<h3><span id="1-程序计数器">1、程序计数器</span></h3><h4><span id="作用">作用</span></h4><p>用于保存JVM中下一条所要执行的指令的地址</p>
+<h4><span id="特点">特点</span></h4><ul>
+<li>线程私有<ul>
+<li>CPU会为每个线程分配时间片，当当前线程的时间片使用完以后，CPU就会去执行另一个线程中的代码</li>
+<li>程序计数器是<strong>每个线程</strong>所<strong>私有</strong>的，当另一个线程的时间片用完，又返回来执行当前线程的代码时，通过程序计数器可以知道应该执行哪一句指令</li>
+</ul>
+</li>
+<li>不会存在内存溢出</li>
+</ul>
+<h3><span id="2-虚拟机栈">2、虚拟机栈</span></h3><h4><span id="定义">定义</span></h4><ul>
+<li>每个<strong>线程</strong>运行需要的内存空间，称为<strong>虚拟机栈</strong></li>
+<li>每个栈由多个<strong>栈帧</strong>组成，对应着每次调用方法时所占用的内存</li>
+<li>每个线程只能有<strong>一个活动栈帧</strong>，对应着<strong>当前正在执行的方法</strong>（栈顶部的第一个方法）</li>
+</ul>
+<h4><span id="演示">演示</span></h4><p>代码</p>
+<pre><code>public class Main &#123;
+    public static void main(String[] args) &#123;
+        method1();
+    &#125;
+
+    private static void method1() &#123;
+        method2(1, 2);
+    &#125;
+
+    private static int method2(int a, int b) &#123;
+        int c = a + b;
+        return c;
+    &#125;
+&#125;Copy
+</code></pre>
+<p><a target="_blank" rel="noopener" href="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608150534.png"><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608150534.png" alt="img"></a></p>
+<p>在控制台中可以看到，主类中的方法在进入虚拟机栈的时候，符合栈的特点</p>
+<h4><span id="问题辨析">问题辨析</span></h4><ul>
+<li>垃圾回收是否涉及栈内存？<ul>
+<li><strong>不需要</strong>。因为虚拟机栈中是由一个个栈帧组成的，在方法执行完毕后，对应的栈帧就会被弹出栈。所以无需通过垃圾回收机制去回收内存。</li>
+</ul>
+</li>
+<li>栈内存的分配越大越好吗？<ul>
+<li>不是。因为<strong>物理内存是一定的</strong>，栈内存越大，可以支持更多的递归调用，但是可执行的线程数就会越少。</li>
+</ul>
+</li>
+<li>方法内的局部变量是否是线程安全的？<ul>
+<li>看变量是被线程私有还是共享，共享则不安全</li>
+<li>看变量的作用范围</li>
+<li><img src="/2022/01/28/JVM/image-20220202214904660.png" alt="image-20220202214904660"></li>
+</ul>
+</li>
+</ul>
+<h4><span id="内存溢出">内存溢出</span></h4><p><strong>Java.lang.stackOverflowError</strong> 栈内存溢出</p>
+<p><strong>发生原因</strong></p>
+<ul>
+<li>虚拟机栈中，<strong>栈帧过多</strong>（无限递归）</li>
+<li>每个栈帧<strong>所占用过大</strong></li>
+</ul>
+<h4><span id="线程运行诊断">线程运行诊断</span></h4><p>CPU占用过高</p>
+<ul>
+<li>Linux环境下运行某些程序的时候，可能导致CPU的占用过高，这时需要定位占用CPU过高的线程<ul>
+<li><strong>top</strong>命令，查看是哪个<strong>进程</strong>占用CPU过高</li>
+<li><strong>ps H -eo pid, tid（线程id）, %cpu | grep 刚才通过top查到的进程号</strong> 通过ps命令进一步查看是哪个线程占用CPU过高</li>
+<li><strong>jstack 进程id</strong> 通过查看进程中的线程的nid，刚才通过ps命令看到的tid来<strong>对比定位</strong>，注意jstack查找出的线程id是<strong>16进制的</strong>，<strong>需要转换</strong></li>
+</ul>
+</li>
+</ul>
+<h3><span id="3-本地方法栈">3、本地方法栈</span></h3><p>一些带有<strong>native关键字</strong>的方法就是需要JAVA去调用本地的C或者C++方法，因为JAVA有时候没法直接和操作系统底层交互，所以需要用到本地方法</p>
+<h3><span id="4-堆">4、堆</span></h3><h4><span id="定义">定义</span></h4><p>通过new关键字<strong>创建的对象</strong>都会被放在堆内存</p>
+<h4><span id="特点">特点</span></h4><ul>
+<li><strong>所有线程共享</strong>，堆内存中的对象都需要<strong>考虑线程安全问题</strong></li>
+<li>有垃圾回收机制</li>
+</ul>
+<h4><span id="堆内存溢出">堆内存溢出</span></h4><p><strong>java.lang.OutofMemoryError</strong> ：java heap space. 堆内存溢出</p>
+<h4><span id="堆内存诊断">堆内存诊断</span></h4><p><strong>jps</strong></p>
+<p><strong>jmap</strong></p>
+<p><strong>jconsole</strong></p>
+<p><strong>jvirsalvm</strong></p>
+<h3><span id="5-方法区">5、方法区</span></h3><h4><span id="结构">结构</span></h4><p><a target="_blank" rel="noopener" href="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608150547.png"><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608150547.png" alt="img"></a></p>
+<h4><span id="内存溢出">内存溢出</span></h4><ul>
+<li>1.8以前会导致<strong>永久代</strong>内存溢出</li>
+<li>1.8以后会导致<strong>元空间</strong>内存溢出</li>
+</ul>
+<h4><span id="常量池">常量池</span></h4><p>二进制字节码的组成：类的基本信息、常量池、类的方法定义（包含了虚拟机指令）</p>
+<p><strong>通过反编译来查看类的信息</strong></p>
+<ul>
+<li><p>获得对应类的.class文件</p>
+<ul>
+<li><p>在JDK对应的bin目录下运行cmd，<strong>也可以在IDEA控制台输入</strong></p>
+<p><a target="_blank" rel="noopener" href="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608150602.png"><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608150602.png" alt="img"></a></p>
+</li>
+<li><p>输入 <strong>javac 对应类的绝对路径</strong></p>
+<pre><code>F:\JAVA\JDK8.0\bin&gt;javac F:\Thread_study\src\com\nyima\JVM\day01\Main.javaCopy
+</code></pre>
+<p>输入完成后，对应的目录下就会出现类的.class文件</p>
+</li>
+</ul>
+</li>
+<li><p>在控制台输入 javap -v 类的绝对路径</p>
+<pre><code>javap -v F:\Thread_study\src\com\nyima\JVM\day01\Main.classCopy
+</code></pre>
+</li>
+<li><p>然后能在控制台看到反编译以后类的信息了</p>
+<ul>
+<li><p>类的基本信息</p>
+<p><img src="/2022/01/28/JVM/image-20220203213504873.png" alt="image-20220203213504873"></p>
+</li>
+<li><p>常量池</p>
+<p><img src="/2022/01/28/JVM/image-20220203213602701.png" alt="image-20220203213602701"></p>
+</li>
+<li><p>虚拟机中执行编译的方法（框内的是真正编译执行的内容，**#号的内容需要在常量池中查找**）</p>
+<p><img src="/2022/01/28/JVM/image-20220203213712499.png" alt="image-20220203213712499"></p>
+</li>
+</ul>
+</li>
+</ul>
+<h4><span id="运行时常量池">运行时常量池</span></h4><ul>
+<li>常量池<ul>
+<li>就是一张表（如上图中的constant pool），虚拟机指令根据这张常量表找到要执行的类名、方法名、参数类型、字面量信息</li>
+</ul>
+</li>
+<li>运行时常量池<ul>
+<li>常量池是*.class文件中的，当该<strong>类被加载以后</strong>，它的常量池信息就会<strong>放入运行时常量池</strong>，并把里面的<strong>符号地址变为真实地址</strong></li>
+</ul>
+</li>
+</ul>
+<h4><span id="常量池与串池的关系">常量池与串池的关系</span></h4><h5><span id="串池stringtable"><strong>串池</strong>StringTable</span></h5><p><strong>特征</strong></p>
+<ul>
+<li>常量池中的字符串仅是符号，只有<strong>在被用到时才会转化为对象</strong></li>
+<li>利用串池的机制，来避免重复创建字符串对象</li>
+<li>字符串<strong>变量</strong>拼接的原理是<strong>StringBuilder</strong></li>
+<li>字符串<strong>常量</strong>拼接的原理是<strong>编译器优化</strong></li>
+<li>可以使用<strong>intern方法</strong>，主动将串池中还没有的字符串对象放入串池中</li>
+<li><strong>注意</strong>：无论是串池还是堆里面的字符串，都是对象</li>
+</ul>
+<p>用来放字符串对象且里面的<strong>元素不重复</strong></p>
+<pre><code class="java">public class StringTableStudy &#123;
+    public static void main(String[] args) &#123;
+        String a = &quot;a&quot;; 
+        String b = &quot;b&quot;;
+        String ab = &quot;ab&quot;;
+    &#125;
+&#125;Copy
+</code></pre>
+<p>常量池中的信息，都会被加载到运行时常量池中，但这是a b ab 仅是常量池中的符号，<strong>还没有成为java字符串</strong></p>
+<pre><code class="java">0: ldc           #2                  // String a
+2: astore_1
+3: ldc           #3                  // String b
+5: astore_2
+6: ldc           #4                  // String ab
+8: astore_3
+9: returnCopy
+</code></pre>
+<p>当执行到 ldc #2 时，会把符号 a 变为 “a” 字符串对象，<strong>并放入串池中</strong>（hashtable结构 不可扩容）</p>
+<p>当执行到 ldc #3 时，会把符号 b 变为 “b” 字符串对象，并放入串池中</p>
+<p>当执行到 ldc #4 时，会把符号 ab 变为 “ab” 字符串对象，并放入串池中</p>
+<p>最终<strong>StringTable [“a”, “b”, “ab”]</strong></p>
+<p><strong>注意</strong>：字符串对象的创建都是<strong>懒惰的</strong>，只有当运行到那一行字符串且在串池中不存在的时候（如 ldc #2）时，该字符串才会被创建并放入串池中。</p>
+<p>使用拼接<strong>字符串变量对象</strong>创建字符串的过程</p>
+<pre><code>public class StringTableStudy &#123;
+    public static void main(String[] args) &#123;
+        String a = &quot;a&quot;;
+        String b = &quot;b&quot;;
+        String ab = &quot;ab&quot;;
+        //拼接字符串对象来创建新的字符串
+        String ab2 = a+b; 
+    &#125;
+&#125;Copy
+</code></pre>
+<p>反编译后的结果</p>
+<pre><code class="java">     Code:
+      stack=2, locals=5, args_size=1
+         0: ldc           #2                  // String a
+         2: astore_1
+         3: ldc           #3                  // String b
+         5: astore_2
+         6: ldc           #4                  // String ab
+         8: astore_3
+         9: new           #5                  // class java/lang/StringBuilder
+        12: dup
+        13: invokespecial #6                  // Method java/lang/StringBuilder.&quot;&lt;init&gt;&quot;:()V
+        16: aload_1
+        17: invokevirtual #7                  // Method java/lang/StringBuilder.append:(Ljava/lang/String
+;)Ljava/lang/StringBuilder;
+        20: aload_2
+        21: invokevirtual #7                  // Method java/lang/StringBuilder.append:(Ljava/lang/String
+;)Ljava/lang/StringBuilder;
+        24: invokevirtual #8                  // Method java/lang/StringBuilder.toString:()Ljava/lang/Str
+ing;
+        27: astore        4
+        29: returnCopy
+</code></pre>
+<p>通过拼接的方式来创建字符串的<strong>过程</strong>是：StringBuilder().append(“a”).append(“b”).toString()</p>
+<p>最后的toString方法的返回值是一个<strong>新的字符串</strong>，但字符串的<strong>值</strong>和拼接的字符串一致，但是两个不同的字符串，<strong>一个存在于串池之中，一个存在于堆内存之中</strong></p>
+<pre><code class="java">String ab = &quot;ab&quot;;
+String ab2 = a+b;
+//结果为false,因为ab是存在于串池之中，ab2是由StringBuffer的toString方法所返回的一个对象，存在于堆内存之中
+System.out.println(ab == ab2);Copy
+</code></pre>
+<p>使用<strong>拼接字符串常量对象</strong>的方法创建字符串</p>
+<pre><code class="java">public class StringTableStudy &#123;
+    public static void main(String[] args) &#123;
+        String a = &quot;a&quot;;
+        String b = &quot;b&quot;;
+        String ab = &quot;ab&quot;;
+        String ab2 = a+b;
+        //使用拼接字符串的方法创建字符串
+        String ab3 = &quot;a&quot; + &quot;b&quot;;
+    &#125;
+&#125;Copy
+</code></pre>
+<p>反编译后的结果</p>
+<pre><code class="java">       Code:
+      stack=2, locals=6, args_size=1
+         0: ldc           #2                  // String a
+         2: astore_1
+         3: ldc           #3                  // String b
+         5: astore_2
+         6: ldc           #4                  // String ab
+         8: astore_3
+         9: new           #5                  // class java/lang/StringBuilder
+        12: dup
+        13: invokespecial #6                  // Method java/lang/StringBuilder.&quot;&lt;init&gt;&quot;:()V
+        16: aload_1
+        17: invokevirtual #7                  // Method java/lang/StringBuilder.append:(Ljava/lang/String
+;)Ljava/lang/StringBuilder;
+        20: aload_2
+        21: invokevirtual #7                  // Method java/lang/StringBuilder.append:(Ljava/lang/String
+;)Ljava/lang/StringBuilder;
+        24: invokevirtual #8                  // Method java/lang/StringBuilder.toString:()Ljava/lang/Str
+ing;
+        27: astore        4
+        //ab3初始化时直接从串池中获取字符串
+        29: ldc           #4                  // String ab
+        31: astore        5
+        33: returnCopy
+</code></pre>
+<ul>
+<li>使用<strong>拼接字符串常量</strong>的方法来创建新的字符串时，因为<strong>内容是常量，javac在编译期会进行优化，结果已在编译期确定为ab</strong>，而创建ab的时候已经在串池中放入了“ab”，所以ab3直接从串池中获取值，所以进行的操作和 ab = “ab” 一致。</li>
+<li>使用<strong>拼接字符串变量</strong>的方法来创建新的字符串时，因为内容是变量，只能<strong>在运行期确定它的值，所以需要使用StringBuilder来创建</strong></li>
+</ul>
+<h5><span id="intern方法-18">intern方法 1.8</span></h5><p>调用字符串对象的intern方法，会将该字符串对象尝试放入到串池中</p>
+<ul>
+<li>如果串池中没有该字符串对象，则放入成功</li>
+<li>如果有该字符串对象，则放入失败</li>
+</ul>
+<p>无论放入是否成功，都会返回<strong>串池中</strong>的字符串对象</p>
+<p><strong>注意</strong>：此时如果调用intern方法成功，堆内存与串池中的字符串对象是同一个对象；如果失败，则不是同一个对象</p>
+<p><strong>例1</strong></p>
+<pre><code>public class Main &#123;
+    public static void main(String[] args) &#123;
+        //&quot;a&quot; &quot;b&quot; 被放入串池中，str则存在于堆内存之中
+        String str = new String(&quot;a&quot;) + new String(&quot;b&quot;);
+        //调用str的intern方法，这时串池中没有&quot;ab&quot;，则会将该字符串对象放入到串池中，此时堆内存与串池中的&quot;ab&quot;是同一个对象
+        String st2 = str.intern();
+        //给str3赋值，因为此时串池中已有&quot;ab&quot;，则直接将串池中的内容返回
+        String str3 = &quot;ab&quot;;
+        //因为堆内存与串池中的&quot;ab&quot;是同一个对象，所以以下两条语句打印的都为true
+        System.out.println(str == st2);
+        System.out.println(str == str3);
+    &#125;
+&#125;Copy
+</code></pre>
+<p><strong>例2</strong></p>
+<pre><code>public class Main &#123;
+    public static void main(String[] args) &#123;
+        //此处创建字符串对象&quot;ab&quot;，因为串池中还没有&quot;ab&quot;，所以将其放入串池中
+        String str3 = &quot;ab&quot;;
+        //&quot;a&quot; &quot;b&quot; 被放入串池中，str则存在于堆内存之中
+        String str = new String(&quot;a&quot;) + new String(&quot;b&quot;);
+        //此时因为在创建str3时，&quot;ab&quot;已存在与串池中，所以放入失败，但是会返回串池中的&quot;ab&quot;
+        String str2 = str.intern();
+        //false
+        System.out.println(str == str2);
+        //false
+        System.out.println(str == str3);
+        //true
+        System.out.println(str2 == str3);
+    &#125;
+&#125;Copy
+</code></pre>
+<h5><span id="intern方法-16">intern方法 1.6</span></h5><p>调用字符串对象的intern方法，会将该字符串对象尝试放入到串池中</p>
+<ul>
+<li>如果串池中没有该字符串对象，会将该字符串对象复制一份，再放入到串池中</li>
+<li>如果有该字符串对象，则放入失败</li>
+</ul>
+<p>无论放入是否成功，都会返回<strong>串池中</strong>的字符串对象</p>
+<p><strong>注意</strong>：此时无论调用intern方法成功与否，串池中的字符串对象和堆内存中的字符串对象<strong>都不是同一个对象</strong></p>
+<h4><span id="stringtable-垃圾回收">StringTable 垃圾回收</span></h4><p>StringTable在内存紧张时，会发生垃圾回收</p>
+<h4><span id="stringtable调优">StringTable调优</span></h4><ul>
+<li><p>因为StringTable是由HashTable实现的，所以可以<strong>适当增加HashTable桶的个数</strong>，来减少字符串放入串池所需要的时间</p>
+<pre><code>-XX:StringTableSize=xxxxCopy
+</code></pre>
+</li>
+<li><p>考虑是否需要将字符串对象入池</p>
+<p>可以通过<strong>intern方法减少重复入池</strong></p>
+</li>
+</ul>
+<h3><span id="6-直接内存">6、直接内存</span></h3><ul>
+<li>属于操作系统，常见于NIO操作时，<strong>用于数据缓冲区</strong></li>
+<li>分配回收成本较高，但读写性能高</li>
+<li>不受JVM内存回收管理</li>
+</ul>
+<h4><span id="文件读写流程">文件读写流程</span></h4><p><a target="_blank" rel="noopener" href="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608150715.png"><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608150715.png" alt="img"></a></p>
+<p><strong>使用了DirectBuffer</strong></p>
+<p><a target="_blank" rel="noopener" href="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608150736.png"><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608150736.png" alt="img"></a></p>
+<p>直接内存是操作系统和Java代码<strong>都可以访问的一块区域</strong>，无需将代码从系统内存复制到Java堆内存，从而提高了效率</p>
+<h4><span id="释放原理">释放原理</span></h4><p>直接内存的回收不是通过JVM的垃圾回收来释放的，而是通过<strong>unsafe.freeMemory</strong>来手动释放</p>
+<p>通过</p>
+<pre><code>//通过ByteBuffer申请1M的直接内存
+ByteBuffer byteBuffer = ByteBuffer.allocateDirect(_1M);Copy
+</code></pre>
+<p>申请直接内存，但JVM并不能回收直接内存中的内容，它是如何实现回收的呢？</p>
+<p><strong>allocateDirect的实现</strong></p>
+<pre><code>public static ByteBuffer allocateDirect(int capacity) &#123;
+    return new DirectByteBuffer(capacity);
+&#125;Copy
+</code></pre>
+<p>DirectByteBuffer类</p>
+<pre><code>DirectByteBuffer(int cap) &#123;   // package-private
+   
+    super(-1, 0, cap, cap);
+    boolean pa = VM.isDirectMemoryPageAligned();
+    int ps = Bits.pageSize();
+    long size = Math.max(1L, (long)cap + (pa ? ps : 0));
+    Bits.reserveMemory(size, cap);
+
+    long base = 0;
+    try &#123;
+        base = unsafe.allocateMemory(size); //申请内存
+    &#125; catch (OutOfMemoryError x) &#123;
+        Bits.unreserveMemory(size, cap);
+        throw x;
+    &#125;
+    unsafe.setMemory(base, size, (byte) 0);
+    if (pa &amp;&amp; (base % ps != 0)) &#123;
+        // Round up to page boundary
+        address = base + ps - (base &amp; (ps - 1));
+    &#125; else &#123;
+        address = base;
+    &#125;
+    cleaner = Cleaner.create(this, new Deallocator(base, size, cap)); //通过虚引用，来实现直接内存的释放，this为虚引用的实际对象
+    att = null;
+&#125;Copy
+</code></pre>
+<p>这里调用了一个Cleaner的create方法，且后台线程还会对虚引用的对象监测，如果虚引用的实际对象（这里是DirectByteBuffer）被回收以后，就会调用Cleaner的clean方法，来清除直接内存中占用的内存</p>
+<pre><code>public void clean() &#123;
+       if (remove(this)) &#123;
+           try &#123;
+               this.thunk.run(); //调用run方法
+           &#125; catch (final Throwable var2) &#123;
+               AccessController.doPrivileged(new PrivilegedAction&lt;Void&gt;() &#123;
+                   public Void run() &#123;
+                       if (System.err != null) &#123;
+                           (new Error(&quot;Cleaner terminated abnormally&quot;, var2)).printStackTrace();
+                       &#125;
+
+                       System.exit(1);
+                       return null;
+                   &#125;
+               &#125;);
+           &#125;Copy
+</code></pre>
+<p>对应对象的run方法</p>
+<pre><code>public void run() &#123;
+    if (address == 0) &#123;
+        // Paranoia
+        return;
+    &#125;
+    unsafe.freeMemory(address); //释放直接内存中占用的内存
+    address = 0;
+    Bits.unreserveMemory(size, capacity);
+&#125;Copy
+</code></pre>
+<h5><span id="直接内存的回收机制总结">直接内存的回收机制总结</span></h5><ul>
+<li>使用了Unsafe类来完成直接内存的分配回收，回收需要主动调用freeMemory方法</li>
+<li>ByteBuffer的实现内部使用了Cleaner（虚引用）来检测ByteBuffer。一旦ByteBuffer被垃圾回收，那么会由ReferenceHandler来调用Cleaner的clean方法调用freeMemory来释放内存</li>
+</ul>
+<h2><span id="三-垃圾回收">三、垃圾回收</span></h2><h3><span id="1-如何判断对象可以回收">1、如何判断对象可以回收</span></h3><h4><span id="引用计数法">引用计数法</span></h4><p>弊端：循环引用时，两个对象的计数都为1，导致两个对象都无法被释放</p>
+<p><a target="_blank" rel="noopener" href="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608150750.png"><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608150750.png" alt="img"></a></p>
+<h4><span id="可达性分析算法">可达性分析算法</span></h4><ul>
+<li>JVM中的垃圾回收器通过<strong>可达性分析</strong>来探索所有存活的对象</li>
+<li>扫描堆中的对象，看能否沿着GC Root对象为起点的引用链找到该对象，如果<strong>找不到，则表示可以回收</strong></li>
+<li>可以作为GC Root的对象<ul>
+<li>虚拟机栈（栈帧中的本地变量表）中引用的对象。　</li>
+<li>方法区中类静态属性引用的对象</li>
+<li>方法区中常量引用的对象</li>
+<li>本地方法栈中JNI（即一般说的Native方法）引用的对象</li>
+</ul>
+</li>
+</ul>
+<h4><span id="五种引用">五种引用</span></h4><p><a target="_blank" rel="noopener" href="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608150800.png"><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608150800.png" alt="img"></a></p>
+<h5><span id="强引用">强引用</span></h5><p>只有GC Root<strong>都不引用</strong>该对象时，才会回收<strong>强引用</strong>对象</p>
+<ul>
+<li>如上图B、C对象都不引用A1对象时，A1对象才会被回收</li>
+</ul>
+<h5><span id="软引用">软引用</span></h5><p>当GC Root指向软引用对象时，在<strong>内存不足时</strong>，会<strong>回收软引用所引用的对象</strong></p>
+<ul>
+<li>如上图如果B对象不再引用A2对象且内存不足时，软引用所引用的A2对象就会被回收</li>
+</ul>
+<h6><span id="软引用的使用">软引用的使用</span></h6><pre><code>public class Demo1 &#123;
+    public static void main(String[] args) &#123;
+        final int _4M = 4*1024*1024;
+        //使用软引用对象 list和SoftReference是强引用，而SoftReference和byte数组则是软引用
+        List&lt;SoftReference&lt;byte[]&gt;&gt; list = new ArrayList&lt;&gt;();
+        SoftReference&lt;byte[]&gt; ref= new SoftReference&lt;&gt;(new byte[_4M]);
+    &#125;
+&#125;Copy
+</code></pre>
+<p>如果在垃圾回收时发现内存不足，在回收软引用所指向的对象时，<strong>软引用本身不会被清理</strong></p>
+<p>如果想要<strong>清理软引用</strong>，需要使<strong>用引用队列</strong></p>
+<pre><code>public class Demo1 &#123;
+    public static void main(String[] args) &#123;
+        final int _4M = 4*1024*1024;
+        //使用引用队列，用于移除引用为空的软引用对象
+        ReferenceQueue&lt;byte[]&gt; queue = new ReferenceQueue&lt;&gt;();
+        //使用软引用对象 list和SoftReference是强引用，而SoftReference和byte数组则是软引用
+        List&lt;SoftReference&lt;byte[]&gt;&gt; list = new ArrayList&lt;&gt;();
+        SoftReference&lt;byte[]&gt; ref= new SoftReference&lt;&gt;(new byte[_4M]);
+
+        //遍历引用队列，如果有元素，则移除
+        Reference&lt;? extends byte[]&gt; poll = queue.poll();
+        while(poll != null) &#123;
+            //引用队列不为空，则从集合中移除该元素
+            list.remove(poll);
+            //移动到引用队列中的下一个元素
+            poll = queue.poll();
+        &#125;
+    &#125;
+&#125;Copy
+</code></pre>
+<p><strong>大概思路为：</strong>查看引用队列中有无软引用，如果有，则将该软引用从存放它的集合中移除（这里为一个list集合）</p>
+<h5><span id="弱引用">弱引用</span></h5><p>只有弱引用引用该对象时，在垃圾回收时，<strong>无论内存是否充足</strong>，都会回收弱引用所引用的对象</p>
+<ul>
+<li>如上图如果B对象不再引用A3对象，则A3对象会被回收</li>
+</ul>
+<p><strong>弱引用的使用和软引用类似</strong>，只是将 <strong>SoftReference 换为了 WeakReference</strong></p>
+<h5><span id="虚引用"><strong>虚引用</strong></span></h5><p>当虚引用对象所引用的对象被回收以后，虚引用对象就会被放入引用队列中，调用虚引用的方法</p>
+<ul>
+<li>虚引用的一个体现是<strong>释放直接内存所分配的内存</strong>，当引用的对象ByteBuffer被垃圾回收以后，虚引用对象Cleaner就会被放入引用队列中，然后调用Cleaner的clean方法来释放直接内存</li>
+<li>如上图，B对象不再引用ByteBuffer对象，ByteBuffer就会被回收。但是直接内存中的内存还未被回收。这时需要将虚引用对象Cleaner放入引用队列中，然后调用它的clean方法来释放直接内存</li>
+</ul>
+<h5><span id="终结器引用">终结器引用</span></h5><p>所有的类都继承自Object类，Object类有一个finalize方法。当某个对象不再被其他的对象所引用时，会先将终结器引用对象放入引用队列中，然后根据终结器引用对象找到它所引用的对象，然后调用该对象的finalize方法。调用以后，该对象就可以被垃圾回收了</p>
+<ul>
+<li>如上图，B对象不再引用A4对象。这是终结器对象就会被放入引用队列中，引用队列会根据它，找到它所引用的对象。然后调用被引用对象的finalize方法。调用以后，该对象就可以被垃圾回收了</li>
+</ul>
+<h5><span id="引用队列">引用队列</span></h5><ul>
+<li>软引用和弱引用<strong>可以配合</strong>引用队列<ul>
+<li>在<strong>弱引用</strong>和<strong>虚引用</strong>所引用的对象被回收以后，会将这些引用放入引用队列中，方便一起回收这些软/弱引用对象</li>
+</ul>
+</li>
+<li>虚引用和终结器引用<strong>必须配合</strong>引用队列<ul>
+<li>虚引用和终结器引用在使用时会关联一个引用队列</li>
+</ul>
+</li>
+</ul>
+<h3><span id="2-垃圾回收算法">2、垃圾回收算法</span></h3><h4><span id="标记-清除">标记-清除</span></h4><p><a target="_blank" rel="noopener" href="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608150813.png"><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608150813.png" alt="img"></a></p>
+<p><strong>定义</strong>：标记清除算法顾名思义，是指在虚拟机执行垃圾回收的过程中，先采用标记算法确定可回收对象，然后垃圾收集器根据标识清除相应的内容，给堆内存腾出相应的空间</p>
+<ul>
+<li>这里的腾出内存空间并不是将内存空间的字节清0，而是记录下这段内存的起始结束地址，下次分配内存的时候，会直接<strong>覆盖</strong>这段内存</li>
+</ul>
+<p><strong>缺点</strong>：<strong>容易产生大量的内存碎片</strong>，可能无法满足大对象的内存分配，一旦导致无法分配对象，那就会导致jvm启动gc，一旦启动gc，我们的应用程序就会暂停，这就导致应用的响应速度变慢</p>
+<h4><span id="标记-整理">标记-整理</span></h4><p><a target="_blank" rel="noopener" href="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608150827.png"><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608150827.png" alt="img"></a></p>
+<p>标记-整理 会将不被GC Root引用的对象回收，清楚其占用的内存空间。然后整理剩余的对象，可以有效避免因内存碎片而导致的问题，但是因为整体需要消耗一定的时间，所以效率较低</p>
+<h4><span id="复制">复制</span></h4><p><a target="_blank" rel="noopener" href="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608150842.png"><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608150842.png" alt="img"></a></p>
+<p><a target="_blank" rel="noopener" href="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608150856.png"><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608150856.png" alt="img"></a></p>
+<p><a target="_blank" rel="noopener" href="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608150907.png"><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608150907.png" alt="img"></a></p>
+<p><a target="_blank" rel="noopener" href="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608150919.png"><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608150919.png" alt="img"></a></p>
+<p>将内存分为等大小的两个区域，FROM和TO（TO中为空）。先将被GC Root引用的对象从FROM放入TO中，再回收不被GC Root引用的对象。然后交换FROM和TO。这样也可以避免内存碎片的问题，但是会占用双倍的内存空间。</p>
+<h3><span id="3-分代回收">3、分代回收</span></h3><p><a target="_blank" rel="noopener" href="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608150931.png"><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608150931.png" alt="img"></a></p>
+<h4><span id="回收流程">回收流程</span></h4><p>新创建的对象都被放在了<strong>新生代的伊甸园</strong>中</p>
+<p><a target="_blank" rel="noopener" href="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608150939.png"><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608150939.png" alt="img"></a></p>
+<p>当伊甸园中的内存不足时，就会进行一次垃圾回收，这时的回收叫做 <strong>Minor GC</strong></p>
+<p>Minor GC 会将<strong>伊甸园和幸存区FROM</strong>存活的对象<strong>先</strong>复制到 <strong>幸存区 TO</strong>中， 并让其<strong>寿命加1</strong>，再<strong>交换两个幸存区</strong></p>
+<p><a target="_blank" rel="noopener" href="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608150946.png"><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608150946.png" alt="img"></a></p>
+<p><a target="_blank" rel="noopener" href="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608150955.png"><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608150955.png" alt="img"></a></p>
+<p><a target="_blank" rel="noopener" href="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151002.png"><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151002.png" alt="img"></a></p>
+<p>再次创建对象，若新生代的伊甸园又满了，则会<strong>再次触发 Minor GC</strong>（会触发 <strong>stop the world</strong>， 暂停其他用户线程，只让垃圾回收线程工作），这时不仅会回收伊甸园中的垃圾，<strong>还会回收幸存区中的垃圾</strong>，再将活跃对象复制到幸存区TO中。回收以后会交换两个幸存区，并让幸存区中的对象<strong>寿命加1</strong></p>
+<p><a target="_blank" rel="noopener" href="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151010.png"><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151010.png" alt="img"></a></p>
+<p>如果幸存区中的对象的<strong>寿命超过某个阈值</strong>（最大为15，4bit），就会被<strong>放入老年代</strong>中</p>
+<p><a target="_blank" rel="noopener" href="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151018.png"><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151018.png" alt="img"></a></p>
+<p>如果新生代老年代中的内存都满了，就会先触发Minor GC，再触发<strong>Full GC</strong>，扫描<strong>新生代和老年代中</strong>所有不再使用的对象并回收</p>
+<h4><span id="gc-分析">GC 分析</span></h4><h5><span id="大对象处理策略">大对象处理策略</span></h5><p>当遇到一个<strong>较大的对象</strong>时，就算新生代的<strong>伊甸园</strong>为空，也<strong>无法容纳该对象</strong>时，会将该对象<strong>直接晋升为老年代</strong></p>
+<h5><span id="线程内存溢出">线程内存溢出</span></h5><p>某个线程的内存溢出了而抛异常（out of memory），不会让其他的线程结束运行</p>
+<p>这是因为当一个线程<strong>抛出OOM异常后</strong>，<strong>它所占据的内存资源会全部被释放掉</strong>，从而不会影响其他线程的运行，<strong>进程依然正常</strong></p>
+<h3><span id="4-垃圾回收器">4、垃圾回收器</span></h3><h4><span id="相关概念">相关概念</span></h4><p><strong>并行收集</strong>：指多条垃圾收集线程并行工作，但此时<strong>用户线程仍处于等待状态</strong>。</p>
+<p><strong>并发收集</strong>：指用户线程与垃圾收集线程<strong>同时工作</strong>（不一定是并行的可能会交替执行）。<strong>用户程序在继续运行</strong>，而垃圾收集程序运行在另一个CPU上</p>
+<p><strong>吞吐量</strong>：即CPU用于<strong>运行用户代码的时间</strong>与CPU<strong>总消耗时间</strong>的比值（吞吐量 = 运行用户代码时间 / ( 运行用户代码时间 + 垃圾收集时间 )），也就是。例如：虚拟机共运行100分钟，垃圾收集器花掉1分钟，那么吞吐量就是99%</p>
+<h4><span id="串行">串行</span></h4><ul>
+<li>单线程</li>
+<li>内存较小，个人电脑（CPU核数较少）</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151027.png"><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151027.png" alt="img"></a></p>
+<p><strong>安全点</strong>：让其他线程都在这个点停下来，以免垃圾回收时移动对象地址，使得其他线程找不到被移动的对象</p>
+<p>因为是串行的，所以只有一个垃圾回收线程。且在该线程执行回收工作时，其他线程进入<strong>阻塞</strong>状态</p>
+<h5><span id="serial-收集器">Serial 收集器</span></h5><p>Serial收集器是最基本的、发展历史最悠久的收集器</p>
+<p><strong>特点：</strong>单线程、简单高效（与其他收集器的单线程相比），采用<strong>复制算法</strong>。对于限定单个CPU的环境来说，Serial收集器由于没有线程交互的开销，专心做垃圾收集自然可以获得最高的单线程手机效率。收集器进行垃圾回收时，必须暂停其他所有的工作线程，直到它结束（Stop The World）</p>
+<h5><span id="parnew-收集器">ParNew 收集器</span></h5><p>ParNew收集器其实就是Serial收集器的多线程版本</p>
+<p><strong>特点</strong>：多线程、ParNew收集器默认开启的收集线程数与CPU的数量相同，在CPU非常多的环境中，可以使用-XX:ParallelGCThreads参数来限制垃圾收集的线程数。和Serial收集器一样存在Stop The World问题</p>
+<h5><span id="serial-old-收集器">Serial Old 收集器</span></h5><p>Serial Old是Serial收集器的老年代版本</p>
+<p><strong>特点</strong>：同样是单线程收集器，采用<strong>标记-整理算法</strong></p>
+<h4><span id="吞吐量优先">吞吐量优先</span></h4><ul>
+<li>多线程</li>
+<li>堆内存较大，多核CPU</li>
+<li>单位时间内，STW（stop the world，停掉其他所有工作线程）时间最短</li>
+<li><strong>JDK1.8默认使用</strong>的垃圾回收器</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151039.png"><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151039.png" alt="img"></a></p>
+<h5><span id="parallel-scavenge-收集器">Parallel Scavenge 收集器</span></h5><p>与吞吐量关系密切，故也称为吞吐量优先收集器</p>
+<p><strong>特点</strong>：属于新生代收集器也是采用<strong>复制算法</strong>的收集器（用到了新生代的幸存区），又是并行的多线程收集器（与ParNew收集器类似）</p>
+<p>该收集器的目标是达到一个可控制的吞吐量。还有一个值得关注的点是：<strong>GC自适应调节策略</strong>（与ParNew收集器最重要的一个区别）</p>
+<p><strong>GC自适应调节策略</strong>：Parallel Scavenge收集器可设置-XX:+UseAdptiveSizePolicy参数。当开关打开时<strong>不需要</strong>手动指定新生代的大小（-Xmn）、Eden与Survivor区的比例（-XX:SurvivorRation）、晋升老年代的对象年龄（-XX:PretenureSizeThreshold）等，虚拟机会根据系统的运行状况收集性能监控信息，动态设置这些参数以提供最优的停顿时间和最高的吞吐量，这种调节方式称为GC的自适应调节策略。</p>
+<p>Parallel Scavenge收集器使用两个参数控制吞吐量：</p>
+<ul>
+<li>XX:MaxGCPauseMillis 控制最大的垃圾收集停顿时间</li>
+<li>XX:GCRatio 直接设置吞吐量的大小</li>
+</ul>
+<h5><span id="parallel-old-收集器"><strong>Parallel Old 收集器</strong></span></h5><p>是Parallel Scavenge收集器的老年代版本</p>
+<p><strong>特点</strong>：多线程，采用<strong>标记-整理算法</strong>（老年代没有幸存区）</p>
+<h4><span id="响应时间优先">响应时间优先</span></h4><ul>
+<li>多线程</li>
+<li>堆内存较大，多核CPU</li>
+<li>尽可能让单次STW时间变短（尽量不影响其他线程运行）</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151052.png"><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151052.png" alt="img"></a></p>
+<h5><span id="cms-收集器">CMS 收集器</span></h5><p>Concurrent Mark Sweep，一种以获取<strong>最短回收停顿时间</strong>为目标的<strong>老年代</strong>收集器</p>
+<p><strong>特点</strong>：基于<strong>标记-清除算法</strong>实现。并发收集、低停顿，但是会产生内存碎片</p>
+<p><strong>应用场景</strong>：适用于注重服务的响应速度，希望系统停顿时间最短，给用户带来更好的体验等场景下。如web程序、b/s服务</p>
+<p><strong>CMS收集器的运行过程分为下列4步：</strong></p>
+<p><strong>初始标记</strong>：标记GC Roots能直接到的对象。速度很快但是<strong>仍存在Stop The World问题</strong></p>
+<p><strong>并发标记</strong>：进行GC Roots Tracing 的过程，找出存活对象且用户线程可并发执行</p>
+<p><strong>重新标记</strong>：为了<strong>修正并发标记期间</strong>因用户程序继续运行而导致标记产生变动的那一部分对象的标记记录。仍然存在Stop The World问题</p>
+<p><strong>并发清除</strong>：对标记的对象进行清除回收</p>
+<p>CMS收集器的内存回收过程是与用户线程一起<strong>并发执行</strong>的</p>
+<h4><span id="g1">G1</span></h4><h5><span id="定义"><strong>定义</strong>：</span></h5><p>Garbage First</p>
+<p>JDK 9以后默认使用，而且替代了CMS 收集器</p>
+<p><a target="_blank" rel="noopener" href="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200909201212.png"><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200909201212.png" alt="img"></a></p>
+<h5><span id="适用场景">适用场景</span></h5><ul>
+<li>同时注重吞吐量和低延迟（响应时间）</li>
+<li>超大堆内存（内存大的），会将堆内存划分为多个<strong>大小相等</strong>的区域</li>
+<li>整体上是<strong>标记-整理</strong>算法，两个区域之间是<strong>复制</strong>算法</li>
+</ul>
+<p><strong>相关参数</strong>：JDK8 并不是默认开启的，所需要参数开启</p>
+<p><a target="_blank" rel="noopener" href="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151100.png"><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151100.png" alt="img"></a></p>
+<h5><span id="g1垃圾回收阶段">G1垃圾回收阶段</span></h5><p><a target="_blank" rel="noopener" href="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151109.png"><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151109.png" alt="img"></a></p>
+<p>新生代伊甸园垃圾回收—–&gt;内存不足，新生代回收+并发标记—–&gt;回收新生代伊甸园、幸存区、老年代内存——&gt;新生代伊甸园垃圾回收(重新开始)</p>
+<h5><span id="young-collection">Young Collection</span></h5><p><strong>分区算法region</strong></p>
+<p>分代是按对象的生命周期划分，分区则是将堆空间划分连续几个不同小区间，每一个小区间独立回收，可以控制一次回收多少个小区间，方便控制 GC 产生的停顿时间</p>
+<p>E：伊甸园 S：幸存区 O：老年代</p>
+<ul>
+<li>会STW</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151119.png"><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151119.png" alt="img"></a></p>
+<p><a target="_blank" rel="noopener" href="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151129.png"><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151129.png" alt="img"></a></p>
+<p><a target="_blank" rel="noopener" href="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151140.png"><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151140.png" alt="img"></a></p>
+<h5><span id="young-collection-cm">Young Collection + CM</span></h5><p>CM：并发标记</p>
+<ul>
+<li>在 Young GC 时会<strong>对 GC Root 进行初始标记</strong></li>
+<li>在老年代<strong>占用堆内存的比例</strong>达到阈值时，对进行并发标记（不会STW），阈值可以根据用户来进行设定</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151150.png"><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151150.png" alt="img"></a></p>
+<h5><span id="mixed-collection">Mixed Collection</span></h5><p>会对E S O 进行<strong>全面的回收</strong></p>
+<ul>
+<li>最终标记</li>
+<li><strong>拷贝</strong>存活</li>
+</ul>
+<p>-XX:MaxGCPauseMills:xxx 用于指定最长的停顿时间</p>
+<p><strong>问</strong>：为什么有的老年代被拷贝了，有的没拷贝？</p>
+<p>因为指定了最大停顿时间，如果对所有老年代都进行回收，耗时可能过高。为了保证时间不超过设定的停顿时间，会<strong>回收最有价值的老年代</strong>（回收后，能够得到更多内存）</p>
+<p><a target="_blank" rel="noopener" href="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151201.png"><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151201.png" alt="img"></a></p>
+<h5><span id="full-gc">Full GC</span></h5><p>G1在老年代内存不足时（老年代所占内存超过阈值）</p>
+<ul>
+<li>如果垃圾产生速度慢于垃圾回收速度，不会触发Full GC，还是并发地进行清理</li>
+<li>如果垃圾产生速度快于垃圾回收速度，便会触发Full GC</li>
+</ul>
+<h5><span id="young-collection-跨代引用">Young Collection 跨代引用</span></h5><ul>
+<li>新生代回收的跨代引用（老年代引用新生代）问题</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151211.png"><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151211.png" alt="img"></a></p>
+<ul>
+<li>卡表与Remembered Set<ul>
+<li>Remembered Set 存在于E中，用于保存新生代对象对应的脏卡<ul>
+<li>脏卡：O被划分为多个区域（一个区域512K），如果该区域引用了新生代对象，则该区域被称为脏卡</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>在引用变更时通过post-write barried + dirty card queue</li>
+<li>concurrent refinement threads 更新 Remembered Set</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151222.png"><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151222.png" alt="img"></a></p>
+<h5><span id="remark">Remark</span></h5><p>重新标记阶段</p>
+<p>在垃圾回收时，收集器处理对象的过程中</p>
+<p>黑色：已被处理，需要保留的 灰色：正在处理中的 白色：还未处理的</p>
+<p><a target="_blank" rel="noopener" href="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151229.png"><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151229.png" alt="img"></a></p>
+<p>但是在<strong>并发标记过程中</strong>，有可能A被处理了以后未引用C，但该处理过程还未结束，在处理过程结束之前A引用了C，这时就会用到remark</p>
+<p>过程如下</p>
+<ul>
+<li>之前C未被引用，这时A引用了C，就会给C加一个写屏障，写屏障的指令会被执行，将C放入一个队列当中，并将C变为 处理中 状态</li>
+<li>在<strong>并发标记</strong>阶段结束以后，重新标记阶段会STW，然后将放在该队列中的对象重新处理，发现有强引用引用它，就会处理它</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151239.png"><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151239.png" alt="img"></a></p>
+<h5><span id="jdk-8u20-字符串去重">JDK 8u20 字符串去重</span></h5><p>过程</p>
+<ul>
+<li>将所有新分配的字符串（底层是char[]）放入一个队列</li>
+<li>当新生代回收时，G1并发检查是否有重复的字符串</li>
+<li>如果字符串的值一样，就让他们<strong>引用同一个字符串对象</strong></li>
+<li>注意，其与String.intern的区别<ul>
+<li>intern关注的是字符串对象</li>
+<li>字符串去重关注的是char[]</li>
+<li>在JVM内部，使用了不同的字符串标</li>
+</ul>
+</li>
+</ul>
+<p>优点与缺点</p>
+<ul>
+<li>节省了大量内存</li>
+<li>新生代回收时间略微增加，导致略微多占用CPU</li>
+</ul>
+<h5><span id="jdk-8u40-并发标记类卸载">JDK 8u40 并发标记类卸载</span></h5><p>在并发标记阶段结束以后，就能知道哪些类不再被使用。如果一个类加载器的所有类都不在使用，则卸载它所加载的所有类</p>
+<h5><span id="jdk-8u60-回收巨型对象">JDK 8u60 回收巨型对象</span></h5><ul>
+<li>一个对象大于region的一半时，就称为巨型对象</li>
+<li>G1不会对巨型对象进行拷贝</li>
+<li>回收时被优先考虑</li>
+<li>G1会跟踪老年代所有incoming引用，如果老年代incoming引用为0的巨型对象就可以在新生代垃圾回收时处理掉</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151249.png"><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151249.png" alt="img"></a></p>
+<h3><span id="5-gc-调优">5、GC 调优</span></h3><p>查看虚拟机参数命令</p>
+<pre><code>&quot;F:\JAVA\JDK8.0\bin\java&quot; -XX:+PrintFlagsFinal -version | findstr &quot;GC&quot;Copy
+</code></pre>
+<p>可以根据参数去查询具体的信息</p>
+<h4><span id="调优领域">调优领域</span></h4><ul>
+<li>内存</li>
+<li>锁竞争</li>
+<li>CPU占用</li>
+<li>IO</li>
+<li>GC</li>
+</ul>
+<h4><span id="确定目标">确定目标</span></h4><p>低延迟/高吞吐量？ 选择合适的GC</p>
+<ul>
+<li>CMS G1 ZGC</li>
+<li>ParallelGC</li>
+<li>Zing</li>
+</ul>
+<h4><span id="最快的gc是不发生gc">最快的GC是不发生GC</span></h4><p>首先排除减少因为自身编写的代码而引发的内存问题</p>
+<ul>
+<li>查看Full GC前后的内存占用，考虑以下几个问题<ul>
+<li>数据是不是太多？</li>
+<li>数据表示是否太臃肿<ul>
+<li>对象图</li>
+<li>对象大小</li>
+</ul>
+</li>
+<li>是否存在内存泄漏</li>
+</ul>
+</li>
+</ul>
+<h4><span id="新生代调优">新生代调优</span></h4><ul>
+<li>新生代的特点<ul>
+<li>所有的new操作分配内存都是非常廉价的<ul>
+<li>TLAB</li>
+</ul>
+</li>
+<li>死亡对象回收零代价</li>
+<li>大部分对象用过即死（朝生夕死）</li>
+<li>MInor GC 所用时间远小于Full GC</li>
+</ul>
+</li>
+<li>新生代内存越大越好么？<ul>
+<li>不是<ul>
+<li>新生代内存太小：频繁触发Minor GC，会STW，会使得吞吐量下降</li>
+<li>新生代内存太大：老年代内存占比有所降低，会更频繁地触发Full GC。而且触发Minor GC时，清理新生代所花费的时间会更长</li>
+</ul>
+</li>
+<li>新生代内存设置为内容纳[并发量*(请求-响应)]的数据为宜</li>
+</ul>
+</li>
+</ul>
+<h4><span id="幸存区调优">幸存区调优</span></h4><ul>
+<li>幸存区需要能够保存 <strong>当前活跃对象</strong>+<strong>需要晋升的对象</strong></li>
+<li>晋升阈值配置得当，让长时间存活的对象尽快晋升</li>
+</ul>
+<h4><span id="老年代调优">老年代调优</span></h4><h2><span id="四-类加载与字节码技术">四、类加载与字节码技术</span></h2><p><a target="_blank" rel="noopener" href="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151300.png"><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151300.png" alt="img"></a></p>
+<h3><span id="1-类文件结构">1、类文件结构</span></h3><p>首先获得.class字节码文件</p>
+<p>方法：</p>
+<ul>
+<li>在文本文档里写入java代码（文件名与类名一致），将文件类型改为.java</li>
+<li>java终端中，执行javac X:…\XXX.java</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200910155135.png"><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200910155135.png" alt="img"></a></p>
+<p>以下是字节码文件</p>
+<pre><code>0000000 ca fe ba be 00 00 00 34 00 23 0a 00 06 00 15 09 
+0000020 00 16 00 17 08 00 18 0a 00 19 00 1a 07 00 1b 07 
+0000040 00 1c 01 00 06 3c 69 6e 69 74 3e 01 00 03 28 29 
+0000060 56 01 00 04 43 6f 64 65 01 00 0f 4c 69 6e 65 4e 
+0000100 75 6d 62 65 72 54 61 62 6c 65 01 00 12 4c 6f 63 
+0000120 61 6c 56 61 72 69 61 62 6c 65 54 61 62 6c 65 01 
+0000140 00 04 74 68 69 73 01 00 1d 4c 63 6e 2f 69 74 63 
+0000160 61 73 74 2f 6a 76 6d 2f 74 35 2f 48 65 6c 6c 6f 
+0000200 57 6f 72 6c 64 3b 01 00 04 6d 61 69 6e 01 00 16 
+0000220 28 5b 4c 6a 61 76 61 2f 6c 61 6e 67 2f 53 74 72 
+0000240 69 6e 67 3b 29 56 01 00 04 61 72 67 73 01 00 13 
+0000260 5b 4c 6a 61 76 61 2f 6c 61 6e 67 2f 53 74 72 69 
+0000300 6e 67 3b 01 00 10 4d 65 74 68 6f 64 50 61 72 61 
+0000320 6d 65 74 65 72 73 01 00 0a 53 6f 75 72 63 65 46 
+0000340 69 6c 65 01 00 0f 48 65 6c 6c 6f 57 6f 72 6c 64
+0000360 2e 6a 61 76 61 0c 00 07 00 08 07 00 1d 0c 00 1e 
+0000400 00 1f 01 00 0b 68 65 6c 6c 6f 20 77 6f 72 6c 64 
+0000420 07 00 20 0c 00 21 00 22 01 00 1b 63 6e 2f 69 74 
+0000440 63 61 73 74 2f 6a 76 6d 2f 74 35 2f 48 65 6c 6c 
+0000460 6f 57 6f 72 6c 64 01 00 10 6a 61 76 61 2f 6c 61 
+0000500 6e 67 2f 4f 62 6a 65 63 74 01 00 10 6a 61 76 61 
+0000520 2f 6c 61 6e 67 2f 53 79 73 74 65 6d 01 00 03 6f 
+0000540 75 74 01 00 15 4c 6a 61 76 61 2f 69 6f 2f 50 72 
+0000560 69 6e 74 53 74 72 65 61 6d 3b 01 00 13 6a 61 76 
+0000600 61 2f 69 6f 2f 50 72 69 6e 74 53 74 72 65 61 6d 
+0000620 01 00 07 70 72 69 6e 74 6c 6e 01 00 15 28 4c 6a 
+0000640 61 76 61 2f 6c 61 6e 67 2f 53 74 72 69 6e 67 3b 
+0000660 29 56 00 21 00 05 00 06 00 00 00 00 00 02 00 01 
+0000700 00 07 00 08 00 01 00 09 00 00 00 2f 00 01 00 01 
+0000720 00 00 00 05 2a b7 00 01 b1 00 00 00 02 00 0a 00 
+0000740 00 00 06 00 01 00 00 00 04 00 0b 00 00 00 0c 00 
+0000760 01 00 00 00 05 00 0c 00 0d 00 00 00 09 00 0e 00 
+0001000 0f 00 02 00 09 00 00 00 37 00 02 00 01 00 00 00 
+0001020 09 b2 00 02 12 03 b6 00 04 b1 00 00 00 02 00 0a 
+0001040 00 00 00 0a 00 02 00 00 00 06 00 08 00 07 00 0b 
+0001060 00 00 00 0c 00 01 00 00 00 09 00 10 00 11 00 00 
+0001100 00 12 00 00 00 05 01 00 10 00 00 00 01 00 13 00 
+0001120 00 00 02 00 14Copy
+</code></pre>
+<p>根据 JVM 规范，<strong>类文件结构</strong>如下</p>
+<pre><code>u4              magic
+u2             minor_version;    
+u2             major_version;    
+u2             constant_pool_count;    
+cp_info        constant_pool[constant_pool_count-1];    
+u2             access_flags;    
+u2             this_class;    
+u2             super_class;   
+u2             interfaces_count;    
+u2             interfaces[interfaces_count];   
+u2             fields_count;    
+field_info     fields[fields_count];   
+u2             methods_count;    
+method_info    methods[methods_count];    
+u2             attributes_count;    
+attribute_info attributes[attributes_count];Copy
+</code></pre>
+<h4><span id="魔数">魔数</span></h4><p>u4 magic</p>
+<p>对应字节码文件的0~3个字节</p>
+<p>0000000 <strong>ca fe ba be</strong> 00 00 00 34 00 23 0a 00 06 00 15 09</p>
+<h4><span id="版本">版本</span></h4><p>u2 minor_version;</p>
+<p>u2 major_version;</p>
+<p>0000000 ca fe ba be <strong>00 00 00 34</strong> 00 23 0a 00 06 00 15 09</p>
+<p>34H = 52，代表JDK8</p>
+<h4><span id="常量池">常量池</span></h4><p>见资料文件</p>
+<p>…略</p>
+<h3><span id="2-字节码指令">2、字节码指令</span></h3><p>可参考</p>
+<p><a target="_blank" rel="noopener" href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5">https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html#jvms-6.5</a></p>
+<h4><span id="javap工具">javap工具</span></h4><p>Oracle 提供了 <strong>javap</strong> 工具来反编译 class 文件</p>
+<pre><code>javap -v F:\Thread_study\src\com\nyima\JVM\day01\Main.classCopy
+F:\Thread_study&gt;javap -v F:\Thread_study\src\com\nyima\JVM\day5\Demo1.class
+Classfile /F:/Thread_study/src/com/nyima/JVM/day5/Demo1.class
+  Last modified 2020-6-6; size 434 bytes
+  MD5 checksum df1dce65bf6fb0b4c1de318051f4a67e
+  Compiled from &quot;Demo1.java&quot;
+public class com.nyima.JVM.day5.Demo1
+  minor version: 0
+  major version: 52
+  flags: ACC_PUBLIC, ACC_SUPER
+Constant pool:
+   #1 = Methodref          #6.#15         // java/lang/Object.&quot;&lt;init&gt;&quot;:()V
+   #2 = Fieldref           #16.#17        // java/lang/System.out:Ljava/io/PrintStream;
+   #3 = String             #18            // hello world
+   #4 = Methodref          #19.#20        // java/io/PrintStream.println:(Ljava/lang/String;)V
+   #5 = Class              #21            // com/nyima/JVM/day5/Demo1
+   #6 = Class              #22            // java/lang/Object
+   #7 = Utf8               &lt;init&gt;
+   #8 = Utf8               ()V
+   #9 = Utf8               Code
+  #10 = Utf8               LineNumberTable
+  #11 = Utf8               main
+  #12 = Utf8               ([Ljava/lang/String;)V
+  #13 = Utf8               SourceFile
+  #14 = Utf8               Demo1.java
+  #15 = NameAndType        #7:#8          // &quot;&lt;init&gt;&quot;:()V
+  #16 = Class              #23            // java/lang/System
+  #17 = NameAndType        #24:#25        // out:Ljava/io/PrintStream;
+  #18 = Utf8               hello world
+  #19 = Class              #26            // java/io/PrintStream
+  #20 = NameAndType        #27:#28        // println:(Ljava/lang/String;)V
+  #21 = Utf8               com/nyima/JVM/day5/Demo1
+  #22 = Utf8               java/lang/Object
+  #23 = Utf8               java/lang/System
+  #24 = Utf8               out
+  #25 = Utf8               Ljava/io/PrintStream;
+  #26 = Utf8               java/io/PrintStream
+  #27 = Utf8               println
+  #28 = Utf8               (Ljava/lang/String;)V
+&#123;
+  public com.nyima.JVM.day5.Demo1();
+    descriptor: ()V
+    flags: ACC_PUBLIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0
+         1: invokespecial #1                  // Method java/lang/Object.&quot;&lt;init&gt;&quot;:()V
+         4: return
+      LineNumberTable:
+        line 7: 0
+
+  public static void main(java.lang.String[]);
+    descriptor: ([Ljava/lang/String;)V
+    flags: ACC_PUBLIC, ACC_STATIC
+    Code:
+      stack=2, locals=1, args_size=1
+         0: getstatic     #2                  // Field java/lang/System.out:Ljava/io/PrintStream;
+         3: ldc           #3                  // String hello world
+         5: invokevirtual #4                  // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+
+         8: return
+      LineNumberTable:
+        line 9: 0
+        line 10: 8
+&#125;Copy
+</code></pre>
+<h4><span id="图解方法执行流程">图解方法执行流程</span></h4><p>代码</p>
+<pre><code>public class Demo3_1 &#123;    
+    public static void main(String[] args) &#123;        
+        int a = 10;        
+        int b = Short.MAX_VALUE + 1;        
+        int c = a + b;        
+        System.out.println(c);   
+    &#125; 
+&#125;Copy
+</code></pre>
+<p><strong>常量池载入运行时常量池</strong></p>
+<p>常量池也属于方法区，只不过这里单独提出来了</p>
+<p><a target="_blank" rel="noopener" href="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151317.png"><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151317.png" alt="img"></a></p>
+<p><strong>方法字节码载入方法区</strong></p>
+<p>（stack=2，locals=4） 对应操作数栈有2个空间（每个空间4个字节），局部变量表中有4个槽位</p>
+<p><a target="_blank" rel="noopener" href="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151325.png"><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151325.png" alt="img"></a></p>
+<p><strong>执行引擎开始执行字节码</strong></p>
+<p><strong>bipush 10</strong></p>
+<ul>
+<li><p>将一个 byte 压入操作数栈</p>
+<p>（其长度会补齐 4 个字节），类似的指令还有</p>
+<ul>
+<li>sipush 将一个 short 压入操作数栈（其长度会补齐 4 个字节）</li>
+<li>ldc 将一个 int 压入操作数栈</li>
+<li>ldc2_w 将一个 long 压入操作数栈（<strong>分两次压入</strong>，因为 long 是 8 个字节）</li>
+<li>这里小的数字都是和字节码指令存在一起，<strong>超过 short 范围的数字存入了常量池</strong></li>
+</ul>
+</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151336.png"><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151336.png" alt="img"></a></p>
+<p><strong>istore 1</strong></p>
+<p>将操作数栈栈顶元素弹出，放入局部变量表的slot 1中</p>
+<p>对应代码中的</p>
+<pre><code>a = 10Copy
+</code></pre>
+<p><a target="_blank" rel="noopener" href="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151346.png"><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151346.png" alt="img"></a></p>
+<p><a target="_blank" rel="noopener" href="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151412.png"><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151412.png" alt="img"></a></p>
+<p><strong>ldc #3</strong></p>
+<p>读取运行时常量池中#3，即32768(超过short最大值范围的数会被放到运行时常量池中)，将其加载到操作数栈中</p>
+<p>注意 Short.MAX_VALUE 是 32767，所以 32768 = Short.MAX_VALUE + 1 实际是在编译期间计算好的</p>
+<p><a target="_blank" rel="noopener" href="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151421.png"><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151421.png" alt="img"></a></p>
+<p><strong>istore 2</strong></p>
+<p>将操作数栈中的元素弹出，放到局部变量表的2号位置</p>
+<p><a target="_blank" rel="noopener" href="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151432.png"><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151432.png" alt="img"></a></p>
+<p><a target="_blank" rel="noopener" href="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151441.png"><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151441.png" alt="img"></a></p>
+<p><strong>iload1 iload2</strong></p>
+<p>将局部变量表中1号位置和2号位置的元素放入操作数栈中</p>
+<ul>
+<li>因为只能在操作数栈中执行运算操作</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151450.png"><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151450.png" alt="img"></a></p>
+<p><a target="_blank" rel="noopener" href="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151459.png"><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151459.png" alt="img"></a></p>
+<p><strong>iadd</strong></p>
+<p>将操作数栈中的两个元素<strong>弹出栈</strong>并相加，结果在压入操作数栈中</p>
+<p><a target="_blank" rel="noopener" href="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151508.png"><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151508.png" alt="img"></a></p>
+<p><a target="_blank" rel="noopener" href="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151523.png"><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151523.png" alt="img"></a></p>
+<p><strong>istore 3</strong></p>
+<p>将操作数栈中的元素弹出，放入局部变量表的3号位置</p>
+<p><a target="_blank" rel="noopener" href="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151547.png"><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151547.png" alt="img"></a></p>
+<p><a target="_blank" rel="noopener" href="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151555.png"><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151555.png" alt="img"></a></p>
+<p><strong>getstatic #4</strong></p>
+<p>在运行时常量池中找到#4，发现是一个对象</p>
+<p>在堆内存中找到该对象，并将其<strong>引用</strong>放入操作数栈中</p>
+<p><a target="_blank" rel="noopener" href="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151605.png"><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151605.png" alt="img"></a></p>
+<p><a target="_blank" rel="noopener" href="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151613.png"><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151613.png" alt="img"></a></p>
+<p><strong>iload 3</strong></p>
+<p>将局部变量表中3号位置的元素压入操作数栈中</p>
+<p><a target="_blank" rel="noopener" href="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151624.png"><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151624.png" alt="img"></a></p>
+<p><strong>invokevirtual 5</strong></p>
+<p>找到常量池 #5 项，定位到方法区 java/io/PrintStream.println:(I)V 方法</p>
+<p>生成新的栈帧（分配 locals、stack等）</p>
+<p>传递参数，执行新栈帧中的字节码</p>
+<p><a target="_blank" rel="noopener" href="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151632.png"><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151632.png" alt="img"></a></p>
+<p>执行完毕，弹出栈帧</p>
+<p>清除 main 操作数栈内容</p>
+<p><a target="_blank" rel="noopener" href="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151640.png"><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608151640.png" alt="img"></a></p>
+<p><strong>return</strong><br>完成 main 方法调用，弹出 main 栈帧，程序结束</p>
+<h4><span id="通过字节码指令来分析问题">通过字节码指令来分析问题</span></h4><p>代码</p>
+<pre><code>public class Demo2 &#123;
+    public static void main(String[] args) &#123;
+        int i=0;
+        int x=0;
+        while(i&lt;10) &#123;
+            x = x++;
+            i++;
+        &#125;
+        System.out.println(x); //接过为0
+    &#125;
+&#125;Copy
+</code></pre>
+<p>为什么最终的x结果为0呢？ 通过分析字节码指令即可知晓</p>
+<pre><code>Code:
+     stack=2, locals=3, args_size=1    //操作数栈分配2个空间，局部变量表分配3个空间
+        0: iconst_0    //准备一个常数0
+        1: istore_1    //将常数0放入局部变量表的1号槽位 i=0
+        2: iconst_0    //准备一个常数0
+        3: istore_2    //将常数0放入局部变量的2号槽位 x=0    
+        4: iload_1        //将局部变量表1号槽位的数放入操作数栈中
+        5: bipush        10    //将数字10放入操作数栈中，此时操作数栈中有2个数
+        7: if_icmpge     21    //比较操作数栈中的两个数，如果下面的数大于上面的数，就跳转到21。这里的比较是将两个数做减法。因为涉及运算操作，所以会将两个数弹出操作数栈来进行运算。运算结束后操作数栈为空
+       10: iload_2        //将局部变量2号槽位的数放入操作数栈中，放入的值是0
+       11: iinc          2, 1    //将局部变量2号槽位的数加1，自增后，槽位中的值为1
+       14: istore_2    //将操作数栈中的数放入到局部变量表的2号槽位，2号槽位的值又变为了0
+       15: iinc          1, 1 //1号槽位的值自增1
+       18: goto          4 //跳转到第4条指令
+       21: getstatic     #2                  // Field java/lang/System.out:Ljava/io/PrintStream;
+       24: iload_2
+       25: invokevirtual #3                  // Method java/io/PrintStream.println:(I)V
+       28: returnCopy
+</code></pre>
+<h4><span id="构造方法">构造方法</span></h4><h5><span id="cinitv">cinit()V</span></h5><pre><code>public class Demo3 &#123;
+    static int i = 10;
+
+    static &#123;
+        i = 20;
+    &#125;
+
+    static &#123;
+        i = 30;
+    &#125;
+
+    public static void main(String[] args) &#123;
+        System.out.println(i); //结果为30
+    &#125;
+&#125;Copy
+</code></pre>
+<p>编译器会按<strong>从上至下</strong>的顺序，收集所有 static 静态代码块和静态成员赋值的代码，<strong>合并</strong>为一个特殊的方法 cinit()V ：</p>
+<pre><code>stack=1, locals=0, args_size=0
+         0: bipush        10
+         2: putstatic     #3                  // Field i:I
+         5: bipush        20
+         7: putstatic     #3                  // Field i:I
+        10: bipush        30
+        12: putstatic     #3                  // Field i:I
+        15: returnCopy
+</code></pre>
+<h5><span id="initv">init()V</span></h5><pre><code>public class Demo4 &#123;
+    private String a = &quot;s1&quot;;
+
+    &#123;
+        b = 20;
+    &#125;
+
+    private int b = 10;
+
+    &#123;
+        a = &quot;s2&quot;;
+    &#125;
+
+    public Demo4(String a, int b) &#123;
+        this.a = a;
+        this.b = b;
+    &#125;
+
+    public static void main(String[] args) &#123;
+        Demo4 d = new Demo4(&quot;s3&quot;, 30);
+        System.out.println(d.a);
+        System.out.println(d.b);
+    &#125;
+&#125;Copy
+</code></pre>
+<p>编译器会按<strong>从上至下</strong>的顺序，收集所有 {} 代码块和成员变量赋值的代码，<strong>形成新的构造方法</strong>，但<strong>原始构造方法</strong>内的代码<strong>总是在后</strong></p>
+<pre><code>Code:
+     stack=2, locals=3, args_size=3
+        0: aload_0
+        1: invokespecial #1                  // Method java/lang/Object.&quot;&lt;init&gt;&quot;:()V
+        4: aload_0
+        5: ldc           #2                  // String s1
+        7: putfield      #3                  // Field a:Ljava/lang/String;
+       10: aload_0
+       11: bipush        20
+       13: putfield      #4                  // Field b:I
+       16: aload_0
+       17: bipush        10
+       19: putfield      #4                  // Field b:I
+       22: aload_0
+       23: ldc           #5                  // String s2
+       25: putfield      #3                  // Field a:Ljava/lang/String;
+       //原始构造方法在最后执行
+       28: aload_0
+       29: aload_1
+       30: putfield      #3                  // Field a:Ljava/lang/String;
+       33: aload_0
+       34: iload_2
+       35: putfield      #4                  // Field b:I
+       38: returnCopy
+</code></pre>
+<h4><span id="方法调用">方法调用</span></h4><pre><code>public class Demo5 &#123;
+    public Demo5() &#123;
+
+    &#125;
+
+    private void test1() &#123;
+
+    &#125;
+
+    private final void test2() &#123;
+
+    &#125;
+
+    public void test3() &#123;
+
+    &#125;
+
+    public static void test4() &#123;
+
+    &#125;
+
+    public static void main(String[] args) &#123;
+        Demo5 demo5 = new Demo5();
+        demo5.test1();
+        demo5.test2();
+        demo5.test3();
+        Demo5.test4();
+    &#125;
+&#125;Copy
+</code></pre>
+<p>不同方法在调用时，对应的虚拟机指令有所区别</p>
+<ul>
+<li>私有、构造、被final修饰的方法，在调用时都使用<strong>invokespecial</strong>指令</li>
+<li>普通成员方法在调用时，使用invokespecial指令。因为编译期间无法确定该方法的内容，只有在运行期间才能确定</li>
+<li>静态方法在调用时使用invokestatic指令</li>
+</ul>
+<pre><code>Code:
+      stack=2, locals=2, args_size=1
+         0: new           #2                  // class com/nyima/JVM/day5/Demo5 
+         3: dup
+         4: invokespecial #3                  // Method &quot;&lt;init&gt;&quot;:()V
+         7: astore_1
+         8: aload_1
+         9: invokespecial #4                  // Method test1:()V
+        12: aload_1
+        13: invokespecial #5                  // Method test2:()V
+        16: aload_1
+        17: invokevirtual #6                  // Method test3:()V
+        20: invokestatic  #7                  // Method test4:()V
+        23: returnCopy
+</code></pre>
+<ul>
+<li>new 是创建【对象】，给对象分配堆内存，执行成功会将【<strong>对象引用</strong>】压入操作数栈</li>
+<li>dup 是赋值操作数栈栈顶的内容，本例即为【<strong>对象引用</strong>】，为什么需要两份引用呢，一个是要配合 invokespecial 调用该对象的构造方法 “init”:()V （会消耗掉栈顶一个引用），另一个要 配合 astore_1 赋值给局部变量</li>
+<li>终方法（ﬁnal），私有方法（private），构造方法都是由 invokespecial 指令来调用，属于静态绑定</li>
+<li>普通成员方法是由 invokevirtual 调用，属于<strong>动态绑定</strong>，即支持多态 成员方法与静态方法调用的另一个区别是，执行方法前是否需要【对象引用】</li>
+</ul>
+<h4><span id="多态原理">多态原理</span></h4><p>因为普通成员方法需要在运行时才能确定具体的内容，所以虚拟机需要调用<strong>invokevirtual</strong>指令</p>
+<p>在执行invokevirtual指令时，经历了以下几个步骤</p>
+<ul>
+<li>先通过栈帧中对象的引用找到对象</li>
+<li>分析对象头，找到对象实际的Class</li>
+<li>Class结构中有<strong>vtable</strong></li>
+<li>查询vtable找到方法的具体地址</li>
+<li>执行方法的字节码</li>
+</ul>
+<h4><span id="异常处理">异常处理</span></h4><h5><span id="try-catch">try-catch</span></h5><pre><code>public class Demo1 &#123;
+    public static void main(String[] args) &#123;
+        int i = 0;
+        try &#123;
+            i = 10;
+        &#125;catch (Exception e) &#123;
+            i = 20;
+        &#125;
+    &#125;
+&#125;Copy
+</code></pre>
+<p>对应字节码指令</p>
+<pre><code>Code:
+     stack=1, locals=3, args_size=1
+        0: iconst_0
+        1: istore_1
+        2: bipush        10
+        4: istore_1
+        5: goto          12
+        8: astore_2
+        9: bipush        20
+       11: istore_1
+       12: return
+     //多出来一个异常表
+     Exception table:
+        from    to  target type
+            2     5     8   Class java/lang/ExceptionCopy
+</code></pre>
+<ul>
+<li>可以看到多出来一个 Exception table 的结构，[from, to) 是<strong>前闭后开</strong>（也就是检测2~4行）的检测范围，一旦这个范围内的字节码执行出现异常，则通过 type 匹配异常类型，如果一致，进入 target 所指示行号</li>
+<li>8行的字节码指令 astore_2 是将异常对象引用存入局部变量表的2号位置（为e）</li>
+</ul>
+<h5><span id="多个single-catch">多个single-catch</span></h5><pre><code>public class Demo1 &#123;
+    public static void main(String[] args) &#123;
+        int i = 0;
+        try &#123;
+            i = 10;
+        &#125;catch (ArithmeticException e) &#123;
+            i = 20;
+        &#125;catch (Exception e) &#123;
+            i = 30;
+        &#125;
+    &#125;
+&#125;Copy
+</code></pre>
+<p>对应的字节码</p>
+<pre><code>Code:
+     stack=1, locals=3, args_size=1
+        0: iconst_0
+        1: istore_1
+        2: bipush        10
+        4: istore_1
+        5: goto          19
+        8: astore_2
+        9: bipush        20
+       11: istore_1
+       12: goto          19
+       15: astore_2
+       16: bipush        30
+       18: istore_1
+       19: return
+     Exception table:
+        from    to  target type
+            2     5     8   Class java/lang/ArithmeticException
+            2     5    15   Class java/lang/ExceptionCopy
+</code></pre>
+<ul>
+<li>因为异常出现时，<strong>只能进入</strong> Exception table 中<strong>一个分支</strong>，所以局部变量表 slot 2 位置<strong>被共用</strong></li>
+</ul>
+<h5><span id="finally">finally</span></h5><pre><code>public class Demo2 &#123;
+    public static void main(String[] args) &#123;
+        int i = 0;
+        try &#123;
+            i = 10;
+        &#125; catch (Exception e) &#123;
+            i = 20;
+        &#125; finally &#123;
+            i = 30;
+        &#125;
+    &#125;
+&#125;Copy
+</code></pre>
+<p>对应字节码</p>
+<pre><code>Code:
+     stack=1, locals=4, args_size=1
+        0: iconst_0
+        1: istore_1
+        //try块
+        2: bipush        10
+        4: istore_1
+        //try块执行完后，会执行finally    
+        5: bipush        30
+        7: istore_1
+        8: goto          27
+       //catch块     
+       11: astore_2 //异常信息放入局部变量表的2号槽位
+       12: bipush        20
+       14: istore_1
+       //catch块执行完后，会执行finally        
+       15: bipush        30
+       17: istore_1
+       18: goto          27
+       //出现异常，但未被Exception捕获，会抛出其他异常，这时也需要执行finally块中的代码   
+       21: astore_3
+       22: bipush        30
+       24: istore_1
+       25: aload_3
+       26: athrow  //抛出异常
+       27: return
+     Exception table:
+        from    to  target type
+            2     5    11   Class java/lang/Exception
+            2     5    21   any
+           11    15    21   anyCopy
+</code></pre>
+<p>可以看到 ﬁnally 中的代码被<strong>复制了 3 份</strong>，分别放入 try 流程，catch 流程以及 catch剩余的异常类型流程</p>
+<p><strong>注意</strong>：虽然从字节码指令看来，每个块中都有finally块，但是finally块中的代码<strong>只会被执行一次</strong></p>
+<h5><span id="finally中的return">finally中的return</span></h5><pre><code>public class Demo3 &#123;
+    public static void main(String[] args) &#123;
+        int i = Demo3.test();
+        //结果为20
+        System.out.println(i);
+    &#125;
+
+    public static int test() &#123;
+        int i;
+        try &#123;
+            i = 10;
+            return i;
+        &#125; finally &#123;
+            i = 20;
+            return i;
+        &#125;
+    &#125;
+&#125;Copy
+</code></pre>
+<p>对应字节码</p>
+<pre><code>Code:
+     stack=1, locals=3, args_size=0
+        0: bipush        10
+        2: istore_0
+        3: iload_0
+        4: istore_1  //暂存返回值
+        5: bipush        20
+        7: istore_0
+        8: iload_0
+        9: ireturn    //ireturn会返回操作数栈顶的整型值20
+       //如果出现异常，还是会执行finally块中的内容，没有抛出异常
+       10: astore_2
+       11: bipush        20
+       13: istore_0
+       14: iload_0
+       15: ireturn    //这里没有athrow了，也就是如果在finally块中如果有返回操作的话，且try块中出现异常，会吞掉异常！
+     Exception table:
+        from    to  target type
+            0     5    10   anyCopy
+</code></pre>
+<ul>
+<li>由于 ﬁnally 中的 <strong>ireturn</strong> 被插入了所有可能的流程，因此返回结果肯定以ﬁnally的为准</li>
+<li>至于字节码中第 2 行，似乎没啥用，且留个伏笔，看下个例子</li>
+<li>跟上例中的 ﬁnally 相比，发现<strong>没有 athrow 了</strong>，这告诉我们：如果在 ﬁnally 中出现了 return，会<strong>吞掉异常</strong></li>
+<li>所以<strong>不要在finally中进行返回操作</strong></li>
+</ul>
+<h5><span id="被吞掉的异常">被吞掉的异常</span></h5><pre><code>public class Demo3 &#123;
+   public static void main(String[] args) &#123;
+      int i = Demo3.test();
+      //最终结果为20
+      System.out.println(i);
+   &#125;
+
+   public static int test() &#123;
+      int i;
+      try &#123;
+         i = 10;
+         //这里应该会抛出异常
+         i = i/0;
+         return i;
+      &#125; finally &#123;
+         i = 20;
+         return i;
+      &#125;
+   &#125;
+&#125;Copy
+</code></pre>
+<p>会发现打印结果为20，并未抛出异常</p>
+<h5><span id="finally不带return">finally不带return</span></h5><pre><code>public class Demo4 &#123;
+    public static void main(String[] args) &#123;
+        int i = Demo4.test();
+        System.out.println(i);
+    &#125;
+
+    public static int test() &#123;
+        int i = 10;
+        try &#123;
+            return i;
+        &#125; finally &#123;
+            i = 20;
+        &#125;
+    &#125;
+&#125;Copy
+</code></pre>
+<p>对应字节码</p>
+<pre><code>Code:
+     stack=1, locals=3, args_size=0
+        0: bipush        10
+        2: istore_0 //赋值给i 10
+        3: iload_0    //加载到操作数栈顶
+        4: istore_1 //加载到局部变量表的1号位置
+        5: bipush        20
+        7: istore_0 //赋值给i 20
+        8: iload_1 //加载局部变量表1号位置的数10到操作数栈
+        9: ireturn //返回操作数栈顶元素 10
+       10: astore_2
+       11: bipush        20
+       13: istore_0
+       14: aload_2 //加载异常
+       15: athrow //抛出异常
+     Exception table:
+        from    to  target type
+            3     5    10   anyCopy
+</code></pre>
+<h4><span id="synchronized">Synchronized</span></h4><pre><code>public class Demo5 &#123;
+    public static void main(String[] args) &#123;
+        int i = 10;
+        Lock lock = new Lock();
+        synchronized (lock) &#123;
+            System.out.println(i);
+        &#125;
+    &#125;
+&#125;
+
+class Lock&#123;&#125;Copy
+</code></pre>
+<p>对应字节码</p>
+<pre><code>Code:
+     stack=2, locals=5, args_size=1
+        0: bipush        10
+        2: istore_1
+        3: new           #2                  // class com/nyima/JVM/day06/Lock
+        6: dup //复制一份，放到操作数栈顶，用于构造函数消耗
+        7: invokespecial #3                  // Method com/nyima/JVM/day06/Lock.&quot;&lt;init&gt;&quot;:()V
+       10: astore_2 //剩下的一份放到局部变量表的2号位置
+       11: aload_2 //加载到操作数栈
+       12: dup //复制一份，放到操作数栈，用于加锁时消耗
+       13: astore_3 //将操作数栈顶元素弹出，暂存到局部变量表的三号槽位。这时操作数栈中有一份对象的引用
+       14: monitorenter //加锁
+       //锁住后代码块中的操作    
+       15: getstatic     #4                  // Field java/lang/System.out:Ljava/io/PrintStream;
+       18: iload_1
+       19: invokevirtual #5                  // Method java/io/PrintStream.println:(I)V
+       //加载局部变量表中三号槽位对象的引用，用于解锁    
+       22: aload_3    
+       23: monitorexit //解锁
+       24: goto          34
+       //异常操作    
+       27: astore        4
+       29: aload_3
+       30: monitorexit //解锁
+       31: aload         4
+       33: athrow
+       34: return
+     //可以看出，无论何时出现异常，都会跳转到27行，将异常放入局部变量中，并进行解锁操作，然后加载异常并抛出异常。      
+     Exception table:
+        from    to  target type
+           15    24    27   any
+           27    31    27   anyCopy
+</code></pre>
+<h3><span id="3-编译期处理">3、编译期处理</span></h3><p>所谓的 <strong>语法糖</strong> ，其实就是指 java 编译器把 *.java 源码编译为 *.class 字节码的过程中，<strong>自动生成</strong>和<strong>转换</strong>的一些代码，主要是为了减轻程序员的负担，算是 java 编译器给我们的一个额外福利</p>
+<p><strong>注意</strong>，以下代码的分析，借助了 javap 工具，idea 的反编译功能，idea 插件 jclasslib 等工具。另外， 编译器转换的<strong>结果直接就是 class 字节码</strong>，只是为了便于阅读，给出了 几乎等价 的 java 源码方式，并不是编译器还会转换出中间的 java 源码，切记。</p>
+<h4><span id="默认构造函数">默认构造函数</span></h4><pre><code>public class Candy1 &#123;
+
+&#125;Copy
+</code></pre>
+<p>经过编译期优化后</p>
+<pre><code>public class Candy1 &#123;
+   //这个无参构造器是java编译器帮我们加上的
+   public Candy1() &#123;
+      //即调用父类 Object 的无参构造方法，即调用 java/lang/Object.&quot; &lt;init&gt;&quot;:()V
+      super();
+   &#125;
+&#125;Copy
+</code></pre>
+<h4><span id="自动拆装箱">自动拆装箱</span></h4><p>基本类型和其包装类型的相互转换过程，称为拆装箱</p>
+<p>在JDK 5以后，它们的转换可以在编译期自动完成</p>
+<pre><code>public class Demo2 &#123;
+   public static void main(String[] args) &#123;
+      Integer x = 1;
+      int y = x;
+   &#125;
+&#125;Copy
+</code></pre>
+<p>转换过程如下</p>
+<pre><code>public class Demo2 &#123;
+   public static void main(String[] args) &#123;
+      //基本类型赋值给包装类型，称为装箱
+      Integer x = Integer.valueOf(1);
+      //包装类型赋值给基本类型，称谓拆箱
+      int y = x.intValue();
+   &#125;
+&#125;Copy
+</code></pre>
+<h4><span id="泛型集合取值">泛型集合取值</span></h4><p>泛型也是在 JDK 5 开始加入的特性，但 java 在<strong>编译泛型代码后</strong>会执行 <strong>泛型擦除</strong> 的动作，即泛型信息在编译为字节码之后就<strong>丢失</strong>了，实际的类型都当做了 <strong>Object</strong> 类型来处理：</p>
+<pre><code>public class Demo3 &#123;
+   public static void main(String[] args) &#123;
+      List&lt;Integer&gt; list = new ArrayList&lt;&gt;();
+      list.add(10);
+      Integer x = list.get(0);
+   &#125;
+&#125;Copy
+</code></pre>
+<p>对应字节码</p>
+<pre><code>Code:
+    stack=2, locals=3, args_size=1
+       0: new           #2                  // class java/util/ArrayList
+       3: dup
+       4: invokespecial #3                  // Method java/util/ArrayList.&quot;&lt;init&gt;&quot;:()V
+       7: astore_1
+       8: aload_1
+       9: bipush        10
+      11: invokestatic  #4                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+      //这里进行了泛型擦除，实际调用的是add(Objcet o)
+      14: invokeinterface #5,  2            // InterfaceMethod java/util/List.add:(Ljava/lang/Object;)Z
+
+      19: pop
+      20: aload_1
+      21: iconst_0
+      //这里也进行了泛型擦除，实际调用的是get(Object o)   
+      22: invokeinterface #6,  2            // InterfaceMethod java/util/List.get:(I)Ljava/lang/Object;
+//这里进行了类型转换，将Object转换成了Integer
+      27: checkcast     #7                  // class java/lang/Integer
+      30: astore_2
+      31: returnCopy
+</code></pre>
+<p>所以调用get函数取值时，有一个类型转换的操作</p>
+<pre><code>Integer x = (Integer) list.get(0);Copy
+</code></pre>
+<p>如果要将返回结果赋值给一个int类型的变量，则还有<strong>自动拆箱</strong>的操作</p>
+<pre><code>int x = (Integer) list.get(0).intValue();Copy
+</code></pre>
+<h4><span id="可变参数">可变参数</span></h4><pre><code>public class Demo4 &#123;
+   public static void foo(String... args) &#123;
+      //将args赋值给arr，可以看出String...实际就是String[] 
+      String[] arr = args;
+      System.out.println(arr.length);
+   &#125;
+
+   public static void main(String[] args) &#123;
+      foo(&quot;hello&quot;, &quot;world&quot;);
+   &#125;
+&#125;Copy
+</code></pre>
+<p>可变参数 <strong>String…</strong> args 其实是一个 <strong>String[]</strong> args ，从代码中的赋值语句中就可以看出来。 同 样 java 编译器会在编译期间将上述代码变换为：</p>
+<pre><code>public class Demo4 &#123;
+   public Demo4 &#123;&#125;
+
+    
+   public static void foo(String[] args) &#123;
+      String[] arr = args;
+      System.out.println(arr.length);
+   &#125;
+
+   public static void main(String[] args) &#123;
+      foo(new String[]&#123;&quot;hello&quot;, &quot;world&quot;&#125;);
+   &#125;
+&#125;Copy
+</code></pre>
+<p>注意，如果调用的是foo()，即未传递参数时，等价代码为foo(new String[]{})，<strong>创建了一个空数组</strong>，而不是直接传递的null</p>
+<h4><span id="foreach">foreach</span></h4><pre><code>public class Demo5 &#123;
+    public static void main(String[] args) &#123;
+        //数组赋初值的简化写法也是一种语法糖。
+        int[] arr = &#123;1, 2, 3, 4, 5&#125;;
+        for(int x : arr) &#123;
+            System.out.println(x);
+        &#125;
+    &#125;
+&#125;Copy
+</code></pre>
+<p>编译器会帮我们转换为</p>
+<pre><code>public class Demo5 &#123;
+    public Demo5 &#123;&#125;
+
+    public static void main(String[] args) &#123;
+        int[] arr = new int[]&#123;1, 2, 3, 4, 5&#125;;
+        for(int i=0; i&lt;arr.length; ++i) &#123;
+            int x = arr[i];
+            System.out.println(x);
+        &#125;
+    &#125;
+&#125;Copy
+</code></pre>
+<p><strong>如果是集合使用foreach</strong></p>
+<pre><code>public class Demo5 &#123;
+   public static void main(String[] args) &#123;
+      List&lt;Integer&gt; list = Arrays.asList(1, 2, 3, 4, 5);
+      for (Integer x : list) &#123;
+         System.out.println(x);
+      &#125;
+   &#125;
+&#125;Copy
+</code></pre>
+<p>集合要使用foreach，需要该集合类实现了<strong>Iterable接口</strong>，因为集合的遍历需要用到<strong>迭代器Iterator</strong></p>
+<pre><code>public class Demo5 &#123;
+    public Demo5 &#123;&#125;
+    
+   public static void main(String[] args) &#123;
+      List&lt;Integer&gt; list = Arrays.asList(1, 2, 3, 4, 5);
+      //获得该集合的迭代器
+      Iterator&lt;Integer&gt; iterator = list.iterator();
+      while(iterator.hasNext()) &#123;
+         Integer x = iterator.next();
+         System.out.println(x);
+      &#125;
+   &#125;
+&#125;Copy
+</code></pre>
+<h4><span id="switch字符串">switch字符串</span></h4><pre><code>public class Demo6 &#123;
+   public static void main(String[] args) &#123;
+      String str = &quot;hello&quot;;
+      switch (str) &#123;
+         case &quot;hello&quot; :
+            System.out.println(&quot;h&quot;);
+            break;
+         case &quot;world&quot; :
+            System.out.println(&quot;w&quot;);
+            break;
+         default:
+            break;
+      &#125;
+   &#125;
+&#125;Copy
+</code></pre>
+<p>在编译器中执行的操作</p>
+<pre><code>public class Demo6 &#123;
+   public Demo6() &#123;
+      
+   &#125;
+   public static void main(String[] args) &#123;
+      String str = &quot;hello&quot;;
+      int x = -1;
+      //通过字符串的hashCode+value来判断是否匹配
+      switch (str.hashCode()) &#123;
+         //hello的hashCode
+         case 99162322 :
+            //再次比较，因为字符串的hashCode有可能相等
+            if(str.equals(&quot;hello&quot;)) &#123;
+               x = 0;
+            &#125;
+            break;
+         //world的hashCode
+         case 11331880 :
+            if(str.equals(&quot;world&quot;)) &#123;
+               x = 1;
+            &#125;
+            break;
+         default:
+            break;
+      &#125;
+
+      //用第二个switch在进行输出判断
+      switch (x) &#123;
+         case 0:
+            System.out.println(&quot;h&quot;);
+            break;
+         case 1:
+            System.out.println(&quot;w&quot;);
+            break;
+         default:
+            break;
+      &#125;
+   &#125;
+&#125;Copy
+</code></pre>
+<p>过程说明：</p>
+<ul>
+<li>在编译期间，单个的switch被分为了两个<ul>
+<li>第一个用来匹配字符串，并给x赋值<ul>
+<li>字符串的匹配用到了字符串的hashCode，还用到了equals方法</li>
+<li>使用hashCode是为了提高比较效率，使用equals是防止有hashCode冲突（如BM和C.）</li>
+</ul>
+</li>
+<li>第二个用来根据x的值来决定输出语句</li>
+</ul>
+</li>
+</ul>
+<h4><span id="switch枚举">switch枚举</span></h4><pre><code>public class Demo7 &#123;
+   public static void main(String[] args) &#123;
+      SEX sex = SEX.MALE;
+      switch (sex) &#123;
+         case MALE:
+            System.out.println(&quot;man&quot;);
+            break;
+         case FEMALE:
+            System.out.println(&quot;woman&quot;);
+            break;
+         default:
+            break;
+      &#125;
+   &#125;
+&#125;
+
+enum SEX &#123;
+   MALE, FEMALE;
+&#125;Copy
+</code></pre>
+<p>编译器中执行的代码如下</p>
+<pre><code>public class Demo7 &#123;
+   /**     
+    * 定义一个合成类（仅 jvm 使用，对我们不可见）     
+    * 用来映射枚举的 ordinal 与数组元素的关系     
+    * 枚举的 ordinal 表示枚举对象的序号，从 0 开始     
+    * 即 MALE 的 ordinal()=0，FEMALE 的 ordinal()=1     
+    */ 
+   static class $MAP &#123;
+      //数组大小即为枚举元素个数，里面存放了case用于比较的数字
+      static int[] map = new int[2];
+      static &#123;
+         //ordinal即枚举元素对应所在的位置，MALE为0，FEMALE为1
+         map[SEX.MALE.ordinal()] = 1;
+         map[SEX.FEMALE.ordinal()] = 2;
+      &#125;
+   &#125;
+
+   public static void main(String[] args) &#123;
+      SEX sex = SEX.MALE;
+      //将对应位置枚举元素的值赋给x，用于case操作
+      int x = $MAP.map[sex.ordinal()];
+      switch (x) &#123;
+         case 1:
+            System.out.println(&quot;man&quot;);
+            break;
+         case 2:
+            System.out.println(&quot;woman&quot;);
+            break;
+         default:
+            break;
+      &#125;
+   &#125;
+&#125;
+
+enum SEX &#123;
+   MALE, FEMALE;
+&#125;Copy
+</code></pre>
+<h4><span id="枚举类">枚举类</span></h4><pre><code>enum SEX &#123;
+   MALE, FEMALE;
+&#125;Copy
+</code></pre>
+<p>转换后的代码</p>
+<pre><code>public final class Sex extends Enum&lt;Sex&gt; &#123;   
+   //对应枚举类中的元素
+   public static final Sex MALE;    
+   public static final Sex FEMALE;    
+   private static final Sex[] $VALUES;
+   
+    static &#123;       
+        //调用构造函数，传入枚举元素的值及ordinal
+        MALE = new Sex(&quot;MALE&quot;, 0);    
+        FEMALE = new Sex(&quot;FEMALE&quot;, 1);   
+        $VALUES = new Sex[]&#123;MALE, FEMALE&#125;; 
+   &#125;
+     
+   //调用父类中的方法
+    private Sex(String name, int ordinal) &#123;     
+        super(name, ordinal);    
+    &#125;
+   
+    public static Sex[] values() &#123;  
+        return $VALUES.clone();  
+    &#125;
+    public static Sex valueOf(String name) &#123; 
+        return Enum.valueOf(Sex.class, name);  
+    &#125; 
+   
+&#125;Copy
+</code></pre>
+<h4><span id="匿名内部类">匿名内部类</span></h4><pre><code>public class Demo8 &#123;
+   public static void main(String[] args) &#123;
+      Runnable runnable = new Runnable() &#123;
+         @Override
+         public void run() &#123;
+            System.out.println(&quot;running...&quot;);
+         &#125;
+      &#125;;
+   &#125;
+&#125;Copy
+</code></pre>
+<p>转换后的代码</p>
+<pre><code>public class Demo8 &#123;
+   public static void main(String[] args) &#123;
+      //用额外创建的类来创建匿名内部类对象
+      Runnable runnable = new Demo8$1();
+   &#125;
+&#125;
+
+//创建了一个额外的类，实现了Runnable接口
+final class Demo8$1 implements Runnable &#123;
+   public Demo8$1() &#123;&#125;
+
+   @Override
+   public void run() &#123;
+      System.out.println(&quot;running...&quot;);
+   &#125;
+&#125;Copy
+</code></pre>
+<p>如果匿名内部类中引用了<strong>局部变量</strong></p>
+<pre><code>public class Demo8 &#123;
+   public static void main(String[] args) &#123;
+      int x = 1;
+      Runnable runnable = new Runnable() &#123;
+         @Override
+         public void run() &#123;
+            System.out.println(x);
+         &#125;
+      &#125;;
+   &#125;
+&#125;Copy
+</code></pre>
+<p>转化后代码</p>
+<pre><code>public class Demo8 &#123;
+   public static void main(String[] args) &#123;
+      int x = 1;
+      Runnable runnable = new Runnable() &#123;
+         @Override
+         public void run() &#123;
+            System.out.println(x);
+         &#125;
+      &#125;;
+   &#125;
+&#125;
+
+final class Demo8$1 implements Runnable &#123;
+   //多创建了一个变量
+   int val$x;
+   //变为了有参构造器
+   public Demo8$1(int x) &#123;
+      this.val$x = x;
+   &#125;
+
+   @Override
+   public void run() &#123;
+      System.out.println(val$x);
+   &#125;
+&#125;Copy
+</code></pre>
+<h3><span id="4-类加载阶段">4、类加载阶段</span></h3><h4><span id="加载">加载</span></h4><ul>
+<li><p>将类的字节码载入</p>
+<p>方法区</p>
+<p>（1.8后为元空间，在本地内存中）中，内部采用 C++ 的 instanceKlass 描述 java 类，它的重要 ﬁeld 有：</p>
+<ul>
+<li>_java_mirror 即 java 的类镜像，例如对 String 来说，它的镜像类就是 String.class，作用是把 klass 暴露给 java 使用</li>
+<li>_super 即父类</li>
+<li>_ﬁelds 即成员变量</li>
+<li>_methods 即方法</li>
+<li>_constants 即常量池</li>
+<li>_class_loader 即类加载器</li>
+<li>_vtable 虚方法表</li>
+<li>_itable 接口方法</li>
+</ul>
+</li>
+<li><p>如果这个类还有父类没有加载，<strong>先加载父类</strong></p>
+</li>
+<li><p>加载和链接可能是<strong>交替运行</strong>的</p>
+</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200611205050.png"><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200611205050.png" alt="img"></a></p>
+<ul>
+<li>instanceKlass保存在<strong>方法区</strong>。JDK 8以后，方法区位于元空间中，而元空间又位于本地内存中</li>
+<li>_java_mirror则是保存在<strong>堆内存</strong>中</li>
+<li>InstanceKlass和*.class(JAVA镜像类)互相保存了对方的地址</li>
+<li>类的对象在对象头中保存了*.class的地址。让对象可以通过其找到方法区中的instanceKlass，从而获取类的各种信息</li>
+</ul>
+<h4><span id="链接">链接</span></h4><h5><span id="验证">验证</span></h5><p>验证类是否符合 JVM规范，安全性检查</p>
+<h5><span id="准备">准备</span></h5><p>为 static 变量分配空间，设置默认值</p>
+<ul>
+<li>static变量在JDK 7以前是存储与instanceKlass末尾。但在JDK 7以后就存储在_java_mirror末尾了</li>
+<li>static变量在分配空间和赋值是在两个阶段完成的。分配空间在准备阶段完成，赋值在初始化阶段完成</li>
+<li>如果 static 变量是 ﬁnal 的<strong>基本类型</strong>，以及<strong>字符串常量</strong>，那么编译阶段值就确定了，<strong>赋值在准备阶段完成</strong></li>
+<li>如果 static 变量是 ﬁnal 的，但属于<strong>引用类型</strong>，那么赋值也会在<strong>初始化阶段完成</strong></li>
+</ul>
+<h5><span id="解析">解析</span></h5><p><strong>HSDB的使用</strong></p>
+<ul>
+<li>先获得要查看的进程ID</li>
+</ul>
+<pre><code>jpsCopy
+</code></pre>
+<ul>
+<li>打开HSDB</li>
+</ul>
+<pre><code>java -cp F:\JAVA\JDK8.0\lib\sa-jdi.jar sun.jvm.hotspot.HSDBCopy
+</code></pre>
+<ul>
+<li>运行时可能会报错，是因为<strong>缺少一个.dll的文件</strong>，我们在JDK的安装目录中找到该文件，复制到缺失的文件下即可</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200611221703.png"><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200611221703.png" alt="img"></a></p>
+<ul>
+<li>定位需要的进程</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200611221857.png"><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200611221857.png" alt="img"></a></p>
+<p><a target="_blank" rel="noopener" href="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200611222029.png"><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200611222029.png" alt="img"></a></p>
+<p><strong>解析的含义</strong></p>
+<p>将常量池中的符号引用解析为直接引用</p>
+<ul>
+<li>未解析时，常量池中的看到的对象仅是符号，未真正的存在于内存中</li>
+</ul>
+<pre><code>public class Demo1 &#123;
+   public static void main(String[] args) throws IOException, ClassNotFoundException &#123;
+      ClassLoader loader = Demo1.class.getClassLoader();
+      //只加载不解析
+      Class&lt;?&gt; c = loader.loadClass(&quot;com.nyima.JVM.day8.C&quot;);
+      //用于阻塞主线程
+      System.in.read();
+   &#125;
+&#125;
+
+class C &#123;
+   D d = new D();
+&#125;
+
+class D &#123;
+
+&#125;Copy
+</code></pre>
+<ul>
+<li>打开HSDB<ul>
+<li>可以看到此时只加载了类C</li>
+</ul>
+</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200611223153.png"><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200611223153.png" alt="img"></a></p>
+<p>查看类C的常量池，可以看到类D<strong>未被解析</strong>，只是存在于常量池中的符号</p>
+<p><a target="_blank" rel="noopener" href="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200611230658.png"><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200611230658.png" alt="img"></a></p>
+<ul>
+<li><p>解析以后，会将常量池中的符号引用解析为直接引用</p>
+<ul>
+<li>可以看到，此时已加载并解析了类C和类D</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200611223441.png"><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200611223441.png" alt="img"></a></p>
+</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200613104723.png"><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200613104723.png" alt="img"></a></p>
+<h4><span id="初始化">初始化</span></h4><p>初始化阶段就是<strong>执行类构造器clinit()方法的过程</strong>，虚拟机会保证这个类的『构造方法』的线程安全</p>
+<ul>
+<li>clinit()方法是由编译器自动收集类中的所有类变量的<strong>赋值动作和静态语句块</strong>（static{}块）中的语句合并产生的</li>
+</ul>
+<p><strong>注意</strong></p>
+<p>编译器收集的顺序是由语句在源文件中<strong>出现的顺序决定</strong>的，静态语句块中只能访问到定义在静态语句块之前的变量，定义在它<strong>之后</strong>的变量，在前面的静态语句块<strong>可以赋值，但是不能访问</strong>，如</p>
+<p><a target="_blank" rel="noopener" href="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20201118204542.png"><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20201118204542.png" alt="img"></a></p>
+<h5><span id="发生时机">发生时机</span></h5><p><strong>类的初始化的懒惰的</strong>，以下情况会初始化</p>
+<ul>
+<li>main 方法所在的类，总会被首先初始化</li>
+<li>首次访问这个类的静态变量或静态方法时</li>
+<li>子类初始化，如果父类还没初始化，会引发</li>
+<li>子类访问父类的静态变量，只会触发父类的初始化</li>
+<li>Class.forName</li>
+<li>new 会导致初始化</li>
+</ul>
+<p>以下情况不会初始化</p>
+<ul>
+<li>访问类的 static ﬁnal 静态常量（基本类型和字符串）</li>
+<li>类对象.class 不会触发初始化</li>
+<li>创建该类对象的数组</li>
+<li>类加载器的.loadClass方法</li>
+<li>Class.forNamed的参数2为false时</li>
+</ul>
+<p><strong>验证类是否被初始化，可以看改类的静态代码块是否被执行</strong></p>
+<h3><span id="5-类加载器">5、类加载器</span></h3><p>Java虚拟机设计团队有意把类加载阶段中的<strong>“通过一个类的全限定名来获取描述该类的二进制字节流”</strong>这个动作放到Java虚拟机外部去实现，以便让应用程序自己决定如何去获取所需的类。实现这个动作的代码被称为<strong>“类加载器”</strong>（ClassLoader）</p>
+<h4><span id="类与类加载器">类与类加载器</span></h4><p>类加载器虽然只用于实现类的加载动作，但它在Java程序中起到的作用却远超类加载阶段</p>
+<p>对于任意一个类，都必须由加载它的<strong>类加载器</strong>和这个<strong>类本身</strong>一起共同确立其在Java虚拟机中的唯一性，每一个类加载器，都拥有一个独立的类名称空间。这句话可以表达得更通俗一些：<strong>比较两个类是否“相等”，只有在这两个类是由同一个类加载器加载的前提下才有意义</strong>，否则，即使这两个类来源于同一个Class文件，被同一个Java虚拟机加载，只要加载它们的类加载器不同，那这两个类就必定不相等</p>
+<p>以JDK 8为例</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>加载的类</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Bootstrap ClassLoader（启动类加载器）</td>
+<td>JAVA_HOME/jre/lib</td>
+<td>无法直接访问</td>
+</tr>
+<tr>
+<td>Extension ClassLoader(拓展类加载器)</td>
+<td>JAVA_HOME/jre/lib/ext</td>
+<td>上级为Bootstrap，<strong>显示为null</strong></td>
+</tr>
+<tr>
+<td>Application ClassLoader(应用程序类加载器)</td>
+<td>classpath</td>
+<td>上级为Extension</td>
+</tr>
+<tr>
+<td>自定义类加载器</td>
+<td>自定义</td>
+<td>上级为Application</td>
+</tr>
+</tbody></table>
+<h4><span id="启动类加载器">启动类加载器</span></h4><p>可通过在控制台输入指令，使得类被启动类加器加载</p>
+<h4><span id="拓展类加载器">拓展类加载器</span></h4><p>如果classpath和JAVA_HOME/jre/lib/ext 下有同名类，加载时会使用<strong>拓展类加载器</strong>加载。当应用程序类加载器发现拓展类加载器已将该同名类加载过了，则不会再次加载</p>
+<h4><span id="双亲委派模式">双亲委派模式</span></h4><p>双亲委派模式，即调用类加载器ClassLoader 的 loadClass 方法时，查找类的规则</p>
+<p>loadClass源码</p>
+<pre><code>protected Class&lt;?&gt; loadClass(String name, boolean resolve)
+    throws ClassNotFoundException
+&#123;
+    synchronized (getClassLoadingLock(name)) &#123;
+        // 首先查找该类是否已经被该类加载器加载过了
+        Class&lt;?&gt; c = findLoadedClass(name);
+        //如果没有被加载过
+        if (c == null) &#123;
+            long t0 = System.nanoTime();
+            try &#123;
+                //看是否被它的上级加载器加载过了 Extension的上级是Bootstarp，但它显示为null
+                if (parent != null) &#123;
+                    c = parent.loadClass(name, false);
+                &#125; else &#123;
+                    //看是否被启动类加载器加载过
+                    c = findBootstrapClassOrNull(name);
+                &#125;
+            &#125; catch (ClassNotFoundException e) &#123;
+                // ClassNotFoundException thrown if class not found
+                // from the non-null parent class loader
+                //捕获异常，但不做任何处理
+            &#125;
+
+            if (c == null) &#123;
+                //如果还是没有找到，先让拓展类加载器调用findClass方法去找到该类，如果还是没找到，就抛出异常
+                //然后让应用类加载器去找classpath下找该类
+                long t1 = System.nanoTime();
+                c = findClass(name);
+
+                // 记录时间
+                sun.misc.PerfCounter.getParentDelegationTime().addTime(t1 - t0);
+                sun.misc.PerfCounter.getFindClassTime().addElapsedTimeFrom(t1);
+                sun.misc.PerfCounter.getFindClasses().increment();
+            &#125;
+        &#125;
+        if (resolve) &#123;
+            resolveClass(c);
+        &#125;
+        return c;
+    &#125;
+&#125;Copy
+</code></pre>
+<h4><span id="自定义类加载器">自定义类加载器</span></h4><h5><span id="使用场景">使用场景</span></h5><ul>
+<li>想加载非 classpath 随意路径中的类文件</li>
+<li>通过接口来使用实现，希望解耦时，常用在框架设计</li>
+<li>这些类希望予以隔离，不同应用的同名类都可以加载，不冲突，常见于 tomcat 容器</li>
+</ul>
+<h5><span id="步骤">步骤</span></h5><ul>
+<li>继承ClassLoader父类</li>
+<li>要遵从双亲委派机制，重写 ﬁndClass 方法<ul>
+<li>不是重写loadClass方法，否则不会走双亲委派机制</li>
+</ul>
+</li>
+<li>读取类文件的字节码</li>
+<li>调用父类的 deﬁneClass 方法来加载类</li>
+<li>使用者调用该类加载器的 loadClass 方法</li>
+</ul>
+<h4><span id="破坏双亲委派模式">破坏双亲委派模式</span></h4><ul>
+<li>双亲委派模型的第一次“被破坏”其实发生在双亲委派模型出现之前——即JDK1.2面世以前的“远古”时代<ul>
+<li>建议用户重写findClass()方法，在类加载器中的loadClass()方法中也会调用该方法</li>
+</ul>
+</li>
+<li>双亲委派模型的第二次“被破坏”是由这个模型自身的缺陷导致的<ul>
+<li>如果有基础类型又要调用回用户的代码，此时也会破坏双亲委派模式</li>
+</ul>
+</li>
+<li>双亲委派模型的第三次“被破坏”是由于用户对程序动态性的追求而导致的<ul>
+<li>这里所说的“动态性”指的是一些非常“热”门的名词：代码热替换（Hot Swap）、模块热部署（Hot Deployment）等</li>
+</ul>
+</li>
+</ul>
+<h3><span id="6-运行期优化">6、运行期优化</span></h3><h4><span id="分层编译">分层编译</span></h4><p>JVM 将执行状态分成了 5 个层次：</p>
+<ul>
+<li>0层：解释执行，用解释器将字节码翻译为机器码</li>
+<li>1层：使用 C1 <strong>即时编译器</strong>编译执行（不带 proﬁling）</li>
+<li>2层：使用 C1 即时编译器编译执行（带基本的profiling）</li>
+<li>3层：使用 C1 即时编译器编译执行（带完全的profiling）</li>
+<li>4层：使用 C2 即时编译器编译执行</li>
+</ul>
+<p>proﬁling 是指在运行过程中收集一些程序执行状态的数据，例如【方法的调用次数】，【循环的 回边次数】等</p>
+<h5><span id="即时编译器jit与解释器的区别">即时编译器（JIT）与解释器的区别</span></h5><ul>
+<li>解释器<ul>
+<li>将字节码<strong>解释</strong>为机器码，下次即使遇到相同的字节码，仍会执行重复的解释</li>
+<li>是将字节码解释为针对所有平台都通用的机器码</li>
+</ul>
+</li>
+<li>即时编译器<ul>
+<li>将一些字节码<strong>编译</strong>为机器码，<strong>并存入 Code Cache</strong>，下次遇到相同的代码，直接执行，无需再编译</li>
+<li>根据平台类型，生成平台特定的机器码</li>
+</ul>
+</li>
+</ul>
+<p>对于大部分的不常用的代码，我们无需耗费时间将其编译成机器码，而是采取解释执行的方式运行；另一方面，对于仅占据小部分的热点代码，我们则可以将其编译成机器码，以达到理想的运行速度。 执行效率上简单比较一下 Interpreter &lt; C1 &lt; C2，总的目标是发现热点代码（hotspot名称的由 来），并优化这些热点代码</p>
+<h5><span id="逃逸分析">逃逸分析</span></h5><p>逃逸分析（Escape Analysis）简单来讲就是，Java Hotspot 虚拟机可以分析新创建对象的使用范围，并决定是否在 Java 堆上分配内存的一项技术</p>
+<p>逃逸分析的 JVM 参数如下：</p>
+<ul>
+<li>开启逃逸分析：-XX:+DoEscapeAnalysis</li>
+<li>关闭逃逸分析：-XX:-DoEscapeAnalysis</li>
+<li>显示分析结果：-XX:+PrintEscapeAnalysis</li>
+</ul>
+<p>逃逸分析技术在 Java SE 6u23+ 开始支持，并默认设置为启用状态，可以不用额外加这个参数</p>
+<p><strong>对象逃逸状态</strong></p>
+<p><strong>全局逃逸（GlobalEscape）</strong></p>
+<ul>
+<li>即一个对象的作用范围逃出了当前方法或者当前线程，有以下几种场景：<ul>
+<li>对象是一个静态变量</li>
+<li>对象是一个已经发生逃逸的对象</li>
+<li>对象作为当前方法的返回值</li>
+</ul>
+</li>
+</ul>
+<p><strong>参数逃逸（ArgEscape）</strong></p>
+<ul>
+<li>即一个对象被作为方法参数传递或者被参数引用，但在调用过程中不会发生全局逃逸，这个状态是通过被调方法的字节码确定的</li>
+</ul>
+<p><strong>没有逃逸</strong></p>
+<ul>
+<li>即方法中的对象没有发生逃逸</li>
+</ul>
+<p><strong>逃逸分析优化</strong></p>
+<p>针对上面第三点，当一个对象<strong>没有逃逸</strong>时，可以得到以下几个虚拟机的优化</p>
+<p><strong>锁消除</strong></p>
+<p>我们知道线程同步锁是非常牺牲性能的，当编译器确定当前对象只有当前线程使用，那么就会移除该对象的同步锁</p>
+<p>例如，StringBuffer 和 Vector 都是用 synchronized 修饰线程安全的，但大部分情况下，它们都只是在当前线程中用到，这样编译器就会优化移除掉这些锁操作</p>
+<p>锁消除的 JVM 参数如下：</p>
+<ul>
+<li>开启锁消除：-XX:+EliminateLocks</li>
+<li>关闭锁消除：-XX:-EliminateLocks</li>
+</ul>
+<p>锁消除在 JDK8 中都是默认开启的，并且锁消除都要建立在逃逸分析的基础上</p>
+<p><strong>标量替换</strong></p>
+<p>首先要明白标量和聚合量，<strong>基础类型</strong>和<strong>对象的引用</strong>可以理解为<strong>标量</strong>，它们不能被进一步分解。而能被进一步分解的量就是聚合量，比如：对象</p>
+<p>对象是聚合量，它又可以被进一步分解成标量，将其成员变量分解为分散的变量，这就叫做<strong>标量替换</strong>。</p>
+<p>这样，如果一个对象没有发生逃逸，那压根就不用创建它，只会在栈或者寄存器上创建它用到的成员标量，节省了内存空间，也提升了应用程序性能</p>
+<p>标量替换的 JVM 参数如下：</p>
+<ul>
+<li>开启标量替换：-XX:+EliminateAllocations</li>
+<li>关闭标量替换：-XX:-EliminateAllocations</li>
+<li>显示标量替换详情：-XX:+PrintEliminateAllocations</li>
+</ul>
+<p>标量替换同样在 JDK8 中都是默认开启的，并且都要建立在逃逸分析的基础上</p>
+<p><strong>栈上分配</strong></p>
+<p>当对象没有发生逃逸时，该<strong>对象</strong>就可以通过标量替换分解成成员标量分配在<strong>栈内存</strong>中，和方法的生命周期一致，随着栈帧出栈时销毁，减少了 GC 压力，提高了应用程序性能</p>
+<h4><span id="方法内联">方法内联</span></h4><h5><span id="内联函数"><strong>内联函数</strong></span></h5><p>内联函数就是在程序编译时，编译器将程序中出现的内联函数的调用表达式用内联函数的函数体来直接进行替换</p>
+<h5><span id="jvm内联函数"><strong>JVM内联函数</strong></span></h5><p>C++是否为内联函数由自己决定，Java由<strong>编译器决定</strong>。Java不支持直接声明为内联函数的，如果想让他内联，你只能够向编译器提出请求: 关键字<strong>final修饰</strong> 用来指明那个函数是希望被JVM内联的，如</p>
+<pre><code>public final void doSomething() &#123;  
+        // to do something  
+&#125;Copy
+</code></pre>
+<p>总的来说，一般的函数都不会被当做内联函数，只有声明了final后，编译器才会考虑是不是要把你的函数变成内联函数</p>
+<p>JVM内建有许多运行时优化。首先<strong>短方法</strong>更利于JVM推断。流程更明显，作用域更短，副作用也更明显。如果是长方法JVM可能直接就跪了。</p>
+<p>第二个原因则更重要：<strong>方法内联</strong></p>
+<p>如果JVM监测到一些<strong>小方法被频繁的执行</strong>，它会把方法的调用替换成方法体本身，如：</p>
+<pre><code>private int add4(int x1, int x2, int x3, int x4) &#123; 
+        //这里调用了add2方法
+        return add2(x1, x2) + add2(x3, x4);  
+    &#125;  
+
+    private int add2(int x1, int x2) &#123;  
+        return x1 + x2;  
+    &#125;Copy
+</code></pre>
+<p>方法调用被替换后</p>
+<pre><code>private int add4(int x1, int x2, int x3, int x4) &#123;  
+        //被替换为了方法本身
+        return x1 + x2 + x3 + x4;  
+    &#125;Copy
+</code></pre>
+<h4><span id="反射优化">反射优化</span></h4><pre><code>public class Reflect1 &#123;
+   public static void foo() &#123;
+      System.out.println(&quot;foo...&quot;);
+   &#125;
+
+   public static void main(String[] args) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException &#123;
+      Method foo = Demo3.class.getMethod(&quot;foo&quot;);
+      for(int i = 0; i&lt;=16; i++) &#123;
+         foo.invoke(null);
+      &#125;
+   &#125;
+&#125;Copy
+</code></pre>
+<p>foo.invoke 前面 0 ~ 15 次调用使用的是 MethodAccessor 的 NativeMethodAccessorImpl 实现</p>
+<p>invoke方法源码</p>
+<pre><code>@CallerSensitive
+public Object invoke(Object obj, Object... args)
+    throws IllegalAccessException, IllegalArgumentException,
+       InvocationTargetException
+&#123;
+    if (!override) &#123;
+        if (!Reflection.quickCheckMemberAccess(clazz, modifiers)) &#123;
+            Class&lt;?&gt; caller = Reflection.getCallerClass();
+            checkAccess(caller, clazz, obj, modifiers);
+        &#125;
+    &#125;
+    //MethodAccessor是一个接口，有3个实现类，其中有一个是抽象类
+    MethodAccessor ma = methodAccessor;             // read volatile
+    if (ma == null) &#123;
+        ma = acquireMethodAccessor();
+    &#125;
+    return ma.invoke(obj, args);
+&#125;Copy
+</code></pre>
+<p><a target="_blank" rel="noopener" href="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200614133554.png"><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200614133554.png" alt="img"></a></p>
+<p>会由DelegatingMehodAccessorImpl去调用NativeMethodAccessorImpl</p>
+<p>NativeMethodAccessorImpl源码</p>
+<pre><code>class NativeMethodAccessorImpl extends MethodAccessorImpl &#123;
+    private final Method method;
+    private DelegatingMethodAccessorImpl parent;
+    private int numInvocations;
+
+    NativeMethodAccessorImpl(Method var1) &#123;
+        this.method = var1;
+    &#125;
+    
+    //每次进行反射调用，会让numInvocation与ReflectionFactory.inflationThreshold的值（15）进行比较，并使使得numInvocation的值加一
+    //如果numInvocation&gt;ReflectionFactory.inflationThreshold，则会调用本地方法invoke0方法
+    public Object invoke(Object var1, Object[] var2) throws IllegalArgumentException, InvocationTargetException &#123;
+        if (++this.numInvocations &gt; ReflectionFactory.inflationThreshold() &amp;&amp; !ReflectUtil.isVMAnonymousClass(this.method.getDeclaringClass())) &#123;
+            MethodAccessorImpl var3 = (MethodAccessorImpl)(new MethodAccessorGenerator()).generateMethod(this.method.getDeclaringClass(), this.method.getName(), this.method.getParameterTypes(), this.method.getReturnType(), this.method.getExceptionTypes(), this.method.getModifiers());
+            this.parent.setDelegate(var3);
+        &#125;
+
+        return invoke0(this.method, var1, var2);
+    &#125;
+
+    void setParent(DelegatingMethodAccessorImpl var1) &#123;
+        this.parent = var1;
+    &#125;
+
+    private static native Object invoke0(Method var0, Object var1, Object[] var2);
+&#125;Copy
+//ReflectionFactory.inflationThreshold()方法的返回值
+private static int inflationThreshold = 15;Copy
+</code></pre>
+<ul>
+<li>一开始if条件不满足，就会调用本地方法invoke0</li>
+<li>随着numInvocation的增大，当它大于ReflectionFactory.inflationThreshold的值16时，就会本地方法访问器替换为一个运行时动态生成的访问器，来提高效率<ul>
+<li>这时会从反射调用变为<strong>正常调用</strong>，即直接调用 Reflect1.foo()</li>
+</ul>
+</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200614135011.png"><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200614135011.png" alt="img"></a></p>
+
       
     </div>
 
@@ -268,7 +2413,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/17/mysql%E4%BC%98%E5%8C%96/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/21/Stream%E6%B5%81/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -282,7 +2427,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/01/17/mysql%E4%BC%98%E5%8C%96/" class="post-title-link" itemprop="url">mysql优化</a>
+            <a href="/2022/01/21/Stream%E6%B5%81/" class="post-title-link" itemprop="url">Stream流</a>
         </h2>
 
         <div class="post-meta">
@@ -294,14 +2439,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2022-01-17 11:04:24" itemprop="dateCreated datePublished" datetime="2022-01-17T11:04:24+08:00">2022-01-17</time>
+              <time title="创建时间：2022-01-21 20:32:33" itemprop="dateCreated datePublished" datetime="2022-01-21T20:32:33+08:00">2022-01-21</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-02-07 22:21:42" itemprop="dateModified" datetime="2022-02-07T22:21:42+08:00">2022-02-07</time>
+                <time title="修改时间：2022-01-23 12:28:06" itemprop="dateModified" datetime="2022-01-23T12:28:06+08:00">2022-01-23</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -309,7 +2454,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/mysql/" itemprop="url" rel="index"><span itemprop="name">mysql</span></a>
+                  <a href="/categories/Java%E8%BF%9B%E9%98%B6/" itemprop="url" rel="index"><span itemprop="name">Java进阶</span></a>
                 </span>
             </span>
 
@@ -318,13 +2463,13 @@
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
               </span>
-              <span>22k</span>
+              <span>6k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
-              <span>20 分钟</span>
+              <span>5 分钟</span>
             </span>
 
         </div>
@@ -336,866 +2481,246 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>[TOC]</p>
-<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220117114857930.png" alt="image-20220117114857930"></p>
-<p>显示字符集编码</p>
-<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220117121933893.png" alt="image-20220117121933893"></p>
-<h1><span id="mysql架构">mysql架构</span></h1><p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220125173346275.png" alt="image-20220125173346275"></p>
-<h2><span id="逻辑架构">逻辑架构</span></h2><p><img src="https://img-blog.csdnimg.cn/20190311133729340.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzMzNzQ1MTAy,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-<ul>
-<li><strong>Client :</strong><br>提供连接MySQL服务器功能的常用工具集</li>
-<li><strong>Server :</strong><br>MySQL实例，真正提供数据存储和数据处理功能的MySQL服务器进程</li>
-<li><strong>mysqld:</strong><br>MySQL服务器守护程序，在后台运行。它管理着客户端请求。mysqld是一个多线程的进程，允许多个会话连接，端口监听连接，管理MySQL实例</li>
-<li><strong>MySQL memory allocation:</strong><br>MySQL的要求的内存空间是动态的，比如 <code>innodb_buffer_pool_size (from 5.7.5), key_buffer_size</code>。每个会话都有独一无二的执行计划，我们只能共享同一会话域内的数据集。</li>
-<li><strong>SESSION</strong><br>为每个客户端连接分配一个会话，动态分配和回收。用于查询处理，每个会话同时具备一个缓冲区。每个会话是作为一个线程执行的</li>
-<li><strong>Parser</strong><br>检测SQL语句语法，为每条SQL语句生成<code>SQL_ID</code>，用户认证也发生在这个阶段</li>
-<li><strong>Optimizer</strong><br>创造一个有效率的执行计划（根据具体的存储引擎）。它将会重写查询语句。比如：InnoDB有共享缓冲区，所以，优化器会首先从预先缓存的数据中提取。使用 table statistics optimizer将会为SQL查询生成一个执行计划。用户权限检查也发生在这个阶段。</li>
-<li><strong>Metadata cache</strong><br>缓存对象元信息和统计信息</li>
-<li><strong>Query cache</strong><br>共享在内存中的完全一样的查询语句。如果完全相同的查询在缓存命中，MySQL服务器会直接从缓存中去检索结果。缓存是会话间共享的，所以为一个客户生成的结果集也能为另一个客户所用。查询缓存基于<code>SQL_ID</code>。将SELECT语句写入视图就是查询缓存最好的例子。</li>
-<li><strong>key cache</strong><br>缓存表索引。<code>MySQL keys</code>是索引。如果索引数据量小，它将缓存索引结构和叶子节点（存储索引数据）。如果索引很大，它只会缓存索引结构，通常供<strong>MyISAM存储引擎</strong>使用</li>
-</ul>
-<h2><span id="数据库引擎">数据库引擎：</span></h2><p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220125173524623.png" alt="image-20220125173524623"></p>
-<p>引擎对比：</p>
-<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220125173746074.png" alt="image-20220125173746074"></p>
-<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220125174645385.png" alt="image-20220125174645385"></p>
-<h2><span id="sql性能下降的原因">SQL性能下降的原因</span></h2><ul>
-<li>查询语句写的差。</li>
-<li>索引失效：索引建了，但是没有用上。</li>
-<li>关联 查询太多<code>join</code>（设计缺陷或者不得已的需求）。</li>
-<li>服务器调优以及各个参数的设置（缓冲、线程数等）。</li>
-</ul>
-<h2><span id="机读顺序">机读顺序</span></h2><p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220126104245756.png" alt="image-20220126104245756"></p>
-<h2><span id="七种join理论">七种JOIN理论</span></h2><p><a target="_blank" rel="noopener" href="https://camo.githubusercontent.com/86ddd9cb519bf327ca485e638dd17d8ec15e10778a6b1d85b7c6dfa54d553df1/68747470733a2f2f696d672d626c6f672e6373646e696d672e636e2f32303230303830313231323031313535392e6a70673f782d6f73732d70726f636573733d696d6167652f77617465726d61726b2c747970655f5a6d46755a33706f5a57356e6147567064476b2c736861646f775f31302c746578745f6148523063484d364c7939696247396e4c6d4e7a5a473475626d56304c314a796157356e6231383d2c73697a655f31362c636f6c6f725f4646464646462c745f3730"><img src="https://camo.githubusercontent.com/86ddd9cb519bf327ca485e638dd17d8ec15e10778a6b1d85b7c6dfa54d553df1/68747470733a2f2f696d672d626c6f672e6373646e696d672e636e2f32303230303830313231323031313535392e6a70673f782d6f73732d70726f636573733d696d6167652f77617465726d61726b2c747970655f5a6d46755a33706f5a57356e6147567064476b2c736861646f775f31302c746578745f6148523063484d364c7939696247396e4c6d4e7a5a473475626d56304c314a796157356e6231383d2c73697a655f31362c636f6c6f725f4646464646462c745f3730" alt="七种JOIN理论"></a></p>
-<pre><code class="sql">/* 1 */
-SELECT &lt;select_list&gt; FROM TableA A LEFT JOIN TableB B ON A.Key = B.Key;
-
-/* 2 */
-SELECT &lt;select_list&gt; FROM TableA A RIGHT JOIN TableB B ON A.Key = B.Key;
-
-/* 3 */
-SELECT &lt;select_list&gt; FROM TableA A INNER JOIN TableB B ON A.Key = B.Key;
-
-/* 4 */
-SELECT &lt;select_list&gt; FROM TableA A LEFT JOIN TableB B ON A.Key = B.Key WHERE B.Key IS NULL;
-
-/* 5 */
-SELECT &lt;select_list&gt; FROM TableA A RIGHT JOIN TableB B ON A.Key = B.Key WHERE A.Key IS NULL;
-
-/* 6 */
-SELECT &lt;select_list&gt; FROM TableA A FULL OUTER JOIN TableB B ON A.Key = B.Key;
-/* MySQL不支持FULL OUTER JOIN这种语法 可以改成 1+2 */
-SELECT &lt;select_list&gt; FROM TableA A LEFT JOIN TableB B ON A.Key = B.Key
-UNION
-SELECT &lt;select_list&gt; FROM TableA A RIGHT JOIN TableB B ON A.Key = B.Key;
-
-/* 7 */
-SELECT &lt;select_list&gt; FROM TableA A FULL OUTER JOIN TableB B ON A.Key = B.Key WHERE A.Key IS NULL OR B.Key IS NULL;
-/* MySQL不支持FULL OUTER JOIN这种语法 可以改成 4+5 */
-SELECT &lt;select_list&gt; FROM TableA A LEFT JOIN TableB B ON A.Key = B.Key WHERE B.Key IS NULL;
-UNION
-SELECT &lt;select_list&gt; FROM TableA A RIGHT JOIN TableB B ON A.Key = B.Key WHERE A.Key IS NULL;
-</code></pre>
-<p>训练：</p>
-<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220126112014110.png" alt="image-20220126112014110"></p>
-<p>笛卡尔积</p>
-<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220126112141713.png" alt="image-20220126112141713"></p>
-<p>inner join</p>
-<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220126112509976.png" alt="image-20220126112509976"></p>
-<p>left join</p>
-<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220126112649545.png" alt="image-20220126112649545"></p>
-<p>right join</p>
-<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220126112731024.png" alt="image-20220126112731024"></p>
-<p>返回所有记录</p>
-<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220126113400563.png" alt="image-20220126113400563"></p>
-<h2><span id></span></h2><h1><span id="索引">索引</span></h1><p>索引的本质：<strong>索引是排好序的快速查找数据结构。</strong></p>
-<p><strong>重点：索引会影响到MySQL查找(WHERE的查询条件)和排序(ORDER BY)两大功能！</strong></p>
-<p><strong>除了数据本身之外，数据库还维护着一个满足特定查找算法的数据结构，这些数据结构以某种方式指向数据，这样就可以在这些数据结构的基础上实现高级查找算法，这种数据结构就是索引。</strong></p>
-<p>一般来说，索引本身也很大，不可能全部存储在内存中，因此索引往往以索引文件的形式存储在磁盘上</p>
-<pre><code>Linux下查看磁盘空间命令 df -h 
-</code></pre>
-<pre><code class="shell">[root@VM-16-3-centos ~]# df -h
-Filesystem      Size  Used Avail Use% Mounted on
-devtmpfs        908M     0  908M   0% /dev
-tmpfs           919M   32K  919M   1% /dev/shm
-tmpfs           919M  624K  919M   1% /run
-tmpfs           919M     0  919M   0% /sys/fs/cgroup
-/dev/vda1        59G  7.4G   50G  14% /
-tmpfs           184M     0  184M   0% /run/user/0
-</code></pre>
-<p>我们平时所说的索引，如果没有特别指明，都是指B树（多路搜索树，并不一定是二叉的）结构组织的索引。其中聚集索引，次要索引，覆盖索引，复合索引，前缀索引，唯一索引默认都是使用B+树索引，统称索引。当然，除了B+树这种数据结构的索引之外，还有哈希索引（Hash Index）等。</p>
-<blockquote>
-<p>索引的优势和劣势</p>
-</blockquote>
-<p>优势：</p>
-<ul>
-<li>查找：类似大学图书馆的书目索引，提高数据检索的效率，降低数据库的IO成本。</li>
-<li>排序：通过索引対数据进行排序，降低数据排序的成本，降低了CPU的消耗。</li>
-</ul>
-<p>劣势：</p>
-<ul>
-<li>实际上索引也是一张表，该表保存了主键与索引字段，并指向实体表的记录，所以索引列也是要占用空间的。</li>
-<li>虽然索引大大提高了查询速度，但是同时会降低表的更新速度，例如对表频繁的进行<code>INSERT</code>、<code>UPDATE</code>和<code>DELETE</code>。因为更新表的时候，MySQL不仅要保存数据，还要保存一下索引文件每次更新添加的索引列的字段，都会调整因为更新所带来的键值变化后的索引信息。</li>
-<li>索引只是提高效率的一个因素，如果MySQL有大数据量的表，就需要花时间研究建立最优秀的索引。</li>
-</ul>
-<h2><span id="mysql索引分类">MySQL索引分类</span></h2><p>索引分类：</p>
-<ul>
-<li>单值索引：一个索引只包含单个列，一个表可以有多个单列索引。</li>
-<li>唯一索引：索引列的值必须唯一，但是允许空值。</li>
-<li>复合索引：一个索引包含多个字段。</li>
-</ul>
-<p><strong>建议：一张表建的索引最好不要超过5个！</strong></p>
-<pre><code class="sql">/* 基本语法 */
-
-/* 1、创建索引 [UNIQUE]可以省略*/
-/* 如果只写一个字段就是单值索引，写多个字段就是复合索引 */
-CREATE [UNIQUE] INDEX indexName ON tabName(columnName(length));
-
-/* 2、删除索引 */
-DROP INDEX [indexName] ON tabName;
-
-/* 3、查看索引 */
-/* 加上\G就可以以列的形式查看了 不加\G就是以表的形式查看 */
-SHOW INDEX FROM tabName \G;
-</code></pre>
-<p>使用<code>ALTER</code>命令来为数据表添加索引</p>
-<pre><code class="sql">/* 1、该语句添加一个主键，这意味着索引值必须是唯一的，并且不能为NULL */
-ALTER TABLE tabName ADD PRIMARY KEY(column_list);
-
-/* 2、该语句创建索引的键值必须是唯一的(除了NULL之外，NULL可能会出现多次) */
-ALTER TABLE tabName ADD UNIQUE indexName(column_list);
-
-/* 3、该语句创建普通索引，索引值可以出现多次 */
-ALTER TABLE tabName ADD INDEX indexName(column_list);
-
-/* 4、该语句指定了索引为FULLTEXT，用于全文检索 */
-ALTER TABLE tabName ADD FULLTEXT indexName(column_list);
-</code></pre>
-<h2><span id="mysql索引数据结构">MySQL索引数据结构</span></h2><p>索引数据结构：</p>
-<ul>
-<li><code>BTree</code>索引。</li>
-<li><code>Hash</code>索引。</li>
-<li><code>Full-text</code>全文索引。</li>
-<li><code>R-Tree</code>索引。</li>
-</ul>
-<p><code>BTree</code>索引检索原理：</p>
-<p><a target="_blank" rel="noopener" href="https://camo.githubusercontent.com/585e16bba5e6911f7d81728ab9731894fd6631963a028f79d6f327d50109b42d/68747470733a2f2f696d672d626c6f672e6373646e696d672e636e2f32303230303830313233333133343933312e706e673f782d6f73732d70726f636573733d696d6167652f77617465726d61726b2c747970655f5a6d46755a33706f5a57356e6147567064476b2c736861646f775f31302c746578745f6148523063484d364c7939696247396e4c6d4e7a5a473475626d56304c314a796157356e6231383d2c73697a655f31362c636f6c6f725f4646464646462c745f3730"><img src="https://camo.githubusercontent.com/585e16bba5e6911f7d81728ab9731894fd6631963a028f79d6f327d50109b42d/68747470733a2f2f696d672d626c6f672e6373646e696d672e636e2f32303230303830313233333133343933312e706e673f782d6f73732d70726f636573733d696d6167652f77617465726d61726b2c747970655f5a6d46755a33706f5a57356e6147567064476b2c736861646f775f31302c746578745f6148523063484d364c7939696247396e4c6d4e7a5a473475626d56304c314a796157356e6231383d2c73697a655f31362c636f6c6f725f4646464646462c745f3730" alt="BTree"></a></p>
-<h2><span id="哪些情况不要建索引">哪些情况不要建索引</span></h2><ul>
-<li>记录太少的表。</li>
-<li>经常增删改的表。</li>
-<li>频繁更新的字段不适合创建索引。</li>
-<li>Where条件里用不到的字段不创建索引。</li>
-<li>假如一个表有10万行记录，有一个字段A只有true和false两种值，并且每个值的分布概率大约为50%，那么对A字段建索引一般不会提高数据库的查询速度。索引的选择性是指索引列中不同值的数目与表中记录数的比。如果一个表中有2000条记录，表索引列有1980个不同的值，那么这个索引的选择性就是1980/2000=0.99。一个索引的选择性越接近于1，这个索引的效率就越高。</li>
-</ul>
-<h1><span id="性能分析">性能分析</span></h1><h2><span id="explain简介">EXPLAIN简介</span></h2><blockquote>
-<p>EXPLAIN是什么？</p>
-</blockquote>
-<p>EXPLAIN：SQL的执行计划，使用EXPLAIN关键字可以模拟优化器执行SQL查询语句，从而知道MySQL是如何处理SQL语句的。</p>
-<blockquote>
-<p>EXPLAIN怎么使用？</p>
-</blockquote>
-<p>语法：<code>explain</code> + <code>SQL</code>。</p>
-<pre><code class="sql">mysql&gt; explain select * from tbl_emp\G;
-*************************** 1. row ***************************
-           id: 1
-  select_type: SIMPLE
-        table: tbl_emp
-         type: ALL
-possible_keys: NULL
-          key: NULL
-      key_len: NULL
-          ref: NULL
-         rows: 8
-        Extra: NULL
-1 row in set (0.00 sec)
-
-ERROR: 
-No query specified
-</code></pre>
-<blockquote>
-<p>EXPLAIN能干嘛？</p>
-</blockquote>
-<p>可以查看以下信息：</p>
-<ul>
-<li><code>id</code>：表的读取顺序。</li>
-<li><code>select_type</code>：数据读取操作的操作类型。</li>
-<li><code>possible_keys</code>：哪些索引可以使用。</li>
-<li><code>key</code>：哪些索引被实际使用。</li>
-<li><code>ref</code>：表之间的引用。</li>
-<li><code>rows</code>：每张表有多少行被优化器查询。</li>
-</ul>
-<h2><span id="explain字段">EXPLAIN字段</span></h2><blockquote>
-<p>id</p>
-</blockquote>
-<p><code>id</code>：表的读取和加载顺序。</p>
-<p>值有以下三种情况：</p>
-<ul>
-<li><code>id</code>相同，执行顺序由上至下。</li>
-<li><code>id</code>不同，如果是子查询，id的序号会递增，<strong>id值越大优先级越高，越先被执行。</strong></li>
-<li><code>id</code>有相同有不同，同时存在。<strong>永远是id大的优先级最高，id相等的时候顺序执行。</strong></li>
-</ul>
-<blockquote>
-<p>select_type</p>
-</blockquote>
-<p><code>select_type</code>：数据查询的类型，主要是用于区别，普通查询、联合查询、子查询等的复杂查询。</p>
-<ul>
-<li><p><code>SIMPLE</code>：简单的<code>SELECT</code>查询，查询中不包含子查询或者<code>UNION </code>。</p>
-</li>
-<li><p><code>PRIMARY</code>：查询中如果包含任何复杂的子部分，最外层查询则被标记为<code>PRIMARY</code>。</p>
-</li>
-<li><p><code>SUBQUERY</code>：在<code>SELECT</code>或者<code>WHERE</code>子句中包含了子查询。</p>
-</li>
-<li><p><code>DERIVED</code>：在<code>FROM</code>子句中包含的子查询被标记为<code>DERIVED(衍生)</code>，MySQL会递归执行这些子查询，把结果放在临时表中。</p>
-</li>
-<li><p><code>UNION</code>：如果第二个<code>SELECT</code>出现在<code>UNION</code>之后，则被标记为<code>UNION</code>；若<code>UNION</code>包含在<code>FROM</code>子句的子查询中，外层<code>SELECT</code>将被标记为<code>DERIVED</code>。</p>
-</li>
-<li><p><code>UNION RESULT</code>：从<code>UNION</code>表获取结果的<code>SELECT</code>。</p>
+          <h1><span id="stream流">Stream流</span></h1><p><strong>自我感觉是一流的形式传递操作，上一个操作返回的结果放到下一个</strong></p>
+<p><strong>可以被用来对集合或数组进行链状流式的操作</strong></p>
+<p>可以先写出匿名内部类的形式，然后再快捷转换为lambda表达式</p>
 <p><strong>eg:</strong></p>
-<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220129211613525.png" alt="image-20220129211613525"></p>
-</li>
-</ul>
-<blockquote>
-<p>type</p>
-</blockquote>
-<p><code>type</code>：访问类型排列。</p>
-<p><strong>从最好到最差依次是：</strong><code>system</code>&gt;<code>const</code>&gt;<code>eq_ref</code>&gt;<code>ref</code>&gt;<code>range</code>&gt;<code>index</code>&gt;<code>ALL</code>。除了<code>ALL</code>没有用到索引，其他级别都用到索引了。</p>
-<p>一般来说，得保证查询至少达到<code>range</code>级别，最好达到<code>ref</code>。</p>
-<ul>
-<li><code>system</code>：表只有一行记录（等于系统表），这是<code>const</code>类型的特例，平时不会出现，这个也可以忽略不计。</li>
-<li><code>const</code>：表示通过索引一次就找到了，<code>const</code>用于比较<code>primary key</code>或者<code>unique</code>索引。因为只匹配一行数据，所以很快。如将主键置于<code>where</code>列表中，MySQL就能将该查询转化为一个常量。</li>
-<li><code>eq_ref</code>：唯一性索引扫描，读取本表中和关联表表中的每行组合成的一行，查出来只有一条记录。除 了 <code>system</code> 和<code> const</code> 类型之外, 这是最好的联接类型。</li>
-<li><code>ref</code>：非唯一性索引扫描，返回本表和关联表某个值匹配的所有行，查出来有多条记录。</li>
-<li><code>range</code>：只检索给定范围的行，一般就是在<code>WHERE</code>语句中出现了<code>BETWEEN</code>、<code>&lt; &gt;</code>、<code>in</code>等的查询。这种范围扫描索引比全表扫描要好，因为它只需要开始于索引树的某一点，而结束于另一点，不用扫描全部索引。</li>
-<li><code>index</code>：<code>Full Index Scan</code>，全索引扫描，<code>index</code>和<code>ALL</code>的区别为<code>index</code>类型只遍历索引树。<strong>也就是说虽然<code>ALL</code>和<code>index</code>都是读全表，但是<code>index</code>是从索引中读的，<code>ALL</code>是从磁盘中读取的。</strong></li>
-<li><code>ALL</code>：<code>Full Table Scan</code>，没有用到索引，全表扫描。</li>
-</ul>
-<blockquote>
-<p>possible_keys 和 key</p>
-</blockquote>
-<p><code>possible_keys</code>：显示可能应用在这张表中的索引，一个或者多个。查询涉及到的字段上若存在索引，则该索引将被列出，<strong>但不一定被查询实际使用。</strong></p>
-<p><code>key</code>：实际使用的索引。如果为<code>NULL</code>，则没有使用索引。查询中如果使用了覆盖索引，则该索引仅仅出现在<code>key</code>列表中。</p>
-<blockquote>
-<p>key_len</p>
-</blockquote>
-<p><code>key_len</code>：表示索引中使用的字节数，可通过该列计算查询中使用的索引的长度。<code>key_len</code>显示的值为索引字段的最大可能长度，并非实际使用长度，即<code>key_len</code>是根据表定义计算而得，不是通过表内检索出的。在不损失精度的情况下，长度越短越好。</p>
-<p><code>key_len</code>计算规则：<strong><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_34930488/article/details/102931490">https://blog.csdn.net/qq_34930488/article/details/102931490</a></strong></p>
-<pre><code class="sql">mysql&gt; desc category;
-+---------------+------------+------+-----+---------+----------------+
-| Field         | Type       | Null | Key | Default | Extra          |
-+---------------+------------+------+-----+---------+----------------+
-| cat_id        | bigint(20) | NO   | PRI | NULL    | auto_increment |
-| name          | char(50)   | YES  |     | NULL    |                |
-| parent_cid    | bigint(20) | YES  |     | NULL    |                |
-| cat_level     | int(11)    | YES  |     | NULL    |                |
-| show_status   | tinyint(4) | YES  |     | NULL    |                |
-| sort          | int(11)    | YES  |     | NULL    |                |
-| icon          | char(255)  | YES  |     | NULL    |                |
-| product_unit  | char(50)   | YES  |     | NULL    |                |
-| product_count | int(11)    | YES  |     | NULL    |                |
-+---------------+------------+------+-----+---------+----------------+
-9 rows in set (0.00 sec)
+<pre><code class="java">// 我们可以调用getAuthors方法获取到作家的集合。现在需要打印所有年龄小于18的作家的名字，并且要注意去重。
+ getAuthors()
+         .stream()
+         .distinct()
+         .filter(author -&gt; author.getAge()&lt;18)
+         .forEach(author -&gt; System.out.println(author.getName()));
+</code></pre>
+<h2><span id="操作种类">操作种类</span></h2><h3><span id="创建流">创建流</span></h3><pre><code class="java">//创建流,有两种方式
+public static void test01()&#123;
+    Integer[] list=&#123;1,2,3,4,5&#125;;
+    Stream&lt;Integer&gt; stream=Arrays.stream(list);
+    Stream&lt;Integer&gt; stream1 = Stream.of(list);
+    stream.distinct().filter(integer -&gt; integer&lt;3).forEach(integer -&gt; System.out.println(integer));
+    stream1.distinct().filter(integer -&gt; integer&lt;3).forEach(integer -&gt; System.out.println(integer));
+&#125;
+</code></pre>
+<h3><span id="中间操作">中间操作</span></h3><h5><span id="filter">filter</span></h5><p>​    可以对流中的元素进行条件过滤，符合过滤条件的才能继续留在流中。</p>
+<h5><span id="map">map</span></h5><p>​    可以把对流中的元素进行计算或转换。</p>
+<pre><code class="java">public static void test03()&#123;
+    //输出作者的描述
+    getAuthors()
+            .stream()
+            .map(Author::getIntro)
+            .forEach(author-&gt; System.out.println(author));
+&#125;
+</code></pre>
+<p><img src="/2022/01/21/Stream%E6%B5%81/image-20220121213239914.png" alt="image-20220121213239914"></p>
+<h5><span id="distinct">distinct</span></h5><p>​    可以去除流中的重复元素。</p>
+<h5><span id="sorted">sorted</span></h5><p>​    可以对流中的元素进行排序，排序规则可自定义。</p>
+<pre><code class="java">public static void test04()&#123;
+    //按年龄升序的顺序排列
+    getAuthors()
+            .stream()
+            .distinct()
+            .sorted(new Comparator&lt;Author&gt;() &#123;
+                @Override
+                public int compare(Author o1, Author o2) &#123;
+                    return o1.getAge()- o2.getAge();
+                &#125;
+            &#125;)
+            .forEach(author -&gt; System.out.println(author));
+&#125;
+</code></pre>
+<p><img src="/2022/01/21/Stream%E6%B5%81/image-20220121213640079.png" alt="image-20220121213640079"></p>
+<p><strong>注意：如果调用空参的sorted()方法，需要流中的元素是实现了Comparable。</strong></p>
+<h5><span id="limit">limit</span></h5><p>​    可以设置流的最大长度，超出的部分将被抛弃。</p>
+<pre><code class="java">//实现输出年龄最小的两个人
+public static void test05()&#123;
+    getAuthors()
+            .stream()
+            .distinct()
+            .sorted()//这里实体类实现了Comparable接口
+            .limit(2)
+            .forEach(author -&gt; System.out.println(author));
+&#125;
+</code></pre>
+<p><img src="/2022/01/21/Stream%E6%B5%81/image-20220121214448565.png" alt="image-20220121214448565"></p>
+<h5><span id="skip">skip</span></h5><p>​    跳过流中的前n个元素，返回剩下的元素</p>
+<p>跳过年龄最小的</p>
+<p><img src="/2022/01/21/Stream%E6%B5%81/image-20220121214634846.png" alt="image-20220121214634846"></p>
+<h5><span id="flatmap">flatMap</span></h5><p>​    map只能把一个对象转换成另一个对象来作为流中的元素。而flatMap可以把一个对象转换成多个对象作为流中的元素。</p>
+<h3><span id="终结操作">终结操作</span></h3><h5><span id="foreach">forEach</span></h5><p>​    对流中的元素进行遍历操作，我们通过传入的参数去指定对遍历到的元素进行什么具体操作。</p>
+<h5><span id="count">count</span></h5><p>​    可以用来获取当前流中元素的个数。</p>
+<p>例子：</p>
+<p>​    打印这些作家的所出书籍的数目，注意删除重复元素。</p>
+<pre><code class="java">//        打印这些作家的所出书籍的数目，注意删除重复元素。
+        List&lt;Author&gt; authors = getAuthors();
 
+        long count = authors.stream()
+                .flatMap(author -&gt; author.getBooks().stream())
+                .distinct()
+                .count();
+        System.out.println(count);
+</code></pre>
+<h5><span id="maxampmin">max&amp;min</span></h5><p>​    可以用来获取流中的最值。</p>
+<p>例子：</p>
+<p>​    分别获取这些作家的所出书籍的最高分和最低分并打印。</p>
+<pre><code class="java">        public static void test09()&#123;
+        //    分别获取这些作家的所出书籍的最高分和最低分并打印。
+        List&lt;Author&gt; authors = getAuthors();
+        Optional&lt;Integer&gt; max = authors.stream()
+                .flatMap(author -&gt; author.getBooks().stream())
+                .map(book -&gt; book.getScore())
+                .max(new Comparator&lt;Integer&gt;() &#123;
+                    @Override
+                    public int compare(Integer o1, Integer o2) &#123;
+                        return o1-o2;
+                    &#125;
+                &#125;);
 
-mysql&gt; explain select cat_id from category where cat_id between 10 and 20 \G;
-*************************** 1. row ***************************
-           id: 1
-  select_type: SIMPLE
-        table: category
-   partitions: NULL
-         type: range
-possible_keys: PRIMARY
-          key: PRIMARY  # 用到了主键索引，通过查看表结构知道，cat_id是bigint类型，占用8个字节
-      key_len: 8        # 这里只用到了cat_id主键索引，所以长度就是8！
-          ref: NULL
-         rows: 11
-     filtered: 100.00
-        Extra: Using where; Using index
-1 row in set, 1 warning (0.00 sec)
+        Optional&lt;Integer&gt; min = authors.stream()
+                .flatMap(author -&gt; author.getBooks().stream())
+                .map(book -&gt; book.getScore())
+                .min((score1, score2) -&gt; score1 - score2);
+        System.out.println(max.get());
+        System.out.println(min.get());
+    &#125;
 </code></pre>
-<blockquote>
-<p>ref</p>
-</blockquote>
-<p><code>ref</code>：显示索引的哪一列被使用了，如果可能的话，是一个常数。哪些列或常量被用于查找索引列上的值。</p>
-<blockquote>
-<p>rows</p>
-</blockquote>
-<p><code>rows</code>：根据表统计信息及索引选用情况，大致估算出找到所需的记录需要读取的行数。</p>
-<blockquote>
-<p>Extra</p>
-</blockquote>
-<p><code>Extra</code>：包含不适合在其他列中显示但十分重要的额外信息。</p>
-<ul>
-<li><code>Using filesort</code>：说明MySQL会对数据使用一个外部的索引排序，而不是按照表内的索引顺序进行读取。<strong>MySQL中无法利用索引完成的排序操作成为”文件内排序”。</strong></li>
-</ul>
-<pre><code class="sql"># 排序没有使用索引
-mysql&gt; explain select name from category where name=&#39;Tangs&#39; order by cat_level \G
-*************************** 1. row ***************************
-           id: 1
-  select_type: SIMPLE
-        table: category
-   partitions: NULL
-         type: ref
-possible_keys: idx_name_parentCid_catLevel
-          key: idx_name_parentCid_catLevel
-      key_len: 201
-          ref: const
-         rows: 1
-     filtered: 100.00
-        Extra: Using where; Using index; Using filesort
-1 row in set, 1 warning (0.00 sec)
+<h5><span id="collect">collect</span></h5><p>​    把当前流转换成一个集合。</p>
+<p>例子：</p>
+<p>​    获取一个存放所有作者名字的List集合。</p>
+<pre><code class="java">public static void test10()&#123;
+        //        获取一个存放所有作者名字的List集合。
+        List&lt;Author&gt; authors=getAuthors();
+        List&lt;String&gt; names=authors.stream()
+                .distinct()
+                .map(author -&gt; author.getName())
+                .collect(Collectors.toList());
+        System.out.println(names);
+    &#125;
+</code></pre>
+<p>​    获取一个所有书名的Set集合。</p>
+<p><img src="/2022/01/21/Stream%E6%B5%81/Stream%E6%B5%81image-20220123122758892.png" alt="image-20220123122758892"></p>
+<p>​    获取一个Map集合，map的key为作者名，value为List<book></book></p>
+<pre><code class="java">//        获取一个Map集合，map的key为作者名，value为List&lt;Book&gt;
+        List&lt;Author&gt; authors = getAuthors();
 
-#~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
-# 排序使用到了索引
+        Map&lt;String, List&lt;Book&gt;&gt; map = authors.stream()
+                .distinct()
+                .collect(Collectors.toMap(author -&gt; author.getName(), author -&gt; author.getBooks()));
 
-mysql&gt; explain select name from category where name=&#39;zz&#39; order by parent_cid,cat_level\G
-*************************** 1. row ***************************
-           id: 1
-  select_type: SIMPLE
-        table: category
-   partitions: NULL
-         type: ref
-possible_keys: idx_name_parentCid_catLevel
-          key: idx_name_parentCid_catLevel
-      key_len: 201
-          ref: const
-         rows: 1
-     filtered: 100.00
-        Extra: Using where; Using index
-1 row in set, 1 warning (0.00 sec)
+        System.out.println(map);
 </code></pre>
-<ul>
-<li><code>Using temporary</code>：使用了临时表保存中间结果，MySQL在対查询结果排序时使用了临时表。常见于排序<code>order by</code>和分组查询<code>group by</code>。<strong>临时表対系统性能损耗很大。</strong></li>
-<li><code>Using index</code>：表示相应的<code>SELECT</code>操作中使用了覆盖索引，避免访问了表的数据行，效率不错！如果同时出现<code>Using where</code>，表示索引被用来执行索引键值的查找；如果没有同时出现<code>Using where</code>，表明索引用来读取数据而非执行查找动作。</li>
-</ul>
-<pre><code class="sql"># 覆盖索引
-# 就是select的数据列只用从索引中就能够取得，不必从数据表中读取，换句话说查询列要被所使用的索引覆盖。
-# 注意：如果要使用覆盖索引，一定不能写SELECT *，要写出具体的字段。
-mysql&gt; explain select cat_id from category \G;
-*************************** 1. row ***************************
-           id: 1
-  select_type: SIMPLE
-        table: category
-   partitions: NULL
-         type: index
-possible_keys: NULL       
-          key: PRIMARY
-      key_len: 8
-          ref: NULL
-         rows: 1425
-     filtered: 100.00
-        Extra: Using index   # select的数据列只用从索引中就能够取得，不必从数据表中读取   
-1 row in set, 1 warning (0.00 sec)
+<h5><span id="查找与匹配">查找与匹配</span></h5><h6><span id="anymatch">anyMatch</span></h6><p>​    可以用来判断是否有任意符合匹配条件的元素，结果为boolean类型。</p>
+<p>例子：</p>
+<p>​    判断是否有年龄在29以上的作家</p>
+<pre><code class="java">//        判断是否有年龄在29以上的作家
+        List&lt;Author&gt; authors = getAuthors();
+        boolean flag = authors.stream()
+                .anyMatch(author -&gt; author.getAge() &gt; 29);
+        System.out.println(flag);
 </code></pre>
-<ul>
-<li><code>Using where</code>：表明使用了<code>WHERE</code>过滤。</li>
-<li><code>Using join buffer</code>：使用了连接缓存。</li>
-<li><code>impossible where</code>：<code>WHERE</code>子句的值总是false，不能用来获取任何元组。</li>
-</ul>
-<pre><code class="sql">mysql&gt; explain select name from staffs where name = &#39;zz&#39; and name = &#39;cc&#39;\G
-*************************** 1. row ***************************
-           id: 1
-  select_type: SIMPLE
-        table: NULL
-   partitions: NULL
-         type: NULL
-possible_keys: NULL
-          key: NULL
-      key_len: NULL
-          ref: NULL
-         rows: NULL
-     filtered: NULL
-        Extra: Impossible WHERE   # 不可能字段同时查到两个名字
-1 row in set, 1 warning (0.00 sec)
+<h6><span id="allmatch">allMatch</span></h6><p>​    可以用来判断是否都符合匹配条件，结果为boolean类型。如果都符合结果为true，否则结果为false。</p>
+<p>例子：</p>
+<p>​    判断是否所有的作家都是成年人</p>
+<pre><code class="java">//        判断是否所有的作家都是成年人
+        List&lt;Author&gt; authors = getAuthors();
+        boolean flag = authors.stream()
+                .allMatch(author -&gt; author.getAge() &gt;= 18);
+        System.out.println(flag);
 </code></pre>
-<h2><span id="mysql中explain的extra字段值using-index和using-whereusing-index和using-where以及using-index-condition的区别">MySQL中Explain的Extra字段值Using index和Using where；Using index和Using where以及Using index condition的区别</span></h2><p> 在分别介绍以上四个值之前，我们需要知道，MySQL的架构分成了server层和存储引擎层（storage engine），server层通过调用存储引擎层来返回数据。       </p>
-<p>其中Using index表示查询的列被索引覆盖，因而无需再回表（如果你不知道啥叫回表，请参见第3篇博客）查询，因而效率较高。例如：select id from test where id = 5;其中id为主键。</p>
-<p>​    Using where;Using index表示查询的列被索引覆盖，且where筛选条件是索引列前导列的一个范围，或者是索引列的非前导列，例如：select id from test where id &gt; 5;。很明显，效率也很高。</p>
-<p>​    Using where表示查询的列未被索引覆盖，且where筛选条件是索引列前导列的一个范围，或者是索引列的非前导列，或者是非索引列，例如：select * from test where id &gt; 30; 。因为未被索引覆盖，所以需要回表，因而性能比前两者差。</p>
-<p>​    Extra为null表示查询的列未被索引覆盖，且where筛选条件是索引的前导列，这意味着用到了索引，但是部分字段未被索引覆盖，必须通过“回表”来实现，因而性能也比前两者差。</p>
-<p>​    Using index condition是MySQL 5.6中引入的一种新特性，叫做Index Condition Pushdown(ICP)，是一种在存储引擎层使用索引过滤数据的一种优化方式。这里的“下推” 是指将原来在server层进行的table filter中可以进行index filter的部分，在引擎层面使用index filter进行处理，不再需要回表进行table filter。使用ICP可以减少存储引擎层返回需要被index filter过滤掉的行记录，省去了存储引擎访问基表的次数以及MySQL服务器访问存储引擎的次数。Using index condition仅适用于二级索引，原因是ICP的目的是减少全行读取的次数，从而减少IO操作。而对于innodb聚集索引，完整的记录已被读入到innodb缓冲区，在这种情况下，ICP不会减少io，所以ICP只适用于二级索引，一般发生在查询字段无法被二级索引覆盖的场景，该场景下往往需要回表。通过ICP，可以减少存储引擎返回的行记录，从而减少了IO操作</p>
-<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220129210757192.png" alt="image-20220129210757192"></p>
-<h1><span id="索引分析">索引分析</span></h1><h2><span id="单表索引分析">单表索引分析</span></h2><blockquote>
-<p>数据准备</p>
-</blockquote>
-<pre><code>
-</code></pre>
-<blockquote>
-<p>案例：查询<code>category_id</code>为1且<code>comments</code>大于1的情况下，<code>views</code>最多的<code>article_id</code>。</p>
-</blockquote>
-<pre><code class="sql"># 1、sql语句
-SELECT id,author_id FROM article WHERE category_id = 1 AND comments &gt; 1 ORDER BY views DESC LIMIT 1;
+<h6><span id="nonematch">noneMatch</span></h6><p>​    可以判断流中的元素是否都不符合匹配条件。如果都不符合结果为true，否则结果为false</p>
+<p>例子：</p>
+<p>​    判断作家是否都没有超过100岁的。</p>
+<pre><code class="java">//        判断作家是否都没有超过100岁的。
+        List&lt;Author&gt; authors = getAuthors();
 
-# 2、sql执行计划
-mysql&gt; EXPLAIN SELECT id,author_id FROM article WHERE category_id = 1 AND comments &gt; 1 ORDER BY views DESC LIMIT 1\G
-*************************** 1. row ***************************
-           id: 1
-  select_type: SIMPLE
-        table: article
-   partitions: NULL
-         type: ALL  #最坏的情况
-possible_keys: NULL
-          key: NULL
-      key_len: NULL
-          ref: NULL
-         rows: 5
-     filtered: 20.00
-        Extra: Using where; Using filesort  # 产生了文件内排序，需要优化SQL
-1 row in set, 1 warning (0.00 sec)
-</code></pre>
-<p>2、创建索引<code>idx_article_ccv</code>。</p>
-<pre><code class="sql">CREATE INDEX idx_article_ccv ON article(category_id,comments,views);
-</code></pre>
-<p>3、查看当前索引。</p>
-<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220129213500083.png" alt="image-20220129213500083"></p>
-<p>4、查看现在SQL语句的执行计划。</p>
-<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220129213519241.png" alt="image-20220129213519241"></p>
-<p>发现创建符合索引<code>idx_article_ccv</code>之后，虽然解决了全表扫描的问题，但是在<code>order by</code>排序的时候没有用到索引，MySQL居然还是用的**<code>Using filesort</code>**</p>
-<p>5、我们试试把SQL修改为<code>SELECT id,author_id FROM article WHERE category_id = 1 AND comments = 1 ORDER BY views DESC LIMIT 1;</code>看看SQL的执行计划。</p>
-<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220129214319416.png" alt="image-20220129214319416"></p>
-<p>推论：当<code>comments &gt; 1</code>的时候<code>order by</code>排序<code>views</code>字段索引就用不上，但是当<code>comments = 1</code>的时候<code>order by</code>排序<code>views</code>字段索引就可以用上！！！</p>
-<p><strong>所以，范围值使索引失效。</strong></p>
-<p>6、我们现在知道<strong>范围之后的索引会失效</strong>，原来的索引<code>idx_article_ccv</code>最后一个字段<code>views</code>会失效，那么我们如果删除这个索引，创建<code>idx_article_cv</code>索引呢？？？？</p>
-<pre><code class="sql">/* 创建索引 idx_article_cv */
-CREATE INDEX idx_article_cv ON article(category_id,views);
-</code></pre>
-<p>查看当前的索引</p>
-<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220129214725701.png" alt="image-20220129214725701"></p>
-<p>7、当前索引是<code>idx_article_cv</code>，来看一下SQL执行计划。</p>
-<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220129214743296.png" alt="image-20220129214743296"></p>
-<p>成功了</p>
-<h2><span id="两表索引分析">两表索引分析</span></h2><blockquote>
-<p>数据准备</p>
-<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220129215115964.png" alt="image-20220129215115964"></p>
-</blockquote>
-<pre><code>
-</code></pre>
-<blockquote>
-<p>两表连接查询的SQL执行计划</p>
-</blockquote>
-<p>1、不创建索引的情况下，SQL的执行计划。</p>
-<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220129215318710.png" alt="image-20220129215318710"></p>
-<p><code>book</code>和<code>class</code>两张表都是没有使用索引，全表扫描，那么如果进行优化，索引是创建在<code>book</code>表还是创建在<code>class</code>表</p>
-<p>2、左表(<code>book</code>表)创建索引。</p>
-<p>创建索引<code>idx_book_card</code></p>
-<pre><code class="sql">/* 在book表创建索引 */
-CREATE INDEX idx_book_card ON book(card);
-</code></pre>
-<p>在<code>book</code>表中有<code>idx_book_card</code>索引的情况下，查看SQL执行计划</p>
-<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220129215436042.png" alt="image-20220129215436042"></p>
-<p>3、删除<code>book</code>表的索引，右表(<code>class</code>表)创建索引。</p>
-<p>创建索引<code>idx_class_card</code></p>
-<pre><code class="sql">/* 在class表创建索引 */
-CREATE INDEX idx_class_card ON class(card);
-</code></pre>
-<p>在<code>class</code>表中有<code>idx_class_card</code>索引的情况下，查看SQL执行计划</p>
-<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220129215703969.png" alt="image-20220129215703969"></p>
-<p><strong>由此可见，左连接将索引创建在右表上更合适，右连接将索引创建在左表上更合适。</strong></p>
-<h2><span id="三张表索引分析">三张表索引分析</span></h2><blockquote>
-<p>数据准备</p>
-</blockquote>
-<pre><code class="sql">DROP TABLE IF EXISTS `phone`;
+        boolean b = authors.stream()
+                .noneMatch(author -&gt; author.getAge() &gt; 100);
 
-CREATE TABLE IF NOT EXISTS `phone`(
-`phone_id` INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT &#39;主键&#39;,
-`card` INT(10) UNSIGNED NOT NULL COMMENT &#39;分类&#39; 
-) COMMENT &#39;手机&#39;;
+        System.out.println(b);
 </code></pre>
-<blockquote>
-<p>三表连接查询SQL优化</p>
-</blockquote>
-<p>1、不加任何索引，查看SQL执行计划。</p>
-<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220130195042549.png" alt="image-20220130195042549"></p>
-<p>2、根据两表查询优化的经验，左连接需要在右表上添加索引，所以尝试在<code>book</code>表和<code>phone</code>表上添加索引。</p>
-<pre><code class="sql">/* 在book表创建索引 */
-CREATE INDEX idx_book_card ON book(card);
+<h6><span id="findany">findAny</span></h6><p>​    获取流中的任意一个元素。该方法没有办法保证获取的一定是流中的第一个元素。</p>
+<p>例子：</p>
+<p>​    获取任意一个年龄大于18的作家，如果存在就输出他的名字</p>
+<pre><code class="java">//        获取任意一个年龄大于18的作家，如果存在就输出他的名字
+        List&lt;Author&gt; authors = getAuthors();
+        Optional&lt;Author&gt; optionalAuthor = authors.stream()
+                .filter(author -&gt; author.getAge()&gt;18)
+                .findAny();
 
-/* 在phone表上创建索引 */
-CREATE INDEX idx_phone_card ON phone(card);
+        optionalAuthor.ifPresent(author -&gt; System.out.println(author.getName()));
 </code></pre>
-<p>再次执行SQL的执行计划</p>
-<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220130195317676.png" alt="image-20220130195317676"></p>
-<h2><span id="结论">结论</span></h2><p><code>JOIN</code>语句的优化：</p>
-<ul>
-<li>尽可能减少<code>JOIN</code>语句中的<code>NestedLoop</code>（嵌套循环）的总次数：<strong>永远都是小的结果集驱动大的结果集</strong>。</li>
-<li>优先优化<code>NestedLoop</code>的内层循环。</li>
-<li>保证<code>JOIN</code>语句中被驱动表上<code>JOIN</code>条件字段已经被索引。</li>
-<li>当无法保证被驱动表的<code>JOIN</code>条件字段被索引且内存资源充足的前提下，不要太吝惜<code>Join Buffer</code> 的设置。</li>
-</ul>
-<h1><span id="索引失效">索引失效</span></h1><p>建表：</p>
-<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220130202619301.png" alt="image-20220130202619301"></p>
-<p>建立索引 </p>
-<pre><code class="sql">ALTER TABLE staffs ADD INDEX index_staffs_nameAgePos(`name`,`age`,`pos`);
-</code></pre>
-<p>查看效果</p>
-<p>三条查询语句</p>
-<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220130203429755.png" alt="image-20220130203429755"></p>
-<p>只有长度在变化，其他都是好的</p>
-<h2><span id="索引失效应该避免"><strong>索引失效（应该避免）</strong></span></h2><h3><span id="从左开始且不跳列才不会失效"><strong>从左开始且不跳列才不会失效</strong></span></h3><ul>
-<li>最佳左前缀法则 - 如果索引了多列，要遵守最左前缀法则。指的是查询从索引的<strong>最左前列开始并且不跳过复合索引中间列</strong>。</li>
-</ul>
-<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220130203719338.png" alt="image-20220130203719338"></p>
-<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220130203842786.png" alt="image-20220130203842786"></p>
-<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220130203749391.png" alt="image-20220130203749391"></p>
-<p>key_len不对，索引失效，不符合最佳左前缀</p>
-<h3><span id="索引列上不做额外操作才不会失效">索引列上不做额外操作才不会失效</span></h3><p>不在索引列上做任何操作（计算、函数、（自动or手动）类型转换），会导致索引失效而转向全表扫描。</p>
-<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220130205238614.png" alt="image-20220130205238614"></p>
-<h3><span id="少用gtltbetweenand等结构">少用&gt;，&lt;，between…and等结构</span></h3><ul>
-<li>存储引擎不能使用索引中<code>范围条件右边的列</code>。（就是&gt;，&lt;，between…and）</li>
-<li>范围条件右边的索引失效</li>
-</ul>
-<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220130222810515.png" alt="image-20220130222810515"></p>
-<h3><span id="减少select">减少select *</span></h3><ul>
-<li>尽量使用覆盖索引（只访问索引的查询（索引列和查询列一致））<br>区别在于extra，索引的不同，速度不一样</li>
-</ul>
-<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220130223926414.png" alt="image-20220130223926414"></p>
-<h3><span id="不用-is-null-is-not-null">不用 is null, is not null</span></h3><ul>
-<li>is null, is not null 也无法使用索引。</li>
-</ul>
-<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220130224127150.png" alt="image-20220130224127150"></p>
-<h3><span id="模糊查询">模糊查询</span></h3><ul>
-<li>like以通配符开头（’%abc…’），mysql索引失效会变成全表扫描的操作。</li>
-<li><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220130224520085.png" alt="image-20220130224520085"></li>
-</ul>
-<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220130224447994.png" alt="image-20220130224447994"></p>
-<p>只有xx%前缀查询才不会失效</p>
-<p>解决方法：</p>
-<p>把*替换为索引的字段值（id可以不加索引）</p>
-<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220130224928257.png" alt="image-20220130224928257"></p>
-<h3><span id="类型要正确">类型要正确</span></h3><p>即使类型不正确也可以查询，但是底层会帮你转换类型，在判断，但会浪费时间，索引直接失效，变成了全表查询</p>
-<ul>
-<li><p>字符串不加单引号索引失效。</p>
-</li>
-<li><p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220130225213417.png" alt="image-20220130225213417"></p>
-<p>把*替换为字段值会好些</p>
-</li>
-</ul>
-<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220130225125971.png" alt="image-20220130225125971"></p>
-<h3><span id="不用or关键字就不会失效">不用or关键字就不会失效</span></h3><ul>
-<li>少用or，用它来连接时会索引失效。</li>
-</ul>
-<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220130225352233.png" alt="image-20220130225352233"></p>
-<h1><span id="面试常考">面试常考</span></h1><p><strong>建表</strong></p>
-<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220201190057941.png" alt="image-20220201190057941"></p>
-<p><strong>建立索引</strong></p>
-<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220201190132165.png" alt="image-20220201190132165"></p>
-<p><strong>explain</strong></p>
-<p><strong>正常顺序</strong></p>
-<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220201190200564.png" alt="image-20220201190200564"></p>
-<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220201190228297.png" alt="image-20220201190228297"></p>
-<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220201190243309.png" alt="image-20220201190243309"></p>
-<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220201190317209.png" alt="image-20220201190317209"></p>
-<p><strong>乱序</strong></p>
-<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220201190613078.png" alt="image-20220201190613078"></p>
-<p>打乱顺序mysql的最左前缀原则仍符合，因为mysql有优化器会帮你查询是否匹配</p>
-<p><strong>范围</strong></p>
-<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220201195817005.png" alt="image-20220201195817005"></p>
-<p>如果开始限定范围<br>第一条会用到3个索引，前两个用来查找，c3用来排序<br>第二条用到了4个索引，前3个用来查找，c4用来排序</p>
-<p>因为mysql引擎会优化第二个sql语句在底层已经变成</p>
-<p><strong>explain select * from test03 where c1=’a1’ and c2=’a2’ and c3=’a3’ and c4&gt;’a4’;</strong></p>
-<p><strong>使用order by</strong><br>下面那个例子都是一样的<br>前两个都是在查找，第三个只是在排序，到了这里就已经断了，所以c4可有可无</p>
-<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220201200304494.png" alt="image-20220201200304494"></p>
-<p>如果使用c4排序，会出现Using filesort。，因为优化器会给你文件排序（因为中间跳了一个）</p>
-<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220204121522497.png" alt="image-20220204121522497"></p>
-<p>这个也会出现Using filesort，因为顺序颠倒了</p>
-<pre><code class="sql"> explain select * from test03 where c1=&#39;a1&#39; and c5=&#39;a5&#39; order by c3,c2;
-</code></pre>
-<p>这个就不会出现filesort，因为c2的值已经确认了</p>
-<p> <img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220204122519176.png" alt="image-20220204122519176"></p>
-<p>groupby之前必排序，规则和orderby差不多</p>
-<p>模糊查询</p>
-<p>%在左边会导致索引失效，在右边可以不失效</p>
-<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220204123846471.png" alt="image-20220204123846471"></p>
-<h2><span id="总结">总结</span></h2><p>对于单键索引，尽量选择针对当前query过滤性更好的索引。<br>在选择组合索引的时候，当前Query中过滤性最好的字段在索引字段顺序中，位置越靠前越好。<br>在选择组合索引的时候，尽量选择可以能够包含当前query中的where字句中更多字段的索引。<br>尽可能通过分析统计信息和调整query的写法来达到选择合适索引的目的。</p>
-<p>口诀：</p>
-<p><strong>全值匹配我最爱， 最左前缀要遵守；</strong></p>
-<p><strong>带头大哥不能死， 中间兄弟不能断；</strong></p>
-<p><strong>索引列上少计算， 范围之后全失效；</strong></p>
-<p><strong>LIKE 百分写最右， 覆盖索引不写 <code>\*</code>；</strong></p>
-<p><strong>不等空值还有 OR， 索引影响要注意；</strong></p>
-<p><strong>VAR 引号不可丢， SQL 优化有诀窍。</strong></p>
-<h1><span id="查询截取分析">查询截取分析</span></h1><h2><span id="sql调优过程">SQL调优过程：</span></h2><p>观察，至少跑1天，看看生产的慢SQL情况。<br>开启慢查询日志，设置阙值，比如超过5秒钟的就是慢SQL，并将它抓取出来。<br>explain + 慢SQL分析。<br>show profile。<br>运维经理 or DBA，进行SQL数据库服务器的参数调优。</p>
-<h2><span id="总结">总结：</span></h2><p>慢查询的开启并捕获<br>explain + 慢SQL分析<br>show profile查询SQL在Mysql服务器里面的执行细节和生命周期情况<br>SQL数据库服务器的参数调优。</p>
-<h2><span id="in和exists的区别">in和exists的区别</span></h2><h3><span id="小表驱动大表">小表驱动大表</span></h3><p>RBO原理：</p>
-<p>当B表的数据集必须小于A表的数据集时，用in优于exists。</p>
-<p> <strong>select * from A where id in (select id from B)</strong><br> 等价于:<br> <strong>for select id from B</strong><br> <strong>for select * from A where A.id = B.id</strong><br> 当A表的数据集系小于B表的数据集时，用exists优于in</p>
-<p> <strong>select * from A where exists (select 1 from B where B.id = A.id)</strong><br> 等价于：<br> <strong>for select * from A</strong><br> <strong>for select * from B where B.id = A.id</strong></p>
-<h3><span id="关于exists的关键字">关于exists的关键字</span></h3><p>该语法可以理解为：将主查询的数据，放到子查询中做条件验证，根据验证结果（TRUE或FALSE）来决定主查询的数据结果是否得以保留。</p>
-<p>提示</p>
-<p>EXSTS(subquey)只返回TRUE或FALSE，因此子查询中的SELECT * 也可以是 SELECT 1 或select ‘X’，官方说法是实际执行时会忽略SELECT清单，因此没有区别。<br>EXISTS子查询的实际执行过程可能经过了优化而不是我们理解上的逐条对比，如果担忧效率问题，可进行实际检验以确定是否有效率问题。<br>EXISTS子查询往往也可以用条件表达式，其他子查询或者JOIN来替代，何种最优需要具体问题具体分析<br>3.2 OrderBy优化<br>ORDER BY子句，尽量使用Index方式排序，避免使用FileSort方式排序</p>
-<p>建立一张表以及一个索引</p>
-<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220204195232493.png" alt="image-20220204195232493"></p>
-<p>如果索引的时候也是按照顺序，两种情况都是一样的</p>
-<p>但是索引的时候不按顺序<br>就会出现这样的情况</p>
-<h2><span id="mysql支持二种方式的排序filesort和lindex">MySQL支持二种方式的排序：FileSort和lIndex</span></h2><p>Index效率高，它指MySQL扫描索引本身完成排序，FileSort方式效率较低。</p>
-<h4><span id="order-by满足两情况会使用index方式排序">ORDER BY满足两情况，会使用Index方式排序：</span></h4><p><strong>1.ORDER BY语句使用索引最左前列。</strong><br><strong>2</strong>.<strong>使用where子句与Order BY子句条件列组合满足索引最左前列。</strong><br>如果不在索引列上，mysql的filesort有两种算法：<strong>双路排序、单路排序</strong></p>
-<blockquote>
-<p>双路排序：MySQL4.1之前是使用双路排序，字面意思就是两次扫描磁盘，最终得到数据，读取行指针和OrderBy列，对他们进行排序，然后扫描已经排序好的列表，按照列表中的值重新从列表中读对应的数据输出。<br>从磁盘取排序字段，在buffer进行排序，再从磁盘取其他字段。取一批数据，要对磁盘进行了两次扫描，众所周知，I\O是很耗时的，所以在mysql4.1之后，出现了第二种改进的算法，就是单路排序。</p>
-</blockquote>
-<blockquote>
-<p>单路排序：从磁盘读取查询需要的所有列，按照order by列在buffer对它们进行排序，然后扫描排序压的列表进行输出，它的效率更快一些，避免了第二次读取数据。并且把随机IO变成了顺序IO,但是它会使用更多的空间，因为它把每一行都保存在内存中了。<br>但是用单路有问题</p>
-</blockquote>
-<p>在sort_buffer中，单路排序比双路排序要多占用很多空间，因为单路排序是把所有字段都取出,所以有可能取出的数据的总大小超出了sort_buffer的容量，导致每次只能取sort_buffer容量大小的数据，进行排序（创建tmp文件，多路合并)，排完再取取sort_buffer容量大小，再排……从而多次I/O。<br>本来想省一次I/O操作，反而导致了大量的I/O操作，反而得不偿失。</p>
-<h4><span id="优化策略">优化策略</span></h4><p>1.增大sort_buffer_size参数的设置<br>2.增大max_length_for_sort_data参数的设置<br>3.为什么设置sort_buffer_size、max_length_for_sort_data参数能优化排序？</p>
-<p>主要是因为可以提高Order By的速度</p>
-<h4><span id="具体原因如下">具体原因如下：</span></h4><p>Order by时select * 是一个Query需要的字段，这点非常重要。在这里的影响是;</p>
-<p>当Query的字段大小总和小于max_length_for_sort_data而且排序字段不是TEXT|BLOB类型时，会用改进后的算法——单路排序，否则用老算法——多路排序。<br>两种算法的数据都有可能超出sort_buffer的容量，超出之后，会创建tmp文件进行合并排序，导致多次IO，但是用单路排序算法的风险会更大一些，所以要提高sort_buffer__size。<br>尝试提高sort_buffer_size，不管用哪种算法，提高这个参数都会提高效率，当然，要根据系统的能力去提高，因为这个参数是针对每个进程的。<br>尝试提高max_length_for_sort_data，提高这个参数，会增加用改进算法的概率。但是如果设的太高，数据总容量超出sort_buffer_size的概率就增大，明显症状是高的磁盘I/O活动和低的处理器使用率。</p>
-<pre><code>
-</code></pre>
-<h3><span id="小结">小结</span></h3><p>为排序使用索引</p>
-<p>MySql两种排序方式∶文件排序 或 扫描有序索引排序</p>
-<p>MySql能为 排序 与 查询 使用相同的索引</p>
-<p>创建复合索引 a_b_c (a, b, c)</p>
-<p>order by能使用索引最左前缀</p>
-<pre><code class="sql">ORDER BY a
-ORDER BY a, b
-ORDER BY a, b, c
-ORDER BY a DESC, b DESC, c DESC
-</code></pre>
-<p>如果WHERE使用素引的最左前缀定义为常量，则order by能使用索引</p>
-<pre><code class="sql">WHERE a = const ORDER BY b,c
-WHERE a = const AND b = const ORDER BY c
-WHERE a = const ORDER BY b, c
-WHERE a = const AND b &gt; const ORDER BY b, c
-</code></pre>
-<p>不能使用索引进行排序的情况</p>
-<pre><code class="sql">ORDER BY a ASC, b DESC, c DESC //排序不—致
-WHERE g = const ORDER BY b, c //产丢失a索引
-WHERE a = const ORDER BY c //产丢失b索引
-WHERE a = const ORDER BY a, d //d不是素引的一部分
-WHERE a in (…) ORDER BY b, c //对于排序来说,多个相等条件也是范围查询
-</code></pre>
-<h2><span id="groupby优化">GroupBy优化</span></h2><p>GroupBy优化（和order by差不多）</p>
-<p>group by实质是先排序后进行分组，遵照索引建的最佳左前缀。<br>当无法使用索引列，增大max_length_for_sort_data参数的设置 + 增大sort_buffer_size参数的设置。<br>where高于having，能写在where限定的条件就不要去having限定了。</p>
-<h2><span id="慢查询日志">慢查询日志</span></h2><p>MySQL的慢查询日志是MySQL提供的一种日志记录，它用来记录在MySQL中响应时间超过阀值的语句，具体指运行时间超过long_query_time值的SQL，则会被记录到慢查询日志中。long_query_time的默认值为10，意思是运行10秒以上的语句。<br>由他来查看哪些SQL超出了我们的最大忍耐时间值，比如一条sql执行超过5秒钟，我们就算慢SQL，希望能收集超过5秒的sql，结合之前explain进行全面分析<br>默认情况下，MySQL数据库没有开启慢查询日速，需要我们手动来设置这个参数。</p>
-<p>一般不建议启动该参数，因为开启慢查询日志会或多或少带来一定的性能影响。慢查询日志支持将日志记录写入文件。</p>
-<p>通过如下命令进行操作</p>
-<p>查看日志是否开启</p>
-<pre><code class="sql">SHOW VARIABLES LIKE &#39;%slow_query_log%&#39;;
-</code></pre>
-<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220204210832085.png" alt="image-20220204210832085"></p>
-<p>开启 set global slow_query_log=1，只对当前数据库生效，默认关闭的<br>结果如下</p>
-<p><strong>永久生效</strong><br>修改配置文件my.cnf<br>[mysqld]下增加或修改参数slow_query_log和slow_query_log_file后，然后重启MySQL服务器。也即将如下两行配置进my.cnf文件</p>
-<pre><code class="ABAP">slow_query_log =1
-slow_query_log_file=/var/lib/manongyanjiuseng-slow.log
-</code></pre>
-<p>关于慢查询的参数slow_query_log_file，它指定慢查询日志文件的存放路径，系统默认会给一个缺省的文件host_name-slow.log（如果没有指定参数slow_query_log_file的话）</p>
-<h3><span id="什么样的数据会放到慢查询日志">什么样的数据会放到慢查询日志</span></h3><p>需要设置一个多长的时间段就会放到日志中<br>这个是由参数long_query_time控制，默认情况下long_query_time的值为10秒</p>
-<p>命令：</p>
-<pre><code class="sql">SHOW VARIABLES LIKE &#39;long_query_time%&#39;;
-</code></pre>
-<p>运行时间正好等于long_query_time的情况，并不会被记录下来，需大于</p>
-<p>设置阈值时间后还需要重启才可以生效 </p>
-<pre><code class="sql">set global long_query_time=3;
-</code></pre>
-<p>查询当前系统中有多少条慢查询记录 </p>
-<pre><code class="sql">show global status like &#39;%Slow_queries%&#39;;
-</code></pre>
-<p>如果在配置文件中设置阈值<br>具体配置如下</p>
-<p>[mysqld]下配置:</p>
-<pre><code class="sql">slow_query_log=1;
-slow_query_log_file=/var/lib/mysql/atguigu-slow.log
-long_query_time=3;
-log_output=FILE;
-</code></pre>
-<h2><span id="结合工具进行分析mysqldumpslow">==结合工具进行分析mysqldumpslow ==</span></h2><p>在生产环境中，如果要手工分析日志，查找、分析SQL，显然是个体力活，MySQL提供了日志分析工具mysqldumpslow。</p>
-<p>查看mysqldumpslow的帮助信息，mysqldumpslow –help。</p>
-<h3><span id="工作常用参考">工作常用参考</span></h3><pre><code class="sh">得到返回记录集最多的10个SQL ，
-mysqldumpslow -s r -t 10 /var/lib/mysql/atguigu-slow.log
-得到访问次数最多的10个SQL，
-mysqldumpslow -s c -t 10 /var/lib/mysql/atguigu-slow.log
-得到按照时间排序的前10条里面含有左连接的查询语句，
-mysqldumpslow -s t -t 10 -g &quot;left join&quot; /var/lib/mysql/atguigu-slow.log
-另外建议在使用这些命令时结合│和more 使用，否则有可能出现爆屏情况，
-mysqldumpslow -s r-t 10 /ar/lib/mysql/atguigu-slow.log | more
-</code></pre>
-<p>3.5 批量插入数据脚本<br>为了更好的展示<br>先建立一张表</p>
-<pre><code class="sql">create database bigData;
-use bigData;
+<h6><span id="findfirst">findFirst</span></h6><p>​    获取流中的第一个元素。</p>
+<p>例子：</p>
+<p>​    获取一个年龄最小的作家，并输出他的姓名。</p>
+<pre><code class="java">//        获取一个年龄最小的作家，并输出他的姓名。
+        List&lt;Author&gt; authors = getAuthors();
+        Optional&lt;Author&gt; first = authors.stream()
+                .sorted((o1, o2) -&gt; o1.getAge() - o2.getAge())
+                .findFirst();
 
-CREATE TABLE dept(
-    id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-    deptno MEDIUMINT UNSIGNED NOT NULL DEFAULT 0,
-    dname VARCHAR(20)NOT NULL DEFAULT &quot;&quot;,
-    loc VARCHAR(13) NOT NULL DEFAULT &quot;&quot;
-)ENGINE=INNODB DEFAULT CHARSET=utf8;
+        first.ifPresent(author -&gt; System.out.println(author.getName()));
+</code></pre>
+<h5><span id="reduce归并">reduce归并</span></h5><p>​    对流中的数据按照你指定的计算方式计算出一个结果。（缩减操作）</p>
+<p>​    reduce的作用是把stream中的元素给组合起来，我们可以传入一个初始值，它会按照我们的计算方式依次拿流中的元素和初始化值进行计算，计算结果再和后面的元素计算。</p>
+<p>​    reduce两个参数的重载形式内部的计算方式如下：</p>
+<pre><code class="java">T result = identity;
+for (T element : this stream)
+    result = accumulator.apply(result, element)
+return result;
+</code></pre>
+<p>​    其中identity就是我们可以通过方法参数传入的初始值，accumulator的apply具体进行什么计算也是我们通过方法参数来确定的。</p>
+<p>例子：</p>
+<p>​    使用reduce求所有作者年龄的和</p>
+<pre><code class="java">//        使用reduce求所有作者年龄的和
+        List&lt;Author&gt; authors = getAuthors();
+        Integer sum = authors.stream()
+                .distinct()
+                .map(author -&gt; author.getAge())
+                .reduce(0, (result, element) -&gt; result + element);
+        System.out.println(sum);
+</code></pre>
+<p>​    使用reduce求所有作者中年龄的最大值</p>
+<pre><code class="java">//        使用reduce求所有作者中年龄的最大值
+        List&lt;Author&gt; authors = getAuthors();
+        Integer max = authors.stream()
+                .map(author -&gt; author.getAge())
+                .reduce(Integer.MIN_VALUE, (result, element) -&gt; result &lt; element ? element : result);
 
-CREATE TABLE emp(
-    id int unsigned primary key auto_increment,
-    empno mediumint unsigned not null default 0,
-    ename varchar(20) not null default &quot;&quot;,
-    job varchar(9) not null default &quot;&quot;,
-    mgr mediumint unsigned not null default 0,
-    hiredate date not null,
-    sal decimal(7,2) not null,
-    comm decimal(7,2) not null,
-    deptno mediumint unsigned not null default 0
-)ENGINE=INNODB DEFAULT CHARSET=utf8;
+        System.out.println(max);
 </code></pre>
-<p>开启了可以创建存储函数的权限，主要是这个功能</p>
-<p>设置参数<strong>log_bin_trust_function_creators</strong></p>
-<pre><code class="sql">show variables like &#39;log_bin_trust_function_creators&#39;;
-set global log_bin_trust_function_creators=1;
+<p>​    使用reduce求所有作者中年龄的最小值</p>
+<pre><code class="java">//        使用reduce求所有作者中年龄的最小值
+        List&lt;Author&gt; authors = getAuthors();
+        Integer min = authors.stream()
+                .map(author -&gt; author.getAge())
+                .reduce(Integer.MAX_VALUE, (result, element) -&gt; result &gt; element ? element : result);
+        System.out.println(min);
 </code></pre>
-<p>这是在终端上输入的<br>但是重启后会失效</p>
-<p>如果要配置永久的，需要在配置文件上配置</p>
-<p>windows下my.ini[mysqld]加上</p>
-<pre><code class="sh">log_bin_trust_function_creators=1
+<p>​    reduce一个参数的重载形式内部的计算</p>
+<pre><code class="java">      boolean foundAny = false;
+     T result = null;
+     for (T element : this stream) &#123;
+         if (!foundAny) &#123;
+             foundAny = true;
+             result = element;
+         &#125;
+         else
+             result = accumulator.apply(result, element);
+     &#125;
+     return foundAny ? Optional.of(result) : Optional.empty();
 </code></pre>
-<p>linux下/etc/my.cnf 下my.cnf[mysqld]加上</p>
-<pre><code class="sh">log_bin_trust_function_creators=1
+<p>​    如果用一个参数的重载方法去求最小值代码如下：</p>
+<pre><code class="java">        //        使用reduce求所有作者中年龄的最小值
+        List&lt;Author&gt; authors = getAuthors();
+        Optional&lt;Integer&gt; minOptional = authors.stream()
+                .map(author -&gt; author.getAge())
+                .reduce((result, element) -&gt; result &gt; element ? element : result);
+        minOptional.ifPresent(age-&gt; System.out.println(age));
 </code></pre>
-<p>创建函数，保证每条数据都不同</p>
-<p>随机产生字符串</p>
-<pre><code class="sql">delimiter $$ # 两个 $$ 表示结束
-create function rand_string(n int) returns varchar(255)
-begin
-    declare chars_str varchar(100) default &#39;abcdefghijklmnopqrstuvwxyz&#39;;
-    declare return_str varchar(255) default &#39;&#39;;
-    declare i int default 0;
-    while i &lt; n do
-        set return_str = concat(return_str,substring(chars_str,floor(1+rand()*52),1));
-        set i=i+1;
-    end while;
-    return return_str;
-end $$
-</code></pre>
-<p>执行完语句后，在终端上输入select rand_string(2)$$;，要以$$结尾</p>
-<p>随机产生部门编号    </p>
-<pre><code class="sql">delimiter $$
-create function rand_num() returns int(5)
-begin
-    declare i int default 0;
-    set i=floor(100+rand()*10);
-    return i;
-end $$
-</code></pre>
-<p>执行完语句后，在终端上输入select rand_num()$$，要以$$结尾</p>
-<p>创建存储过程，创建往emp表中插入数据的存储过程</p>
-<pre><code class="sql">delimiter $$
-create procedure insert_emp(in start int(10),in max_num int(10))
-begin
-    declare i int default 0;
-    set autocommit = 0;
-    repeat
-        set i = i+1;
-        insert into emp(empno,ename,job,mgr,hiredate,sal,comm,deptno) values((start+i),rand_string(6),&#39;salesman&#39;,0001,curdate(),2000,400,rand_num());
-        until i=max_num
-        end repeat;
-    commit;
-end $$
-</code></pre>
-<p>创建往dept表中插入数据的存储过程</p>
-<pre><code class="sql">delimiter $$
-create procedure insert_dept(in start int(10),in max_num int(10))
-begin
-    declare i int default 0;
-    set autocommit = 0;
-    repeat
-        set i = i+1;
-        insert into dept(deptno,dname,loc) values((start+i),rand_string(10),rand_string(8));
-        until i=max_num
-        end repeat;
-    commit;
-end $$
-</code></pre>
-<p>调用存储过程<br>往dept表中插入数据</p>
-<pre><code class="sql">DELIMITER ;
-CALL insert_dept(100, 10);
-</code></pre>
-<p>往emp表中插入50万数据</p>
-<pre><code class="sql">DELIMITER ;
-CALL insert_emp(100001, 500000);
-</code></pre>
-<h2><span id="show-profile">Show Profile</span></h2><p>Show Profile是mysql提供可以用来分析当前会话中语句执行的资源消耗情况。可以用于SQL的调优的测量</p>
-<p>默认情况下，参数处于关闭状态，并保存最近15次的运行结果。</p>
-<p>查看当前状态是否开启了， </p>
-<pre><code class="sql">show variables like &#39;profiling&#39;;
-</code></pre>
-<p>开启 ，</p>
-<pre><code class="sql">set profiling=on;
-</code></pre>
-<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220206120852097.png" alt="image-20220206120852097"></p>
-<p>通过执行show profiles;</p>
-<ul>
-<li><p>诊断SQL，show profile cpu,block io for query 上一步前面的问题SQL数字号码;<br>例如</p>
-<pre><code class="sql">show profile cpu,block io for query 3;
-</code></pre>
-<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220206120949041.png" alt="image-20220206120949041"></p>
-</li>
+<h3><span id="35-注意事项">3.5 注意事项</span></h3><ul>
+<li>惰性求值（如果没有终结操作，没有中间操作是不会得到执行的）</li>
+<li>流是一次性的（一旦一个流对象经过一个终结操作后。这个流就不能再被使用）</li>
+<li>不会影响原数据（我们在流中可以多数据做很多处理。但是正常情况下是不会影响原来集合中的元素的。这往往也是我们期望的）</li>
 </ul>
-<p>具体的参数介绍</p>
-<blockquote>
-<p>ALL：显示所有的开销信息。</p>
-</blockquote>
-<blockquote>
-<p>BLOCK IO：显示块lO相关开销。<br>CONTEXT SWITCHES ：上下文切换相关开销。<br>CPU：显示CPU相关开销信息。<br>IPC：显示发送和接收相关开销信息。<br>MEMORY：显示内存相关开销信息。<br>PAGE FAULTS：显示页面错误相关开销信息。<br>SOURCE：显示和Source_function，Source_file，Source_line相关的开销信息。<br>SWAPS：显示交换次数相关开销的信息。<br>在查询该文件的时候如果出现了这些一定要特别注意</p>
-</blockquote>
-<h3><span id="不理想字段">不理想字段</span></h3><p><strong>converting HEAP to MyISAM</strong> 查询结果太大，内存都不够用了往磁盘上搬了。<br><strong>Creating tmp table</strong> 创建临时表，拷贝数据到临时表，用完再删除<br><strong>Copying to tmp table on disk</strong> 把内存中临时表复制到磁盘，危险!<br>locked</p>
-<h2><span id="全局查询日志">全局查询日志</span></h2><p>General log默认不开启的原因有两个：</p>
-<p>日志将会非常大，对磁盘是一个很大的压力。因为所有的操作都会被记录下来。<br>对MySQL数据的性能有一定的影响。</p>
-<p>不要在生产环境开启这个功能。</p>
-<ul>
-<li><p>开启</p>
-<pre><code>set global general_log=1
-</code></pre>
-<p>#记录日志文件的路径</p>
-<pre><code>general_log_file=/path/logfile
-</code></pre>
-<p>#输出格式</p>
-<pre><code>log_output=FILE
-</code></pre>
-</li>
-</ul>
-<p>查看状态是否开启，<strong>show variables like ‘general_log’;</strong></p>
-<pre><code class="sql">set global general_log=1;
-set global log_output=&#39;TABLE&#39;;
-</code></pre>
-<p>log_output=‘FILE‘表示将日志存入文件,默认值是‘FILE‘</p>
-<p>log_output=‘TABLE‘表示将日志存入数据库,这样日志信息就会被写入到mysql.slow_log表中.</p>
-<p>所编写的sql语句，将会记录到mysql库里的geneial_log表，可以用下面的命令查看：</p>
-<p>select * from mysql.general_log;</p>
-<p>查出来会有输出语句</p>
-<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220206211546434.png" alt="image-20220206211546434"></p>
-<h2><span id="锁机制">锁机制</span></h2><h3><span id="从读写来分">从读写来分</span></h3><p>读锁：可共同读</p>
-<p>写锁：不可共同写，在任务完成前，会阻断其他读锁和写锁</p>
-<p>表锁：</p>
-<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220206223240669.png" alt="image-20220206223240669"></p>
-<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220206224230948.png" alt="image-20220206224230948"></p>
-<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220206224728944.png" alt="image-20220206224728944"></p>
-<p>innoDB索引失效行锁会切换为表锁</p>
-<h3><span id="间隙锁的危害">间隙锁的危害</span></h3><blockquote>
-<p>什么是间隙锁？</p>
-</blockquote>
-<p>当我们用范围条件而不是相等条件检索数据，并请求共享或者排他锁时，<code>InnoDB</code>会给符合条件的已有数据记录的索引项加锁，对于键值在条件范文内但并不存在的记录，叫做”间隙(GAP)”。</p>
-<p><code>InnoDB</code>也会对这个”间隙”加锁，这种锁的机制就是所谓的”间隙锁”。</p>
-<blockquote>
-<p>间隙锁的危害</p>
-</blockquote>
-<p>因为<code>Query</code>执行过程中通过范围查找的话，他会锁定整个范围内所有的索引键值，即使这个键值不存在。</p>
-<p>间隙锁有一个比较致命的缺点，就是<strong>当锁定一个范围的键值后，即使某些不存在的键值也会被无辜的锁定，而造成在锁定的时候无法插入锁定键值范围内的任何数据。</strong>在某些场景下这可能会対性能造成很大的危害。</p>
-<p><img src="/2022/01/17/mysql%E4%BC%98%E5%8C%96/image-20220207212800265.png" alt="image-20220207212800265"></p>
-<h3><span id="行锁">行锁</span></h3><pre><code class="sql">SELECT .....FOR UPDATE`在锁定某一行后，其他写操作会被阻塞，直到锁定的行被`COMMIT
-</code></pre>
-<h3><span id="行锁分析">行锁分析</span></h3><pre><code class="sql">mysql&gt; SHOW STATUS LIKE &#39;innodb_row_lock%&#39;;
-+-------------------------------+-------+
-| Variable_name                 | Value |
-+-------------------------------+-------+
-| Innodb_row_lock_current_waits | 0     |
-| Innodb_row_lock_time          | 11131 |
-| Innodb_row_lock_time_avg      | 11131 |
-| Innodb_row_lock_time_max      | 11131 |
-| Innodb_row_lock_waits         | 1     |
-+-------------------------------+-------+
-5 rows in set (0.00 sec)
-</code></pre>
-<ul>
-<li><code>Innodb_row_lock_current_waits</code>：当前正在等待锁定的数量。</li>
-<li><code>Innodb_row_lock_time</code>：从系统启动到现在锁定总时间长度（重要）。</li>
-<li><code>Innodb_row_lock_time_avg</code>：每次等待所花的平均时间（重要）。</li>
-<li><code>Innodb_row_lock_time_max</code>：从系统启动到现在等待最长的一次所花的时间。</li>
-<li><code>Innodb_row_lock_waits</code>：系统启动后到现在总共等待的次数（重要）。</li>
-</ul>
-<p>尤其是当等待次数很高，而且每次等待时长也不小的时候，我们就需要分析系统中为什么会有如此多的等待，然后根据分析结果着手制定优化策略。</p>
-<h2><span id="主从复制">主从复制</span></h2><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/phpstudy2015-6/p/6485819.html">https://www.cnblogs.com/phpstudy2015-6/p/6485819.html</a></p>
 
       
     </div>
@@ -1216,7 +2741,7 @@ set global log_output=&#39;TABLE&#39;;
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/23/">23</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1284,7 +2809,7 @@ set global log_output=&#39;TABLE&#39;;
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-count">46</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1297,7 +2822,7 @@ set global log_output=&#39;TABLE&#39;;
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">36</span>
+        <span class="site-state-item-count">37</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1363,18 +2888,18 @@ set global log_output=&#39;TABLE&#39;;
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">198k</span>
+    <span title="站点总字数">202k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">3:01</span>
+    <span title="站点阅读时长">3:03</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共77k字</span>
+  <span class="post-count">博客全站共78.7k字</span>
 </div>
 
     <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
