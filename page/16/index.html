@@ -195,210 +195,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/15/Restful%E8%AF%A6%E8%A7%A3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Gzz">
-      <meta itemprop="description" content="只要开始就不算晚">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="香饽饽">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/09/15/Restful%E8%AF%A6%E8%A7%A3/" class="post-title-link" itemprop="url">Restful详解</a>
-        </h2>
-
-        <div class="post-meta">
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-09-15 21:28:35 / 修改时间：22:02:53" itemprop="dateCreated datePublished" datetime="2021-09-15T21:28:35+08:00">2021-09-15</time>
-            </span>
-
-          
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-              <span>3.9k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-              <span>4 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2><span id="资源与uri">资源与URI</span></h2><p>REST全称是表述性状态转移，那究竟指的是什么的表述? 其实指的就是资源。</p>
-<p>要让一个资源可以被识别，需要有个唯一标识，在Web中这个唯一标识就是URI(Uniform Resource Identifier)。</p>
-<h3><span id="uri的设计技巧">URI的设计技巧</span></h3><ul>
-<li>使用_或-来让URI可读性更好  <strong>例子</strong>：<a target="_blank" rel="noopener" href="http://www.oschina.net/news/38119/oschina-translate-reward-plan">http://www.oschina.net/news/38119/oschina-translate-reward-plan</a></li>
-<li>使用/来表示资源的层级关系  <strong>例子</strong>：/orders/2012/10可以用来表示2012年10月的订单记录。</li>
-<li>使用?用来过滤资源  <strong>例子</strong>：很多人只是把?简单的当做是参数的传递，很容易造成URI过于复杂、难以理解。可以把?用于对资源的过滤， 例如/git/git/pulls用来表示git项目的所有推入请求，而/pulls?state=closed用来表示git项目中已经关闭的推入请求， 这种URL通常对应的是一些特定条件的查询结果或算法运算结果。</li>
-<li>,或;可以用来表示同级资源的关系 <strong>例子</strong>：例如哪天github可以比较某个文件在随意两次提交记录之间的差异，或许可以用；连接两个文件。</li>
-</ul>
-<h2><span id="统一资源接口">统一资源接口</span></h2><p>RESTful架构应该遵循统一接口原则，统一接口包含了一组受限的预定义的操作，不论什么样的资源，都是通过使用相同的接口进行资源的访问。接口应该使用标准的HTTP方法如GET，PUT和POST，并遵循这些方法的语义。</p>
-<p>如果按照HTTP方法的语义来暴露资源，那么接口将会拥有安全性和幂等性的特性，例如GET和HEAD请求都是安全的， 无论请求多少次，都不会改变服务器状态。而GET、HEAD、PUT和DELETE请求都是幂等的，无论对资源操作多少次， 结果总是一样的，后面的请求并不会产生比第一次更多的影响。</p>
-<h3><span id="资源的表述">资源的表述</span></h3><p>上面提到，客户端通过HTTP方法可以获取资源，是吧? 不，确切的说，客户端获取的只是资源的表述而已。 资源在外界的具体呈现，可以有多种表述(或成为表现、表示)形式，在客户端和服务端之间传送的也是资源的表述，而不是资源本身。 例如文本资源可以采用html、xml、json等格式，图片可以使用PNG或JPG展现出来。</p>
-<p>资源的表述包括数据和描述数据的元数据，例如，HTTP头”Content-Type” 就是这样一个元数据属性。</p>
-<p>那么客户端如何知道服务端提供哪种表述形式呢?</p>
-<p>答案是可以通过HTTP内容协商，客户端可以通过Accept头请求一种特定格式的表述，服务端则通过Content-Type告诉客户端资源的表述形式。</p>
-<p>以github为例，请求某组织资源的json格式的表述形式:</p>
-<p><img src="/2021/09/15/Restful%E8%AF%A6%E8%A7%A3/291731048886033.jpg" alt="291731048886033"></p>
-<p>假如github也能够支持xml格式的表述格式，那么结果就是这样的:</p>
-<p><img src="/2021/09/15/Restful%E8%AF%A6%E8%A7%A3/291731045756062.jpg" alt="291731045756062"></p>
-<h2><span id="springmvc实现restful服务">SpringMVC实现restful服务:</span></h2><p>SpringMVC原生态的支持了REST风格的架构设计</p>
-<p>所涉及到的注解:</p>
-<p>---@RequestMapping<br> ---@PathVariable<br> ---@ResponseBody</p>
-<pre><code class="java">package cn.itcast.mybatis.controller;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import cn.itcast.mybatis.pojo.User;
-import cn.itcast.mybatis.service.NewUserService;
-
-@RequestMapping(&quot;restful/user&quot;)
-@Controller
-public class RestUserController &#123;
-
-@Autowired
-private NewUserService newUserService;
-
-/**
- * 根据用户id查询用户数据
- * 
- * @param id
- * @return
- */
-@RequestMapping(value = &quot;&#123;id&#125;&quot;, method = RequestMethod.GET)
-@ResponseBody
-public ResponseEntity&lt;User&gt; queryUserById(@PathVariable(&quot;id&quot;) Long id) &#123;
-    try &#123;
-        User user = this.newUserService.queryUserById(id);
-        if (null == user) &#123;
-            // 资源不存在，响应404
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        &#125;
-        // 200
-        // return ResponseEntity.status(HttpStatus.OK).body(user);
-        return ResponseEntity.ok(user);
-    &#125; catch (Exception e) &#123;
-        e.printStackTrace();
-    &#125;
-    // 500
-    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-&#125;
-
-/**
- * 新增用户
- * 
- * @param user
- * @return
- */
-@RequestMapping(method = RequestMethod.POST)
-public ResponseEntity&lt;Void&gt; saveUser(User user) &#123;
-    try &#123;
-        this.newUserService.saveUser(user);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
-    &#125; catch (Exception e) &#123;
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-    &#125;
-    // 500
-    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-&#125;
-
-/**
- * 更新用户资源
- * 
- * @param user
- * @return
- */
-@RequestMapping(method = RequestMethod.PUT)
-public ResponseEntity&lt;Void&gt; updateUser(User user) &#123;
-    try &#123;
-        this.newUserService.updateUser(user);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-    &#125; catch (Exception e) &#123;
-        e.printStackTrace();
-    &#125;
-    // 500
-    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-&#125;
-
-/**
- * 删除用户资源
- * 
- * @param user
- * @return
- */
-@RequestMapping(method = RequestMethod.DELETE)
-public ResponseEntity&lt;Void&gt; deleteUser(@RequestParam(value = &quot;id&quot;, defaultValue = &quot;0&quot;) Long id) &#123;
-    try &#123;
-        if (id.intValue() == 0) &#123;
-            // 请求参数有误
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        &#125;
-        this.newUserService.deleteUserById(id);
-        // 204
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-    &#125; catch (Exception e) &#123;
-        e.printStackTrace();
-    &#125;
-    // 500
-    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-&#125;
-&#125;
-</code></pre>
-<p>出自：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/7893169a7c93">RESTful接口详解 - 简书 (jianshu.com)</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/13/java%E5%9B%9B%E7%A7%8D%E7%BA%BF%E7%A8%8B%E6%B1%A0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -515,6 +311,158 @@ public void run() &#123;
   
   
 
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/10/post%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C%E7%B1%BB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Gzz">
+      <meta itemprop="description" content="只要开始就不算晚">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="香饽饽">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/09/10/post%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C%E7%B1%BB/" class="post-title-link" itemprop="url">原子操作类</a>
+        </h2>
+
+        <div class="post-meta">
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-09-10 11:58:53 / 修改时间：18:50:25" itemprop="dateCreated datePublished" datetime="2021-09-10T11:58:53+08:00">2021-09-10</time>
+            </span>
+
+          
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+              <span>1.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1><span id="原子操作类atomicinteger">原子操作类AtomicInteger</span></h1><p>在使用Java爬取网站图片时，遇到多线程下载图片，需显示下载到第几张图片问题，于是使用了原子操作类AtomicInteger，可以保证操作具有原子性</p>
+<h2><span id="例一">例一</span></h2><p>创建两个线程，分别将全局变量i进行加1</p>
+<p>每个线程执行5000次（次数少了正确率比较高🤣，5000都是重复执行好几次之后才出现不理想结果）</p>
+<pre><code class="java">public class D &#123;
+    private static int m = 0;
+
+    public static void main(String[] args) throws InterruptedException &#123;
+//        CountDownLatch cdl = new CountDownLatch(2);
+
+        Thread t1 = new Thread(new Runnable() &#123;
+            @Override
+            public void run() &#123;
+                for (int j = 0; j &lt; 5000; j++) &#123;
+                    m++;
+                    System.out.println(&quot;1:&quot;+m);
+                &#125;
+                //cdl.countDown();
+            &#125;
+        &#125;);
+        Thread t2 = new Thread(new Runnable() &#123;
+            @Override
+            public void run() &#123;
+                for (int j = 0; j &lt; 5000; j++) &#123;
+                    m++;
+                    System.out.println(&quot;2:&quot;+m);
+                &#125;
+                //cdl.countDown();
+            &#125;
+        &#125;);
+        t1.start();
+        t2.start();
+
+        //cdl.await();
+        System.out.println(&quot;result=&quot; + m);
+    &#125;
+&#125;
+</code></pre>
+<p><img src="/2021/09/10/post%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C%E7%B1%BB/image-20210910184257578.png" alt="image-20210910184257578"></p>
+<p>由此可以看出m变量没有加锁(synchronized)，。但是synchronized过于沉重。于是我们可以考虑使用原子操作类<strong>AtomicInteger</strong>来实现。</p>
+<h2><span id="例二">例二</span></h2><p>使用<strong>AtomicInteger</strong> 中的<strong>incrementAndGet</strong> 函数来进行自增操作，代替直接使用**i++**来进行自增，保证了操作的原子性。</p>
+<pre><code class="java">import java.util.concurrent.atomic.AtomicInteger;
+
+public class D &#123;
+    private static int m = 0;
+
+    public static void main(String[] args) throws InterruptedException &#123;
+//        CountDownLatch cdl = new CountDownLatch(2);
+          AtomicInteger i=new AtomicInteger(0);
+        Thread t1 = new Thread(new Runnable() &#123;
+            @Override
+            public void run() &#123;
+                for (int j = 0; j &lt; 5000; j++) &#123;
+                    i.incrementAndGet();
+                    System.out.println(&quot;1:&quot;+i);
+                &#125;
+                //cdl.countDown();
+            &#125;
+        &#125;);
+        Thread t2 = new Thread(new Runnable() &#123;
+            @Override
+            public void run() &#123;
+                for (int j = 0; j &lt; 5000; j++) &#123;
+                    i.incrementAndGet();
+                    System.out.println(&quot;2:&quot;+i);
+                &#125;
+                //cdl.countDown();
+            &#125;
+        &#125;);
+        t1.start();
+        t2.start();
+
+        //cdl.await();
+        
+    &#125;
+&#125;
+</code></pre>
+<p><img src="/2021/09/10/post%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C%E7%B1%BB/image-20210910184723295.png" alt="image-20210910184723295"></p>
+<p>现在无论执行多少次，结果永远是10000</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
 
   
   <nav class="pagination">
@@ -586,7 +534,7 @@ public void run() &#123;
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-count">45</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -599,7 +547,7 @@ public void run() &#123;
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">37</span>
+        <span class="site-state-item-count">36</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -665,18 +613,18 @@ public void run() &#123;
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">202k</span>
+    <span title="站点总字数">203k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">3:03</span>
+    <span title="站点阅读时长">3:05</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共78.7k字</span>
+  <span class="post-count">博客全站共79.1k字</span>
 </div>
 
     <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>

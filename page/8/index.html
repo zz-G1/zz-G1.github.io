@@ -303,7 +303,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-12-06 21:34:56" itemprop="dateModified" datetime="2021-12-06T21:34:56+08:00">2021-12-06</time>
+                <time title="修改时间：2022-02-28 21:35:23" itemprop="dateModified" datetime="2022-02-28T21:35:23+08:00">2022-02-28</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -320,13 +320,13 @@
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
               </span>
-              <span>12k</span>
+              <span>14k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
-              <span>11 分钟</span>
+              <span>12 分钟</span>
             </span>
 
         </div>
@@ -346,6 +346,18 @@
 <li><input disabled type="checkbox"> service api接口服务父节点</li>
 <li><input disabled type="checkbox"> node.js做BFF层</li>
 </ul>
+<h2><span id="数据库">数据库</span></h2><h3><span id="分布式id">分布式ID</span></h3><p><strong>雪花算法生成</strong></p>
+<p>它能够保证不同表的主键的不重复性，以及相同表的主键的有序性</p>
+<p>整体上按照时间自增排序，并且整个分布式系统内不会产生ID碰撞，并且效率较高。</p>
+<h3><span id="自动填充">自动填充</span></h3><p>项目中经常会遇到一些数据，每次都使用相同的方式填充，例如记录的创建时间，更新时间等</p>
+<p>实现：</p>
+<p>1.<strong>数据库修改</strong></p>
+<p>在User表中添加datetime类型的新的字段 create_time、update_time</p>
+<p><strong>2、实体类修改</strong></p>
+<p>实体上增加字段并添加自动填充注解</p>
+<p><strong>3、实现元对象处理器接口</strong></p>
+<h3><span id="批量删除">批量删除</span></h3><p>batch操作</p>
+<h3><span id="逻辑删除">逻辑删除</span></h3><p>sql执行的是update操作</p>
 <p>父项目只管理依赖的版本，就做到了按需加载依赖，而且版本统一</p>
 <p><dependencymanagement>用于父项目中对子项目进行统一依赖管理</dependencymanagement></p>
 <p>遇到问题：IDEA中删除模块后，重新创建同名模块，显示已存在该模块</p>
@@ -524,32 +536,80 @@ public class CommonMetaObjectHandler implements MetaObjectHandler &#123;
 &#125;
 </code></pre>
 <h3><span id="定义统一异常处理器">定义统一异常处理器</span></h3><p>因为要返回前台，所以要统一异常处理，并以json格式返回</p>
-<pre><code class="Java">@ControllerAdvice
+<pre><code class="Java">package com.atguigu.guli.service.base.handler;
+
+import com.atguigu.guli.common.base.result.R;
+import com.atguigu.guli.common.base.result.ResultCodeEnum;
+import com.atguigu.guli.common.base.util.ExceptionUtils;
+import com.atguigu.guli.service.base.exception.GuliException;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.jdbc.BadSqlGrammarException;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+/**
+ * @author zz
+ * @since 2021/11/13
+ */
+@ControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler &#123;
 
     @ExceptionHandler(Exception.class)
     @ResponseBody
-    public R error(Exception e)&#123;
-//        e.printStackTrace();
+    public R error(Exception e) &#123;
         log.error(ExceptionUtils.getMessage(e));
         return R.error();
     &#125;
 
     @ExceptionHandler(BadSqlGrammarException.class)
     @ResponseBody
-    public R error(BadSqlGrammarException e)&#123;
+    public R error(BadSqlGrammarException e) &#123;
         log.error(ExceptionUtils.getMessage(e));
         return R.setResult(ResultCodeEnum.BAD_SQL_GRAMMAR);
     &#125;
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     @ResponseBody
-    public R error(HttpMessageNotReadableException e)&#123;
+    public R error(HttpMessageNotReadableException e) &#123;
         log.error(ExceptionUtils.getMessage(e));
         return R.setResult(ResultCodeEnum.JSON_PARSE_ERROR);
     &#125;
+
+    @ExceptionHandler(GuliException.class)
+    @ResponseBody
+    public R error(GuliException e) &#123;
+        //oss的错误由这里返回前台
+        log.error(ExceptionUtils.getMessage(e));
+        return R.error().message(e.getMessage()).code(e.getCode());
+    &#125;
 &#125;
+</code></pre>
+<h2><span id="oss参数配置小技巧">OSS参数配置小技巧</span></h2><p>@Data<br>@Component<br>@ConfigurationProperties(prefix = “aliyun.oss”)</p>
+<pre><code class="java">/**
+ * @author zz
+ * @since 2021/11/20
+ * 一启动就可以从yaml文件中读取变量值
+ */
+@Data
+@Component
+@ConfigurationProperties(prefix = &quot;aliyun.oss&quot;)
+public class OssProperties &#123;
+    private String endpoint;
+    private String keyid;
+    private String keysecret;
+    private String bucketname;
+&#125;
+</code></pre>
+<pre><code class="yml">aliyun:
+  oss:
+    endpoint: oss-cn-beijing.aliyuncs.com
+    keyid: LTAI5tHQjqR36XKKGZ4e4dxt
+    keysecret: ad5M6HuxGRUX0KGVCjmHBhYSCAj2i7
+    #bucket可以在控制台创建，也可以使用java代码创建，注意先测试bucket是否已被占用
+    bucketname: guli-academy-01
 </code></pre>
 <h2><span id="前端">前端</span></h2><p>vue axios</p>
 <p>跨域问题：@crossOrigin</p>
@@ -633,7 +693,11 @@ export default &#123;
 <p>计算属性效率很高</p>
 <h2><span id="自定义异常">自定义异常</span></h2><p>更为灵活</p>
 <p>一般情况下自定义异常类型都为运行时异常，继承RuntimeException</p>
+<p><img src="/2021/11/11/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B/image-20220228200805440.png" alt="image-20220228200805440"></p>
+<p>异常处理器对异常进行捕获抛出</p>
 <h2><span id="注册中心和服务容错">注册中心和服务容错</span></h2><h3><span id="nacos">nacos</span></h3><p>使用它充当注册中心</p>
+<h2><span id="负载均衡">负载均衡</span></h2><p>OpenFeign默认集成了 Ribbon， 所以在Nacos下使用OpenFeign默认就实现了负载均衡的效果</p>
+<h2><span id="openfeign的超时控制">OpenFeign的超时控制</span></h2><p>超时后，服务消费者端默认会发起一次重试</p>
 <h3><span id="使用jmeter测试并发">使用JMeter测试并发</span></h3><p>服务之间的雪崩效应</p>
 <p><img src="/2021/11/11/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B/image-20211124224106908.png" alt="image-20211124224106908"></p>
 <h3><span id="容错方案">容错方案</span></h3><p>隔离，超时，限流，熔断，降级        经典容错组件：Spring Cloud Hystrix、Sentinel。</p>
@@ -741,10 +805,11 @@ private String id;
     $&#123;ew.customSqlSegment&#125; 
 &lt;/select&gt;
 </code></pre>
+<h3><span id="难点">难点：</span></h3><p>使用MyBatis Plus的分页插件和QueryWrapper结合自定义mapper xml实现多表关联查询</p>
 <p>当我们需要把组装的querywapper传到mapper让mybatis自动查询时</p>
 <p>1.<img src="/2021/11/11/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B/image-20211129204210637.png" alt="image-20211129204210637"></p>
 <p>2.<img src="/2021/11/11/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B/image-20211129204255198.png" alt="image-20211129204255198"></p>
-<h4><span id="删除业务">删除业务：</span></h4><pre><code class="java"> 数据库中外键约束的设置：
+<h3><span id="删除业务">删除业务：</span></h3><pre><code class="java"> 数据库中外键约束的设置：
  互联网分布式项目中不允许使用外键与级联更新，一切设计级联的操作不要依赖数据库层，要在业务层解决
  &lt;p&gt;
  如果业务层解决级联删除功能
@@ -909,7 +974,7 @@ private String id;
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-count">45</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -922,7 +987,7 @@ private String id;
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">37</span>
+        <span class="site-state-item-count">36</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -988,18 +1053,18 @@ private String id;
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">202k</span>
+    <span title="站点总字数">203k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">3:03</span>
+    <span title="站点阅读时长">3:05</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共78.7k字</span>
+  <span class="post-count">博客全站共79.1k字</span>
 </div>
 
     <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
