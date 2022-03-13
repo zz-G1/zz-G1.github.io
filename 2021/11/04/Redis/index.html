@@ -34,7 +34,7 @@
 <meta property="og:image" content="http://example.com/2021/11/04/Redis/image-20211104140647780.png">
 <meta property="og:image" content="http://example.com/2021/11/04/Redis/image-20211104141011197.png">
 <meta property="og:image" content="http://example.com/2021/11/04/Redis/image-20211104141230255.png">
-<meta property="og:image" content="https://images2018.cnblogs.com/blog/1120165/201805/1120165-20180527234349672-568401853.png">
+<meta property="og:image" content="http://example.com/2021/11/04/Redis/1120165-20180527234349672-568401853.png">
 <meta property="og:image" content="http://example.com/2021/11/04/Redis/image-20211104143325041.png">
 <meta property="og:image" content="http://example.com/2021/11/04/Redis/image-20211104143636111.png">
 <meta property="og:image" content="http://example.com/2021/11/04/Redis/image-20211104143922548.png">
@@ -91,7 +91,7 @@
 <meta property="og:image" content="http://example.com/2021/11/04/Redis/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzg3MzIyNw==,size_16,color_FFFFFF,t_70-16363526320984">
 <meta property="og:image" content="http://example.com/2021/11/04/Redis/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzg3MzIyNw==,size_16,color_FFFFFF,t_70-16363526462886">
 <meta property="article:published_time" content="2021-11-04T03:37:46.000Z">
-<meta property="article:modified_time" content="2022-03-01T12:00:06.015Z">
+<meta property="article:modified_time" content="2022-03-05T14:04:31.989Z">
 <meta property="article:author" content="Gzz">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/2021/11/04/Redis/image-20211104130443874.png">
@@ -292,7 +292,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-03-01 20:00:06" itemprop="dateModified" datetime="2022-03-01T20:00:06+08:00">2022-03-01</time>
+                <time title="修改时间：2022-03-05 22:04:31" itemprop="dateModified" datetime="2022-03-05T22:04:31+08:00">2022-03-05</time>
               </span>
 
           
@@ -347,7 +347,7 @@
 <p>为什么单线程还这么快呢</p>
 </blockquote>
 <p>redis是将所有的数据全部放在内存中，所以说用单线程操作效率最高，多线程（cpu上下文会切换：耗时的操作），对于内存系统来说，如果没有上下文切换效率就是最高的！多次读写都是在一个cpu上，在内存情况下，这个就是最佳的选择。</p>
-<h2><span id="底层数据结构参考httpswwwcnblogscomysoceanp9080942html_label3">底层数据结构（参考</span></h2><h3><span id="简单动态字符串">简单动态字符串</span></h3><p><img src="https://images2018.cnblogs.com/blog/1120165/201805/1120165-20180527234349672-568401853.png" alt="img"></p>
+<h2><span id="底层数据结构参考httpswwwcnblogscomysoceanp9080942html_label3">底层数据结构（参考</span></h2><h3><span id="简单动态字符串">简单动态字符串</span></h3><p><img src="/2021/11/04/Redis/1120165-20180527234349672-568401853.png" alt="img"></p>
 <p>　　一般来说，SDS 除了保存数据库中的字符串值以外，SDS 还可以作为缓冲区（buffer）：包括 AOF 模块中的AOF缓冲区以及客户端状态中的输入缓冲区。</p>
 <h3><span id="链表">链表</span></h3><p>　Redis链表特性：</p>
 <p>　　①、双端：链表具有前置节点和后置节点的引用，获取这两个节点时间复杂度都为O(1)。</p>
@@ -1205,7 +1205,7 @@ sentinel client-reconfig-script mymaster /var/redis/reconfig.sh
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-count">46</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1218,7 +1218,7 @@ sentinel client-reconfig-script mymaster /var/redis/reconfig.sh
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">36</span>
+        <span class="site-state-item-count">37</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1284,18 +1284,18 @@ sentinel client-reconfig-script mymaster /var/redis/reconfig.sh
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">204k</span>
+    <span title="站点总字数">206k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">3:06</span>
+    <span title="站点阅读时长">3:07</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共80.2k字</span>
+  <span class="post-count">博客全站共81.2k字</span>
 </div>
 
     <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
