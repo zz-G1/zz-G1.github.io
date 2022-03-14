@@ -195,6 +195,166 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/12/25/%E9%A1%B9%E7%9B%AE%E6%95%B4%E5%90%88security/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Gzz">
+      <meta itemprop="description" content="只要开始就不算晚">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="香饽饽">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/12/25/%E9%A1%B9%E7%9B%AE%E6%95%B4%E5%90%88security/" class="post-title-link" itemprop="url">项目整合security</a>
+        </h2>
+
+        <div class="post-meta">
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-12-25 12:22:22" itemprop="dateCreated datePublished" datetime="2021-12-25T12:22:22+08:00">2021-12-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-01-20 21:29:42" itemprop="dateModified" datetime="2022-01-20T21:29:42+08:00">2022-01-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AE%89%E5%85%A8%E6%A1%86%E6%9E%B6/" itemprop="url" rel="index"><span itemprop="name">安全框架</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+              <span>1.7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1><span id="整合security">整合security</span></h1><h2><span id="security流程">security流程</span></h2><p><strong>核心过滤器</strong></p>
+<p><img src="/2021/12/25/%E9%A1%B9%E7%9B%AE%E6%95%B4%E5%90%88security/image-20211214144425527-16404064926651.png" alt="image-20211214144425527"></p>
+<p><strong>UsernamePasswordAuthenticationFilter</strong>:负责处理我们在登陆页面填写了用户名密码后的登陆请求。入门案例的认证工作主要由它负责。</p>
+<p><strong>ExceptionTranslationFilter：</strong>处理过滤器链中抛出的任何AccessDeniedException和AuthenticationException 。</p>
+<p><strong>FilterSecurityInterceptor：</strong>负责权限校验的过滤器。</p>
+<p>​    </p>
+<h2><span id="解决面向接口开发">解决（面向接口开发）</span></h2><p>登录</p>
+<p>​    ①自定义登录接口  </p>
+<p>​                调用ProviderManager的方法进行认证 如果认证通过生成jwt</p>
+<p>​                把用户信息存入redis中</p>
+<p>​    ②自定义UserDetailsService </p>
+<p>​                在这个实现类中去查询数据库</p>
+<pre><code class="java">/**
+ * &lt;p&gt;
+ * 自定义userDetailsService - 认证用户详情
+ * &lt;/p&gt;
+ *
+ * @author qy
+ * @since 2019-11-08
+ */
+@Service(&quot;userDetailsService&quot;)
+public class UserDetailsServiceImpl implements UserDetailsService &#123;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private PermissionService permissionService;
+
+    /***
+     * 根据账号获取用户信息
+     * @param username:
+     * @return: org.springframework.security.core.userdetails.UserDetails
+     */
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException &#123;
+        // 从数据库中取出用户信息
+        User user = userService.selectByUsername(username);
+
+        // 判断用户是否存在
+        if (null == user)&#123;
+            //throw new UsernameNotFoundException(&quot;用户名不存在！&quot;);
+        &#125;
+        // 返回UserDetails实现类
+        com.atguigu.serurity.entity.User curUser = new com.atguigu.serurity.entity.User();
+        BeanUtils.copyProperties(user,curUser);
+
+        List&lt;String&gt; authorities = permissionService.selectPermissionValueByUserId(user.getId());
+        SecurityUser securityUser = new SecurityUser(curUser);
+        securityUser.setPermissionValueList(authorities);
+        return securityUser;
+    &#125;
+
+&#125;
+</code></pre>
+<p>校验：</p>
+<p>​    ①定义Jwt认证过滤器</p>
+<p>​                获取token</p>
+<p>​                解析token获取其中的userid</p>
+<p>​                从redis中获取用户信息</p>
+<p>​                存入SecurityContextHolder</p>
+<p><img src="/2021/12/25/%E9%A1%B9%E7%9B%AE%E6%95%B4%E5%90%88security/image-20220120162733957.png" alt="image-20220120162733957"></p>
+<h3><span id="具体思路">具体思路：</span></h3><p>因为系统的模块众多，每个模块都需要就进行认证与授权，所以选择基于<strong>token</strong>的形式进行认证与授权，用户根据用户名密码认证成功，然后获取当前用户角色的一系列权限值，并以<strong>用户名为key</strong>，权限列表为value的形式存入redis缓存中，根据用户名相关信息生成token返回，浏览器将token记录到cookie中，每次调用api接口都默认<strong>将token携带到header请求头中</strong>，Spring-security解析header头获取token信息，<strong>解析token获取当前用户名</strong>，根据用户名就可以从redis中获取<strong>权限列表</strong>，这样Spring-security就能够判断当前请求是否有权限访问。</p>
+<p><img src="/2021/12/25/%E9%A1%B9%E7%9B%AE%E6%95%B4%E5%90%88security/image-20220120161410796.png" alt="image-20220120161410796"></p>
+<p>获取权限部分：</p>
+<p>SercurityUser类中：</p>
+<p><img src="/2021/12/25/%E9%A1%B9%E7%9B%AE%E6%95%B4%E5%90%88security/image-20220120162121198.png" alt="image-20220120162121198"></p>
+<p><img src="/2021/12/25/%E9%A1%B9%E7%9B%AE%E6%95%B4%E5%90%88security/image-20220120162046037.png" alt="image-20220120162046037"></p>
+<p>往所需权限管理的模块中引入依赖：</p>
+<p><img src="/2021/12/25/%E9%A1%B9%E7%9B%AE%E6%95%B4%E5%90%88security/image-20220120170457804.png" alt="image-20220120170457804"></p>
+<p><img src="/2021/12/25/%E9%A1%B9%E7%9B%AE%E6%95%B4%E5%90%88security/image-20220120212933077.png" alt="image-20220120212933077"></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/12/22/%E5%AE%9E%E4%B9%A0%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%95/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -314,88 +474,10 @@ ImpFile getCurrentVersion(Long businessId, String name);
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/12/15/nginx/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Gzz">
-      <meta itemprop="description" content="只要开始就不算晚">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="香饽饽">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/12/15/nginx/" class="post-title-link" itemprop="url">nginx</a>
-        </h2>
-
-        <div class="post-meta">
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-12-15 12:22:56 / 修改时间：12:44:38" itemprop="dateCreated datePublished" datetime="2021-12-15T12:22:56+08:00">2021-12-15</time>
-            </span>
-
-          
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-              <span>40</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1><span id="nginx学习">nginx学习</span></h1><p>反向代理（代理服务器端 ）</p>
-<p>负载均衡</p>
-<p>高性能</p>
-<p>各项功能通过配置文件进行配置</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/6/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/23/">23</a><a class="extend next" rel="next" href="/page/8/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/6/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/24/">24</a><a class="extend next" rel="next" href="/page/8/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -463,7 +545,7 @@ ImpFile getCurrentVersion(Long businessId, String name);
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-count">47</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -476,7 +558,7 @@ ImpFile getCurrentVersion(Long businessId, String name);
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">37</span>
+        <span class="site-state-item-count">38</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -542,18 +624,18 @@ ImpFile getCurrentVersion(Long businessId, String name);
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">206k</span>
+    <span title="站点总字数">207k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">3:07</span>
+    <span title="站点阅读时长">3:08</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共81.2k字</span>
+  <span class="post-count">博客全站共82.3k字</span>
 </div>
 
     <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
