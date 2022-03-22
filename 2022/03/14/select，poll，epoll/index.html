@@ -22,15 +22,15 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="select、poll、epoll 区别总结： 1、支持一个进程所能打开的最大连接数select 单个进程所能打开的最大连接数有FD_SETSIZE宏定义，其大小是32个整数的大小（在32位的机器上，大小就是3232，同理64位机器上FD_SETSIZE为3264），当然我们可以对进行修改，然后重新编译内核，但是性能可能会受到影响，这需要进一步的测试。 poll poll本质上和select没有区">
+  <meta name="description" content="select、poll、epoll 区别总结： 底层实现select&#x2F;poll 他俩没多大本质区别，都是用线性结构存储进程关注的socket集合，因此都需要遍历文件描述符集合来判断是否可以读写，时间复杂度为O（n），而且也需要在用户态和内核态之间拷贝文件描述符集合，消耗性能。 epoll 通过两个手段解决了上面的不足  在内核中使用了红黑树来跟踪进程所有的待检测文件描述符，减少了内核和用户空间大量">
 <meta property="og:type" content="article">
 <meta property="og:title" content="select，poll，epoll">
 <meta property="og:url" content="http://example.com/2022/03/14/select%EF%BC%8Cpoll%EF%BC%8Cepoll/index.html">
 <meta property="og:site_name" content="香饽饽">
-<meta property="og:description" content="select、poll、epoll 区别总结： 1、支持一个进程所能打开的最大连接数select 单个进程所能打开的最大连接数有FD_SETSIZE宏定义，其大小是32个整数的大小（在32位的机器上，大小就是3232，同理64位机器上FD_SETSIZE为3264），当然我们可以对进行修改，然后重新编译内核，但是性能可能会受到影响，这需要进一步的测试。 poll poll本质上和select没有区">
+<meta property="og:description" content="select、poll、epoll 区别总结： 底层实现select&#x2F;poll 他俩没多大本质区别，都是用线性结构存储进程关注的socket集合，因此都需要遍历文件描述符集合来判断是否可以读写，时间复杂度为O（n），而且也需要在用户态和内核态之间拷贝文件描述符集合，消耗性能。 epoll 通过两个手段解决了上面的不足  在内核中使用了红黑树来跟踪进程所有的待检测文件描述符，减少了内核和用户空间大量">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-03-14T07:46:06.000Z">
-<meta property="article:modified_time" content="2022-03-14T14:01:39.374Z">
+<meta property="article:modified_time" content="2022-03-21T08:22:49.282Z">
 <meta property="article:author" content="Gzz">
 <meta property="article:tag" content="IO">
 <meta name="twitter:card" content="summary">
@@ -223,10 +223,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-03-14 15:46:06 / 修改时间：22:01:39" itemprop="dateCreated datePublished" datetime="2022-03-14T15:46:06+08:00">2022-03-14</time>
+              <time title="创建时间：2022-03-14 15:46:06" itemprop="dateCreated datePublished" datetime="2022-03-14T15:46:06+08:00">2022-03-14</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-03-21 16:22:49" itemprop="dateModified" datetime="2022-03-21T16:22:49+08:00">2022-03-21</time>
+              </span>
 
           
             <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
@@ -240,7 +246,7 @@
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
               </span>
-              <span>570</span>
+              <span>792</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -259,6 +265,14 @@
 
       
         <p><strong>select、poll、epoll 区别总结：</strong></p>
+<h2><span id="底层实现">底层实现</span></h2><p><strong>select/poll</strong></p>
+<p>他俩没多大本质区别，都是用线性结构存储进程关注的socket集合，因此都需要遍历文件描述符集合来判断是否可以读写，时间复杂度为O（n），而且也需要在用户态和内核态之间拷贝文件描述符集合，消耗性能。</p>
+<p><strong>epoll</strong></p>
+<p>通过两个手段解决了上面的不足</p>
+<ol>
+<li>在内核中使用了红黑树来跟踪进程所有的待检测文件描述符，减少了内核和用户空间大量的数据拷贝和内存分配</li>
+<li>使用了时间驱动的机制，内核里维护了一个链表来记录就绪事件。不需要轮询检测了</li>
+</ol>
 <h4><span id="1-支持一个进程所能打开的最大连接数">1、支持一个进程所能打开的最大连接数</span></h4><p><strong>select</strong></p>
 <p>单个进程所能打开的最大连接数有FD_SETSIZE宏定义，其大小是32个整数的大小（在32位的机器上，大小就是32<em>32，同理64位机器上FD_SETSIZE为32</em>64），当然我们可以对进行修改，然后重新编译内核，但是性能可能会受到影响，这需要进一步的测试。</p>
 <p><strong>poll</strong></p>
@@ -276,7 +290,7 @@
 <p><strong>poll</strong></p>
 <p>同上</p>
 <p><strong>epoll</strong></p>
-<p>epoll通过内核和用户空间共享一块内存来实现的。</p>
+<p>epoll通过内核和用户空间共享一块内存来实现的。（错的）</p>
 
     </div>
 
@@ -418,7 +432,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">1、支持一个进程所能打开的最大连接数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">2、FD剧增后带来的IO效率问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">3、 消息传递方式</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">底层实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">1.0.1.</span> <span class="nav-text">1、支持一个进程所能打开的最大连接数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">1.0.2.</span> <span class="nav-text">2、FD剧增后带来的IO效率问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">1.0.3.</span> <span class="nav-text">3、 消息传递方式</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -513,18 +527,18 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">207k</span>
+    <span title="站点总字数">208k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">3:08</span>
+    <span title="站点阅读时长">3:09</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共82.3k字</span>
+  <span class="post-count">博客全站共82.7k字</span>
 </div>
 
     <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>

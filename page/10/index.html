@@ -384,7 +384,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-03-05 22:04:31" itemprop="dateModified" datetime="2022-03-05T22:04:31+08:00">2022-03-05</time>
+                <time title="修改时间：2022-03-21 12:02:24" itemprop="dateModified" datetime="2022-03-21T12:02:24+08:00">2022-03-21</time>
               </span>
 
           
@@ -1132,7 +1132,18 @@ sentinel client-reconfig-script mymaster /var/redis/reconfig.sh
 <li><p>数据预热</p>
 <p>数据加热的含义就是在正式部署之前，我先把可能的数据先预先访问一遍，这样部分可能大量访问的数据就会加载到缓存中。在即将发生大并发访问前手动触发加载缓存不同的key，设置不同的过期时间，让缓存失效的时间点尽量均匀。</p>
 </li>
+<li><p><img src="/2021/11/04/Redis/1647835150674.png" alt="1647835150674"></p>
+</li>
 </ul>
+<h2><span id="缓存一致性">缓存一致性</span></h2><p>先更新数据库，在更新缓存，先更新缓存，再更新数据库都会有问题</p>
+<p>先更新数据库再删除缓存可以解决，因为缓存的写入要快于数据库的写入，但是会影响缓存的命中率，</p>
+<p>对于解决先删除缓存再更新数据库问题：此时就引入了延时双删：</p>
+<pre><code>删除缓存
+更新数据库
+睡眠 需要大于第二个线程读取数据并写入缓存的时间
+删除缓存
+</code></pre>
+<p>睡眠时间难以估算，所以还是先更新数据库再删除缓存比较好</p>
 
       
     </div>
@@ -1300,18 +1311,18 @@ sentinel client-reconfig-script mymaster /var/redis/reconfig.sh
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">207k</span>
+    <span title="站点总字数">208k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">3:08</span>
+    <span title="站点阅读时长">3:09</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共82.3k字</span>
+  <span class="post-count">博客全站共82.7k字</span>
 </div>
 
     <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>

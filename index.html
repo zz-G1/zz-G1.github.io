@@ -220,17 +220,23 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-03-14 15:46:06 / 修改时间：22:01:39" itemprop="dateCreated datePublished" datetime="2022-03-14T15:46:06+08:00">2022-03-14</time>
+              <time title="创建时间：2022-03-14 15:46:06" itemprop="dateCreated datePublished" datetime="2022-03-14T15:46:06+08:00">2022-03-14</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-03-21 16:22:49" itemprop="dateModified" datetime="2022-03-21T16:22:49+08:00">2022-03-21</time>
+              </span>
 
           
             <span class="post-meta-item" title="本文字数">
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
               </span>
-              <span>570</span>
+              <span>792</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -249,6 +255,14 @@
 
       
           <p><strong>select、poll、epoll 区别总结：</strong></p>
+<h2><span id="底层实现">底层实现</span></h2><p><strong>select/poll</strong></p>
+<p>他俩没多大本质区别，都是用线性结构存储进程关注的socket集合，因此都需要遍历文件描述符集合来判断是否可以读写，时间复杂度为O（n），而且也需要在用户态和内核态之间拷贝文件描述符集合，消耗性能。</p>
+<p><strong>epoll</strong></p>
+<p>通过两个手段解决了上面的不足</p>
+<ol>
+<li>在内核中使用了红黑树来跟踪进程所有的待检测文件描述符，减少了内核和用户空间大量的数据拷贝和内存分配</li>
+<li>使用了时间驱动的机制，内核里维护了一个链表来记录就绪事件。不需要轮询检测了</li>
+</ol>
 <h4><span id="1-支持一个进程所能打开的最大连接数">1、支持一个进程所能打开的最大连接数</span></h4><p><strong>select</strong></p>
 <p>单个进程所能打开的最大连接数有FD_SETSIZE宏定义，其大小是32个整数的大小（在32位的机器上，大小就是32<em>32，同理64位机器上FD_SETSIZE为32</em>64），当然我们可以对进行修改，然后重新编译内核，但是性能可能会受到影响，这需要进一步的测试。</p>
 <p><strong>poll</strong></p>
@@ -266,7 +280,7 @@
 <p><strong>poll</strong></p>
 <p>同上</p>
 <p><strong>epoll</strong></p>
-<p>epoll通过内核和用户空间共享一块内存来实现的。</p>
+<p>epoll通过内核和用户空间共享一块内存来实现的。（错的）</p>
 
       
     </div>
@@ -576,18 +590,18 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">207k</span>
+    <span title="站点总字数">208k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">3:08</span>
+    <span title="站点阅读时长">3:09</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共82.3k字</span>
+  <span class="post-count">博客全站共82.7k字</span>
 </div>
 
     <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
