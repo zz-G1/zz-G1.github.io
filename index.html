@@ -195,79 +195,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/30/Bean%E2%80%9D/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Gzz">
-      <meta itemprop="description" content="只要开始就不算晚">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="香饽饽">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/03/30/Bean%E2%80%9D/" class="post-title-link" itemprop="url">Bean”</a>
-        </h2>
-
-        <div class="post-meta">
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-03-30 10:46:42" itemprop="dateCreated datePublished" datetime="2022-03-30T10:46:42+08:00">2022-03-30</time>
-            </span>
-
-          
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-              <span>0</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          
-      
-    </div>
-
-    
-    
-    
-
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/14/select%EF%BC%8Cpoll%EF%BC%8Cepoll/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -371,6 +298,149 @@
   
   
 
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/13/%E2%80%9C%E7%B4%A2%E5%BC%95%E7%9A%84%E6%A0%91%E7%BB%93%E6%9E%84%E2%80%9D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Gzz">
+      <meta itemprop="description" content="只要开始就不算晚">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="香饽饽">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/03/13/%E2%80%9C%E7%B4%A2%E5%BC%95%E7%9A%84%E6%A0%91%E7%BB%93%E6%9E%84%E2%80%9D/" class="post-title-link" itemprop="url">“索引的树结构”</a>
+        </h2>
+
+        <div class="post-meta">
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-03-13 14:58:51" itemprop="dateCreated datePublished" datetime="2022-03-13T14:58:51+08:00">2022-03-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-03-23 21:39:09" itemprop="dateModified" datetime="2022-03-23T21:39:09+08:00">2022-03-23</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+              <span>2.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3><span id="查找结构的进化">查找结构的进化</span></h3><p>二分查找</p>
+<p>二叉树</p>
+<p>二叉平衡树</p>
+<p>B-TREE ：二叉平衡树的基础上，使加载一次节点，可以加载更多路径数据，同时把查询范围缩减到更小</p>
+<p>缺点：业务数据的大小可能远远超过了索引数据的大小，每次为了查找对比计算，需要把数据加载到内存以及 CPU 高速缓存中时，都要把索引数据和无关的业务数据全部查出来。本来一次就可以把所有索引数据加载进来，现在却要多次才能加载完。如果所对比的节点不是所查的数据，那么这些加载进内存的业务数据就毫无用处，全部抛弃。</p>
+<p>B+TREE：非叶子节点只保存索引数据，叶子节点保存索引数据与<strong>业务数据所在的地址</strong></p>
+<h4><span id></span></h4><ol>
+<li><p>B+数据量相同的情况下，非叶子节点可以存放更多的数据，B+树会更加矮胖，io次数会更少</p>
+</li>
+<li><p>B+树有大量的冗余节点（非叶子结点），会让B+树在插入删除时的效率更高</p>
+</li>
+<li><p>B+树的叶子结点用双向链表连了起来，有益于范围查询，而B树只能遍历。</p>
+</li>
+</ol>
+<p><strong>聚簇索引和非聚簇索引</strong></p>
+<p>如果叶子节点存储的是实际数据的就是聚簇索引，一个表只能有一个聚簇索引；如果叶子节点存储的不是实际数据，而是主键值则就是二级索引，一个表中可以有多个二级索引。</p>
+<p>在使用二级索引进行查找数据时，如果查询的数据能在二级索引找到，那么就是「索引覆盖」操作，如果查询的数据不在二级索引里，就需要先在二级索引找到主键值，需要去聚簇索引中获得数据行，这个过程就叫作「回表」</p>
+<h3><span id="查询数据的过程">查询数据的过程</span></h3><p><strong>在定位记录所在哪一个页时，也是通过二分法快速定位到包含该记录的页。定位到该页后，又会在该页内进行二分法快速定位记录所在的分组（槽号），最后在分组内进行遍历查找。</strong></p>
+<p>磁盘IO</p>
+<p><strong>磁盘处理太慢太慢了</strong></p>
+<ul>
+<li>尽量减少 I/O 次数，比如可以使用缓存；</li>
+<li>每次 I/O 尽量获取更多的数据；</li>
+<li>每次 I/O 尽量获取有用的数据，当然相应的也间接减少总 I/O 次数</li>
+</ul>
+<p>总结：</p>
+<ul>
+<li>数据存储在磁盘（ SSD 跟 CPU 性能也不在一个量级），而磁盘处理数据很慢；</li>
+<li>提高磁盘性能主要通过减少 I/O 次数，以及单次 I/O 有效数据量；</li>
+<li>索引通过多阶（一个节点保存多个数据，指向多个子节点）使树的结构更矮胖，从而减少 I/O 次数；</li>
+<li>索引通过 B+ 树，把业务数据与索引数据分离，来提高单次 I/O 有效数据量，从而减少 I/O 次数；</li>
+<li>索引通过树数据的有序和「二分查找」（多阶树可以假设为多分查找），大大缩小查询范围；</li>
+<li>索引针对的是单个字段或部分字段，数据量本身比一条记录的数据量要少的多，这样即使通过扫描的方式查询索引也比扫描数据库表本身快的多；</li>
+</ul>
+<h2><span id="事务">事务</span></h2><ul>
+<li>持久性是通过 redo log （重做日志）来保证的；是物理日志，记录做了什么修改</li>
+<li>原子性是通过 undo log（回滚日志） 来保证的；</li>
+<li>一致性是binlog保证的 ，逻辑日志（有三种格式）statement，row包含操作的具体数据，mixed</li>
+<li>隔离性是通过 MVCC（多版本并发控制） 或锁机制来保证的； </li>
+</ul>
+<h2><span id="死锁问题">死锁问题</span></h2><p>处理订单业务时，需要用到select…for update用来避免并发导致的幻读问题，但是这样的话就容易出现死锁</p>
+<p>处理方法是破坏形成死锁的条件：<strong>打破循环等待条件</strong></p>
+<ul>
+<li><strong>设置事务等待锁的超时时间</strong>。当一个事务的等待时间超过该值后，就对这个事务进行回滚，于是锁就释放了，另一个事务就可以继续执行了。在 InnoDB 中，参数 <code>innodb_lock_wait_timeout</code> 是用来设置超时时间的，默认值时 50 秒。</li>
+</ul>
+<ul>
+<li><strong>开启主动死锁检测</strong>。主动死锁检测在发现死锁后，主动回滚死锁链条中的某一个事务，让其他事务得以继续执行。将参数 <code>innodb_deadlock_detect</code> 设置为 on，表示开启这个逻辑，默认就开启。</li>
+</ul>
+<h2><span id="关于count">关于count</span></h2><p><img src="/2022/03/13/%E2%80%9C%E7%B4%A2%E5%BC%95%E7%9A%84%E6%A0%91%E7%BB%93%E6%9E%84%E2%80%9D/image-20220314151059566.png" alt="image-20220314151059566"></p>
+<p>*<em>count(1)、 count(</em>)、 count(主键字段)**在执行的时候，如果表里存在二级索引，优化器就会选择二级索引进行扫描。</p>
+<p>所以，如果要执行 count(1)、 count(*)、 count(主键字段) 时，尽量在数据表上建立二级索引，这样优化器会自动采用 key_len 最小的二级索引进行扫描，相比于扫描主键索引效率会高一些。</p>
+<p>再来，就是不要使用 count(字段)  来统计记录个数，因为它的效率是最差的，会采用全表扫描的方式来统计。如果你非要统计表中该字段不为 NULL 的记录个数，建议给这个字段建立一个二级索引。</p>
+<h3><span id="优化count">优化count</span></h3><p>如果数据量很大，因为要全表扫描，所以也要花费不短的时间</p>
+<p>1.使用explain 出现的rows 字段值就是  explain 命令对表 t_order 记录的估算值。</p>
+<p>2.额外表保存记录值</p>
+<h2><span id></span></h2><h2><span id="索引失效的情况"><strong>索引失效的情况</strong></span></h2><ul>
+<li>当我们使用左或者左右模糊匹配的时候，也就是 <code>like %xx</code> 或者 <code>like %xx%</code> 这两种方式都会造成索引失效；</li>
+<li>当我们在查询条件中对索引列使用函数，就会导致索引失效。</li>
+<li>当我们在查询条件中对索引列进行表达式计算，也是无法走索引的。</li>
+<li>MySQL 在遇到字符串和数字比较的时候，会自动把字符串转为数字，然后再进行比较。如果字符串是索引列，而条件语句中的输入参数是数字的话，那么索引列会发生隐式类型转换，由于隐式类型转换是通过 CAST 函数实现的，等同于对索引列使用了函数，所以就会导致索引失效。</li>
+<li>联合索引要能正确使用需要遵循最左匹配原则，也就是按照最左优先的方式进行索引的匹配，否则就会导致索引失效。</li>
+<li>在 WHERE 子句中，如果在 OR 前的条件列是索引列，而在 OR 后的条件列不是索引列，那么索引会失效。</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
 
   
   <nav class="pagination">
@@ -442,7 +512,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-count">47</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

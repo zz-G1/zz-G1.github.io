@@ -195,277 +195,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/16/mybatisPlus/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Gzz">
-      <meta itemprop="description" content="只要开始就不算晚">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="香饽饽">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/10/16/mybatisPlus/" class="post-title-link" itemprop="url">mybatisPlus</a>
-        </h2>
-
-        <div class="post-meta">
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-10-16 16:50:45" itemprop="dateCreated datePublished" datetime="2021-10-16T16:50:45+08:00">2021-10-16</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-10-18 14:18:40" itemprop="dateModified" datetime="2021-10-18T14:18:40+08:00">2021-10-18</time>
-              </span>
-
-          
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-              <span>2.9k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-              <span>3 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1><span id="mybatisplus">mybatisPlus</span></h1><p><img src="/2021/10/16/mybatisPlus/image-20211016165647437.png" alt="image-20211016165647437"></p>
-<h2><span id="入门">入门</span></h2><p>mapper接口文件继承<strong>basemapper</strong>，记得加参数要显示查询对象类型</p>
-<pre><code class="java">//继承Basemapper就可以不编写xml文件了
-@Repository//代表是持久层
-public interface UserMapper extends BaseMapper&lt;User&gt; &#123;
-
-&#125;
-</code></pre>
-<p>注意：🧨🧨🧨🧨🧨要在主启动类下配置扫描的mapper包下所有的接口</p>
-<pre><code class="java">@MapperScan(&quot;com.zz.mybatisplus.mapper&quot;)
-</code></pre>
-<p>🎇🎇🎇🎇🎇🎇</p>
-<h2><span id="日志配置">日志配置</span></h2><p>为了查看sql语句运用情况</p>
-<pre><code class="yml">mybatis-plus:
-  configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-</code></pre>
-<p>结果：</p>
-<p><img src="/2021/10/16/mybatisPlus/image-20211016173856822.png" alt="image-20211016173856822"></p>
-<h2><span id></span></h2><h2><span id="主键生成策略">主键生成策略</span></h2><p>雪花算法</p>
-<blockquote>
-<p>默认 ID_WORKER 全局唯一id</p>
-</blockquote>
-<pre><code class="java">
-/**
- * &lt;p&gt;
- * 生成ID类型枚举类
- * &lt;/p&gt;
- *
- * @author hubin
- * @since 2015-11-10
- */
-@Getter
-public enum IdType &#123;
-    /**
-     * 数据库ID自增
-     */
-    AUTO(0),
-    /**
-     * 该类型为未设置主键类型
-     */
-    NONE(1),
-    /**
-     * 用户输入ID
-     * 该类型可以通过自己注册自动填充插件进行填充
-     */
-    INPUT(2),
-
-    /* 以下3种类型、只有当插入对象ID 为空，才自动填充。 */
-    /**
-     * 全局唯一ID (idWorker)
-     */
-    ID_WORKER(3),
-    /**
-     * 全局唯一ID (UUID)
-     */
-    UUID(4),
-    /**
-     * 字符串全局唯一ID (idWorker 的字符串表示)
-     */
-    ID_WORKER_STR(5);
-
-    private int key;
-
-    IdType(int key) &#123;
-        this.key = key;
-    &#125;
-&#125;
-</code></pre>
-<p><img src="/2021/10/16/mybatisPlus/image-20211017192539524.png" alt="image-20211017192539524"></p>
-<blockquote>
-<p>主键自增</p>
-</blockquote>
-<p>实体类字段上 </p>
-<pre><code class="java">@TableId(type = IdType.AUTO)
-</code></pre>
-<p>数据库字段一定要是自增！</p>
-<h2><span id="更新操作"><img src="/2021/10/16/mybatisPlus/image-20211017193225402.png">更新操作</span></h2><p>参数为对象</p>
-<pre><code class="java">@Test
-    void test1()&#123;
-        User user=new User(6,&quot;gzz&quot;,89,&quot;1614399965@qq.com&quot;);
-        userMapper.updateById(user);
-    &#125;
-</code></pre>
-<h2><span id="自动填充时间">自动填充时间</span></h2><p>1.数据库管理工具设置</p>
-<p>2.代码级别设置</p>
-<blockquote>
-<p>实体类字段属性上需要增加注解</p>
-</blockquote>
-<p><img src="/2021/10/16/mybatisPlus/image-20211017200938069.png" alt="image-20211017200938069"></p>
-<p>实现自己的处理器</p>
-<pre><code class="java">@Slf4j
-@Component//把自己的处理器添加到IOC容器中
-public class My implements MetaObjectHandler &#123;
-    @Override
-    public void insertFill(MetaObject metaObject) &#123;
-
-        log.debug(&quot;=================insertFill被调用==================&quot;);
-        this.setFieldValByName(&quot;createTime&quot;,new Date(),metaObject);
-        this.setFieldValByName(&quot;updateTime&quot;,new Date(),metaObject);
-    &#125;
-
-    @Override
-    public void updateFill(MetaObject metaObject) &#123;
-        log.debug(&quot;==========updateFill被调用====================&quot;);
-        this.setFieldValByName(&quot;updateTime&quot;,new Date(),metaObject);
-    &#125;
-&#125;
-</code></pre>
-<p>结果查看：</p>
-<p><img src="/2021/10/16/mybatisPlus/image-20211017201647403.png" alt="image-20211017201647403"></p>
-<h2><span id></span></h2><h2><span id="乐观锁">乐观锁</span></h2><p>原理：</p>
-<p>  取出记录时，获取当前 version</p>
-<p> 更新时，带上这个version </p>
-<p>  执行更新时， set version = newVersion where version = oldVersion 如果version不对，就更新失败</p>
-<pre><code class="sql">乐观锁：1、先查询，获得版本号 version = 1
--- A
-update user set name = &quot;kuangshen&quot;, version = version + 1
-where id = 2 and version = 1
--- B 线程抢先完成，这个时候 version = 2，会导致 A 修改失败！
-update user set name = &quot;kuangshen&quot;, version = version + 1
-where id = 2 and version = 1
-</code></pre>
-<p><img src="/2021/10/16/mybatisPlus/image-20211017211514770.png" alt="image-20211017211514770"></p>
-<p>数据库增加<strong>version</strong>字段，默认为一</p>
-<p>实体类加对应的字段，增加对应的注解</p>
-<pre><code class="java">@Version//乐观锁
-private Integer version;
-</code></pre>
-<p>注册组件</p>
-<pre><code class="java">@MapperScan(&quot;com.zz.mybatisplus.mapper&quot;)
-@EnableTransactionManagement//自动管理事务
-@Configuration
-public class Myconfig &#123;
-
-    //注册乐观锁插件
-    @Bean
-     public OptimisticLockerInterceptor optimisticLockerInterceptor()&#123;
-        return new OptimisticLockerInterceptor();
-    &#125;
-&#125;
-</code></pre>
-<p>测试</p>
-<pre><code class="Java"> //测试乐观锁
-    @Test
-    void test3()&#123;
-        // 线程 1
-        User user = userMapper.selectById(1L);
-        user.setName(&quot;zz111&quot;);
-
-        // 模拟另外一个线程执行了插队操作
-        User user2 = userMapper.selectById(1L);
-        user2.setName(&quot;zz222&quot;);
-
-        userMapper.updateById(user2);
-        userMapper.updateById(user);//如果没有乐观锁就会覆盖插队线程的值
-    &#125;
-
-</code></pre>
-<p>结果可以看到名字更新最终结果为zz222</p>
-<p><img src="/2021/10/16/mybatisPlus/image-20211017212009400.png" alt="image-20211017212009400"></p>
-<h2><span id></span></h2><h2><span id="逻辑删除">逻辑删除</span></h2><p>1.</p>
-<p>数据库添加逻辑删除字段，默认为0<img src="/2021/10/16/mybatisPlus/image-20211018134702720.png" alt="image-20211018134702720"></p>
-<p>2.</p>
-<p>实体类添加注解和属性</p>
-<pre><code class="java">@TableLogic//逻辑删除
-private Integer deleted;
-</code></pre>
-<p>3.</p>
-<p><strong>配置</strong></p>
-<p>注册逻辑删除组件</p>
-<pre><code class="java">  //逻辑删除
-    @Bean
-    public ISqlInjector sqlInjector()&#123;
-        return new LogicSqlInjector();
-    &#125;
-</code></pre>
-<pre><code class="yml">mybatis-plus:
-  configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-  #逻辑删除配置
-  global-config:
-    db-config:
-      logic-delete-value: 1
-      logic-not-delete-value: 0
-</code></pre>
-<p>体验：<img src="/2021/10/16/mybatisPlus/image-20211018134947771.png" alt="image-20211018134947771"></p>
-<p><img src="/2021/10/16/mybatisPlus/image-20211018135228638.png" alt="image-20211018135228638"></p>
-<p>可以看出实际是把deleted字段的值变为一，之后再查询的时候SQL语句会自动根据deleted=0来过滤，可以看下图</p>
-<p><img src="/2021/10/16/mybatisPlus/image-20211018135453151.png" alt="image-20211018135453151"></p>
-<h2><span id></span></h2><h2><span id="条件构造器">条件构造器</span></h2><p>实例在项目测试用例中查看</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/13/Linux/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -716,6 +445,525 @@ firewall-cmd --list-ports  # 只看端口信息
   
   
 
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/26/Spring-boot%E9%9A%8F%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Gzz">
+      <meta itemprop="description" content="只要开始就不算晚">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="香饽饽">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/09/26/Spring-boot%E9%9A%8F%E8%AE%B0/" class="post-title-link" itemprop="url">Spring boot随记</a>
+        </h2>
+
+        <div class="post-meta">
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-09-26 16:00:44" itemprop="dateCreated datePublished" datetime="2021-09-26T16:00:44+08:00">2021-09-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-12-04 14:20:47" itemprop="dateModified" datetime="2021-12-04T14:20:47+08:00">2021-12-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Spring-boot/" itemprop="url" rel="index"><span itemprop="name">Spring boot</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+              <span>12k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+              <span>11 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1><span id="spring-boot随记">Spring boot随记</span></h1><p><strong>约定大于配置</strong></p>
+<h2><span id="yaml配置">yaml配置:</span></h2><p>实体类上加</p>
+<pre><code class="java">@ConfigurationProperties(prefix = &quot;dog&quot;)
+</code></pre>
+<p><img src="/2021/09/26/Spring-boot%E9%9A%8F%E8%AE%B0/image-20210929201905228.png" alt="image-20210929201905228"></p>
+<p>创建application.yaml文件</p>
+<p><img src="/2021/09/26/Spring-boot%E9%9A%8F%E8%AE%B0/image-20210929201940747.png" alt="image-20210929201940747"></p>
+<p>使用时：<img src="/2021/09/26/Spring-boot%E9%9A%8F%E8%AE%B0/image-20210929202014480.png" alt="image-20210929202014480"></p>
+<h3><span id="松散绑定">松散绑定</span></h3><p>实体类中为<strong>fistname</strong>，yaml文件中为<strong>first-name</strong>也可以赋值</p>
+<h3><span id="jsr303数据校验">JSR303数据校验</span></h3><p>@validated注解实体类</p>
+<pre><code class="java">@Email(message=&quot;邮箱格式错误&quot;) //name必须是邮箱格式
+    private String name;
+</code></pre>
+<p><strong>使用数据校验，可以保证数据的正确性；</strong></p>
+<pre><code class="java">@NotNull(message=&quot;名字不能为空&quot;)
+private String userName;
+@Max(value=120,message=&quot;年龄最大不能查过120&quot;)
+private int age;
+@Email(message=&quot;邮箱格式错误&quot;)
+private String email;
+
+空检查
+@Null       验证对象是否为null
+@NotNull    验证对象是否不为null, 无法查检长度为0的字符串
+@NotBlank   检查约束字符串是不是Null还有被Trim的长度是否大于0,只对字符串,且会去掉前后空格.
+@NotEmpty   检查约束元素是否为NULL或者是EMPTY.
+    
+Booelan检查
+@AssertTrue     验证 Boolean 对象是否为 true  
+@AssertFalse    验证 Boolean 对象是否为 false  
+    
+长度检查
+@Size(min=, max=) 验证对象（Array,Collection,Map,String）长度是否在给定的范围之内  
+@Length(min=, max=) string is between min and max included.
+
+日期检查
+@Past       验证 Date 和 Calendar 对象是否在当前时间之前  
+@Future     验证 Date 和 Calendar 对象是否在当前时间之后  
+@Pattern    验证 String 对象是否符合正则表达式的规则
+
+.......等等
+除此以外，我们还可以自定义一些数据校验规则
+</code></pre>
+<p>yaml文件优先级：<br>优先级1：项目路径下的config文件夹配置文件</p>
+<p>优先级2：项目路径下配置文件</p>
+<p>优先级3：资源路径下的config文件夹配置文件</p>
+<p>优先级4：资源路径下配置文件</p>
+<p><img src="/2021/09/26/Spring-boot%E9%9A%8F%E8%AE%B0/image-20210929204121922.png" alt="image-20210929204121922"></p>
+<p>多环境开发：</p>
+<pre><code class="yaml">server:
+  port: 8080
+#选择要激活那个环境块
+spring:
+  profiles:
+    active: prod
+
+---
+server:
+  port: 8081
+spring:
+  profiles: prod
+
+---
+server:
+  port: 8082
+spring:
+  profiles: dev
+</code></pre>
+<h3><span id="自动配置原理">自动配置原理：</span></h3><p>例子：</p>
+<pre><code class="java">
+//表示这是一个配置类，和以前编写的配置文件一样，也可以给容器中添加组件；
+@Configuration 
+
+//启动指定类的ConfigurationProperties功能；
+  //进入这个HttpProperties查看，将配置文件中对应的值和HttpProperties绑定起来；
+  //并把HttpProperties加入到ioc容器中
+@EnableConfigurationProperties(&#123;HttpProperties.class&#125;) 
+
+//Spring底层@Conditional注解
+  //根据不同的条件判断，如果满足指定的条件，整个配置类里面的配置就会生效；
+  //这里的意思就是判断当前应用是否是web应用，如果是，当前配置类生效
+@ConditionalOnWebApplication(
+    type = Type.SERVLET
+)
+
+//判断当前项目有没有这个类CharacterEncodingFilter；SpringMVC中进行乱码解决的过滤器；
+@ConditionalOnClass(&#123;CharacterEncodingFilter.class&#125;)
+
+//判断配置文件中是否存在某个配置：spring.http.encoding.enabled；
+  //如果不存在，判断也是成立的
+  //即使我们配置文件中不配置pring.http.encoding.enabled=true，也是默认生效的；
+@ConditionalOnProperty(
+    prefix = &quot;spring.http.encoding&quot;,
+    value = &#123;&quot;enabled&quot;&#125;,
+    matchIfMissing = true
+)
+
+public class HttpEncodingAutoConfiguration &#123;
+    //他已经和SpringBoot的配置文件映射了
+    private final Encoding properties;
+    //只有一个有参构造器的情况下，参数的值就会从容器中拿
+    public HttpEncodingAutoConfiguration(HttpProperties properties) &#123;
+        this.properties = properties.getEncoding();
+    &#125;
+    
+    //给容器中添加一个组件，这个组件的某些值需要从properties中获取
+    @Bean
+    @ConditionalOnMissingBean //判断容器没有这个组件？
+    public CharacterEncodingFilter characterEncodingFilter() &#123;
+        CharacterEncodingFilter filter = new OrderedCharacterEncodingFilter();
+        filter.setEncoding(this.properties.getCharset().name());
+        filter.setForceRequestEncoding(this.properties.shouldForce(org.springframework.boot.autoconfigure.http.HttpProperties.Encoding.Type.REQUEST));
+        filter.setForceResponseEncoding(this.properties.shouldForce(org.springframework.boot.autoconfigure.http.HttpProperties.Encoding.Type.RESPONSE));
+        return filter;
+    &#125;
+    //。。。。。。。
+&#125;
+</code></pre>
+<p><strong>根据当前不同的条件判断，决定这个配置类是否生效！</strong></p>
+<p>大体结构：</p>
+<pre><code class="Java">
+//从配置文件中获取指定的值和bean的属性进行绑定
+@ConfigurationProperties(prefix = &quot;spring.http&quot;) 
+public class HttpProperties &#123;
+    // .....
+&#125;
+</code></pre>
+<h3><span id="mvc自动配置原理">mvc自动配置原理</span></h3><pre><code class="java">Spring MVC Auto-configuration
+// Spring Boot为Spring MVC提供了自动配置，它可以很好地与大多数应用程序一起工作。
+Spring Boot provides auto-configuration for Spring MVC that works well with most applications.
+// 自动配置在Spring默认设置的基础上添加了以下功能：
+The auto-configuration adds the following features on top of Spring’s defaults:
+// 包含视图解析器
+Inclusion of ContentNegotiatingViewResolver and BeanNameViewResolver beans.
+// 支持静态资源文件夹的路径，以及webjars
+Support for serving static resources, including support for WebJars 
+// 自动注册了Converter：
+// 转换器，这就是我们网页提交数据到后台自动封装成为对象的东西，比如把&quot;1&quot;字符串自动转换为int类型
+// Formatter：【格式化器，比如页面给我们了一个2019-8-10，它会给我们自动格式化为Date对象】
+Automatic registration of Converter, GenericConverter, and Formatter beans.
+// HttpMessageConverters
+// SpringMVC用来转换Http请求和响应的的，比如我们要把一个User对象转换为JSON字符串，可以去看官网文档解释；
+Support for HttpMessageConverters (covered later in this document).
+// 定义错误代码生成规则的
+Automatic registration of MessageCodesResolver (covered later in this document).
+// 首页定制
+Static index.html support.
+// 图标定制
+Custom Favicon support (covered later in this document).
+// 初始化数据绑定器：帮我们把请求数据绑定到JavaBean中！
+Automatic use of a ConfigurableWebBindingInitializer bean (covered later in this document).
+
+/*
+如果您希望保留Spring Boot MVC功能，并且希望添加其他MVC配置（拦截器、格式化程序、视图控制器和其他功能），则可以添加自己
+的@configuration类，类型为webmvcconfiguer，但不添加@EnableWebMvc。如果希望提供
+RequestMappingHandlerMapping、RequestMappingHandlerAdapter或ExceptionHandlerExceptionResolver的自定义
+实例，则可以声明WebMVCregistrationAdapter实例来提供此类组件。
+*/
+If you want to keep Spring Boot MVC features and you want to add additional MVC configuration 
+(interceptors, formatters, view controllers, and other features), you can add your own 
+@Configuration class of type WebMvcConfigurer but without @EnableWebMvc. If you wish to provide 
+custom instances of RequestMappingHandlerMapping, RequestMappingHandlerAdapter, or 
+ExceptionHandlerExceptionResolver, you can declare a WebMvcRegistrationsAdapter instance to provide such components.
+
+// 如果您想完全控制Spring MVC，可以添加自己的@Configuration，并用@EnableWebMvc进行注释。
+If you want to take complete control of Spring MVC, you can add your own @Configuration annotated with @EnableWebMvc.
+</code></pre>
+<h3><span id="国际化">国际化</span></h3><p><strong>1.设置properties的编码问题</strong></p>
+<p><img src="/2021/09/26/Spring-boot%E9%9A%8F%E8%AE%B0/image-20211003204335787.png" alt="image-20211003204335787"></p>
+<p><strong>2</strong>.<img src="/2021/09/26/Spring-boot%E9%9A%8F%E8%AE%B0/image-20211003204447879.png" alt="image-20211003204447879"></p>
+<p>​    <strong>建立语言配置文件：</strong></p>
+<p><img src="/2021/09/26/Spring-boot%E9%9A%8F%E8%AE%B0/image-20211003204931853.png" alt="image-20211003204931853"></p>
+<p><strong>3.接下来就是让springboot识别我们对于国际化的个性配置，于是涉及到了spring boot的自动配置    MessageSourceProperties类</strong></p>
+<p><img src="/2021/09/26/Spring-boot%E9%9A%8F%E8%AE%B0/image-20211003205859135.png" alt="image-20211003205859135"></p>
+<p><em>// 设置国际化文件的基础名（去掉语言国家代码的）</em></p>
+<pre><code class="properties">spring.messages.basename=i18n.login
+</code></pre>
+<p><strong>4.配置国际化解析</strong></p>
+<p>在Spring中有一个国际化的Locale （区域信息对象）；里面有一个叫做LocaleResolver （获取区域信息对象）的解析器！</p>
+<p>那假如我们现在想点击链接让我们的国际化资源生效，就需要让我们自己的Locale生效！我们去自己写一个自己的LocaleResolver，可以在链接上携带区域信息！</p>
+<pre><code class="html">&lt;!-- 这里传入参数不需要使用 ？使用 （key=value）--&gt;
+&lt;a class=&quot;btn btn-sm&quot; th:href=&quot;@&#123;/index.html(l=&#39;zh_CN&#39;)&#125;&quot;&gt;中文&lt;/a&gt;
+&lt;a class=&quot;btn btn-sm&quot; th:href=&quot;@&#123;/index.html(l=&#39;en_US&#39;)&#125;&quot;&gt;English&lt;/a&gt;
+</code></pre>
+<h4><span id="编写一个处理的组件类">编写一个处理的组件类</span></h4><pre><code class="java">package com.zz.springboot03web.config;
+
+import org.springframework.util.StringUtils;
+import org.springframework.web.servlet.LocaleResolver;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Locale;
+
+public class MyLocaleResolver implements LocaleResolver &#123;
+    @Override
+    public Locale resolveLocale(HttpServletRequest request) &#123;
+        String language=request.getParameter(&quot;l&quot;);
+        Locale locale=Locale.getDefault();//如果没有获取到就使用系统默认的
+        //如果需求链接不为空
+        if(!StringUtils.isEmpty(language))&#123;
+            //分割请求需求
+            String [] split=language.split(&quot;_&quot;);
+            locale=new Locale(split[0],split[1]);
+        &#125;
+        return locale;
+    &#125;
+
+    @Override
+    public void setLocale(HttpServletRequest request, HttpServletResponse response, Locale locale) &#123;
+
+    &#125;
+&#125;
+</code></pre>
+<p><strong>为了使自己定义的组件生效，在我们自己的MvcConofig下添加bean</strong></p>
+<pre><code class="Java">@Bean
+public LocaleResolver localeResolver()&#123;
+    return new MyLocaleResolver();
+&#125;
+</code></pre>
+<h2><span id="使用addviewcontroller实现无业务逻辑跳转">使用addviewController()实现无业务逻辑跳转</span></h2><p><img src="/2021/09/26/Spring-boot%E9%9A%8F%E8%AE%B0/image-20211004174440961.png" alt="image-20211004174440961"></p>
+<p>效果：实际跳转到了test.html页面</p>
+<p><img src="/2021/09/26/Spring-boot%E9%9A%8F%E8%AE%B0/image-20211004174507934.png" alt="image-20211004174507934"></p>
+<h2><span id="requestparam和pathvariable">@RequestParam和@PathVariable</span></h2><blockquote>
+<p> 相同点与区别</p>
+</blockquote>
+<p> @RequestParam和@PathVariable都能够完成类似的功能——因为本质上，它们都是用户的输入，只不过输入的部分不同，一个在URL路径部分，另一个在参数部分。要访问一篇博客文章，这两种URL设计都是可以的：</p>
+<ul>
+<li>通过@PathVariable，例如/blogs/1</li>
+<li>通过@RequestParam，例如blogs?blogId=1</li>
+</ul>
+<p>那么究竟应该选择哪一种呢？建议：</p>
+<p>1、当URL指向的是某一具体业务资源（或资源列表），例如博客，用户时，使用@PathVariable</p>
+<p>2、当URL需要对资源或者资源列表进行过滤，筛选时，用@RequestParam</p>
+<p>例如我们会这样设计URL：</p>
+<ul>
+<li>/blogs/{blogId}</li>
+<li>/blogs?state=publish而不是/blogs/state/publish来表示处于发布状态的博客文章</li>
+</ul>
+<h2><span id="安全shiro-springsecurity">安全（shiro  SpringSecurity）</span></h2><h3><span id="shiro">shiro</span></h3><h4><span id="结合数据库进行验证和授权">结合数据库进行验证和授权</span></h4><p>实际工作中，我们都会把权限相关的内容放在数据库中</p>
+<p>基于 <a target="_blank" rel="noopener" href="https://how2j.cn/k/shiro/shiro-database/1721.html#step7539">RBAC 概念</a>， 就会存在3 张基础表： 用户，角色，权限， 以及 2 张中间表来建立 用户与角色的多对多关系，角色与权限的多对多关系。 用户与权限之间也是多对多关系，但是是通过 角色间接建立的。</p>
+<h5><span id="一">一</span></h5><p><img src="/2021/09/26/Spring-boot%E9%9A%8F%E8%AE%B0/image-20211009223652791.png" alt="image-20211009223652791"></p>
+<h5><span id="二">二</span></h5><p><strong>插入模拟数据</strong></p>
+<h5><span id="三">三</span></h5><p>Dao类</p>
+<p><strong>提供了和权限相关查询</strong></p>
+<h5><span id="四">四</span></h5><p>DatabaseRealm 就是用来通过数据库 验证用户，和相关授权的类。两个方法分别做验证和授权：<br>doGetAuthenticationInfo(), doGetAuthorizationInfo()</p>
+<p>这个类由用户提供，但是不由用户自己调用，而是由 Shiro 去调用。从而在shiro.ini中配置</p>
+<pre><code class="java">public class DatabaseRealm extends AuthorizingRealm&#123;
+    @Override
+    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) &#123;
+        //能进入到这里，表示账号已经通过验证了
+        String userName =(String)principals.getPrimaryPrincipal();
+        //通过DAO获取角色和权限
+        Set&lt;String&gt; permissions = new Dao().listPermissions(userName);
+        Set&lt;String&gt; roles = new Dao().listRoles(userName);
+
+        //授权对象
+        SimpleAuthorizationInfo s = new SimpleAuthorizationInfo();
+        //把通过DAO获取到的角色和权限放进去
+        s.setStringPermissions(permissions);
+        s.setRoles(roles);
+        return s;
+    &#125;
+
+    @Override
+    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException &#123;
+        //获取账号密码
+        UsernamePasswordToken t = (UsernamePasswordToken) token;
+        String userName= token.getPrincipal().toString();
+        String password= new String( t.getPassword());
+        //获取数据库中的密码
+        String passwordInDB = new Dao().getPassword(userName);
+
+        //如果为空就是账号不存在，如果不相同就是密码错误，但是都抛出AuthenticationException，而不是抛出具体错误原因，免得给破解者提供帮助信息
+        if(null==passwordInDB || !passwordInDB.equals(password))&#123;
+            throw new AuthenticationException();&#125;
+
+        //认证信息里存放账号密码, getName() 是当前Realm的继承方法,通常返回当前类名 :databaseRealm
+        SimpleAuthenticationInfo a = new SimpleAuthenticationInfo(userName,password,getName());
+        return a;
+    &#125;
+    &#125;
+
+</code></pre>
+<h5><span id="五">五</span></h5><pre><code class="ini">[main]
+databaseRealm=DatabaseRealm
+securityManager.realms=$databaseRealm
+</code></pre>
+<h5><span id="结束-̀-ω-́">结束( •̀ ω •́ )✧</span></h5><h4><span id="加密">加密</span></h4><h2><span id="swagger">swagger</span></h2><h3><span id="配置swagger">配置swagger</span></h3><p>（Swagger实例Bean是Docket，所以通过配置Docket实例来配置Swaggger。）</p>
+<p>  可以通过apiInfo()属性配置文档信息</p>
+<pre><code class="java"> //配置文档信息
+    private ApiInfo apiInfo() &#123;
+        Contact contact = new Contact(&quot;gzz&quot;, &quot;https://www.zhihu.com/people/sjbja&quot;, &quot;https://weibo.com/u/7194380917?is_all=1&quot;);
+        return new ApiInfo(
+                &quot;Swagger学习&quot;, // 标题
+                &quot;学习演示如何配置Swagger&quot;, // 描述
+                &quot;v1.0&quot;, // 版本
+                &quot;https://user.qzone.qq.com/1614399965?source=namecardhoverqzone&quot;, // 组织链接
+                contact, // 联系人信息
+                &quot;Apach 2.0 许可&quot;, // 许可
+                &quot;许可链接&quot;, // 许可连接
+                new ArrayList&lt;&gt;()// 扩展
+        );
+    &#125;
+//Docket 实例关联上 apiInfo()
+@Bean
+public Docket docket() &#123;
+   return new Docket(DocumentationType.SWAGGER_2).apiInfo(apiInfo());
+&#125;
+</code></pre>
+<h3><span id="配置接口扫描信息">配置接口扫描信息</span></h3><pre><code class="java"> .select()// 通过.select()方法，去配置扫描接口,RequestHandlerSelectors配置如何扫描接口
+ .apis(RequestHandlerSelectors.basePackage(&quot;com.kuang.swagger.controller&quot;))
+ .build();
+</code></pre>
+<p>上面为根据包路径扫描接口</p>
+<p><strong>其他配置扫描接口的方式：</strong></p>
+<pre><code class="java">any() // 扫描所有，项目中的所有接口都会被扫描到
+none() // 不扫描接口
+// 通过方法上的注解扫描，如withMethodAnnotation(GetMapping.class)只扫描get请求
+withMethodAnnotation(final Class&lt;? extends Annotation&gt; annotation)
+// 通过类上的注解扫描，如.withClassAnnotation(Controller.class)只扫描有controller注解的类中的接口
+withClassAnnotation(final Class&lt;? extends Annotation&gt; annotation)
+</code></pre>
+<p>还可以配置接口扫描过滤：</p>
+<pre><code class="Java"> // 配置如何通过path过滤,即这里只扫描请求以/kuang开头的接口
+      .paths(PathSelectors.ant(&quot;/kuang/**&quot;))
+</code></pre>
+<p>配置开关</p>
+<p><img src="/2021/09/26/Spring-boot%E9%9A%8F%E8%AE%B0/image-20211010183122574.png" alt="image-20211010183122574"></p>
+<p>效果图：<img src="/2021/09/26/Spring-boot%E9%9A%8F%E8%AE%B0/image-20211010183203887.png" alt="image-20211010183203887"></p>
+<h3><span id="动态配置当项目处于test-dev环境时显示swagger处于prod时不显示">动态配置当项目处于test、dev环境时显示swagger，处于prod时不显示</span></h3><pre><code class="java">@Bean
+    public Docket docket(Environment environment)&#123;
+        // 设置要显示swagger的环境
+        Profiles of = Profiles.of(&quot;dev&quot;, &quot;test&quot;);
+        // 判断当前是否处于该环境
+        // 通过 enable() 接收此参数判断是否要显示
+        boolean b = environment.acceptsProfiles(of);
+
+        return new Docket(DocumentationType.SWAGGER_2)
+                .apiInfo(apiInfo())
+                .enable(b) //配置是否启用Swagger，如果是false，在浏览器将无法访问
+                .select()// 通过.select()方法，去配置扫描接口,RequestHandlerSelectors配置如何扫描接口
+                .apis(RequestHandlerSelectors.basePackage(&quot;com.kuang.swagger.controller&quot;))
+                // 配置如何通过path过滤,即这里只扫描请求以/kuang开头的接口
+                .paths(PathSelectors.ant(&quot;/kuang/**&quot;))
+                .build();
+    &#125;
+</code></pre>
+<h3><span id="配置api分组">配置api分组</span></h3><h4><span id="给自己分配组">给自己分配组</span></h4><pre><code>.groupName(&quot;wtt&quot;)// 配置分组
+</code></pre>
+<h4><span id="配置多个分组">配置多个分组</span></h4><pre><code class="java">@Bean
+    public Docket docket1()&#123;
+        return new Docket(DocumentationType.SWAGGER_2).groupName(&quot;group1&quot;);
+    &#125;
+    @Bean
+    public Docket docket2()&#123;
+        return new Docket(DocumentationType.SWAGGER_2).groupName(&quot;group2&quot;);
+    &#125;
+    @Bean
+    public Docket docket3()&#123;
+        return new Docket(DocumentationType.SWAGGER_2).groupName(&quot;group3&quot;);
+    &#125;
+</code></pre>
+<h3><span id="实体配置">实体配置</span></h3><h4><span id="新建实体类">新建实体类</span></h4><p><img src="/2021/09/26/Spring-boot%E9%9A%8F%E8%AE%B0/image-20211010192744837.png" alt="image-20211010192744837"></p>
+<h4><span id="在controller中配置接口">在controller中配置接口</span></h4><p><img src="/2021/09/26/Spring-boot%E9%9A%8F%E8%AE%B0/image-20211010192927354.png" alt="image-20211010192927354"></p>
+<h2><span id="异步-定时-邮件任务">异步、定时、邮件任务</span></h2><h6><span id="异步前台发送邮件点击发送前台瞬间响应后台进行多线程处理">异步：前台发送邮件，点击发送前台瞬间响应，后台进行多线程处理</span></h6><p>实现异步方法：<br>在需实现异步的方法上加</p>
+<pre><code class="java">//告诉Spring这是一个异步方法
+@Async
+</code></pre>
+<p>在主程序上加</p>
+<pre><code class="java">@EnableAsync //开启异步注解功能
+</code></pre>
+<p>完成🎇🎇🎇</p>
+<h6><span id="定时和发送邮件组合起来可实现定时邮件功能">定时和发送邮件：组合起来可实现定时邮件功能</span></h6><p>导入邮件依赖：</p>
+<pre><code class="xml">&lt;dependency&gt;
+&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+&lt;artifactId&gt;spring-boot-starter-mail&lt;/artifactId&gt;
+&lt;/dependency&gt;
+</code></pre>
+<p>定时有两个注解，实现形式和异步差不多：</p>
+<pre><code class="java">  @Scheduled(cron = &quot;0 0/2 * * * ? &quot;)//此注解放在要实现定时任务的方法上
+  @EnableScheduling //开启基于注解的定时任务，放在主程序上
+</code></pre>
+<p>邮件配置：</p>
+<pre><code class="properties">spring.mail.username=1614399965@qq.com
+#授权码
+spring.mail.password=zuursxqcywrddfhf
+spring.mail.host=smtp.qq.com
+# qq需要配置ssl
+spring.mail.properties.mail.smtp.ssl.enable=true
+</code></pre>
+<p>发送一个两分钟一次的邮件：</p>
+<pre><code class="java">@Scheduled(cron = &quot;0 0/2 * * * ? &quot;)
+public void sendEmailTo()&#123;
+    //邮件设置1：一个简单的邮件
+    SimpleMailMessage message = new SimpleMailMessage();
+    message.setSubject(&quot;Love tt&quot;);
+    message.setText(&quot;一生所爱&quot;);
+
+    message.setTo(&quot;1614399965@qq.com&quot;);
+    message.setFrom(&quot;1614399965@qq.com&quot;);
+    mailSender.send(message);
+&#125;
+</code></pre>
+<p>常用的表达式</p>
+<pre><code>（1）0/2 * * * * ?   表示每2秒 执行任务
+（1）0 0/2 * * * ?   表示每2分钟 执行任务
+（1）0 0 2 1 * ?   表示在每月的1日的凌晨2点调整任务
+（2）0 15 10 ? * MON-FRI   表示周一到周五每天上午10:15执行作业
+（3）0 15 10 ? 6L 2002-2006   表示2002-2006年的每个月的最后一个星期五上午10:15执行作
+（4）0 0 10,14,16 * * ?   每天上午10点，下午2点，4点
+（5）0 0/30 9-17 * * ?   朝九晚五工作时间内每半小时
+（6）0 0 12 ? * WED   表示每个星期三中午12点
+（7）0 0 12 * * ?   每天中午12点触发
+（8）0 15 10 ? * *   每天上午10:15触发
+（9）0 15 10 * * ?     每天上午10:15触发
+（10）0 15 10 * * ?   每天上午10:15触发
+（11）0 15 10 * * ? 2005   2005年的每天上午10:15触发
+（12）0 * 14 * * ?     在每天下午2点到下午2:59期间的每1分钟触发
+（13）0 0/5 14 * * ?   在每天下午2点到下午2:55期间的每5分钟触发
+（14）0 0/5 14,18 * * ?     在每天下午2点到2:55期间和下午6点到6:55期间的每5分钟触发
+（15）0 0-5 14 * * ?   在每天下午2点到下午2:05期间的每1分钟触发
+（16）0 10,44 14 ? 3 WED   每年三月的星期三的下午2:10和2:44触发
+（17）0 15 10 ? * MON-FRI   周一至周五的上午10:15触发
+（18）0 15 10 15 * ?   每月15日上午10:15触发
+（19）0 15 10 L * ?   每月最后一日的上午10:15触发
+（20）0 15 10 ? * 6L   每月的最后一个星期五上午10:15触发
+（21）0 15 10 ? * 6L 2002-2005   2002年至2005年的每月的最后一个星期五上午10:15触发
+（22）0 15 10 ? * 6#3   每月的第三个星期五上午10:15触发
+</code></pre>
+<p><code>@RequestParam</code> 和 <code>@PathVariable</code> 注解是用于从 request 中接收请求的，两个都可以接收参数，关键点不同的是<code>@RequestParam</code> 是从 request 里面拿取值，而 <code>@PathVariable</code> 是从一个URI模板里面来填充</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
 
   
   <nav class="pagination">
@@ -787,7 +1035,7 @@ firewall-cmd --list-ports  # 只看端口信息
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-count">47</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
