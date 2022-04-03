@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-04-03T02:48:57.705Z</updated>
+  <updated>2022-04-03T02:57:55.803Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -21,15 +21,17 @@
     <link href="http://example.com/2022/04/03/%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE/"/>
     <id>http://example.com/2022/04/03/%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE/</id>
     <published>2022-04-03T02:26:21.000Z</published>
-    <updated>2022-04-03T02:48:57.705Z</updated>
+    <updated>2022-04-03T02:57:55.803Z</updated>
     
-    <content type="html"><![CDATA[<ol><li><img src="/2022/04/03/%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE/Users\ASUS\AppData\Roaming\Typora\typora-user-images\1648952872902.png" alt="1648952872902"></li></ol><p><strong>@SpringBootApplication SpringBoot应用标注在某个类上说明这个类是SpringBoot的主配置类，SpringBoot就应该运行这个类的main方法来启动springBoot的应用</strong></p><p>2.<img src="/2022/04/03/%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE/Users\ASUS\AppData\Roaming\Typora\typora-user-images\1648952954673.png" alt="1648952954673"></p><p>核心注解为@EnableAutoConfiguration，开启自动配置功能</p><p>3.@EnableAutoConfiguration中有两个核心注解：</p><hr><p><strong>@AutoConfigurationPackage和@Import(AutoConfigurationImportSelector.class)</strong></p><p>@AutoConfigurationPackage自动扫包的配置</p><p><img src="/2022/04/03/%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE/Users\ASUS\AppData\Roaming\Typora\typora-user-images\1648953049026.png" alt="1648953049026"></p><p><img src="/2022/04/03/%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE/Users\ASUS\AppData\Roaming\Typora\typora-user-images\1648953122408.png" alt="1648953122408"></p><p><img src="/2022/04/03/%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE/Users\ASUS\AppData\Roaming\Typora\typora-user-images\1648953155312.png" alt="1648953155312"></p><p>扫描范围默认为当前文件所在包及其子包</p><p>4.@Import(AutoConfigurationImportSelector.class)</p><pre><code class="dart">//扫描具有META-INF/spring.factories文件的jar包任何一个springboot应用，都会引入spring-boot-autoconfigure，而spring.factories文件就在该包下面</code></pre><p><img src="/2022/04/03/%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE/Users\ASUS\AppData\Roaming\Typora\typora-user-images\1648953793994.png" alt="1648953793994"></p>]]></content>
+    <content type="html"><![CDATA[<ol><li><img src="/2022/04/03/%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE/1648952872902.png" alt="1648952872902"></li></ol><p><strong>@SpringBootApplication SpringBoot应用标注在某个类上说明这个类是SpringBoot的主配置类，SpringBoot就应该运行这个类的main方法来启动springBoot的应用</strong></p><p>2.<img src="/2022/04/03/%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE/1648952954673.png" alt="1648952954673"></p><p>核心注解为@EnableAutoConfiguration，开启自动配置功能</p><p>3.@EnableAutoConfiguration中有两个核心注解：</p><hr><p><strong>@AutoConfigurationPackage和@Import(AutoConfigurationImportSelector.class)</strong></p><p>@AutoConfigurationPackage自动扫包的配置</p><p><img src="/2022/04/03/%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE/1648953049026.png" alt="1648953049026"></p><p><img src="/2022/04/03/%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE/1648953122408.png" alt="1648953122408"></p><p><img src="/2022/04/03/%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE/1648953155312.png" alt="1648953155312"></p><p>扫描范围默认为当前文件所在包及其子包</p><p>4.@Import(AutoConfigurationImportSelector.class)</p><pre><code class="dart">//扫描具有META-INF/spring.factories文件的jar包任何一个springboot应用，都会引入spring-boot-autoconfigure，而spring.factories文件就在该包下面</code></pre><p><img src="/2022/04/03/%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE/1648953793994.png" alt="1648953793994"></p>]]></content>
     
     
       
       
     <summary type="html">&lt;ol&gt;
-&lt;li&gt;&lt;img src=&quot;/2022/04/03/%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE/Users\ASUS\AppData\Roaming\Typora\typora-user-images\1648952872902.png&quot; </summary>
+&lt;li&gt;&lt;img src=&quot;/2022/04/03/%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE/1648952872902.png&quot; alt=&quot;1648952872902&quot;&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;@SpringBoo</summary>
       
     
     
