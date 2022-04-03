@@ -4,6 +4,32 @@
   
     
     <entry>
+      <title>自动配置</title>
+      <link href="/2022/04/03/%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE/"/>
+      <url>/2022/04/03/%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE/</url>
+      
+        <content type="html"><![CDATA[<ol><li><img src="/2022/04/03/%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE/Users\ASUS\AppData\Roaming\Typora\typora-user-images\1648952872902.png" alt="1648952872902"></li></ol><p><strong>@SpringBootApplication SpringBoot应用标注在某个类上说明这个类是SpringBoot的主配置类，SpringBoot就应该运行这个类的main方法来启动springBoot的应用</strong></p><p>2.<img src="/2022/04/03/%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE/Users\ASUS\AppData\Roaming\Typora\typora-user-images\1648952954673.png" alt="1648952954673"></p><p>核心注解为@EnableAutoConfiguration，开启自动配置功能</p><p>3.@EnableAutoConfiguration中有两个核心注解：</p><hr><p><strong>@AutoConfigurationPackage和@Import(AutoConfigurationImportSelector.class)</strong></p><p>@AutoConfigurationPackage自动扫包的配置</p><p><img src="/2022/04/03/%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE/Users\ASUS\AppData\Roaming\Typora\typora-user-images\1648953049026.png" alt="1648953049026"></p><p><img src="/2022/04/03/%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE/Users\ASUS\AppData\Roaming\Typora\typora-user-images\1648953122408.png" alt="1648953122408"></p><p><img src="/2022/04/03/%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE/Users\ASUS\AppData\Roaming\Typora\typora-user-images\1648953155312.png" alt="1648953155312"></p><p>扫描范围默认为当前文件所在包及其子包</p><p>4.@Import(AutoConfigurationImportSelector.class)</p><pre><code class="dart">//扫描具有META-INF/spring.factories文件的jar包任何一个springboot应用，都会引入spring-boot-autoconfigure，而spring.factories文件就在该包下面</code></pre><p><img src="/2022/04/03/%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE/Users\ASUS\AppData\Roaming\Typora\typora-user-images\1648953793994.png" alt="1648953793994"></p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Bean</title>
+      <link href="/2022/04/01/Bean/"/>
+      <url>/2022/04/01/Bean/</url>
+      
+        <content type="html"><![CDATA[<h2><span id="循环依赖">循环依赖</span></h2><p>谈到循环依赖要先了解spring bean的生命周期</p><h3><span id="一-加载数据">一. 加载数据</span></h3><p>普通Java对象：以class作为模板创建出具体的实例</p><p>Spring Bean：除了用Class对象外，还用了BeanDefinition实例来描述对象信息</p><p>Spring在启动时需要扫描使用了 <strong>xml</strong>  <strong>注解</strong>  **javaconfig **中需要被Spring管理的Bean信息，随后把信息封装为BeanDefinition，最后把信息放在beanDefinitionMap中，key为beanName，value为BeanDefinition。</p><p>接着遍历beanDefinitionMap，执行BeanFactoryPostProcesser工厂后置处理器的处理逻辑。这里如果想获取bean的数据进行修改的话，通过自定义BeanFactoryPostProcesser来实现</p><h3><span id="二-实例化">二.  实例化</span></h3><h3><span id="三-属性填充">三. 属性填充</span></h3><h3><span id="四-初始化">四. 初始化</span></h3><p>判断该Bean是否实现了Aware相关的接口，如果存在则填充相关的资源</p><p>到了BeanPostProcessor后置处理器（是AOP实现的关键）</p><p>执行BeanPostProcessor相关子类的before方法</p><p>执行init方法，执行顺序为@PostConstruct，实现了initializingbean接口，是否自己定义了init-method方法。</p><h3><span id="五-使用">五.  使用</span></h3><h3><span id="六-销毁">六. 销毁</span></h3><p>看是否实现了diposableBean接口，执行destory方法，或者自己定义了destory-method属性</p><h3><span id="注解xmljavaconfig">注解，xml，javaconfig</span></h3><table><thead><tr><th></th><th>xml</th><th>注解</th><th>config</th></tr></thead><tbody><tr><td>便利性</td><td>不便利</td><td>便利</td><td>不便利</td></tr><tr><td>修改之后是否需要重编译</td><td>不</td><td>需要</td><td>需要</td></tr><tr><td>自由度</td><td>低</td><td>低</td><td>高</td></tr><tr><td>是否可以注入不是自己维护的类</td><td>可以</td><td>不可以</td><td>可以</td></tr></tbody></table><p>现在通常使用注解加config</p><p>只有当需要注入代码不是自己维护的第三方jar包中的类时，或者需要更为灵活地注入，比如说需要调用某个接口，查询数据，然后把这个数据赋值给要注入的对象，那么这时候就需要用到Java Config（面向接口开发）。</p><h2><span id="循环依赖">循环依赖</span></h2><p>A包含B，B包含A</p><p>使用三级缓存</p><p>singletonObjects：一级：正式对象</p><p>earlySingletonObjects：二级：半成品（考虑性能）</p><p>sinletonFactories：三级：工厂（为了代理，可以直接从里面拿代理对象，放在二级缓存）</p><p>创建A时：实例化后，把自己扔在三级缓存，key时beanName，value是ObjectFactory。</p><p>注入属性时发现B还没创建，然后实例化B，B属性注入A，A放在二级缓存中，然后B完成创建，自然A也就可以完成了。</p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>select，poll，epoll</title>
       <link href="/2022/03/14/select%EF%BC%8Cpoll%EF%BC%8Cepoll/"/>
       <url>/2022/03/14/select%EF%BC%8Cpoll%EF%BC%8Cepoll/</url>
