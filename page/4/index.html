@@ -195,6 +195,91 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/27/time-wait%E5%92%8Cclose-wait/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Gzz">
+      <meta itemprop="description" content="只要开始就不算晚">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="香饽饽">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/02/27/time-wait%E5%92%8Cclose-wait/" class="post-title-link" itemprop="url">time_wait和close_wait</a>
+        </h2>
+
+        <div class="post-meta">
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-02-27 19:13:12 / 修改时间：19:35:20" itemprop="dateCreated datePublished" datetime="2022-02-27T19:13:12+08:00">2022-02-27</time>
+            </span>
+
+          
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+              <span>669</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><img src="/2022/02/27/time-wait%E5%92%8Cclose-wait/image-20220227192546623.png" alt="image-20220227192546623"></p>
+<p>客户端和服务器并不固定，看谁主动断开连接</p>
+<h2><span id="time_wait">time_wait</span></h2><p>HTTP的交互跟上面画的那个图是不一样的，关闭连接的不是客户端，而是服务器，所以web服务器也是会出现大量的TIME_WAIT的情况的。</p>
+<p>HTTP协议1.1版规定default行为是Keep-Alive，也就是会重用TCP连接传输多个 request/response，一个主要原因就是发现了这个问题</p>
+<p>解决思路很简单，就是让服务器能够快速回收和重用那些TIME_WAIT的资源</p>
+<p>对/etc/sysctl.conf文件进行修改</p>
+<p>net.ipv4.tcp_tw_reuse和net.ipv4.tcp_tw_recycle的开启都是为了回收处于TIME_WAIT状态的资源。</p>
+<p>net.ipv4.tcp_fin_timeout这个时间可以减少在异常情况下服务器从FIN-WAIT-2转到TIME_WAIT的时间。</p>
+<p>net.ipv4.tcp_keepalive_*一系列参数，是用来设置服务器检测连接存活的相关配置。</p>
+<h2><span id="close_wait">close_wait</span></h2><p>从上面的图可以看出来，如果一直保持在CLOSE_WAIT状态，那么只有一种情况，就是在对方关闭连接之后服务器程序自己没有进一步发出ack信号。换句话说，就是在对方连接关闭之后，程序里没有检测到，或者程序压根就忘记了这个时候需要关闭连接，于是这个资源就一直被程序占着。个人觉得这种情况，通过服务器内核参数也没办法解决，服务器对于程序抢占的资源没有主动回收的权利，除非终止程序运行。</p>
+<p>将大量CLOSE_WAIT的解决办法总结为一句话那就是：查代码。因为问题出在服务器程序里头</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/27/Spring%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -343,127 +428,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/09/ArrayList%E6%89%A9%E5%AE%B9%E6%9C%BA%E5%88%B6/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Gzz">
-      <meta itemprop="description" content="只要开始就不算晚">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="香饽饽">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/02/09/ArrayList%E6%89%A9%E5%AE%B9%E6%9C%BA%E5%88%B6/" class="post-title-link" itemprop="url">ArrayList扩容机制</a>
-        </h2>
-
-        <div class="post-meta">
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-02-09 12:55:59 / 修改时间：13:10:28" itemprop="dateCreated datePublished" datetime="2022-02-09T12:55:59+08:00">2022-02-09</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/javase/" itemprop="url" rel="index"><span itemprop="name">javase</span></a>
-                </span>
-            </span>
-
-          
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-              <span>1.1k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>源码解析：<a target="_blank" rel="noopener" href="https://snailclimb.gitee.io/javaguide/#/docs/java/collection/arraylist-source-code?id=_2-arraylist-%e6%a0%b8%e5%bf%83%e6%ba%90%e7%a0%81%e8%a7%a3%e8%af%bb">https://snailclimb.gitee.io/javaguide/#/docs/java/collection/arraylist-source-code?id=_2-arraylist-%e6%a0%b8%e5%bf%83%e6%ba%90%e7%a0%81%e8%a7%a3%e8%af%bb</a></p>
-<h1><span id="1构造函数">1.构造函数</span></h1><p>有三种</p>
-<p><img src="/2022/02/09/ArrayList%E6%89%A9%E5%AE%B9%E6%9C%BA%E5%88%B6/image-20220209130002676.png" alt="image-20220209130002676"></p>
-<p>说第一种无参构造，默认初始容量为10</p>
-<h1><span id="2add函数">2.add函数</span></h1><pre><code class="java">    /**
-     * 将指定的元素追加到此列表的末尾。
-     */
-    public boolean add(E e) &#123;
-   //添加元素之前，先调用ensureCapacityInternal方法
-        ensureCapacityInternal(size + 1);  // Increments modCount!!
-        //这里看到ArrayList添加元素的实质就相当于为数组赋值
-        elementData[size++] = e;
-        return true;
-    &#125;
-</code></pre>
-<p>进入add方法后调用<strong>ensureCapacityInternal</strong> 方法，进入<strong>ensureCapacityInternal</strong>方法后初始化容量，然后调用<strong>ensureExplicitCapacity</strong>判断是否需要扩容，</p>
-<p>，<strong>grow</strong>方法是实现扩容的方法，需要扩容则扩大1.5位，使用位运算。然后调用<strong>Arrays.copyOf</strong>方法将<strong>elementData</strong>数组指向新的内存空间<strong>newCapacity</strong>的连续空间<br>从此方法中我们可以清晰的看出其实<strong>ArrayList</strong>扩容的本质就是计算出新的扩容数组的<strong>size</strong>后实例化，并将原有数组内容复制到新数组中去。</p>
-<pre><code class="java">  //得到最小扩容量
-    private void ensureCapacityInternal(int minCapacity) &#123;
-        //第二次调用ensureCapacityInternal方法后if判断后为假，因为不是空数组了
-        if (elementData == DEFAULTCAPACITY_EMPTY_ELEMENTDATA) &#123;
-              // 获取默认的容量和传入参数的较大值
-            minCapacity = Math.max(DEFAULT_CAPACITY, minCapacity);
-        &#125;
-
-        ensureExplicitCapacity(minCapacity);
-    &#125;
-
-  //判断是否需要扩容
-    private void ensureExplicitCapacity(int minCapacity) &#123;
-        modCount++;
-
-        // overflow-conscious code
-        if (minCapacity - elementData.length &gt; 0)
-            //调用grow方法进行扩容，调用此方法代表已经开始扩容了
-            grow(minCapacity);
-    &#125;
-</code></pre>
-
-      
-    </div>
-
-    
-    
-    
-
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -535,7 +499,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">49</span>
+          <span class="site-state-item-count">50</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -614,18 +578,18 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">209k</span>
+    <span title="站点总字数">210k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">3:10</span>
+    <span title="站点阅读时长">3:11</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共83.6k字</span>
+  <span class="post-count">博客全站共84.1k字</span>
 </div>
 
     <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>

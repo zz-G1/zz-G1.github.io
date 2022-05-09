@@ -195,6 +195,203 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/29/lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Gzz">
+      <meta itemprop="description" content="只要开始就不算晚">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="香饽饽">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/08/29/lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="post-title-link" itemprop="url">lambda表达式</a>
+        </h2>
+
+        <div class="post-meta">
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-08-29 19:54:07" itemprop="dateCreated datePublished" datetime="2021-08-29T19:54:07+08:00">2021-08-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-01-21 20:30:59" itemprop="dateModified" datetime="2022-01-21T20:30:59+08:00">2022-01-21</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java%E8%BF%9B%E9%98%B6/" itemprop="url" rel="index"><span itemprop="name">Java进阶</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+              <span>2.3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1><span id="lambda">lambda</span></h1><h2><span id="语法">语法</span></h2><p>lambda 表达式的语法格式如下：</p>
+<p><strong>(parameters) -&gt; expression</strong> 或 <strong>(parameters) -&gt;{ statements; }</strong></p>
+<p>以下是lambda表达式的重要特征:</p>
+<ul>
+<li><p><strong>可选类型声明：</strong>不需要声明参数类型，编译器可以统一识别参数值。</p>
+</li>
+<li><p><strong>可选的参数圆括号：</strong>一个参数无需定义圆括号，但多个参数需要定义圆括号。</p>
+</li>
+<li><p><strong>可选的大括号：</strong>如果主体包含了一个语句，就不需要使用大括号。</p>
+</li>
+<li><p><strong>可选的返回关键字：</strong>如果主体只有一个表达式返回值则编译器会自动返回值，大括号需要指定表达式返回了一个数值</p>
+<p><strong>实例：</strong></p>
+</li>
+</ul>
+<pre><code class="java">package com.zz.se;
+
+public class Java8Tester &#123;
+    public static void main(String args[])&#123;
+        Java8Tester tester = new Java8Tester();
+
+        // 类型声明
+        MathOperation addition = (int a, int b) -&gt; a + b;
+
+        // 不用类型声明
+        MathOperation subtraction = (a, b) -&gt; a - b;
+
+        // 大括号中的返回语句
+        MathOperation multiplication = (int a, int b) -&gt; &#123; return a * b; &#125;;
+
+        // 没有大括号及返回语句
+        MathOperation division = (int a, int b) -&gt; a / b;
+
+        System.out.println(&quot;10 + 5 = &quot; + tester.operate(10, 5, addition));
+        System.out.println(&quot;10 - 5 = &quot; + tester.operate(10, 5, subtraction));
+        System.out.println(&quot;10 x 5 = &quot; + tester.operate(10, 5, multiplication));
+        System.out.println(&quot;10 / 5 = &quot; + tester.operate(10, 5, division));
+
+        // 不用括号
+        GreetingService greetService1 = message -&gt;
+                System.out.println(&quot;Hello &quot; + message);
+
+        // 用括号
+        GreetingService greetService2 = (message) -&gt;
+                System.out.println(&quot;Hello &quot; + message);
+
+        greetService1.sayMessage(&quot;Runoob&quot;);
+        greetService2.sayMessage(&quot;Google&quot;);
+    &#125;
+
+    interface MathOperation &#123;
+        int operation(int a, int b);
+    &#125;
+
+    interface GreetingService &#123;
+        void sayMessage(String message);
+    &#125;
+
+    private int operate(int a, int b, MathOperation mathOperation)&#123;
+        return mathOperation.operation(a, b);
+    &#125;
+&#125;
+</code></pre>
+<p>运行结果：<img src="/2021/08/29/lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/image-20210829202936515.png" alt="image-20210829202936515">y</p>
+<p><strong>可以看出：</strong></p>
+<ul>
+<li>Lambda 表达式主要用来定义行内执行的方法类型接口，例如，一个简单方法接口。在上面例子中，我们使用各种类型的Lambda表达式来定义MathOperation接口的方法。然后我们定义了sayMessage的执行。</li>
+<li>Lambda 表达式免去了使用匿名方法的麻烦，并且给予Java简单但是强大的函数化的编程能力。</li>
+</ul>
+<h3><span id="省略规则">省略规则</span></h3><ul>
+<li>参数类型可以省略</li>
+<li>方法体只有一句代码时大括号return和唯一一句代码的分号可以省略</li>
+<li>方法只有一个参数时小括号可以省略</li>
+<li>以上这些规则都记不住也可以省略不记</li>
+</ul>
+<h2><span id="变量作用域">变量作用域</span></h2><p>lambda 表达式只能引用标记了 final 的外层局部变量，这就是说不能在 lambda 内部修改定义在域外的局部变量，否则会编译错误</p>
+<pre><code class="java">package com.zz.se;
+
+public class Demo2 &#123;
+    final static String salutation = &quot;Hello! &quot;;
+
+    public static void main(String args[])&#123;
+        ZzService greetService1 = message -&gt;
+                System.out.println(salutation + message);
+        greetService1.sayMessage(&quot;Gzz&quot;);
+    &#125;
+
+    interface ZzService&#123;
+       void sayMessage(String message);
+    &#125;
+&#125;
+</code></pre>
+<p>运行结果：</p>
+<p><img src="/2021/08/29/lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/image-20210829203729657.png" alt="image-20210829203729657"></p>
+<p>我们也可以直接在 lambda 表达式中访问外层的局部变量：</p>
+<pre><code class="java">public class Demo3 &#123;
+    public static void main(String[] args) &#123;
+
+        final int num=1;
+        Converter s=(Pram)-&gt; System.out.println(Pram+num);
+        s.con(10);//结果为11
+    &#125;
+    public interface Converter&#123;
+        void con(int i);
+    &#125;
+&#125;
+</code></pre>
+<p>lambda 表达式的局部变量可以不用声明为 final，但是必须不可被后面的代码修改（即隐性的具有 final 的语义）</p>
+<p><img src="/2021/08/29/lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/image-20210829211116649.png" alt="image-20210829211116649"></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/27/SpringDataJPA%E4%B9%8B%E6%8F%90%E4%BE%9B%E6%8E%A5%E5%8F%A3%E7%A7%8D%E7%B1%BB-%E4%BA%8C/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -372,103 +569,6 @@ public interface CriteriaQuery&lt;T&gt; extends AbstractQuery&lt;T&gt; &#123;
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/26/Spring-AOP%E5%92%8CIOC%E9%97%AE%E9%A2%98/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Gzz">
-      <meta itemprop="description" content="只要开始就不算晚">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="香饽饽">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/08/26/Spring-AOP%E5%92%8CIOC%E9%97%AE%E9%A2%98/" class="post-title-link" itemprop="url">Spring AOP和IOC问题</a>
-        </h2>
-
-        <div class="post-meta">
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-08-26 11:15:52 / 修改时间：13:42:05" itemprop="dateCreated datePublished" datetime="2021-08-26T11:15:52+08:00">2021-08-26</time>
-            </span>
-
-          
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-              <span>640</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3><span id="ioc">IOC</span></h3><h4><span id="first">First</span></h4><p>IOC(<strong>Inversion of Control</strong>) 即控制反转，<strong>注意</strong>：不是技术，而是一种设计思想🎆🎆🎆🎆🎆</p>
-<p><strong>Ioc意味着将你设计好的对象交给容器控制</strong></p>
-<p><strong>容器</strong>：IoC 容器控制了对象；</p>
-<p><strong>控制什么</strong>：主要控制了外部资源获取（不只是对象包括比如文件等），不用自己new了</p>
-<p><strong>正转</strong>：自己直接在对象内部通过new进行创建对象，是程序主动去创建依赖对象</p>
-<p><strong>反转</strong>：则是由容器来帮忙创建及注入依赖对象</p>
-<p><strong>控制什么反转了</strong>：依赖对象的获取</p>
-<p>传统程序设计如图：是主动创建对象然后再组合</p>
-<p><img src="/2021/08/26/Spring-AOP%E5%92%8CIOC%E9%97%AE%E9%A2%98/261421378318292.jpg" alt="261421378318292"></p>
-<p>有了IOC/DI容器后：客户端就不用去主动创建对象</p>
-<p><img src="/2021/08/26/Spring-AOP%E5%92%8CIOC%E9%97%AE%E9%A2%98/%E4%B8%8B%E8%BD%BD.png" alt="下载"></p>
-<p>其实从另一层面来说 IOC也达到的松耦合的效果</p>
-<p>🎞 <strong>面向对象设计法则之一—— 好莱坞法则：“别找我们，我们找你</strong></p>
-<p><strong>DI</strong>（Dependency Injection）依赖注入 ：由容器将某个依赖关系（example：用户类依赖用户信息类）动态地注入到组件中，目的并非为组件增加什么功能，而是提升组件重用地频率，并为系统搭建一个灵活可拓展的平台，有了依赖注入机制，我们只需进行简单的配置即可。</p>
-<p>理解DI的关键是：“谁依赖谁，为什么需要依赖，谁注入谁，注入了什么”</p>
-<ul>
-<li>谁依赖谁：应用程序依赖IOC容器</li>
-<li>为什么需要依赖：应用程序需要IOC容器来提供对象需要的外部资源</li>
-<li>谁注入谁：IOC注入应用程序某个对象，应用程序依赖的某个对象</li>
-<li>注入了什么：注入某个对象需要的外部资源（包括对象，资源，常量数据）</li>
-</ul>
-<h5><span id="ioc和di的关系">IOC和DI的关系</span></h5><p><strong>是同一个概念的不同角度描述</strong></p>
-<p>相对IoC 而言，依赖注入明确描述了<strong>被注入对象依赖IoC容器配置依赖对象</strong></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -540,7 +640,7 @@ public interface CriteriaQuery&lt;T&gt; extends AbstractQuery&lt;T&gt; &#123;
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">49</span>
+          <span class="site-state-item-count">50</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -619,18 +719,18 @@ public interface CriteriaQuery&lt;T&gt; extends AbstractQuery&lt;T&gt; &#123;
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">209k</span>
+    <span title="站点总字数">210k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">3:10</span>
+    <span title="站点阅读时长">3:11</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共83.6k字</span>
+  <span class="post-count">博客全站共84.1k字</span>
 </div>
 
     <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>

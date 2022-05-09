@@ -195,6 +195,103 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/22/%E9%87%8D%E6%9E%84/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Gzz">
+      <meta itemprop="description" content="只要开始就不算晚">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="香饽饽">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/04/22/%E9%87%8D%E6%9E%84/" class="post-title-link" itemprop="url">重构</a>
+        </h2>
+
+        <div class="post-meta">
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-04-22 18:31:55" itemprop="dateCreated datePublished" datetime="2022-04-22T18:31:55+08:00">2022-04-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-05-01 21:31:00" itemprop="dateModified" datetime="2022-05-01T21:31:00+08:00">2022-05-01</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+              <span>646</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><img src="/2022/04/22/%E9%87%8D%E6%9E%84/1650624089842.png" alt="1650624089842"></p>
+<h2><span id="参数过长">参数过长</span></h2><p><strong>影响</strong>：</p>
+<p>方法不易被理解、使用，方法签名容易不稳定，不易维护</p>
+<p>解决方法：反复使用提炼方法+内联方法，消除多余参数</p>
+<p>​                   尽量把方法移进相关的类中</p>
+<p>​                   如实体类中的get方法在其他类中没有被调用可以删除</p>
+<p>​                   实际工作中，可以结合参数数量、以及自身对业务的理解，在 最小知道 和 保持对象完整性 之间进行权衡</p>
+<h2><span id="全局变量">全局变量</span></h2><p><strong>影响</strong>：可以在任何位置进行修改，在使用过程中可能出现意想不到的值，并且没有任何机制可以探测出哪段代码进行了修改，导致定位困难</p>
+<p><strong>改进目标</strong>：</p>
+<p>降低代码耦合性，保持代码清晰，维护简单，降低由于对全局数据随意的改变引发bug的风险</p>
+<p><strong>方法</strong>：封装变量，提炼函数</p>
+<p>使用Convert To Instance Method替换项目中使用静态方法的地方，进行重构</p>
+<p>如果想避免其他类中引用本类的字段，修饰符改为private</p>
+<h2><span id="可变数据">可变数据</span></h2><p><strong>影响</strong>：</p>
+<p>影响可维护性，在一处修改数据，却在另一处造成难以发现的破坏<br><strong>改进目标</strong>：</p>
+<p>应用“数据不可变”：不可变性是强大的代码防腐剂<br><strong>方法</strong>：<br>封装变量、拆分变量、提炼函数、移除设值，函数、查询取代派生、Builder模式创建不可变对象、引用对象改为值对象、函数式编程等</p>
+<h2><span id="发散式变化">发散式变化</span></h2><p><strong>定义</strong>：<br>某个模块经常因为不同的原因在不同的方向上发生变化<br><strong>影响</strong>：<br>通常，发散式变化是由于多个变化方向之间有较多的来回调用或者函数内部混合了多类处理逻辑。当处于多个不同上下文的外部行为发生变化时候，都会引起对同一个类或模块的修改，影响了代码的可读和可维护性<br><strong>改进目标</strong>：<br>提高代码组织结构、职责单一提升代码可读性、可维护性<br><strong>方法</strong>：<br>拆分阶段<br>搬移函数<br>提炼函数<br>提炼类</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/03/%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -284,133 +381,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/01/Bean/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Gzz">
-      <meta itemprop="description" content="只要开始就不算晚">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="香饽饽">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/04/01/Bean/" class="post-title-link" itemprop="url">Bean</a>
-        </h2>
-
-        <div class="post-meta">
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-04-01 21:31:30 / 修改时间：21:43:20" itemprop="dateCreated datePublished" datetime="2022-04-01T21:31:30+08:00">2022-04-01</time>
-            </span>
-
-          
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-              <span>1.1k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2><span id="循环依赖">循环依赖</span></h2><p>谈到循环依赖要先了解spring bean的生命周期</p>
-<h3><span id="一-加载数据">一. 加载数据</span></h3><p>普通Java对象：以class作为模板创建出具体的实例</p>
-<p>Spring Bean：除了用Class对象外，还用了BeanDefinition实例来描述对象信息</p>
-<p>Spring在启动时需要扫描使用了 <strong>xml</strong>  <strong>注解</strong>  **javaconfig **中需要被Spring管理的Bean信息，随后把信息封装为BeanDefinition，最后把信息放在beanDefinitionMap中，key为beanName，value为BeanDefinition。</p>
-<p>接着遍历beanDefinitionMap，执行BeanFactoryPostProcesser工厂后置处理器的处理逻辑。这里如果想获取bean的数据进行修改的话，通过自定义BeanFactoryPostProcesser来实现</p>
-<h3><span id="二-实例化">二.  实例化</span></h3><h3><span id="三-属性填充">三. 属性填充</span></h3><h3><span id="四-初始化">四. 初始化</span></h3><p>判断该Bean是否实现了Aware相关的接口，如果存在则填充相关的资源</p>
-<p>到了BeanPostProcessor后置处理器（是AOP实现的关键）</p>
-<p>执行BeanPostProcessor相关子类的before方法</p>
-<p>执行init方法，执行顺序为@PostConstruct，实现了initializingbean接口，是否自己定义了init-method方法。</p>
-<h3><span id="五-使用">五.  使用</span></h3><h3><span id="六-销毁">六. 销毁</span></h3><p>看是否实现了diposableBean接口，执行destory方法，或者自己定义了destory-method属性</p>
-<h3><span id="注解xmljavaconfig">注解，xml，javaconfig</span></h3><table>
-<thead>
-<tr>
-<th></th>
-<th>xml</th>
-<th>注解</th>
-<th>config</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>便利性</td>
-<td>不便利</td>
-<td>便利</td>
-<td>不便利</td>
-</tr>
-<tr>
-<td>修改之后是否需要重编译</td>
-<td>不</td>
-<td>需要</td>
-<td>需要</td>
-</tr>
-<tr>
-<td>自由度</td>
-<td>低</td>
-<td>低</td>
-<td>高</td>
-</tr>
-<tr>
-<td>是否可以注入不是自己维护的类</td>
-<td>可以</td>
-<td>不可以</td>
-<td>可以</td>
-</tr>
-</tbody></table>
-<p>现在通常使用注解加config</p>
-<p>只有当需要注入代码不是自己维护的第三方jar包中的类时，或者需要更为灵活地注入，比如说需要调用某个接口，查询数据，然后把这个数据赋值给要注入的对象，那么这时候就需要用到Java Config（面向接口开发）。</p>
-<h2><span id="循环依赖">循环依赖</span></h2><p>A包含B，B包含A</p>
-<p>使用三级缓存</p>
-<p>singletonObjects：一级：正式对象</p>
-<p>earlySingletonObjects：二级：半成品（考虑性能）</p>
-<p>sinletonFactories：三级：工厂（为了代理，可以直接从里面拿代理对象，放在二级缓存）</p>
-<p>创建A时：实例化后，把自己扔在三级缓存，key时beanName，value是ObjectFactory。</p>
-<p>注入属性时发现B还没创建，然后实例化B，B属性注入A，A放在二级缓存中，然后B完成创建，自然A也就可以完成了。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -482,7 +452,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">49</span>
+          <span class="site-state-item-count">50</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -561,18 +531,18 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">209k</span>
+    <span title="站点总字数">210k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">3:10</span>
+    <span title="站点阅读时长">3:11</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共83.6k字</span>
+  <span class="post-count">博客全站共84.1k字</span>
 </div>
 
     <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>

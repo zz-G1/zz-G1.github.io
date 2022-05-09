@@ -195,6 +195,153 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/18/%E6%8B%A6%E6%88%AA%E5%99%A8%E4%B8%8E%E8%BF%87%E6%BB%A4%E5%99%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Gzz">
+      <meta itemprop="description" content="只要开始就不算晚">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="香饽饽">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/09/18/%E6%8B%A6%E6%88%AA%E5%99%A8%E4%B8%8E%E8%BF%87%E6%BB%A4%E5%99%A8/" class="post-title-link" itemprop="url">拦截器与过滤器</a>
+        </h2>
+
+        <div class="post-meta">
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-09-18 20:46:41" itemprop="dateCreated datePublished" datetime="2021-09-18T20:46:41+08:00">2021-09-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-09-20 20:48:17" itemprop="dateModified" datetime="2021-09-20T20:48:17+08:00">2021-09-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/spring-mvc/" itemprop="url" rel="index"><span itemprop="name">spring mvc</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+              <span>1.4k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1><span id="拦截器与过滤器">拦截器与过滤器</span></h1><ul>
+<li><p>过滤器还得配置静态资源过滤，拦截器只会拦截访问的控制器方法，如访问静态资源是不会拦截的</p>
+</li>
+<li><p>拦截器是AOP思想的具体运用，是springmvc框架自己的，使用了springmvc框架的工程才能使用b</p>
+</li>
+<li><p>继承拦截器不许重写，继承过滤器需要重写方法</p>
+</li>
+</ul>
+<p>在web-INF下的所有页面只能通过controller或者servlet访问</p>
+<h2><span id="实现拦截器">实现拦截器</span></h2><p>定义个性化拦截器</p>
+<ol>
+<li><p>实现拦截器接口</p>
+<pre><code class="java">package com.zz.config;
+
+import org.springframework.web.servlet.HandlerInterceptor;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+public class LoignIntercepter implements HandlerInterceptor &#123;
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception &#123;
+        HttpSession httpSession= request.getSession();
+        System.out.println(&quot;uri&quot;+request.getRequestURI());
+
+        //如跳转的是登录页面
+        if(request.getRequestURI().contains(&quot;login&quot;))&#123;
+            return true;
+        &#125;
+
+
+        if(httpSession.getAttribute(&quot;userlogininfo&quot;)!=null)&#123;
+            return true;
+        &#125;
+        //执行到这里说明用户没有登陆
+        // 用户没有登陆就跳转到登陆页面
+        request.getRequestDispatcher(&quot;/WEB-INF/jsp/login.jsp&quot;).forward(request,response);
+        return false;
+    &#125;
+&#125;
+</code></pre>
+</li>
+<li><p>在applicationcontext.xml里配置</p>
+<pre><code class="java">&lt;mvc:interceptors&gt;
+        &lt;mvc:interceptor&gt;
+            &lt;!--包括这个请求下所有的请求--&gt;
+            &lt;mvc:mapping path=&quot;/**&quot;/&gt;
+            &lt;bean class=&quot;com.zz.config.MyInterceptor&quot;/&gt;
+        &lt;/mvc:interceptor&gt;
+        &lt;mvc:interceptor&gt;
+            &lt;mvc:mapping path=&quot;/**&quot;/&gt;
+            &lt;bean class=&quot;com.zz.config.LoignIntercepter&quot;/&gt;
+        &lt;/mvc:interceptor&gt;
+    &lt;/mvc:interceptors&gt;
+</code></pre>
+</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/18/ajax%E6%80%BB%E7%BB%93/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -385,210 +532,6 @@ public class AjaxController &#123;
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/15/Restful%E8%AF%A6%E8%A7%A3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Gzz">
-      <meta itemprop="description" content="只要开始就不算晚">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="香饽饽">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/09/15/Restful%E8%AF%A6%E8%A7%A3/" class="post-title-link" itemprop="url">Restful详解</a>
-        </h2>
-
-        <div class="post-meta">
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-09-15 21:28:35 / 修改时间：22:02:53" itemprop="dateCreated datePublished" datetime="2021-09-15T21:28:35+08:00">2021-09-15</time>
-            </span>
-
-          
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-              <span>3.9k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-              <span>4 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2><span id="资源与uri">资源与URI</span></h2><p>REST全称是表述性状态转移，那究竟指的是什么的表述? 其实指的就是资源。</p>
-<p>要让一个资源可以被识别，需要有个唯一标识，在Web中这个唯一标识就是URI(Uniform Resource Identifier)。</p>
-<h3><span id="uri的设计技巧">URI的设计技巧</span></h3><ul>
-<li>使用_或-来让URI可读性更好  <strong>例子</strong>：<a target="_blank" rel="noopener" href="http://www.oschina.net/news/38119/oschina-translate-reward-plan">http://www.oschina.net/news/38119/oschina-translate-reward-plan</a></li>
-<li>使用/来表示资源的层级关系  <strong>例子</strong>：/orders/2012/10可以用来表示2012年10月的订单记录。</li>
-<li>使用?用来过滤资源  <strong>例子</strong>：很多人只是把?简单的当做是参数的传递，很容易造成URI过于复杂、难以理解。可以把?用于对资源的过滤， 例如/git/git/pulls用来表示git项目的所有推入请求，而/pulls?state=closed用来表示git项目中已经关闭的推入请求， 这种URL通常对应的是一些特定条件的查询结果或算法运算结果。</li>
-<li>,或;可以用来表示同级资源的关系 <strong>例子</strong>：例如哪天github可以比较某个文件在随意两次提交记录之间的差异，或许可以用；连接两个文件。</li>
-</ul>
-<h2><span id="统一资源接口">统一资源接口</span></h2><p>RESTful架构应该遵循统一接口原则，统一接口包含了一组受限的预定义的操作，不论什么样的资源，都是通过使用相同的接口进行资源的访问。接口应该使用标准的HTTP方法如GET，PUT和POST，并遵循这些方法的语义。</p>
-<p>如果按照HTTP方法的语义来暴露资源，那么接口将会拥有安全性和幂等性的特性，例如GET和HEAD请求都是安全的， 无论请求多少次，都不会改变服务器状态。而GET、HEAD、PUT和DELETE请求都是幂等的，无论对资源操作多少次， 结果总是一样的，后面的请求并不会产生比第一次更多的影响。</p>
-<h3><span id="资源的表述">资源的表述</span></h3><p>上面提到，客户端通过HTTP方法可以获取资源，是吧? 不，确切的说，客户端获取的只是资源的表述而已。 资源在外界的具体呈现，可以有多种表述(或成为表现、表示)形式，在客户端和服务端之间传送的也是资源的表述，而不是资源本身。 例如文本资源可以采用html、xml、json等格式，图片可以使用PNG或JPG展现出来。</p>
-<p>资源的表述包括数据和描述数据的元数据，例如，HTTP头”Content-Type” 就是这样一个元数据属性。</p>
-<p>那么客户端如何知道服务端提供哪种表述形式呢?</p>
-<p>答案是可以通过HTTP内容协商，客户端可以通过Accept头请求一种特定格式的表述，服务端则通过Content-Type告诉客户端资源的表述形式。</p>
-<p>以github为例，请求某组织资源的json格式的表述形式:</p>
-<p><img src="/2021/09/15/Restful%E8%AF%A6%E8%A7%A3/291731048886033.jpg" alt="291731048886033"></p>
-<p>假如github也能够支持xml格式的表述格式，那么结果就是这样的:</p>
-<p><img src="/2021/09/15/Restful%E8%AF%A6%E8%A7%A3/291731045756062.jpg" alt="291731045756062"></p>
-<h2><span id="springmvc实现restful服务">SpringMVC实现restful服务:</span></h2><p>SpringMVC原生态的支持了REST风格的架构设计</p>
-<p>所涉及到的注解:</p>
-<p>---@RequestMapping<br> ---@PathVariable<br> ---@ResponseBody</p>
-<pre><code class="java">package cn.itcast.mybatis.controller;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import cn.itcast.mybatis.pojo.User;
-import cn.itcast.mybatis.service.NewUserService;
-
-@RequestMapping(&quot;restful/user&quot;)
-@Controller
-public class RestUserController &#123;
-
-@Autowired
-private NewUserService newUserService;
-
-/**
- * 根据用户id查询用户数据
- * 
- * @param id
- * @return
- */
-@RequestMapping(value = &quot;&#123;id&#125;&quot;, method = RequestMethod.GET)
-@ResponseBody
-public ResponseEntity&lt;User&gt; queryUserById(@PathVariable(&quot;id&quot;) Long id) &#123;
-    try &#123;
-        User user = this.newUserService.queryUserById(id);
-        if (null == user) &#123;
-            // 资源不存在，响应404
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        &#125;
-        // 200
-        // return ResponseEntity.status(HttpStatus.OK).body(user);
-        return ResponseEntity.ok(user);
-    &#125; catch (Exception e) &#123;
-        e.printStackTrace();
-    &#125;
-    // 500
-    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-&#125;
-
-/**
- * 新增用户
- * 
- * @param user
- * @return
- */
-@RequestMapping(method = RequestMethod.POST)
-public ResponseEntity&lt;Void&gt; saveUser(User user) &#123;
-    try &#123;
-        this.newUserService.saveUser(user);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
-    &#125; catch (Exception e) &#123;
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-    &#125;
-    // 500
-    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-&#125;
-
-/**
- * 更新用户资源
- * 
- * @param user
- * @return
- */
-@RequestMapping(method = RequestMethod.PUT)
-public ResponseEntity&lt;Void&gt; updateUser(User user) &#123;
-    try &#123;
-        this.newUserService.updateUser(user);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-    &#125; catch (Exception e) &#123;
-        e.printStackTrace();
-    &#125;
-    // 500
-    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-&#125;
-
-/**
- * 删除用户资源
- * 
- * @param user
- * @return
- */
-@RequestMapping(method = RequestMethod.DELETE)
-public ResponseEntity&lt;Void&gt; deleteUser(@RequestParam(value = &quot;id&quot;, defaultValue = &quot;0&quot;) Long id) &#123;
-    try &#123;
-        if (id.intValue() == 0) &#123;
-            // 请求参数有误
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        &#125;
-        this.newUserService.deleteUserById(id);
-        // 204
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-    &#125; catch (Exception e) &#123;
-        e.printStackTrace();
-    &#125;
-    // 500
-    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-&#125;
-&#125;
-</code></pre>
-<p>出自：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/7893169a7c93">RESTful接口详解 - 简书 (jianshu.com)</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -660,7 +603,7 @@ public ResponseEntity&lt;Void&gt; deleteUser(@RequestParam(value = &quot;id&quot
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">49</span>
+          <span class="site-state-item-count">50</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -739,18 +682,18 @@ public ResponseEntity&lt;Void&gt; deleteUser(@RequestParam(value = &quot;id&quot
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">209k</span>
+    <span title="站点总字数">210k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">3:10</span>
+    <span title="站点阅读时长">3:11</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共83.6k字</span>
+  <span class="post-count">博客全站共84.1k字</span>
 </div>
 
     <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>

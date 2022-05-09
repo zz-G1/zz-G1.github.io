@@ -22,17 +22,21 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="只要开始就不算晚">
-<meta property="og:type" content="website">
-<meta property="og:title" content="香饽饽">
-<meta property="og:url" content="http://example.com/tags/%E5%AE%9E%E4%B9%A0%E5%BC%80%E5%8F%91/index.html">
+  <meta name="description" content="参数过长影响： 方法不易被理解、使用，方法签名容易不稳定，不易维护 解决方法：反复使用提炼方法+内联方法，消除多余参数 ​                   尽量把方法移进相关的类中 ​                   如实体类中的get方法在其他类中没有被调用可以删除 ​                   实际工作中，可以结合参数数量、以及自身对业务的理解，在 最小知道 和 保持对象完">
+<meta property="og:type" content="article">
+<meta property="og:title" content="重构">
+<meta property="og:url" content="http://example.com/2022/04/22/%E9%87%8D%E6%9E%84/index.html">
 <meta property="og:site_name" content="香饽饽">
-<meta property="og:description" content="只要开始就不算晚">
+<meta property="og:description" content="参数过长影响： 方法不易被理解、使用，方法签名容易不稳定，不易维护 解决方法：反复使用提炼方法+内联方法，消除多余参数 ​                   尽量把方法移进相关的类中 ​                   如实体类中的get方法在其他类中没有被调用可以删除 ​                   实际工作中，可以结合参数数量、以及自身对业务的理解，在 最小知道 和 保持对象完">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2022/04/22/%E9%87%8D%E6%9E%84/1650624089842.png">
+<meta property="article:published_time" content="2022-04-22T10:31:55.000Z">
+<meta property="article:modified_time" content="2022-05-01T13:31:00.412Z">
 <meta property="article:author" content="Gzz">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2022/04/22/%E9%87%8D%E6%9E%84/1650624089842.png">
 
-<link rel="canonical" href="http://example.com/tags/%E5%AE%9E%E4%B9%A0%E5%BC%80%E5%8F%91/">
+<link rel="canonical" href="http://example.com/2022/04/22/%E9%87%8D%E6%9E%84/">
 
 
 <script id="page-configurations">
@@ -40,12 +44,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>标签: 实习开发 | 香饽饽</title>
+  <title>重构 | 香饽饽</title>
   
 
 
@@ -189,51 +193,181 @@
         <div class="content-wrap">
           
 
-          <div class="content tag">
+          <div class="content post posts-expand">
             
 
+    
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <h2 class="collection-header">实习开发
-          <small>标签</small>
-        </h2>
-      </div>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/22/%E9%87%8D%E6%9E%84/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Gzz">
+      <meta itemprop="description" content="只要开始就不算晚">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="香饽饽">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          重构
+        </h1>
+
+        <div class="post-meta">
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-04-22 18:31:55" itemprop="dateCreated datePublished" datetime="2022-04-22T18:31:55+08:00">2022-04-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-05-01 21:31:00" itemprop="dateModified" datetime="2022-05-01T21:31:00+08:00">2022-05-01</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+              <span>646</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <span class="collection-header">2021</span>
+        <p><img src="/2022/04/22/%E9%87%8D%E6%9E%84/1650624089842.png" alt="1650624089842"></p>
+<h2><span id="参数过长">参数过长</span></h2><p><strong>影响</strong>：</p>
+<p>方法不易被理解、使用，方法签名容易不稳定，不易维护</p>
+<p>解决方法：反复使用提炼方法+内联方法，消除多余参数</p>
+<p>​                   尽量把方法移进相关的类中</p>
+<p>​                   如实体类中的get方法在其他类中没有被调用可以删除</p>
+<p>​                   实际工作中，可以结合参数数量、以及自身对业务的理解，在 最小知道 和 保持对象完整性 之间进行权衡</p>
+<h2><span id="全局变量">全局变量</span></h2><p><strong>影响</strong>：可以在任何位置进行修改，在使用过程中可能出现意想不到的值，并且没有任何机制可以探测出哪段代码进行了修改，导致定位困难</p>
+<p><strong>改进目标</strong>：</p>
+<p>降低代码耦合性，保持代码清晰，维护简单，降低由于对全局数据随意的改变引发bug的风险</p>
+<p><strong>方法</strong>：封装变量，提炼函数</p>
+<p>使用Convert To Instance Method替换项目中使用静态方法的地方，进行重构</p>
+<p>如果想避免其他类中引用本类的字段，修饰符改为private</p>
+<h2><span id="可变数据">可变数据</span></h2><p><strong>影响</strong>：</p>
+<p>影响可维护性，在一处修改数据，却在另一处造成难以发现的破坏<br><strong>改进目标</strong>：</p>
+<p>应用“数据不可变”：不可变性是强大的代码防腐剂<br><strong>方法</strong>：<br>封装变量、拆分变量、提炼函数、移除设值，函数、查询取代派生、Builder模式创建不可变对象、引用对象改为值对象、函数式编程等</p>
+<h2><span id="发散式变化">发散式变化</span></h2><p><strong>定义</strong>：<br>某个模块经常因为不同的原因在不同的方向上发生变化<br><strong>影响</strong>：<br>通常，发散式变化是由于多个变化方向之间有较多的来回调用或者函数内部混合了多类处理逻辑。当处于多个不同上下文的外部行为发生变化时候，都会引起对同一个类或模块的修改，影响了代码的可读和可维护性<br><strong>改进目标</strong>：<br>提高代码组织结构、职责单一提升代码可读性、可维护性<br><strong>方法</strong>：<br>拆分阶段<br>搬移函数<br>提炼函数<br>提炼类</p>
+
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+    
+    
+    
 
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-12-22T09:52:18+08:00"
-              content="2021-12-22">
-          12-22
-        </time>
+    
+      <div>
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:24px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+      </div>
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="Gzz 微信支付">
+        <p>微信支付</p>
       </div>
 
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/12/22/%E5%AE%9E%E4%B9%A0%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%95/" itemprop="url">
-            <span itemprop="name">实习开发记录</span>
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Gzz
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://example.com/2022/04/22/%E9%87%8D%E6%9E%84/" title="重构">http://example.com/2022/04/22/重构/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
           </a>
-      </div>
-
-    </header>
-  </article>
-
+        </div>
     </div>
   </div>
-  
-  
-  
 
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/04/03/%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE/" rel="prev" title="自动配置">
+      <i class="fa fa-chevron-left"></i> 自动配置
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
   
 
 
@@ -286,6 +420,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">参数过长</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">全局变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">可变数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">发散式变化</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
