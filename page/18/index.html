@@ -195,200 +195,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/18/ajax%E6%80%BB%E7%BB%93/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Gzz">
-      <meta itemprop="description" content="只要开始就不算晚">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="香饽饽">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/09/18/ajax%E6%80%BB%E7%BB%93/" class="post-title-link" itemprop="url">ajax总结</a>
-        </h2>
-
-        <div class="post-meta">
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-09-18 19:35:00" itemprop="dateCreated datePublished" datetime="2021-09-18T19:35:00+08:00">2021-09-18</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-10-13 17:04:21" itemprop="dateModified" datetime="2021-10-13T17:04:21+08:00">2021-10-13</time>
-              </span>
-
-          
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-              <span>3.1k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-              <span>3 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1><span id="ajax">Ajax</span></h1><p>现在对Ajax的理解就是简简单单地优化用户体验</p>
-<p>Ajax的核心是XMLHttpRequest对象(XHR)。XHR为向服务器发送请求和解析服务器响应提供了接口。能够以异步方式从服务器获取新数据。</p>
-<p>jQuery 提供多个与 AJAX 有关的方法。</p>
-<p><strong>实现异步验证用户名</strong></p>
-<p>新建一个maven项目，增加web支持，<strong>配置好tomcat服务器</strong>（就配置这破玩意二花了我两天！！！！！！！如有问题：首先新建一个项目，不要再原项目下新建一个modle；接下来就是配置好tomcat的deployment）</p>
-<p><img src="/2021/09/18/ajax%E6%80%BB%E7%BB%93/image-20210918194117558.png" alt="image-20210918194117558"></p>
-<img src="/2021/09/18/ajax%E6%80%BB%E7%BB%93/image-20210918194214940.png" alt="image-20210918194214940" style="zoom: 50%;">
-
-<p>如没有Artifact，点击加号把现项目以war包形式发布，点击🆗即可。</p>
-<p><img src="/2021/09/18/ajax%E6%80%BB%E7%BB%93/image-20210918194435095.png" alt="image-20210918194435095"></p>
-<p><img src="/2021/09/18/ajax%E6%80%BB%E7%BB%93/image-20210918194456928.png" alt="image-20210918194456928"></p>
-<p>如项目部署成功访问controller显示500，原因可能是spring版本和tomcat版本不匹配，我的之前有问题的就是因为用的是tomcat6，换成tomcat9就好了。还有还有：：：：<strong>记得在project structure里面的artifacts项里配置lib目录</strong>。</p>
-<h2><span id="言归正传">言归正传</span></h2><p>开始实现功能了🧨🧨🧨🎠🎠🎠🎊🎊🎊</p>
-<p>实现效果简单的来说就是输入账号名和密码，当鼠标离开输入框也就是失去焦点，页面会自动显示正确或错误/<img src="/2021/09/18/ajax%E6%80%BB%E7%BB%93/image-20210918195233626.png" alt="image-20210918195233626"></p>
-<p><img src="/2021/09/18/ajax%E6%80%BB%E7%BB%93/image-20210918195314836.png" alt="image-20210918195314836"></p>
-<p>首先编写controller层（UserController）</p>
-<ul>
-<li>记得控制类前要加@Restcontroller注解，就会以json形式返回前台数据</li>
-</ul>
-<pre><code class="java">package com.zz.controller;
-
-import com.zz.pojo.User;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.HttpMediaTypeException;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import javax.security.auth.login.CredentialException;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-@RestController
-public class AjaxController &#123;
-
-   
-
-    @RequestMapping(&quot;/a3&quot;)
-    public String ajax3(String name,String pwd)&#123;
-        String msg = &quot;&quot;;
-        //模拟数据库中存在数据
-        if (name!=null)&#123;
-            if (&quot;admin&quot;.equals(name))&#123;
-                msg = &quot;OK&quot;;
-            &#125;else &#123;
-                msg = &quot;用户名输入错误&quot;;
-            &#125;
-        &#125;
-        if (pwd!=null)&#123;
-            if (&quot;123456&quot;.equals(pwd))&#123;
-                msg = &quot;OK&quot;;
-            &#125;else &#123;
-                msg = &quot;密码输入有误&quot;;
-            &#125;
-        &#125;
-        return msg; //由于@RestController注解，将msg转成json格式返回
-    &#125;
-&#125;
-</code></pre>
-<p>然后从网上下载jquery，放在项目的web包中，然后编写login.jsp页面</p>
-<pre><code class="jsp">&lt;%@ page contentType=&quot;text/html;charset=UTF-8&quot; language=&quot;java&quot; %&gt;
-&lt;html&gt;
-&lt;head&gt;
-  &lt;title&gt;ajax&lt;/title&gt;
-  &lt;script src=&quot;$&#123;pageContext.request.contextPath&#125;/statics/js/jquery.js&quot;&gt;&lt;/script&gt;
-  &lt;script&gt;
-
-    function a1()&#123;
-      $.post(&#123;
-        url:&quot;$&#123;pageContext.request.contextPath&#125;/a3&quot;,
-        data:&#123;&#39;name&#39;:$(&quot;#name&quot;).val()&#125;,
-        success:function (data) &#123;
-          if (data.toString()==&#39;OK&#39;)&#123;
-            $(&quot;#userInfo&quot;).css(&quot;color&quot;,&quot;green&quot;);
-          &#125;else &#123;
-            $(&quot;#userInfo&quot;).css(&quot;color&quot;,&quot;red&quot;);
-          &#125;
-          $(&quot;#userInfo&quot;).html(data);
-        &#125;
-      &#125;);
-    &#125;
-    function a2()&#123;
-      $.post(&#123;
-        url:&quot;$&#123;pageContext.request.contextPath&#125;/a3&quot;,
-        data:&#123;&#39;pwd&#39;:$(&quot;#pwd&quot;).val()&#125;,
-        success:function (data) &#123;
-          if (data.toString()==&#39;OK&#39;)&#123;
-            $(&quot;#pwdInfo&quot;).css(&quot;color&quot;,&quot;green&quot;);
-          &#125;else &#123;
-            $(&quot;#pwdInfo&quot;).css(&quot;color&quot;,&quot;red&quot;);
-          &#125;
-          $(&quot;#pwdInfo&quot;).html(data);
-        &#125;
-      &#125;);
-    &#125;
-
-  &lt;/script&gt;
-&lt;/head&gt;
-&lt;body&gt;
-&lt;p&gt;
-  用户名:&lt;input type=&quot;text&quot; id=&quot;name&quot; onblur=&quot;a1()&quot;/&gt;
-  &lt;span id=&quot;userInfo&quot;&gt;&lt;/span&gt;
-&lt;/p&gt;
-&lt;p&gt;
-  密码:&lt;input type=&quot;text&quot; id=&quot;pwd&quot; onblur=&quot;a2()&quot;/&gt;
-  &lt;span id=&quot;pwdInfo&quot;&gt;&lt;/span&gt;
-&lt;/p&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre>
-<p>到现在启动服务器就可以看到啦，成功后在浏览器查看时每失去焦点时都会向后台发送请求，也是<strong>Ajax的独特之处，把主动权交给了前端。</strong></p>
-<p>放一下项目结构图吧</p>
-<p><img src="/2021/09/18/ajax%E6%80%BB%E7%BB%93/image-20210918200158409.png" alt="image-20210918200158409"></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/15/Restful%E8%AF%A6%E8%A7%A3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -589,10 +395,130 @@ public ResponseEntity&lt;Void&gt; deleteUser(@RequestParam(value = &quot;id&quot
   
   
 
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/13/java%E5%9B%9B%E7%A7%8D%E7%BA%BF%E7%A8%8B%E6%B1%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Gzz">
+      <meta itemprop="description" content="只要开始就不算晚">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="香饽饽">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/09/13/java%E5%9B%9B%E7%A7%8D%E7%BA%BF%E7%A8%8B%E6%B1%A0/" class="post-title-link" itemprop="url">java四种线程池</a>
+        </h2>
+
+        <div class="post-meta">
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-09-13 17:02:09 / 修改时间：17:21:09" itemprop="dateCreated datePublished" datetime="2021-09-13T17:02:09+08:00">2021-09-13</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BA%BF%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">线程</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+              <span>604</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2><span id="普通创建线程new-thead弊端">普通创建线程(new Thead)弊端</span></h2><pre><code class="Java">new Thread(new Runnable() &#123;
+ 
+@Override
+public void run() &#123;
+// TODO Auto-generated method stub
+&#125;
+&#125;).start();
+</code></pre>
+<p>new Thread弊端如下：</p>
+<p>Java提供的四种线程池好处如下：</p>
+<table>
+<thead>
+<tr>
+<th align="center">Java四种线程</th>
+<th align="center">new Thread</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">重复利用存在的线程，减少对象创建，消亡的开销，性能佳</td>
+<td align="center">每次new Thread新建对象性能差</td>
+</tr>
+<tr>
+<td align="center">可有效控制最大并发线程数，提高系统资源的使用率</td>
+<td align="center">线程缺乏统一管理，可能无限制创建新线程，相互之间争夺资源，导致死机</td>
+</tr>
+<tr>
+<td align="center">提供定时执行、定期执行、单线程、并发数控制等功能。</td>
+<td align="center">缺乏更多功能如：定时执行，定期执行，线程中断</td>
+</tr>
+</tbody></table>
+<h2><span id="java线程池">Java线程池</span></h2><p>Java通过Executors提供四种线程池，分别为：</p>
+<ul>
+<li>newCachedThreadPool创建一个可缓存线程池，如果线程池长度超过处理需要，可灵活回收空闲线程，若无可回收，则新建线程。</li>
+<li>newFixedThreadPool 创建一个定长线程池，可控制线程最大并发数，超出的线程会在队列中等待。</li>
+<li>newScheduledThreadPool 创建一个定长线程池，支持定时及周期性任务执行。</li>
+<li>newSingleThreadExecutor 创建一个单线程化的线程池，它只会用唯一的工作线程来执行任务，保证所有任务按照指定顺序(FIFO, LIFO, 优先级)执行。</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/17/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><span class="page-number current">18</span><a class="page-number" href="/page/19/">19</a><span class="space">&hellip;</span><a class="page-number" href="/page/26/">26</a><a class="extend next" rel="next" href="/page/19/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/17/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><span class="page-number current">18</span><a class="page-number" href="/page/19/">19</a><span class="space">&hellip;</span><a class="page-number" href="/page/25/">25</a><a class="extend next" rel="next" href="/page/19/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -660,7 +586,7 @@ public ResponseEntity&lt;Void&gt; deleteUser(@RequestParam(value = &quot;id&quot
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">51</span>
+          <span class="site-state-item-count">50</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -750,7 +676,7 @@ public ResponseEntity&lt;Void&gt; deleteUser(@RequestParam(value = &quot;id&quot
   </div>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共86.2k字</span>
+  <span class="post-count">博客全站共86k字</span>
 </div>
 
     <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
