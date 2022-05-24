@@ -195,6 +195,162 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/08/%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Gzz">
+      <meta itemprop="description" content="只要开始就不算晚">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="香饽饽">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/11/08/%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6/" class="post-title-link" itemprop="url">消息中间件</a>
+        </h2>
+
+        <div class="post-meta">
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-11-08 22:14:29" itemprop="dateCreated datePublished" datetime="2021-11-08T22:14:29+08:00">2021-11-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-11-09 12:44:08" itemprop="dateModified" datetime="2021-11-09T12:44:08+08:00">2021-11-09</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+              <span>761</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1><span id="基于消息中间件的分布式系统的架构">基于消息中间件的分布式系统的架构</span></h1><h2><span id="消息中间件应用的场景">消息中间件应用的场景</span></h2><p>1:跨系统数据传递<br>2:高并发的流量削峰<br>3:数据的分发和异步处理<br>4:大数据分析与传递<br>5:分布式事务<br>比如你有一个数据要进行迁移或者请求并发过多的时候，比如你有10W的并发请求下订单，我们可以在这些订单入库之前，我们可以把订单请求堆积到消息队列中，让它稳健可靠的入库和执行。</p>
+<h2><span id="常见的消息中间件">常见的消息中间件</span></h2><p>ActiveMQ、RabbitMQ、Kafka、RocketMQ等。</p>
+<p>MQ消息队列：负责数据的传接受，存储和传递，所以性能要过于普通服务和技术。</p>
+<h2><span id="消息中间件的核心组成部分">消息中间件的核心组成部分</span></h2><p>1：消息的协议<br>2：消息的持久化机制<br>3：消息的分发策略<br>4：消息的高可用，高可靠<br>5：消息的容错机制</p>
+<h2><span id="消息队列协议">消息队列协议</span></h2><p><strong>面试题：为什么消息中间件不直接使用http协议呢？</strong><br>1: 因为http请求报文头和响应报文头是比较复杂的，包含了cookie，数据的加密解密，状态码，响应码等附加的功能，但是对于一个消息而言，我们并不需要这么复杂，也没有这个必要性，它其实就是负责数据传递，存储，分发就行，一定要追求的是高性能。尽量简洁，快速。<br>2:大部分情况下http大部分都是短链接，在实际的交互过程中，一个请求到响应很有可能会中断，中断以后就不会就行持久化，就会造成请求的丢失。这样就不利于消息中间件的业务场景，因为消息中间件可能是一个长期的获取消息的过程，出现问题和故障要对数据或消息就行持久化等，目的是为了保证消息和数据的高可靠和稳健的运行。</p>
+<h3><span id="常见的持久化方式">常见的持久化方式</span></h3><table>
+<thead>
+<tr>
+<th></th>
+<th>ActiveMQ</th>
+<th>RabbitMQ</th>
+<th><strong>Kafka</strong></th>
+<th>RocketMQ</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>文件存储</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+</tr>
+<tr>
+<td>数据库</td>
+<td>支持</td>
+<td>/</td>
+<td>/</td>
+<td>/</td>
+</tr>
+</tbody></table>
+<h2><span id="消息分发策略的机制和对比">消息分发策略的机制和对比</span></h2><table>
+<thead>
+<tr>
+<th></th>
+<th>ActiveMQ</th>
+<th>RabbitMQ</th>
+<th>Kafka</th>
+<th>RocketMQ</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>发布订阅</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+</tr>
+<tr>
+<td>轮询分发</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+<td>/</td>
+</tr>
+<tr>
+<td>公平分发</td>
+<td>/</td>
+<td>支持</td>
+<td>支持</td>
+<td>/</td>
+</tr>
+<tr>
+<td>重发</td>
+<td>支持</td>
+<td>支持</td>
+<td>/</td>
+<td>支持</td>
+</tr>
+<tr>
+<td>消息拉取</td>
+<td>/</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+</tr>
+</tbody></table>
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/04/Redis/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1012,226 +1168,10 @@ sentinel client-reconfig-script mymaster /var/redis/reconfig.sh
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/02/dubbo/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Gzz">
-      <meta itemprop="description" content="只要开始就不算晚">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="香饽饽">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/11/02/dubbo/" class="post-title-link" itemprop="url">dubbo</a>
-        </h2>
-
-        <div class="post-meta">
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-11-02 16:19:06" itemprop="dateCreated datePublished" datetime="2021-11-02T16:19:06+08:00">2021-11-02</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-11-04 11:36:13" itemprop="dateModified" datetime="2021-11-04T11:36:13+08:00">2021-11-04</time>
-              </span>
-
-          
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-              <span>7.7k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-              <span>7 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1><span id="dubbo">Dubbo</span></h1><h2><span id="rpc框架">RPC框架</span></h2><p>RPC【Remote Procedure Call】是指远程过程调用，是一种进程间通信方式，他是一种技术的思想，而不是规范。</p>
-<p>Apache Dubbo (incubating) 是一款高性能、轻量级的开源Java RPC框架，它提供了三大核心能力：面向接口的远程方法调用，智能容错和负载均衡，以及服务自动注册和发现</p>
-<h2><span id="注册中心-zookeeperregistry">注册中心 zookeeper(Registry)</span></h2><p><img src="/2021/11/02/dubbo/image-20211102170838813.png" alt="image-20211102170838813"></p>
-<p><strong>服务提供者</strong>（<strong>Provider</strong>）：暴露服务的服务提供方，服务提供者在启动时，向注册中心注册自己提供的服务。</p>
-<p><strong>服务消费者</strong>（<strong>Consumer</strong>）: 调用远程服务的服务消费方，服务消费者在启动时，向注册中心订阅自己所需的服务，服务消费者，从提供者地址列表中，基于软负载均衡算法，选一台提供者进行调用，如果调用失败，再选另一台调用。</p>
-<p><strong>注册中心</strong>（<strong>Registry</strong>）：注册中心返回服务提供者地址列表给消费者，如果有变更，注册中心将基于长连接推送变更数据给消费者</p>
-<p><strong>监控中心</strong>（<strong>Monitor</strong>）：服务消费者和提供者，在内存中累计调用次数和调用时间，定时每分钟发送一次统计数据到监控中心</p>
-<h1><span id="dubbo配置">dubbo配置</span></h1><h2><span id="1-配置原则">1、配置原则</span></h2><p><img src="/2021/11/02/dubbo/wpsBCDE.tmp.png" alt="img"> </p>
-<p>JVM 启动 -D 参数优先，这样可以使用户在部署和启动时进行参数重写，比如在启动时需改变协议的端口。</p>
-<p>XML 次之，如果在 XML 中有配置，则 dubbo.properties 中的相应配置项无效。</p>
-<p>Properties 最后，相当于缺省值，只有 XML 没有配置时，dubbo.properties 的相应配置项才会生效，通常用于共享公共配置，比如应用名。</p>
-<h2><span id="2-重试次数">2、重试次数</span></h2><p>失败自动切换，当出现失败，重试其它服务器，但重试会带来更长延迟。可通过 retries=”2” 来设置重试次数(不含第一次)。</p>
-<p>重试次数配置如下</p>
-<pre><code class="xml">&lt;dubbo:service retries=&quot;2&quot; /&gt;
-或&lt;dubbo:reference retries=&quot;2&quot; /&gt;
-或&lt;dubbo:reference&gt;&lt;dubbo:method name=&quot;findFoo&quot; retries=&quot;2&quot; /&gt;&lt;/dubbo:reference&gt;
-</code></pre>
-<h2><span id="3-超时时间">3、超时时间</span></h2><p>由于网络或服务端不可靠，会导致调用出现一种不确定的中间状态（超时）。为了避免超时导致客户端资源（线程）挂起耗尽，必须设置超时时间。</p>
-<h3><span id="1-dubbo消费端">1、Dubbo消费端</span></h3><pre><code class="xml">全局超时配置
-&lt;dubbo:consumer timeout=&quot;5000&quot; /&gt; 
-指定接口以及特定方法超时配置
-&lt;dubbo:reference interface=&quot;com.foo.BarService&quot; timeout=&quot;2000&quot;&gt;  
-    &lt;dubbo:method name=&quot;sayHello&quot; timeout=&quot;3000&quot; /&gt;
-&lt;/dubbo:reference&gt;
-</code></pre>
-<h3><span id="2-dubbo服务端">2、Dubbo服务端</span></h3><pre><code class="xml">全局超时配置&lt;dubbo:provider timeout=&quot;5000&quot; /&gt; 
-指定接口以及特定方法超时配置
-&lt;dubbo:provider interface=&quot;com.foo.BarService&quot; timeout=&quot;2000&quot;&gt;  &lt;dubbo:method name=&quot;sayHello&quot; timeout=&quot;3000&quot; /&gt;
-&lt;/dubbo:provider&gt;
-</code></pre>
-<h3><span id="3-配置原则">3、配置原则</span></h3><p>dubbo推荐在Provider上尽量多配置Consumer端属性：</p>
-<p>1、作服务的提供者，比服务使用方更清楚服务性能参数，如调用的超时时间，合理的重试次数，等等2、在Provider配置后，Consumer不配置则会使用Provider的配置值，即Provider配置可以作为Consumer的缺省值。否则，Consumer会使用Consumer端的全局设置，这对于Provider不可控的，并且往往是不合理的</p>
-<p>配置的覆盖规则：</p>
-<p>\1) 方法级配置别优于接口级别，即小Scope优先 </p>
-<p>\2) Consumer端配置 优于 Provider配置 优于 全局配置，</p>
-<p>\3) 最后是Dubbo Hard Code的配置值（见配置文档）</p>
-<p><img src="/2021/11/02/dubbo/wpsBCDF.tmp.png" alt="img"> </p>
-<h2><span id="4-版本号">4、版本号</span></h2><p>当一个接口实现，出现不兼容升级时，可以用版本号过渡，版本号不同的服务相互间不引用。</p>
-<p>可以按照以下的步骤进行版本迁移：</p>
-<p>在低压力时间段，先升级一半提供者为新版本</p>
-<p>再将所有消费者升级为新版本</p>
-<p>然后将剩下的一半提供者升级为新版本</p>
-<pre><code class="xml">老版本服务提供者配置：
-&lt;dubbo:service interface=&quot;com.foo.BarService&quot; version=&quot;1.0.0&quot; /&gt;
-新版本服务提供者配置：
-&lt;dubbo:service interface=&quot;com.foo.BarService&quot; version=&quot;2.0.0&quot; /&gt; 
-老版本服务消费者配置：&lt;dubbo:reference id=&quot;barService&quot; interface=&quot;com.foo.BarService&quot; version=&quot;1.0.0&quot; /&gt; 
-新版本服务消费者配置：&lt;dubbo:reference id=&quot;barService&quot; interface=&quot;com.foo.BarService&quot; version=&quot;2.0.0&quot; /&gt; 
-如果不需要区分版本，可以按照以下的方式配置：
-&lt;dubbo:reference id=&quot;barService&quot; interface=&quot;com.foo.BarService&quot; version=&quot;*&quot; /&gt;
-</code></pre>
-<h1><span id="三-高可用">三、高可用</span></h1><h2><span id="1-zookeeper宕机与dubbo直连">1、zookeeper宕机与dubbo直连</span></h2><p>现象：zookeeper注册中心宕机，还可以消费dubbo暴露的服务。</p>
-<p>原因：</p>
-<p>健壮性l 监控中心宕掉不影响使用，只是丢失部分采样数据l 数据库宕掉后，注册中心仍能通过缓存提供服务列表查询，但不能注册新服务l 注册中心对等集群，任意一台宕掉后，将自动切换到另一台l <strong>注册中心全部宕掉后，服务提供者和服务消费者仍能通过本地缓存通讯</strong>l 服务提供者无状态，任意一台宕掉后，不影响使用l 服务提供者全部宕掉后，服务消费者应用将无法使用，并无限次重连等待服务提供者恢复 </p>
-<p>高可用：通过设计，减少系统不能提供服务的时间；</p>
-<h2><span id="2-集群下dubbo负载均衡配置">2、集群下dubbo负载均衡配置</span></h2><p>在集群负载均衡时，Dubbo 提供了多种均衡策略，缺省为 random 随机调用。</p>
-<p>负载均衡策略</p>
-<p><strong>Random LoadBalance</strong>随机，按权重设置随机概率。在一个截面上碰撞的概率高，但调用量越大分布越均匀，而且按概率使用权重后也比较均匀，有利于动态调整提供者权重。<strong>RoundRobin LoadBalance</strong>轮循，按公约后的权重设置轮循比率。存在慢的提供者累积请求的问题，比如：第二台机器很慢，但没挂，当请求调到第二台时就卡在那，久而久之，所有请求都卡在调到第二台上。</p>
-<p><strong>LeastActive LoadBalance</strong>最少活跃调用数，相同活跃数的随机，活跃数指调用前后计数差。使慢的提供者收到更少请求，因为越慢的提供者的调用前后计数差会越大。<strong>ConsistentHash LoadBalance</strong>一致性 Hash，相同参数的请求总是发到同一提供者。当某一台提供者挂时，原本发往该提供者的请求，基于虚拟节点，平摊到其它提供者，不会引起剧烈变动。算法参见：<a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Consistent_hashing%E7%BC%BA%E7%9C%81%E5%8F%AA%E5%AF%B9%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8F%82%E6%95%B0">http://en.wikipedia.org/wiki/Consistent_hashing缺省只对第一个参数</a> Hash，如果要修改，请配置 &lt;dubbo:parameter key=”hash.arguments” value=”0,1” /&gt;缺省用 160 份虚拟节点，如果要修改，请配置 &lt;dubbo:parameter key=”hash.nodes” value=”320” /&gt;</p>
-<h2><span id="3-整合hystrix服务熔断与降级处理">3、整合hystrix，服务熔断与降级处理</span></h2><h3><span id="1-服务降级">1、服务降级</span></h3><p><strong>什么是服务降级？</strong></p>
-<p><strong>当服务器压力剧增的情况下，根据实际业务情况及流量，对一些服务和页面有策略的不处理或换种简单的方式处理，从而释放服务器资源以保证核心交易正常运作或高效运作。</strong></p>
-<p>可以通过服务降级功能临时屏蔽某个出错的非关键服务，并定义降级后的返回策略。</p>
-<p>向注册中心写入动态配置覆盖规则：</p>
-<pre><code class="java">RegistryFactory registryFactory = ExtensionLoader.getExtensionLoader(RegistryFactory.class).getAdaptiveExtension();Registry registry = registryFactory.getRegistry(URL.valueOf(&quot;zookeeper://10.20.153.10:2181&quot;));registry.register(URL.valueOf(&quot;override://0.0.0.0/com.foo.BarService?category=configurators&amp;dynamic=false&amp;application=foo&amp;mock=force:return+null&quot;));
-
- 
-</code></pre>
-<p>其中：</p>
-<p>mock=force:return+null 表示消费方对该服务的方法调用都直接返回 null 值，不发起远程调用。用来屏蔽不重要服务不可用时对调用方的影响。</p>
-<p>还可以改为 mock=fail:return+null 表示消费方对该服务的方法调用在失败后，再返回 null 值，不抛异常。用来容忍不重要服务不稳定时对调用方的影响。</p>
-<h3><span id="2-集群容错">2、集群容错</span></h3><p>在集群调用失败时，Dubbo 提供了多种容错方案，缺省为 failover 重试。</p>
-<p><strong>集群容错模式</strong></p>
-<p><strong>Failover Cluster</strong>失败自动切换，当出现失败，重试其它服务器。通常用于读操作，但重试会带来更长延迟。可通过 retries=”2” 来设置重试次数(不含第一次)。 重试次数配置如下：&lt;dubbo:service retries=”2” /&gt;或&lt;dubbo:reference retries=”2” /&gt;或<a href="dubbo:reference">dubbo:reference</a>  &lt;dubbo:method name=”findFoo” retries=”2” /&gt; </p>
-<p><strong>Failfast Cluster</strong>快速失败，只发起一次调用，失败立即报错。通常用于非幂等性的写操作，比如新增记录。 </p>
-<p><strong>Failsafe Cluster</strong>失败安全，出现异常时，直接忽略。通常用于写入审计日志等操作。 <strong>Failback Cluster</strong>失败自动恢复，后台记录失败请求，定时重发。通常用于消息通知操作。 <strong>Forking Cluster</strong>并行调用多个服务器，只要一个成功即返回。通常用于实时性要求较高的读操作，但需要浪费更多服务资源。可通过 forks=”2” 来设置最大并行数。</p>
-<p> <strong>Broadcast Cluster</strong>广播调用所有提供者，逐个调用，任意一台报错则报错 [2]。通常用于通知所有提供者更新缓存或日志等本地资源信息。</p>
-<p> <strong>集群模式配置</strong>按照以下示例在服务提供方和消费方配置集群模式&lt;dubbo:service cluster=”failsafe” /&gt;或&lt;dubbo:reference cluster=”failsafe” /&gt;</p>
-<h3><span id="3-整合hystrix">3、整合hystrix</span></h3><p>Hystrix 旨在通过控制那些访问远程系统、服务和第三方库的节点，从而对延迟和故障提供更强大的容错能力。Hystrix具备拥有回退机制和断路器功能的线程和信号隔离，请求缓存和请求打包，以及监控和配置等功能</p>
-<h4><span id="1-配置spring-cloud-starter-netflix-hystrix"><strong>1、配置spring-cloud-starter-netflix-hystrix</strong></span></h4><p>spring boot官方提供了对hystrix的集成，直接在pom.xml里加入依赖：</p>
-<pre><code class="xml">    &lt;dependency&gt;      
-        &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;                    
-        &lt;artifactId&gt;spring-cloud-starter-netflix-hystrix&lt;/artifactId&gt;      
-        &lt;version&gt;1.4.4.RELEASE&lt;/version&gt;    
-    &lt;/dependency&gt;
-</code></pre>
-<p>然后在Application类上增加@EnableHystrix来启用hystrix starter：</p>
-<pre><code class="java">@SpringBootApplication
-@EnableHystrixpublic 
-class ProviderApplication &#123; 
-</code></pre>
-<h4><span id="2-配置provider端"><strong>2、配置Provider端</strong></span></h4><p>在Dubbo的Provider上增加@HystrixCommand配置，这样子调用就会经过Hystrix代理。</p>
-<pre><code class="java">@Service(version = &quot;1.0.0&quot;)
-public class HelloServiceImpl implements HelloService &#123;  
-    @HystrixCommand(commandProperties = &#123;   
-    @HystrixProperty(name = &quot;circuitBreaker.requestVolumeThreshold&quot;, value = &quot;10&quot;),   
-    @HystrixProperty(name = &quot;execution.isolation.thread.timeoutInMilliseconds&quot;, value = &quot;2000&quot;) &#125;)
-    @Override  
-    public String sayHello(String name) &#123;    
-        // System.out.println(&quot;async provider received: &quot; + name);    
-        // return &quot;annotation: hello, &quot; + name;    
-        throw new RuntimeException(&quot;Exception to show hystrix enabled.&quot;);  &#125;&#125;
-</code></pre>
-<h4><span id="3-配置consumer端"><strong>3、配置Consumer端</strong></span></h4><p>对于Consumer端，则可以增加一层method调用，并在method上配置@HystrixCommand。当调用出错时，会走到fallbackMethod = “reliable”的调用里。</p>
-<pre><code class="java"> @Reference(version = &quot;1.0.0&quot;) 
- private HelloService demoService;  
- @HystrixCommand(fallbackMethod = &quot;reliable&quot;)  
- public String doSayHello(String name) &#123;    
-     return demoService.sayHello(name);  &#125;  
- public String reliable(String name) &#123;    
-    return &quot;hystrix fallback value&quot;;  &#125;
-</code></pre>
-<h1><span id="四-dubbo原理">四、dubbo原理</span></h1><h2><span id="1-rpc原理">1、RPC原理</span></h2><p><img src="/2021/11/02/dubbo/wpsBCEF.tmp.jpg" alt="img"> </p>
-<p>一次完整的RPC调用流程（同步调用，异步另说）如下： <strong>1）服务消费方（client）调用以本地调用方式调用服务；</strong> 2）client stub接收到调用后负责将方法、参数等组装成能够进行网络传输的消息体； 3）client stub找到服务地址，并将消息发送到服务端； 4）server stub收到消息后进行解码； 5）server stub根据解码结果调用本地的服务； 6）本地服务执行并将结果返回给server stub； 7）server stub将返回结果打包成消息并发送至消费方； 8）client stub接收到消息，并进行解码； <strong>9）服务消费方得到最终结果。</strong>RPC框架的目标就是要2~8这些步骤都封装起来，这些细节对用户来说是透明的，不可见的。</p>
-<h2><span id="2-netty通信原理">2、netty通信原理</span></h2><p>Netty是一个异步事件驱动的网络应用程序框架， 用于快速开发可维护的高性能协议服务器和客户端。它极大地简化并简化了TCP和UDP套接字服务器等网络编程。</p>
-<p>BIO：(Blocking IO)</p>
-<p><img src="/2021/11/02/dubbo/wpsBCF0.tmp.jpg" alt="img"> </p>
-<p>NIO (Non-Blocking IO)</p>
-<p><img src="/2021/11/02/dubbo/wpsBCF1.tmp.jpg" alt="img"> </p>
-<p>Selector 一般称 为<strong>选择器</strong> ，也可以翻译为 <strong>多路复用器，</strong></p>
-<p>Connect（连接就绪）、Accept（接受就绪）、Read（读就绪）、Write（写就绪）</p>
-<p>Netty基本原理：</p>
-<p><img src="/2021/11/02/dubbo/wpsBCF2.tmp.jpg" alt="img"> </p>
-<h2><span id="3-dubbo原理">3、dubbo原理</span></h2><h3><span id="1-dubbo原理-框架设计">1、dubbo原理    -框架设计</span></h3><p><img src="/2021/11/02/dubbo/wpsBCF3.tmp.png" alt="img"> </p>
-<p>l config 配置层：对外配置接口，以 ServiceConfig, ReferenceConfig 为中心，可以直接初始化配置类，也可以通过 spring 解析配置生成配置类</p>
-<p>l proxy 服务代理层：服务接口透明代理，生成服务的客户端 Stub 和服务器端 Skeleton, 以 ServiceProxy 为中心，扩展接口为 ProxyFactory</p>
-<p>l registry 注册中心层：封装服务地址的注册与发现，以服务 URL 为中心，扩展接口为 RegistryFactory, Registry, RegistryService</p>
-<p>l cluster 路由层：封装多个提供者的路由及负载均衡，并桥接注册中心，以 Invoker 为中心，扩展接口为 Cluster, Directory, Router, LoadBalance</p>
-<p>l monitor 监控层：RPC 调用次数和调用时间监控，以 Statistics 为中心，扩展接口为 MonitorFactory, Monitor, MonitorService</p>
-<p>l protocol 远程调用层：封装 RPC 调用，以 Invocation, Result 为中心，扩展接口为 Protocol, Invoker, Exporter</p>
-<p>l exchange 信息交换层：封装请求响应模式，同步转异步，以 Request, Response 为中心，扩展接口为 Exchanger, ExchangeChannel, ExchangeClient, ExchangeServer</p>
-<p>l transport 网络传输层：抽象 mina 和 netty 为统一接口，以 Message 为中心，扩展接口为 Channel, Transporter, Client, Server, Codec</p>
-<p>l serialize 数据序列化层：可复用的一些工具，扩展接口为 Serialization, ObjectInput, ObjectOutput, ThreadPool</p>
-<h3><span id="2-dubbo原理-启动解析-加载配置信息">2、dubbo原理    -启动解析、加载配置信息</span></h3><p><img src="/2021/11/02/dubbo/wpsBD04.tmp.jpg" alt="img"> </p>
-<h3><span id="3-dubbo原理-服务暴露">3、dubbo原理    -服务暴露</span></h3><p><img src="/2021/11/02/dubbo/wpsBD05.tmp.png" alt="img"> </p>
-<h3><span id="4-dubbo原理-服务引用">4、dubbo原理    -服务引用</span></h3><p><img src="/2021/11/02/dubbo/wpsBD06.tmp.png" alt="img"> </p>
-<h3><span id="5-dubbo原理-服务调用">5、dubbo原理    -服务调用</span></h3><p><img src="/2021/11/02/dubbo/wpsBD07.tmp.png" alt="img"></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/11/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/25/">25</a><a class="extend next" rel="next" href="/page/13/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/11/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/26/">26</a><a class="extend next" rel="next" href="/page/13/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1299,7 +1239,7 @@ public class HelloServiceImpl implements HelloService &#123;
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">50</span>
+          <span class="site-state-item-count">51</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1378,18 +1318,18 @@ public class HelloServiceImpl implements HelloService &#123;
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">210k</span>
+    <span title="站点总字数">212k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">3:11</span>
+    <span title="站点阅读时长">3:13</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共84.1k字</span>
+  <span class="post-count">博客全站共86.2k字</span>
 </div>
 
     <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
