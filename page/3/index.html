@@ -195,7 +195,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/14/select%EF%BC%8Cpoll%EF%BC%8Cepoll/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/03/%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -209,7 +209,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/03/14/select%EF%BC%8Cpoll%EF%BC%8Cepoll/" class="post-title-link" itemprop="url">select，poll，epoll</a>
+            <a href="/2022/04/03/%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE/" class="post-title-link" itemprop="url">自动配置</a>
         </h2>
 
         <div class="post-meta">
@@ -220,23 +220,17 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2022-03-14 15:46:06" itemprop="dateCreated datePublished" datetime="2022-03-14T15:46:06+08:00">2022-03-14</time>
+              <time title="创建时间：2022-04-03 10:26:21 / 修改时间：10:57:55" itemprop="dateCreated datePublished" datetime="2022-04-03T10:26:21+08:00">2022-04-03</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-03-21 16:22:49" itemprop="dateModified" datetime="2022-03-21T16:22:49+08:00">2022-03-21</time>
-              </span>
 
           
             <span class="post-meta-item" title="本文字数">
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
               </span>
-              <span>792</span>
+              <span>459</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -254,33 +248,25 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p><strong>select、poll、epoll 区别总结：</strong></p>
-<h2><span id="底层实现">底层实现</span></h2><p><strong>select/poll</strong></p>
-<p>他俩没多大本质区别，都是用线性结构存储进程关注的socket集合，因此都需要遍历文件描述符集合来判断是否可以读写，时间复杂度为O（n），而且也需要在用户态和内核态之间拷贝文件描述符集合，消耗性能。</p>
-<p><strong>epoll</strong></p>
-<p>通过两个手段解决了上面的不足</p>
-<ol>
-<li>在内核中使用了红黑树来跟踪进程所有的待检测文件描述符，减少了内核和用户空间大量的数据拷贝和内存分配</li>
-<li>使用了时间驱动的机制，内核里维护了一个链表来记录就绪事件。不需要轮询检测了</li>
+          <ol>
+<li><img src="/2022/04/03/%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE/1648952872902.png" alt="1648952872902"></li>
 </ol>
-<h4><span id="1-支持一个进程所能打开的最大连接数">1、支持一个进程所能打开的最大连接数</span></h4><p><strong>select</strong></p>
-<p>单个进程所能打开的最大连接数有FD_SETSIZE宏定义，其大小是32个整数的大小（在32位的机器上，大小就是32<em>32，同理64位机器上FD_SETSIZE为32</em>64），当然我们可以对进行修改，然后重新编译内核，但是性能可能会受到影响，这需要进一步的测试。</p>
-<p><strong>poll</strong></p>
-<p>poll本质上和select没有区别，但是它没有最大连接数的限制，原因是它是基于链表来存储的</p>
-<p><strong>epoll</strong></p>
-<p>虽然连接数有上限，但是很大，1G内存的机器上可以打开10万左右的连接，2G内存的机器可以打开20万左右的连接</p>
-<h4><span id="2-fd剧增后带来的io效率问题">2、FD剧增后带来的IO效率问题</span></h4><p>select</p>
-<p>因为每次调用时都会对连接进行线性遍历，所以随着FD的增加会造成遍历速度慢的“线性下降性能问题”。</p>
-<p><strong>poll</strong></p>
-<p>同上</p>
-<p><strong>epoll</strong></p>
-<p>因为epoll内核中实现是根据每个fd上的callback函数来实现的，只有活跃的socket才会主动调用callback，所以在活跃socket较少的情况下，使用epoll没有前面两者的线性下降的性能问题，但是所有socket都很活跃的情况下，可能会有性能问题。</p>
-<h4><span id="3-消息传递方式">3、 消息传递方式</span></h4><p><strong>select</strong></p>
-<p>内核需要将消息传递到用户空间，都需要内核拷贝动作</p>
-<p><strong>poll</strong></p>
-<p>同上</p>
-<p><strong>epoll</strong></p>
-<p>epoll通过内核和用户空间共享一块内存来实现的。（错的）</p>
+<p><strong>@SpringBootApplication SpringBoot应用标注在某个类上说明这个类是SpringBoot的主配置类，SpringBoot就应该运行这个类的main方法来启动springBoot的应用</strong></p>
+<p>2.<img src="/2022/04/03/%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE/1648952954673.png" alt="1648952954673"></p>
+<p>核心注解为@EnableAutoConfiguration，开启自动配置功能</p>
+<p>3.@EnableAutoConfiguration中有两个核心注解：</p>
+<hr>
+<p><strong>@AutoConfigurationPackage和@Import(AutoConfigurationImportSelector.class)</strong></p>
+<p>@AutoConfigurationPackage自动扫包的配置</p>
+<p><img src="/2022/04/03/%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE/1648953049026.png" alt="1648953049026"></p>
+<p><img src="/2022/04/03/%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE/1648953122408.png" alt="1648953122408"></p>
+<p><img src="/2022/04/03/%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE/1648953155312.png" alt="1648953155312"></p>
+<p>扫描范围默认为当前文件所在包及其子包</p>
+<p>4.@Import(AutoConfigurationImportSelector.class)</p>
+<pre><code class="dart">//扫描具有META-INF/spring.factories文件的jar包
+任何一个springboot应用，都会引入spring-boot-autoconfigure，而spring.factories文件就在该包下面
+</code></pre>
+<p><img src="/2022/04/03/%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE/1648953793994.png" alt="1648953793994"></p>
 
       
     </div>
@@ -302,7 +288,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/13/%E2%80%9C%E7%B4%A2%E5%BC%95%E7%9A%84%E6%A0%91%E7%BB%93%E6%9E%84%E2%80%9D/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/01/Bean/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -316,7 +302,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/03/13/%E2%80%9C%E7%B4%A2%E5%BC%95%E7%9A%84%E6%A0%91%E7%BB%93%E6%9E%84%E2%80%9D/" class="post-title-link" itemprop="url">“索引的树结构”</a>
+            <a href="/2022/04/01/Bean/" class="post-title-link" itemprop="url">Bean</a>
         </h2>
 
         <div class="post-meta">
@@ -327,29 +313,23 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2022-03-13 14:58:51" itemprop="dateCreated datePublished" datetime="2022-03-13T14:58:51+08:00">2022-03-13</time>
+              <time title="创建时间：2022-04-01 21:31:30 / 修改时间：21:43:20" itemprop="dateCreated datePublished" datetime="2022-04-01T21:31:30+08:00">2022-04-01</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-03-23 21:39:09" itemprop="dateModified" datetime="2022-03-23T21:39:09+08:00">2022-03-23</time>
-              </span>
 
           
             <span class="post-meta-item" title="本文字数">
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
               </span>
-              <span>2.1k</span>
+              <span>1.1k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
-              <span>2 分钟</span>
+              <span>1 分钟</span>
             </span>
 
         </div>
@@ -361,69 +341,59 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3><span id="查找结构的进化">查找结构的进化</span></h3><p>二分查找</p>
-<p>二叉树</p>
-<p>二叉平衡树</p>
-<p>B-TREE ：二叉平衡树的基础上，使加载一次节点，可以加载更多路径数据，同时把查询范围缩减到更小</p>
-<p>缺点：业务数据的大小可能远远超过了索引数据的大小，每次为了查找对比计算，需要把数据加载到内存以及 CPU 高速缓存中时，都要把索引数据和无关的业务数据全部查出来。本来一次就可以把所有索引数据加载进来，现在却要多次才能加载完。如果所对比的节点不是所查的数据，那么这些加载进内存的业务数据就毫无用处，全部抛弃。</p>
-<p>B+TREE：非叶子节点只保存索引数据，叶子节点保存索引数据与<strong>业务数据所在的地址</strong></p>
-<h4><span id></span></h4><ol>
-<li><p>B+数据量相同的情况下，非叶子节点可以存放更多的数据，B+树会更加矮胖，io次数会更少</p>
-</li>
-<li><p>B+树有大量的冗余节点（非叶子结点），会让B+树在插入删除时的效率更高</p>
-</li>
-<li><p>B+树的叶子结点用双向链表连了起来，有益于范围查询，而B树只能遍历。</p>
-</li>
-</ol>
-<p><strong>聚簇索引和非聚簇索引</strong></p>
-<p>如果叶子节点存储的是实际数据的就是聚簇索引，一个表只能有一个聚簇索引；如果叶子节点存储的不是实际数据，而是主键值则就是二级索引，一个表中可以有多个二级索引。</p>
-<p>在使用二级索引进行查找数据时，如果查询的数据能在二级索引找到，那么就是「索引覆盖」操作，如果查询的数据不在二级索引里，就需要先在二级索引找到主键值，需要去聚簇索引中获得数据行，这个过程就叫作「回表」</p>
-<h3><span id="查询数据的过程">查询数据的过程</span></h3><p><strong>在定位记录所在哪一个页时，也是通过二分法快速定位到包含该记录的页。定位到该页后，又会在该页内进行二分法快速定位记录所在的分组（槽号），最后在分组内进行遍历查找。</strong></p>
-<p>磁盘IO</p>
-<p><strong>磁盘处理太慢太慢了</strong></p>
-<ul>
-<li>尽量减少 I/O 次数，比如可以使用缓存；</li>
-<li>每次 I/O 尽量获取更多的数据；</li>
-<li>每次 I/O 尽量获取有用的数据，当然相应的也间接减少总 I/O 次数</li>
-</ul>
-<p>总结：</p>
-<ul>
-<li>数据存储在磁盘（ SSD 跟 CPU 性能也不在一个量级），而磁盘处理数据很慢；</li>
-<li>提高磁盘性能主要通过减少 I/O 次数，以及单次 I/O 有效数据量；</li>
-<li>索引通过多阶（一个节点保存多个数据，指向多个子节点）使树的结构更矮胖，从而减少 I/O 次数；</li>
-<li>索引通过 B+ 树，把业务数据与索引数据分离，来提高单次 I/O 有效数据量，从而减少 I/O 次数；</li>
-<li>索引通过树数据的有序和「二分查找」（多阶树可以假设为多分查找），大大缩小查询范围；</li>
-<li>索引针对的是单个字段或部分字段，数据量本身比一条记录的数据量要少的多，这样即使通过扫描的方式查询索引也比扫描数据库表本身快的多；</li>
-</ul>
-<h2><span id="事务">事务</span></h2><ul>
-<li>持久性是通过 redo log （重做日志）来保证的；是物理日志，记录做了什么修改</li>
-<li>原子性是通过 undo log（回滚日志） 来保证的；</li>
-<li>一致性是binlog保证的 ，逻辑日志（有三种格式）statement，row包含操作的具体数据，mixed</li>
-<li>隔离性是通过 MVCC（多版本并发控制） 或锁机制来保证的； </li>
-</ul>
-<h2><span id="死锁问题">死锁问题</span></h2><p>处理订单业务时，需要用到select…for update用来避免并发导致的幻读问题，但是这样的话就容易出现死锁</p>
-<p>处理方法是破坏形成死锁的条件：<strong>打破循环等待条件</strong></p>
-<ul>
-<li><strong>设置事务等待锁的超时时间</strong>。当一个事务的等待时间超过该值后，就对这个事务进行回滚，于是锁就释放了，另一个事务就可以继续执行了。在 InnoDB 中，参数 <code>innodb_lock_wait_timeout</code> 是用来设置超时时间的，默认值时 50 秒。</li>
-</ul>
-<ul>
-<li><strong>开启主动死锁检测</strong>。主动死锁检测在发现死锁后，主动回滚死锁链条中的某一个事务，让其他事务得以继续执行。将参数 <code>innodb_deadlock_detect</code> 设置为 on，表示开启这个逻辑，默认就开启。</li>
-</ul>
-<h2><span id="关于count">关于count</span></h2><p><img src="/2022/03/13/%E2%80%9C%E7%B4%A2%E5%BC%95%E7%9A%84%E6%A0%91%E7%BB%93%E6%9E%84%E2%80%9D/image-20220314151059566.png" alt="image-20220314151059566"></p>
-<p>*<em>count(1)、 count(</em>)、 count(主键字段)**在执行的时候，如果表里存在二级索引，优化器就会选择二级索引进行扫描。</p>
-<p>所以，如果要执行 count(1)、 count(*)、 count(主键字段) 时，尽量在数据表上建立二级索引，这样优化器会自动采用 key_len 最小的二级索引进行扫描，相比于扫描主键索引效率会高一些。</p>
-<p>再来，就是不要使用 count(字段)  来统计记录个数，因为它的效率是最差的，会采用全表扫描的方式来统计。如果你非要统计表中该字段不为 NULL 的记录个数，建议给这个字段建立一个二级索引。</p>
-<h3><span id="优化count">优化count</span></h3><p>如果数据量很大，因为要全表扫描，所以也要花费不短的时间</p>
-<p>1.使用explain 出现的rows 字段值就是  explain 命令对表 t_order 记录的估算值。</p>
-<p>2.额外表保存记录值</p>
-<h2><span id></span></h2><h2><span id="索引失效的情况"><strong>索引失效的情况</strong></span></h2><ul>
-<li>当我们使用左或者左右模糊匹配的时候，也就是 <code>like %xx</code> 或者 <code>like %xx%</code> 这两种方式都会造成索引失效；</li>
-<li>当我们在查询条件中对索引列使用函数，就会导致索引失效。</li>
-<li>当我们在查询条件中对索引列进行表达式计算，也是无法走索引的。</li>
-<li>MySQL 在遇到字符串和数字比较的时候，会自动把字符串转为数字，然后再进行比较。如果字符串是索引列，而条件语句中的输入参数是数字的话，那么索引列会发生隐式类型转换，由于隐式类型转换是通过 CAST 函数实现的，等同于对索引列使用了函数，所以就会导致索引失效。</li>
-<li>联合索引要能正确使用需要遵循最左匹配原则，也就是按照最左优先的方式进行索引的匹配，否则就会导致索引失效。</li>
-<li>在 WHERE 子句中，如果在 OR 前的条件列是索引列，而在 OR 后的条件列不是索引列，那么索引会失效。</li>
-</ul>
+          <h2><span id="循环依赖">循环依赖</span></h2><p>谈到循环依赖要先了解spring bean的生命周期</p>
+<h3><span id="一-加载数据">一. 加载数据</span></h3><p>普通Java对象：以class作为模板创建出具体的实例</p>
+<p>Spring Bean：除了用Class对象外，还用了BeanDefinition实例来描述对象信息</p>
+<p>Spring在启动时需要扫描使用了 <strong>xml</strong>  <strong>注解</strong>  **javaconfig **中需要被Spring管理的Bean信息，随后把信息封装为BeanDefinition，最后把信息放在beanDefinitionMap中，key为beanName，value为BeanDefinition。</p>
+<p>接着遍历beanDefinitionMap，执行BeanFactoryPostProcesser工厂后置处理器的处理逻辑。这里如果想获取bean的数据进行修改的话，通过自定义BeanFactoryPostProcesser来实现</p>
+<h3><span id="二-实例化">二.  实例化</span></h3><h3><span id="三-属性填充">三. 属性填充</span></h3><h3><span id="四-初始化">四. 初始化</span></h3><p>判断该Bean是否实现了Aware相关的接口，如果存在则填充相关的资源</p>
+<p>到了BeanPostProcessor后置处理器（是AOP实现的关键）</p>
+<p>执行BeanPostProcessor相关子类的before方法</p>
+<p>执行init方法，执行顺序为@PostConstruct，实现了initializingbean接口，是否自己定义了init-method方法。</p>
+<h3><span id="五-使用">五.  使用</span></h3><h3><span id="六-销毁">六. 销毁</span></h3><p>看是否实现了diposableBean接口，执行destory方法，或者自己定义了destory-method属性</p>
+<h3><span id="注解xmljavaconfig">注解，xml，javaconfig</span></h3><table>
+<thead>
+<tr>
+<th></th>
+<th>xml</th>
+<th>注解</th>
+<th>config</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>便利性</td>
+<td>不便利</td>
+<td>便利</td>
+<td>不便利</td>
+</tr>
+<tr>
+<td>修改之后是否需要重编译</td>
+<td>不</td>
+<td>需要</td>
+<td>需要</td>
+</tr>
+<tr>
+<td>自由度</td>
+<td>低</td>
+<td>低</td>
+<td>高</td>
+</tr>
+<tr>
+<td>是否可以注入不是自己维护的类</td>
+<td>可以</td>
+<td>不可以</td>
+<td>可以</td>
+</tr>
+</tbody></table>
+<p>现在通常使用注解加config</p>
+<p>只有当需要注入代码不是自己维护的第三方jar包中的类时，或者需要更为灵活地注入，比如说需要调用某个接口，查询数据，然后把这个数据赋值给要注入的对象，那么这时候就需要用到Java Config（面向接口开发）。</p>
+<h2><span id="循环依赖">循环依赖</span></h2><p>A包含B，B包含A</p>
+<p>使用三级缓存</p>
+<p>singletonObjects：一级：正式对象</p>
+<p>earlySingletonObjects：二级：半成品（考虑性能）</p>
+<p>sinletonFactories：三级：工厂（为了代理，可以直接从里面拿代理对象，放在二级缓存）</p>
+<p>创建A时：实例化后，把自己扔在三级缓存，key时beanName，value是ObjectFactory。</p>
+<p>注入属性时发现B还没创建，然后实例化B，B属性注入A，A放在二级缓存中，然后B完成创建，自然A也就可以完成了。</p>
 
       
     </div>
@@ -444,7 +414,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/25/">25</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/26/">26</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -512,20 +482,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">50</span>
+          <span class="site-state-item-count">52</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-count">20</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">38</span>
+        <span class="site-state-item-count">39</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -591,18 +561,18 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">212k</span>
+    <span title="站点总字数">214k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">3:13</span>
+    <span title="站点阅读时长">3:14</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共86k字</span>
+  <span class="post-count">博客全站共87.2k字</span>
 </div>
 
     <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>

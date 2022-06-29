@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-05-18T14:04:20.749Z</updated>
+  <updated>2022-06-29T04:13:57.343Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,45 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>records</title>
+    <link href="http://example.com/2022/06/29/records/"/>
+    <id>http://example.com/2022/06/29/records/</id>
+    <published>2022-06-29T02:08:04.000Z</published>
+    <updated>2022-06-29T04:13:57.343Z</updated>
+    
+    <content type="html"><![CDATA[<h2><span id="jvm线程属于用户态还是内核态">JVM线程属于用户态还是内核态</span></h2><p>当进程运行在ring3级别时为用户态，ring0级别时为内核态</p><p>有些操作需要有内核权限才能进行，那么有三种由用户态切换到内核态的情况：</p><ol><li>系统调用：操作系统封装内核指令，统一管理硬件资源，然后向用户程序提供系统服务，用户程序进行系统调用，操作系统进行检查确保安全然后再进行相应的资源访问操作。比如malloc()，print()调用write()系统输出字符串</li><li>异常事件：当cpu正在运行用户态程序，发生不可预知的异常事件，就会转用户态，比如缺页中断。</li><li>外围设备的中断：当外围设备完成请求就会向CPU发出中断信号，此时cpu暂停下一条要执行的指令，去执行中断信号所对应的程序</li></ol><p>相同点和不同点：都是中断，但是系统调用是主动，其他都是被动</p><h3><span id="用户态和内核态线程的映射关系">用户态和内核态线程的映射关系</span></h3><p><strong>一对一</strong>（内核线程实现）</p><p>程序使用<strong>轻量级进程</strong>和内核线程产生映射</p><p>缺点：轻量级进程的数量有限制，执行效率低</p><p><strong>多对一</strong>（用户线程实现）</p><p>优点：用户线程数量几乎无限制，执行效率高</p><p>缺点：一个用户线程阻塞，其他线程也会阻塞</p><p><strong>多对多</strong></p><p>UT 用户态线程  LWP 轻量级线程  KLT 内核态线程</p><p><img src="/2022/06/29/records/1656470393008.png" alt="1656470393008"></p><p>优点：</p><ol><li>一个用户线程的阻塞不会导致所有线程的阻塞，因为此时还有别的内核线程被调度来执行。</li><li>多对多模型对用户线程的数量没有限制。</li><li>在多处理器的操作系统中，多对多模型的线程也能得到一定的性能提升，但提升的幅度不如一对一模型的高。在现在流行的操作系统中，大都采用多对多的模型。</li></ol><p>  用户态线程：切换代价小，高并发但是容易阻塞</p><p>  内核态线程：处理能力高，切换代价大</p><h3><span id="java线程的实现">Java线程的实现</span></h3><p>虚拟机规范中并没有限定java线程需要使用哪种线程模型，要根据不同的平台来说，但是无论使用哪种线程模型，java程序的编码和运行都是没有差异的</p><h3><span id="java线程调度">Java线程调度</span></h3><p>线程调度有两种：协同调度和抢占调度</p><p>协同：自己分配时间，自己切换</p><p>抢占：系统分配时间，系统决定线程的切换</p><p>java线程采用<strong>抢占调度</strong></p><p>java线程的6种状态</p><p>新建———-运行———无限期等待——–限期等待———阻塞——结束</p><p>操作系统线程的几种状态</p><p>新建———就绪————等待————运行———–结束</p><h3><span id="java和操作系统的线程对应关系">java和操作系统的线程对应关系</span></h3><p>1.2之前（绿色线程  1:N），程序员为jvm开发了一个线程调度内核，映射到操作系统层面就是<strong>用户态线程</strong>；</p><p>1.2(1:1)之后，jvmU型安泽了操作系统原生线程模型，映射到操作系统层面就是<strong>内核态线程</strong>，通过系统调用，将程序的线程交给了操作系统内核进行调度。</p><h4><span id="通过创建过程来理解">通过创建过程来理解</span></h4><p><img src="/2022/06/29/records/1656474569799.png" alt="1656474569799"></p><p>Java的Thread对象：仅仅是一个Java对象</p><p>JVM的JavaThread对象：连接着java的Thread对象与OS对象</p><p>JVM的OSThread对象：一个工具类，对OS线程<a href="https://so.csdn.net/so/search?q=API&spm=1001.2101.3001.7020">API</a>进行了功能性封装</p><p><strong>流程图：</strong></p><p><img src="/2022/06/29/records/1656474707894.png" alt="1656474707894"></p><p>JVM_StartThread核心做了两件事情：</p><p> 1.创建JavaThread对象</p><p>​         (1) 设置jvm执行run方法的跳板</p><p>​         (2) 调用os::create_thread创建<strong>OSThread对象</strong>及<strong>操作系统线程</strong>完成三者的关联</p><p>​                  os::create_thread做了一下这些：</p><p>​                         创建OSThread对象，将<strong>JavaThread对象</strong>与<strong>OSThread对象</strong>进行关联</p><h3><span id="线程库">线程库</span></h3><p>为开发人员提供创建和管理线程的一套API</p><p>三个主要的线程库：</p><p>1）POSIX Pthreads：可以作为用户或内核库提供，作为 POSIX 标准的扩展</p><p>2）Win32 线程：用于 Window 操作系统的内核级线程库</p><p>3）Java 线程：<strong>Java 线程 API 通常采用宿主系统的线程库来实现</strong>，也就是说在 Win 系统上，Java 线程 API 通常采用 Win API 来实现，在 UNIX 类系统上，采用 Pthread 来实现。</p><h2><span id="操作系统对于锁的实现">操作系统对于锁的实现</span></h2><p>在硬件层面，CPU提供了原子操作、关中断、锁内存总线的机制；OS基于这几个CPU硬件机制，就能够实现锁；再基于锁，就能够实现各种各样的同步机制（信号量、消息、Barrier等等等等）</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2&gt;&lt;span id=&quot;jvm线程属于用户态还是内核态&quot;&gt;JVM线程属于用户态还是内核态&lt;/span&gt;&lt;/h2&gt;&lt;p&gt;当进程运行在ring3级别时为用户态，ring0级别时为内核态&lt;/p&gt;
+&lt;p&gt;有些操作需要有内核权限才能进行，那么有三种由用户态切换到内核态的情况：&lt;/p&gt;
+</summary>
+      
+    
+    
+    
+    <category term="interview records" scheme="http://example.com/categories/interview-records/"/>
+    
+    
+    <category term="字节&amp;DD" scheme="http://example.com/tags/%E5%AD%97%E8%8A%82-DD/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>SpringBoot复习</title>
+    <link href="http://example.com/2022/05/30/SpringBoot%E5%A4%8D%E4%B9%A0/"/>
+    <id>http://example.com/2022/05/30/SpringBoot%E5%A4%8D%E4%B9%A0/</id>
+    <published>2022-05-30T11:35:41.000Z</published>
+    <updated>2022-05-30T11:35:41.896Z</updated>
+    
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>RPC协议</title>
@@ -432,57 +471,6 @@ public class ImgExcepti</summary>
     
     
     <category term="实习开发" scheme="http://example.com/tags/%E5%AE%9E%E4%B9%A0%E5%BC%80%E5%8F%91/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>nginx</title>
-    <link href="http://example.com/2021/12/15/nginx/"/>
-    <id>http://example.com/2021/12/15/nginx/</id>
-    <published>2021-12-15T04:22:56.000Z</published>
-    <updated>2021-12-15T04:44:38.083Z</updated>
-    
-    <content type="html"><![CDATA[<h1><span id="nginx学习">nginx学习</span></h1><p>反向代理（代理服务器端 ）</p><p>负载均衡</p><p>高性能</p><p>各项功能通过配置文件进行配置</p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h1&gt;&lt;span id=&quot;nginx学习&quot;&gt;nginx学习&lt;/span&gt;&lt;/h1&gt;&lt;p&gt;反向代理（代理服务器端 ）&lt;/p&gt;
-&lt;p&gt;负载均衡&lt;/p&gt;
-&lt;p&gt;高性能&lt;/p&gt;
-&lt;p&gt;各项功能通过配置文件进行配置&lt;/p&gt;
-</summary>
-      
-    
-    
-    
-    
-    <category term="nginx" scheme="http://example.com/tags/nginx/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>谷粒学院项目历程2</title>
-    <link href="http://example.com/2021/12/07/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B2/"/>
-    <id>http://example.com/2021/12/07/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B2/</id>
-    <published>2021-12-07T03:02:07.000Z</published>
-    <updated>2022-03-06T14:14:40.526Z</updated>
-    
-    <content type="html"><![CDATA[<h1><span id="谷粒学院项目">谷粒学院项目</span></h1><h2><span id="redis">redis</span></h2><p>由于客户端首页访问量比较大，所以集成一下redis</p><p>当需要把分页参数和querywapper作为参数在sql语句中进行查询时，需要在mapper层加**@Param(Constants.WAPPER)**注解</p><p><img src="/2021/12/07/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B2/image-20211208113652994.png" alt="image-20211208113652994"></p><p><img src="/2021/12/07/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B2/image-20211208114512577.png" alt="image-20211208114512577"></p><p><strong>@Param(Constants.WAPPER)<strong>相当于</strong>@Param(“ew”)</strong></p><p><img src="/2021/12/07/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B2/image-20211208113823141.png" alt="image-20211208113823141"></p><p>${ew.customSqlSegment}这个语句会自动把分页和querywapper参数传到sql查询内</p><p>在使用oss上传图片时，在前端直接调用后端接口，在前端直接给url赋值，附带moudle属性</p><p><img src="/2021/12/07/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B2/image-20211208131741706.png" alt="image-20211208131741706"></p><h2><span id="注册页面获取验证码前端部分">注册页面获取验证码前端部分</span></h2><p><img src="/2021/12/07/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B2/image-20211209174045597.png" alt="image-20211209174045597"></p><pre><code class="vue">// 倒计时    timeDown() &#123;      this.codeText = this.second      // 定义计时器      const timer = setInterval(() =&gt; &#123;        this.codeText--        if (this.codeText &lt; 1) &#123;          clearInterval(timer)          this.codeText = &#39;获取验证码&#39;          this.sending = false          this.second = 60        &#125;        // console.log(new Date())      &#125;, 1000)    &#125;,</code></pre><h2><span id="用户身份认证">用户身份认证</span></h2><ul><li>传统方式为单一服务器模式。</li></ul><ul><li>单点登录（sso）：在多个应用系统中，只需要登录一次，就可以访问其他相互信任的应用系统。</li></ul><p><img src="/2021/12/07/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B2/346672f4-9c52-42bf-8fa3-464bf34a8873.jpg" alt="img"></p><p>使用redis和认证中心</p><p><strong>优点 ：</strong>  </p><p>用户身份信息独立管理，更好的分布式管理。可以自己扩展安全策略</p><p><strong>缺点：</strong></p><p>认证服务器访问压力较大，session的可用性和一致性为矛盾性质，服务器也有性能瓶颈</p><ul><li>token模式   sso模式的一种演变</li></ul><p><img src="/2021/12/07/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B2/0.9709434306629741.png" alt="img"></p><p><strong>优点：</strong></p><ul><li>无状态： token是无状态，session是有状态的</li><li>基于标准化：你的API可以采用标准化的 JSON Web Token (JWT)</li></ul><p><strong>缺点：</strong></p><ul><li>占用带宽</li><li>无法在服务器端销毁</li></ul><p><img src="/2021/12/07/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B2/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM3MTI2MTc1,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p><p>token详细学习</p><p><a href="https://www.jianshu.com/p/24825a2683e6">什么是token - 简书 (jianshu.com)</a></p><h2><span id="jwt">JWT</span></h2><p><strong>JWT头部</strong>分是一个描述JWT元数据的JSON对象</p><pre><code class="json">&#123;  &quot;alg&quot;: &quot;HS256&quot;,  &quot;typ&quot;: &quot;JWT&quot;&#125;</code></pre><p><strong>有效载荷部分</strong>，是JWT的主体内容部分，也是一个JSON对象，包含需要传递的数据。 JWT指定七个默认字段供选择。</p><pre><code class="json">iss: jwt签发者sub: 主题aud: 接收jwt的一方exp: jwt的过期时间，这个过期时间必须要大于签发时间nbf: 定义在什么时间之前，该jwt都是不可用的.iat: jwt的签发时间jti: jwt的唯一身份标识，主要用来作为一次性token,从而回避重放攻击。</code></pre><p>不要在这一部分放隐私数据</p><p><strong>签名哈希</strong>部分是对上面两部分数据签名，通过指定的算法生成哈希，以确保数据不会被篡改。</p><pre><code class="json">HMACSHA256(base64UrlEncode(header) + &quot;.&quot; + base64UrlEncode(claims), secret)</code></pre><p><strong>Base64URL算法</strong></p><p>如前所述，JWT头和有效载荷序列化的算法都用到了Base64URL。该算法和常见Base64算法类似，稍有差别。</p><p>作为令牌的JWT可以放在URL中（例如api.example/?token=xxx）。 Base64中用的三个字符是”+”，”/“和”=”，由于在URL中有特殊含义，因此Base64URL中对他们做了替换：”=”去掉，”+”用”-“替换，”/“用”_”替换，这就是Base64URL算法。</p><p><strong>注意：</strong>base64编码，并不是加密，只是把明文信息变成了不可见的字符串。但是其实只要用一些工具就可以把base64编码解成明文，所以不要在JWT中放入涉及私密的信息</p><h2><span id="后端生成token-根据token获取信息">后端生成token 根据token获取信息</span></h2><p>1.引入依赖</p><pre><code class="xml">&lt;dependencies&gt;    &lt;dependency&gt;        &lt;groupId&gt;io.jsonwebtoken&lt;/groupId&gt;        &lt;artifactId&gt;jjwt&lt;/artifactId&gt;    &lt;/dependency&gt;    &lt;dependency&gt;        &lt;groupId&gt;joda-time&lt;/groupId&gt;        &lt;artifactId&gt;joda-time&lt;/artifactId&gt;    &lt;/dependency&gt;&lt;/dependencies&gt;</code></pre><p>2.工具类</p><pre><code class="java">/**     * stoken     * @param jwtInfo     * @param expire     * @return     */    public static String getJwtToken(JwtInfo jwtInfo, int expire)&#123;        String JwtToken = Jwts.builder()                .setHeaderParam(&quot;typ&quot;, &quot;JWT&quot;)                .setHeaderParam(&quot;alg&quot;, &quot;HS256&quot;)                .setSubject(&quot;guli-user&quot;)//主题                .setIssuedAt(new Date())//颁发时间                .setExpiration(DateTime.now().plusSeconds(expire).toDate())//过期时间                .claim(&quot;id&quot;, jwtInfo.getId())//用户id                .claim(&quot;nickname&quot;, jwtInfo.getNickname())//用户昵称                .claim(&quot;avatar&quot;, jwtInfo.getAvatar())//用户头像                .signWith(SignatureAlgorithm.HS256, getKeyInstance())                .compact();        return JwtToken;    &#125;/** * 根据token获取会员id * @param request * @return */public static JwtInfo getMemberIdByJwtToken(HttpServletRequest request) &#123;    String jwtToken = request.getHeader(&quot;token&quot;);    if(StringUtils.isEmpty(jwtToken)) return null;    Jws&lt;Claims&gt; claimsJws =  Jwts.parser().setSigningKey(getKeyInstance()).parseClaimsJws(jwtToken);    Claims claims = claimsJws.getBody();    JwtInfo jwtInfo = new JwtInfo(claims.get(&quot;id&quot;).toString(),                                   claims.get(&quot;nickname&quot;).toString(),                                   claims.get(&quot;avatar&quot;).toString());    return jwtInfo;&#125;</code></pre><p>JwtInfo为根据token获取的用户信息，注意：不能放有敏感信息</p><h2><span id="前端登录功能">前端登录功能</span></h2><p>token在cookie中，前端header携带cookie返回后端</p><pre><code class="vue">// 登录submitLogin() &#123;// 执行远程登录接口调用loginApi.submitLogin(this.user).then(response =&gt; &#123;// 将JWT写进cookiecookie.set(&#39;guli_jwt_token&#39;, response.data.token, &#123; domain: &#39;localhost&#39; &#125;)// 跳转到网站的首页面window.location.href = &#39;/&#39;&#125;)&#125;</code></pre><p><strong>{ domain: ‘localhost’ }</strong>  cookie的第三个参数</p><p>设置可以共享cookie的父域名</p><h2><span id="创建dtodata-transfer-object服务和服务之间的数据传输对象">创建DTO（Data Transfer Object）：服务和服务之间的数据传输对象</span></h2><p>LEFT JOIN 关键字会从左表 (table_name1) 那里返回所有的行，即使在右表 (table_name2) 中没有匹配的行。</p><h3><span id="left-join-关键字语法">LEFT JOIN 关键字语法</span></h3><pre><code class="sql">SELECT column_name(s)FROM table_name1LEFT JOIN table_name2 ON table_name1.column_name=table_name2.column_name</code></pre><p>serviceimpl层中 this.remove和baseMapper.delete所达成的效果是一样的</p><p><img src="/2021/12/07/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B2/image-20211214115329754-16394540114113.png" alt="image-20211214115329754"></p><p><img src="/2021/12/07/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B2/image-20211214115259908-16394539816312.png" alt="image-20211214115259908"></p><p>只是this调用删除方法返回布尔值</p><h2><span id="微信支付">微信支付</span></h2><p><img src="/2021/12/07/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B2/image-20211215113757450.png" alt="image-20211215113757450"></p><h3><span id="内网穿透">内网穿透</span></h3><p>使用ngrock</p><p><img src="/2021/12/07/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B2/image-20211215132549706.png" alt="image-20211215132549706"></p><p><img src="/2021/12/07/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B2/image-20211215132522036.png" alt="image-20211215132522036"></p><p>微信回调需要访问到local host</p><p>根据微信返回的二维码url地址生成二维码  </p><p>前端生成：npm install <a href="mailto:&#118;&#117;&#101;&#45;&#113;&#x72;&#105;&#x6f;&#117;&#115;&#108;&#x79;&#64;&#x31;&#46;&#x31;&#x2e;&#49;">&#118;&#117;&#101;&#45;&#113;&#x72;&#105;&#x6f;&#117;&#115;&#108;&#x79;&#64;&#x31;&#46;&#x31;&#x2e;&#49;</a></p><p>处理一个幂等性，防止重复调用不必要的方法</p><pre><code class="java">//接口调用的幂等性：无论接口被调用多少次，最后所影响的结果都是一致的if(order.getStatus() == 0)&#123;    //更新订单状态    orderService.updateOrderStatus(notifyMap);&#125;</code></pre><h2><span id="api服务网关">API服务网关</span></h2><p>使用springcloudgateway作为网关</p><pre><code class="xml">&lt;dependency&gt;    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;    &lt;artifactId&gt;spring-cloud-starter-gateway&lt;/artifactId&gt;&lt;/dependency&gt;</code></pre><pre><code class="yaml">spring:  profiles:    active: dev # 环境设置  application:    name: infrastructure-apigateway # 服务名  cloud:    nacos:      discovery:        server-addr: localhost:8848 # nacos服务地址    gateway:      discovery:        locator:          enabled: true # gateway可以发现nacos中的微服务      routes:        - id: service-edu        uri: lb://service-edu        predicates:        - Path=/user/**, /*/edu/**        filters:        - SetStatus=250 #修改返回状态码</code></pre><p>predicates为断言，有路径断言，时间断言，远程IP断言，cookie断言，header断言，Query请求断言，路由权重断言</p><p>uri配置，如果服务器使用集群模式，自动运用负载均衡模式进行配置</p><h3><span id="处理跨域问题">处理跨域问题</span></h3><pre><code class="java">@Configurationpublic class CorsConfig &#123;    @Bean    public CorsWebFilter corsFilter() &#123;        CorsConfiguration config = new CorsConfiguration();        config.addAllowedMethod(&quot;*&quot;);        config.addAllowedOrigin(&quot;*&quot;);        config.addAllowedHeader(&quot;*&quot;);        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource(new PathPatternParser());        source.registerCorsConfiguration(&quot;/**&quot;, config);        return new CorsWebFilter(source);    &#125;&#125;</code></pre><p>有了config配置之后需把@CrossOrigin屏蔽掉</p><h3><span id="自定义全局过滤器">自定义全局过滤器</span></h3><p><img src="/2021/12/07/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B2/image-20211217174019270.png" alt="image-20211217174019270"></p><p>未登录状态下购买课程显示network error</p><p>可优化用户体验，未登录状态下点击购买的话会直接跳转到登录页面</p><h2><span id="遇到问题">遇到问题</span></h2><p><img src="/2021/12/07/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B2/image-20211220131709314.png" alt="image-20211220131709314"></p><p>配置了双跨域问题</p><p><strong>原因：</strong>controller类上加了@CrossOrigin 注解，在网关配置中又配置了跨域问题</p><p><strong>解决方法：</strong>去掉@CrossOrigin 注解，保留网关配置</p><p>问题：404</p><p><img src="/2021/12/07/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B2/20190620105924821.png" alt="img"></p><p><strong>原因：</strong>控制类中的mapping没有和网关配置中的path完全匹配</p><p><img src="/2021/12/07/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B2/Blog\source_posts\谷粒学院项目历程2\image-20211220134104612.png" alt="image-20211220134104612"></p><p><strong>解决方法：</strong>完全匹配就好</p><h2><span id="配置中心-nacos-config">配置中心  nacos config</span></h2><p>导入依赖</p><p>远程配置中心的配置优先生效</p><p>配置动态刷新：<strong>在controller类上添加@RefershScope注解</strong></p><p>多环境配置:</p><p>在bootstrap.yml中配置环境</p><p><img src="/2021/12/07/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B2/image-20211220143121397.png" alt="image-20211220143121397"></p><p>然后在nacos配置中心新建配置文件，命名规则为  <strong>服务名-环境.yaml</strong></p><p>可以用名称空间做微服务隔离，结合多环境配置使用</p><p>单独配置各种服务参数</p><p><img src="/2021/12/07/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B2/image-20211220144514397.png" alt="image-20211220144514397"></p><p>然后在nacos配置中心新增配置文件</p><h2><span id="权限配置">权限配置</span></h2><h3><span id="递归操作">递归操作</span></h3><h4><span id="eg获取全部菜单">eg：获取全部菜单</span></h4><pre><code class="java">//获取全部菜单    @Override    public List&lt;Permission&gt; queryAllMenuGuli() &#123;        //1 查询菜单表所有数据        QueryWrapper&lt;Permission&gt; wrapper = new QueryWrapper&lt;&gt;();        wrapper.orderByDesc(&quot;id&quot;);        List&lt;Permission&gt; permissionList = baseMapper.selectList(wrapper);        //2 把查询所有菜单list集合按照要求进行封装        List&lt;Permission&gt; resultList = bulidPermission(permissionList);        return resultList;    &#125;//把返回所有菜单list集合进行封装的方法    public static List&lt;Permission&gt; bulidPermission(List&lt;Permission&gt; permissionList) &#123;        //创建list集合，用于数据最终封装        List&lt;Permission&gt; finalNode = new ArrayList&lt;&gt;();        //把所有菜单list集合遍历，得到顶层菜单 pid=0菜单，设置level是1        for(Permission permissionNode : permissionList) &#123;            //得到顶层菜单 pid=0菜单            if(&quot;0&quot;.equals(permissionNode.getPid())) &#123;                //设置顶层菜单的level是1                permissionNode.setLevel(1);                //根据顶层菜单，向里面进行查询子菜单，封装到finalNode里面                finalNode.add(selectChildren(permissionNode,permissionList));            &#125;        &#125;        return finalNode;    &#125;    private static Permission selectChildren(Permission permissionNode, List&lt;Permission&gt; permissionList) &#123;        //1 因为向一层菜单里面放二层菜单，二层里面还要放三层，把对象初始化        permissionNode.setChildren(new ArrayList&lt;Permission&gt;());        //2 遍历所有菜单list集合，进行判断比较，比较id和pid值是否相同        for(Permission it : permissionList) &#123;            //判断 id和pid值是否相同            if(permissionNode.getId().equals(it.getPid())) &#123;                //把父菜单的level值+1                int level = permissionNode.getLevel()+1;                it.setLevel(level);                //如果children为空，进行初始化操作                if(permissionNode.getChildren() == null) &#123;                    permissionNode.setChildren(new ArrayList&lt;Permission&gt;());                &#125;                //把查询出来的子菜单放到父菜单里面                permissionNode.getChildren().add(selectChildren(it,permissionList));            &#125;        &#125;        return permissionNode;    &#125;</code></pre>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h1&gt;&lt;span id=&quot;谷粒学院项目&quot;&gt;谷粒学院项目&lt;/span&gt;&lt;/h1&gt;&lt;h2&gt;&lt;span id=&quot;redis&quot;&gt;redis&lt;/span&gt;&lt;/h2&gt;&lt;p&gt;由于客户端首页访问量比较大，所以集成一下redis&lt;/p&gt;
-&lt;p&gt;当需要把分页参数和querywapper作为参数在s</summary>
-      
-    
-    
-    
-    <category term="项目实战" scheme="http://example.com/categories/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/"/>
-    
-    
-    <category term="谷粒学院" scheme="http://example.com/tags/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2/"/>
     
   </entry>
   

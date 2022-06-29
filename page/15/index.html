@@ -195,7 +195,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/16/mybatisPlus/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/21/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -209,7 +209,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/10/16/mybatisPlus/" class="post-title-link" itemprop="url">mybatisPlus</a>
+            <a href="/2021/10/21/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-0/" class="post-title-link" itemprop="url">设计模式Study-0</a>
         </h2>
 
         <div class="post-meta">
@@ -221,28 +221,45 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-10-16 16:50:45" itemprop="dateCreated datePublished" datetime="2021-10-16T16:50:45+08:00">2021-10-16</time>
+              <time title="创建时间：2021-10-21 22:07:05" itemprop="dateCreated datePublished" datetime="2021-10-21T22:07:05+08:00">2021-10-21</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-10-18 14:18:40" itemprop="dateModified" datetime="2021-10-18T14:18:40+08:00">2021-10-18</time>
+                <time title="修改时间：2021-10-23 19:40:37" itemprop="dateModified" datetime="2021-10-23T19:40:37+08:00">2021-10-23</time>
               </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java%E8%BF%9B%E9%98%B6/" itemprop="url" rel="index"><span itemprop="name">Java进阶</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java%E8%BF%9B%E9%98%B6/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">设计模式</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java%E8%BF%9B%E9%98%B6/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%BC%80%E5%A7%8B/" itemprop="url" rel="index"><span itemprop="name">开始</span></a>
+                </span>
+            </span>
 
           
             <span class="post-meta-item" title="本文字数">
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
               </span>
-              <span>2.9k</span>
+              <span>730</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
-              <span>3 分钟</span>
+              <span>1 分钟</span>
             </span>
 
         </div>
@@ -254,197 +271,61 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1><span id="mybatisplus">mybatisPlus</span></h1><p><img src="/2021/10/16/mybatisPlus/image-20211016165647437.png" alt="image-20211016165647437"></p>
-<h2><span id="入门">入门</span></h2><p>mapper接口文件继承<strong>basemapper</strong>，记得加参数要显示查询对象类型</p>
-<pre><code class="java">//继承Basemapper就可以不编写xml文件了
-@Repository//代表是持久层
-public interface UserMapper extends BaseMapper&lt;User&gt; &#123;
-
-&#125;
-</code></pre>
-<p>注意：🧨🧨🧨🧨🧨要在主启动类下配置扫描的mapper包下所有的接口</p>
-<pre><code class="java">@MapperScan(&quot;com.zz.mybatisplus.mapper&quot;)
-</code></pre>
-<p>🎇🎇🎇🎇🎇🎇</p>
-<h2><span id="日志配置">日志配置</span></h2><p>为了查看sql语句运用情况</p>
-<pre><code class="yml">mybatis-plus:
-  configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-</code></pre>
-<p>结果：</p>
-<p><img src="/2021/10/16/mybatisPlus/image-20211016173856822.png" alt="image-20211016173856822"></p>
-<h2><span id></span></h2><h2><span id="主键生成策略">主键生成策略</span></h2><p>雪花算法</p>
+          <h1><span id="设计模式七大原则">设计模式七大原则</span></h1><h3><span id="单一职责原则">单一职责原则</span></h3><p>通常在类级别实行单一职责，只有在类中方法足够少的情况下，才可以在方法级别保持单一职责原则。</p>
+<p><strong>用类来化解分支</strong></p>
+<p><img src="/2021/10/21/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-0/image-20211022104314536.png" alt="image-20211022104314536"></p>
+<p><img src="/2021/10/21/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-0/image-20211022102844895.png" alt="image-20211022102844895"><img src="/2021/10/21/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-0/image-20211022102908817.png" alt="image-20211022102908817"></p>
+<h3><span id="接口隔离原则">接口隔离原则</span></h3><p><strong>一个类对另一个类的依赖应该建立在最小的接口上</strong></p>
 <blockquote>
-<p>默认 ID_WORKER 全局唯一id</p>
+<p>初始版本</p>
 </blockquote>
-<pre><code class="java">
-/**
- * &lt;p&gt;
- * 生成ID类型枚举类
- * &lt;/p&gt;
- *
- * @author hubin
- * @since 2015-11-10
- */
-@Getter
-public enum IdType &#123;
-    /**
-     * 数据库ID自增
-     */
-    AUTO(0),
-    /**
-     * 该类型为未设置主键类型
-     */
-    NONE(1),
-    /**
-     * 用户输入ID
-     * 该类型可以通过自己注册自动填充插件进行填充
-     */
-    INPUT(2),
-
-    /* 以下3种类型、只有当插入对象ID 为空，才自动填充。 */
-    /**
-     * 全局唯一ID (idWorker)
-     */
-    ID_WORKER(3),
-    /**
-     * 全局唯一ID (UUID)
-     */
-    UUID(4),
-    /**
-     * 字符串全局唯一ID (idWorker 的字符串表示)
-     */
-    ID_WORKER_STR(5);
-
-    private int key;
-
-    IdType(int key) &#123;
-        this.key = key;
-    &#125;
-&#125;
-</code></pre>
-<p><img src="/2021/10/16/mybatisPlus/image-20211017192539524.png" alt="image-20211017192539524"></p>
+<p><img src="/2021/10/21/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-0/image-20211022110421886.png" alt="image-20211022110421886"></p>
+<p>依赖关系示例图：</p>
+<p><img src="/2021/10/21/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-0/image-20211022110802941.png" alt="image-20211022110802941"></p>
 <blockquote>
-<p>主键自增</p>
+<p>改进版</p>
+<p><img src="/2021/10/21/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-0/image-20211022110528996.png" alt="image-20211022110528996"></p>
 </blockquote>
-<p>实体类字段上 </p>
-<pre><code class="java">@TableId(type = IdType.AUTO)
-</code></pre>
-<p>数据库字段一定要是自增！</p>
-<h2><span id="更新操作"><img src="/2021/10/16/mybatisPlus/image-20211017193225402.png">更新操作</span></h2><p>参数为对象</p>
-<pre><code class="java">@Test
-    void test1()&#123;
-        User user=new User(6,&quot;gzz&quot;,89,&quot;1614399965@qq.com&quot;);
-        userMapper.updateById(user);
-    &#125;
-</code></pre>
-<h2><span id="自动填充时间">自动填充时间</span></h2><p>1.数据库管理工具设置</p>
-<p>2.代码级别设置</p>
-<blockquote>
-<p>实体类字段属性上需要增加注解</p>
-</blockquote>
-<p><img src="/2021/10/16/mybatisPlus/image-20211017200938069.png" alt="image-20211017200938069"></p>
-<p>实现自己的处理器</p>
-<pre><code class="java">@Slf4j
-@Component//把自己的处理器添加到IOC容器中
-public class My implements MetaObjectHandler &#123;
-    @Override
-    public void insertFill(MetaObject metaObject) &#123;
+<h3><span id="依赖倒转倒置原则">依赖倒转（倒置）原则</span></h3><p><img src="/2021/10/21/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-0/image-20211022112257188.png" alt="image-20211022112257188"></p>
+<p>设计理念：相对于细节（具体的实现类），抽象（接口，抽象类）的东西更<strong>稳定</strong>（优点见上图），以<strong>抽象为基础搭建的架构</strong>比<strong>以细节为架构</strong>要更稳定</p>
+<p>使用接口或抽象类的目的是<strong>制定好规范</strong>，不涉及<strong>具体的操作</strong>，把<strong>展现细节</strong>交给具体实现类去完成。</p>
+<p>细节应该<strong>依赖抽象</strong>，核心思想是<strong>面向接口编程</strong></p>
+<p>EXAMPLE:</p>
+<p>客户端：</p>
+<pre><code class="java">package 依赖倒转;
 
-        log.debug(&quot;=================insertFill被调用==================&quot;);
-        this.setFieldValByName(&quot;createTime&quot;,new Date(),metaObject);
-        this.setFieldValByName(&quot;updateTime&quot;,new Date(),metaObject);
-    &#125;
+import java.time.Period;
 
-    @Override
-    public void updateFill(MetaObject metaObject) &#123;
-        log.debug(&quot;==========updateFill被调用====================&quot;);
-        this.setFieldValByName(&quot;updateTime&quot;,new Date(),metaObject);
+public class Client &#123;
+    public static void main(String[] args) &#123;
+        Person person=new Person();
+        person.receive(new Email());
+        person.receive(new Weixin());
     &#125;
 &#125;
 </code></pre>
-<p>结果查看：</p>
-<p><img src="/2021/10/16/mybatisPlus/image-20211017201647403.png" alt="image-20211017201647403"></p>
-<h2><span id></span></h2><h2><span id="乐观锁">乐观锁</span></h2><p>原理：</p>
-<p>  取出记录时，获取当前 version</p>
-<p> 更新时，带上这个version </p>
-<p>  执行更新时， set version = newVersion where version = oldVersion 如果version不对，就更新失败</p>
-<pre><code class="sql">乐观锁：1、先查询，获得版本号 version = 1
--- A
-update user set name = &quot;kuangshen&quot;, version = version + 1
-where id = 2 and version = 1
--- B 线程抢先完成，这个时候 version = 2，会导致 A 修改失败！
-update user set name = &quot;kuangshen&quot;, version = version + 1
-where id = 2 and version = 1
-</code></pre>
-<p><img src="/2021/10/16/mybatisPlus/image-20211017211514770.png" alt="image-20211017211514770"></p>
-<p>数据库增加<strong>version</strong>字段，默认为一</p>
-<p>实体类加对应的字段，增加对应的注解</p>
-<pre><code class="java">@Version//乐观锁
-private Integer version;
-</code></pre>
-<p>注册组件</p>
-<pre><code class="java">@MapperScan(&quot;com.zz.mybatisplus.mapper&quot;)
-@EnableTransactionManagement//自动管理事务
-@Configuration
-public class Myconfig &#123;
+<p>统一发信息接口：</p>
+<pre><code class="java">package 依赖倒转;
 
-    //注册乐观锁插件
-    @Bean
-     public OptimisticLockerInterceptor optimisticLockerInterceptor()&#123;
-        return new OptimisticLockerInterceptor();
-    &#125;
+interface IReceiver &#123;
+    public String getInfo();
+
 &#125;
 </code></pre>
-<p>测试</p>
-<pre><code class="Java"> //测试乐观锁
-    @Test
-    void test3()&#123;
-        // 线程 1
-        User user = userMapper.selectById(1L);
-        user.setName(&quot;zz111&quot;);
-
-        // 模拟另外一个线程执行了插队操作
-        User user2 = userMapper.selectById(1L);
-        user2.setName(&quot;zz222&quot;);
-
-        userMapper.updateById(user2);
-        userMapper.updateById(user);//如果没有乐观锁就会覆盖插队线程的值
-    &#125;
-
-</code></pre>
-<p>结果可以看到名字更新最终结果为zz222</p>
-<p><img src="/2021/10/16/mybatisPlus/image-20211017212009400.png" alt="image-20211017212009400"></p>
-<h2><span id></span></h2><h2><span id="逻辑删除">逻辑删除</span></h2><p>1.</p>
-<p>数据库添加逻辑删除字段，默认为0<img src="/2021/10/16/mybatisPlus/image-20211018134702720.png" alt="image-20211018134702720"></p>
-<p>2.</p>
-<p>实体类添加注解和属性</p>
-<pre><code class="java">@TableLogic//逻辑删除
-private Integer deleted;
-</code></pre>
-<p>3.</p>
-<p><strong>配置</strong></p>
-<p>注册逻辑删除组件</p>
-<pre><code class="java">  //逻辑删除
-    @Bean
-    public ISqlInjector sqlInjector()&#123;
-        return new LogicSqlInjector();
-    &#125;
-</code></pre>
-<pre><code class="yml">mybatis-plus:
-  configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-  #逻辑删除配置
-  global-config:
-    db-config:
-      logic-delete-value: 1
-      logic-not-delete-value: 0
-</code></pre>
-<p>体验：<img src="/2021/10/16/mybatisPlus/image-20211018134947771.png" alt="image-20211018134947771"></p>
-<p><img src="/2021/10/16/mybatisPlus/image-20211018135228638.png" alt="image-20211018135228638"></p>
-<p>可以看出实际是把deleted字段的值变为一，之后再查询的时候SQL语句会自动根据deleted=0来过滤，可以看下图</p>
-<p><img src="/2021/10/16/mybatisPlus/image-20211018135453151.png" alt="image-20211018135453151"></p>
-<h2><span id></span></h2><h2><span id="条件构造器">条件构造器</span></h2><p>实例在项目测试用例中查看</p>
+<p>微信和email分别建立实体类实现统一发送信息接口，由此可以在上图客户端中实现功能。</p>
+<p><img src="/2021/10/21/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-0/image-20211022115039056.png" alt="image-20211022115039056"></p>
+<p><img src="/2021/10/21/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-0/image-20211022114045857.png" alt="image-20211022114045857"></p>
+<h3><span id="里氏替换原则">里氏替换原则</span></h3><p>引出：继承也有一些弊端：带来侵入性，增加了对象之间的耦合性。一个父类被多个子类继承时，当父类修改功能，则必须要考虑到所有的子类，而且修改后子类的功能会产生故障。</p>
+<p><img src="/2021/10/21/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-0/image-20211022122710402.png" alt="image-20211022122710402"></p>
+<p><img src="/2021/10/21/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-0/image-20211022122725461.png" alt="image-20211022122725461"></p>
+<p><img src="/2021/10/21/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-0/image-20211022122850226.png" alt="image-20211022122850226"></p>
+<p><img src="/2021/10/21/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-0/image-20211022122914008.png" alt="image-20211022122914008"></p>
+<h3><span id="开闭原则">开闭原则</span></h3><p>对扩展开放（提供方），对修改关闭（使用方）</p>
+<p>尽量添加代码而不去修改</p>
+<h3><span id="迪米特法则">迪米特法则</span></h3><p><img src="/2021/10/21/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-0/image-20211023183516689.png" alt="image-20211023183516689"></p>
+<p><img src="/2021/10/21/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-0/image-20211023183343984.png" alt="image-20211023183343984"></p>
+<h3><span id="合成复用原则">合成复用原则</span></h3><p>尽量使用合成或聚合的方式，不要使用继承，降低耦合度。</p>
+<h2><span id="设计原则核心思想">设计原则核心思想</span></h2><p><img src="/2021/10/21/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8FStudy-0/Blog\source_posts\设计模式Study-0\image-20211023193922411.png" alt="image-20211023193922411"></p>
 
       
     </div>
@@ -466,7 +347,7 @@ private Integer deleted;
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/13/Linux/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/20/NodeJS%E3%80%81Npm%E3%80%81Es6%E3%80%81Babel/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -480,7 +361,7 @@ private Integer deleted;
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/10/13/Linux/" class="post-title-link" itemprop="url">Linux</a>
+            <a href="/2021/10/20/NodeJS%E3%80%81Npm%E3%80%81Es6%E3%80%81Babel/" class="post-title-link" itemprop="url">NodeJS、Npm、Es6、Babel</a>
         </h2>
 
         <div class="post-meta">
@@ -491,29 +372,23 @@ private Integer deleted;
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2021-10-13 11:53:20" itemprop="dateCreated datePublished" datetime="2021-10-13T11:53:20+08:00">2021-10-13</time>
+              <time title="创建时间：2021-10-20 17:12:29 / 修改时间：17:26:11" itemprop="dateCreated datePublished" datetime="2021-10-20T17:12:29+08:00">2021-10-20</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-11-09 14:16:46" itemprop="dateModified" datetime="2021-11-09T14:16:46+08:00">2021-11-09</time>
-              </span>
 
           
             <span class="post-meta-item" title="本文字数">
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
               </span>
-              <span>2.3k</span>
+              <span>65</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
-              <span>2 分钟</span>
+              <span>1 分钟</span>
             </span>
 
         </div>
@@ -525,180 +400,7 @@ private Integer deleted;
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1><span id="linux">Linux</span></h1><blockquote>
-<p><strong>/</strong> 为根目录</p>
-</blockquote>
-<p><img src="/2021/10/13/Linux/image-20211013121356670.png" alt="image-20211013121356670"></p>
-<blockquote>
-<p>pwd会显示当前用户所在的目录</p>
-<p>递归创建目录   </p>
-<pre><code>mkdir -p
-</code></pre>
-</blockquote>
-<p><strong>rmdir ( 删除空的目录 )</strong></p>
-<h3><span id="基本属性">基本属性</span></h3><p><img src="/2021/10/13/Linux/image-20211013123219345.png" alt="image-20211013123219345"></p>
-<p>在Linux中第一个字符代表这个文件是目录、文件或链接文件等等：</p>
-<ul>
-<li><p>当为[ <strong>d</strong> ]则是目录</p>
-</li>
-<li><p>当为[ <strong>-</strong> ]则是文件；</p>
-</li>
-<li><p>若是[ <strong>l</strong> ]则表示为链接文档 ( link file )；</p>
-</li>
-<li><p>若是[ <strong>b</strong> ]则表示为装置文件里面的可供储存的接口设备 ( 可随机存取装置 )；</p>
-</li>
-<li><p>若是[ <strong>c</strong> ]则表示为装置文件里面的串行端口设备，例如键盘、鼠标 ( 一次性读取装置 )。</p>
-</li>
-<li><p><img src="/2021/10/13/Linux/image-20211013172707239.png" alt="image-20211013172707239"></p>
-<p><strong>接下来的字符中，以三个为一组，且均为『rwx』 的三个参数的组合。</strong></p>
-<p><strong>其中，[ r ]代表可读(read)、[ w ]代表可写(write)、[ x ]代表可执行(execute)。</strong></p>
-<p><strong>要注意的是，这三个权限的位置不会改变，如果没有权限，就会出现减号[ - ]而已。</strong></p>
-</li>
-</ul>
-<p><img src="/2021/10/13/Linux/640" alt="图片"></p>
-<p>在以上实例中，属主和属组都为 root</p>
-<blockquote>
-<p>修改文件属性</p>
-</blockquote>
-<p><strong>1、chgrp：更改文件属组</strong></p>
-<pre><code class="bash">chgrp [-R] 属组名 文件名
-</code></pre>
-<p>-R：递归更改文件属组，就是在更改某个目录文件的属组时，如果加上-R的参数，那么该目录下的所有文件的属组都会更改。</p>
-<p><strong>2、chown：更改文件属主，也可以同时更改文件属组</strong></p>
-<pre><code class="bash">chown [–R] 属主名 文件名
-chown [-R] 属主名：属组名 文件名
-</code></pre>
-<p><strong>3、chmod：更改文件9个属性</strong></p>
-<pre><code class="bash">chmod [-R] xyz 文件或目录
-</code></pre>
-<p>Linux文件属性有两种设置方法，一种是数字，一种是符号。</p>
-<p>Linux文件的基本权限就有九个，分别是owner/group/others三种身份各有自己的read/write/execute权限。</p>
-<p>先复习一下刚刚上面提到的数据：文件的权限字符为：『-rwxrwxrwx』， 这九个权限是三个三个一组的！其中，我们可以使用数字来代表各个权限，各权限的分数对照表如下：</p>
-<pre><code class="bash">r:4     w:2         x:1
-</code></pre>
-<p>每种身份(owner/group/others)各自的三个权限(r/w/x)分数是需要累加的，例如当权限为：[-rwxrwx—] 分数则是：</p>
-<ul>
-<li>owner = rwx = 4+2+1 = 7</li>
-<li>group = rwx = 4+2+1 = 7</li>
-<li>others= — = 0+0+0 = 0</li>
-</ul>
-<pre><code class="bash">chmod 770 filename
-</code></pre>
-<h3><span id="文件内容查看">文件内容查看</span></h3><ul>
-<li>cat 由第一行开始显示文件内容</li>
-<li>tac 从最后一行开始显示，可以看出 tac 是 cat 的倒着写！</li>
-<li>nl  显示的时候，顺道输出行号！</li>
-<li>more 一页一页的显示文件内容 空格键表示下一页，回车键表示下一行  / 开启查询功能   </li>
-<li>less 与 more 类似，但是比 more 更好的是，他可以往前翻页！</li>
-<li>head 只看头几行</li>
-<li>tail 只看尾巴几行</li>
-</ul>
-<p>ifconfig查看网络配置<img src="/2021/10/13/Linux/image-20211014103811937.png" alt="image-20211014103811937"></p>
-<h3><span id="账号管理">账号管理</span></h3><p>用户账号的管理</p>
-<blockquote>
-<p>添加账号 useradd</p>
-</blockquote>
-<pre><code>useradd 选项 用户名
-</code></pre>
-<p>参数说明：</p>
-<ul>
-<li><p>选项 :</p>
-</li>
-<li><ul>
-<li>-c comment 指定一段注释性描述。</li>
-<li>-d 目录 指定用户主目录，如果此目录不存在，则同时使用-m选项，可以创建主目录。</li>
-<li>-g 用户组 指定用户所属的用户组。</li>
-<li>-G 用户组，用户组 指定用户所属的附加组。</li>
-<li>-m　使用者目录如不存在则自动建立。</li>
-<li>-s Shell文件 指定用户的登录Shell。</li>
-<li>-u 用户号 指定用户的用户号，如果同时有-o选项，则可以重复使用其他用户的标识号。</li>
-</ul>
-</li>
-<li><p>用户名 :</p>
-</li>
-<li><p>指定新账号的登录名。</p>
-</li>
-</ul>
-<blockquote>
-<p>Linux下如何切换用户<br>  1.切换用户的命令为：su username 【username是你的用户名哦】</p>
-</blockquote>
-<blockquote>
-<p>删除帐号  </p>
-</blockquote>
-<pre><code class="bash">userdel 选项 用户名
-</code></pre>
-<p>常用的选项是 <strong>-r</strong>，它的作用是把用户的主目录一起删除。</p>
-<blockquote>
-<p>修改帐号</p>
-</blockquote>
-<pre><code class="bash">usermod 选项 用户名
-</code></pre>
-<p>常用的选项包括-c, -d, -m, -g, -G, -s, -u以及-o等，这些选项的意义与useradd命令中的选项一样，可以为用户指定新的资源值。</p>
-<p>例如：</p>
-<pre><code class="bash"># usermod -s /bin/ksh -d /home/z –g developer kuangshen
-</code></pre>
-<p>此命令将用户kuangshen的登录Shell修改为ksh，主目录改为/home/z，用户组改为developer。</p>
-<blockquote>
-<p><strong>etc/passwd</strong></p>
-</blockquote>
-<pre><code>用户名:口令:用户标识号:组标识号:注释性描述:主目录:登录Shell
-</code></pre>
-<p><img src="/2021/10/13/Linux/image-20211015101642181.png" alt="image-20211015101642181"></p>
-<p>查看磁盘：df -h     du查看当前目录使用空间情况</p>
-<p><img src="/2021/10/13/Linux/image-20211015110307308.png" alt="image-20211015110307308"></p>
-<p>挂载</p>
-<p><img src="/2021/10/13/Linux/image-20211015110932717.png" alt="image-20211015110932717"></p>
-<p>卸载 umount -f 【挂载位置】</p>
-<blockquote>
-<p>进程管理</p>
-<p><img src="/2021/10/13/Linux/image-20211015115117601.png" alt="image-20211015115117601"></p>
-</blockquote>
-<p> pstree -pu</p>
-<p>树状显示进程</p>
-<blockquote>
-<p>发布项目</p>
-</blockquote>
-<p>把项目文件打包成jar文件上传到服务器</p>
-<p>查看项目的端口号，必须确保Linux的防火墙端口是开启的</p>
-<pre><code class="bash"># 查看firewall服务状态
-systemctl status firewalld
-
-# 开启、重启、关闭、firewalld.service服务
-# 开启
-service firewalld start
-# 重启
-service firewalld restart
-# 关闭
-service firewalld stop
-
-# 查看防火墙规则
-firewall-cmd --list-all    # 查看全部信息
-firewall-cmd --list-ports  # 只看端口信息
-
-# 开启端口
-开端口命令：firewall-cmd --zone=public --add-port=80/tcp --permanent
-重启防火墙：systemctl restart firewalld.service
-
-命令含义：
---zone #作用域
---add-port=80/tcp  #添加端口，格式为：端口/通讯协议
---permanent   #永久生效，没有此参数重启后失效
-</code></pre>
-<blockquote>
-<p>tomcat</p>
-</blockquote>
-<pre><code class="bash"># 执行：startup.sh --&gt;启动tomcat
-# 执行：shutdown.sh --&gt;关闭tomcat
-./startup.sh
-./shutdown.sh
-</code></pre>
-<h2><span id="三种软件安装方式">三种软件安装方式</span></h2><p>1.rpm安装</p>
-<p>2.解压缩安装</p>
-<p>3.yum安装</p>
-<p>各种命令无法识别：</p>
-<p>解决：</p>
-<pre><code class="bash">export PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin
-</code></pre>
+          <h1><span id="前端技能基础杂烩">前端技能基础杂烩</span></h1><p>学习文档地址：<a target="_blank" rel="noopener" href="https://www.kuangstudy.com/bbs/1351463043300708353">https://www.kuangstudy.com/bbs/1351463043300708353</a></p>
 
       
     </div>
@@ -719,7 +421,7 @@ firewall-cmd --list-ports  # 只看端口信息
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/14/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><span class="page-number current">15</span><a class="page-number" href="/page/16/">16</a><span class="space">&hellip;</span><a class="page-number" href="/page/25/">25</a><a class="extend next" rel="next" href="/page/16/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/14/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><span class="page-number current">15</span><a class="page-number" href="/page/16/">16</a><span class="space">&hellip;</span><a class="page-number" href="/page/26/">26</a><a class="extend next" rel="next" href="/page/16/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -787,20 +489,20 @@ firewall-cmd --list-ports  # 只看端口信息
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">50</span>
+          <span class="site-state-item-count">52</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-count">20</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">38</span>
+        <span class="site-state-item-count">39</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -866,18 +568,18 @@ firewall-cmd --list-ports  # 只看端口信息
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">212k</span>
+    <span title="站点总字数">214k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">3:13</span>
+    <span title="站点阅读时长">3:14</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共86k字</span>
+  <span class="post-count">博客全站共87.2k字</span>
 </div>
 
     <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
