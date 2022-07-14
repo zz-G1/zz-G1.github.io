@@ -195,387 +195,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/12/07/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Gzz">
-      <meta itemprop="description" content="只要开始就不算晚">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="香饽饽">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/12/07/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B2/" class="post-title-link" itemprop="url">谷粒学院项目历程2</a>
-        </h2>
-
-        <div class="post-meta">
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-12-07 11:02:07" itemprop="dateCreated datePublished" datetime="2021-12-07T11:02:07+08:00">2021-12-07</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-03-06 22:14:40" itemprop="dateModified" datetime="2022-03-06T22:14:40+08:00">2022-03-06</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/" itemprop="url" rel="index"><span itemprop="name">项目实战</span></a>
-                </span>
-            </span>
-
-          
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-              <span>7k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-              <span>6 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1><span id="谷粒学院项目">谷粒学院项目</span></h1><h2><span id="redis">redis</span></h2><p>由于客户端首页访问量比较大，所以集成一下redis</p>
-<p>当需要把分页参数和querywapper作为参数在sql语句中进行查询时，需要在mapper层加**@Param(Constants.WAPPER)**注解</p>
-<p><img src="/2021/12/07/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B2/image-20211208113652994.png" alt="image-20211208113652994"></p>
-<p><img src="/2021/12/07/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B2/image-20211208114512577.png" alt="image-20211208114512577"></p>
-<p><strong>@Param(Constants.WAPPER)<strong>相当于</strong>@Param(“ew”)</strong></p>
-<p><img src="/2021/12/07/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B2/image-20211208113823141.png" alt="image-20211208113823141"></p>
-<p>${ew.customSqlSegment}这个语句会自动把分页和querywapper参数传到sql查询内</p>
-<p>在使用oss上传图片时，在前端直接调用后端接口，在前端直接给url赋值，附带moudle属性</p>
-<p><img src="/2021/12/07/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B2/image-20211208131741706.png" alt="image-20211208131741706"></p>
-<h2><span id="注册页面获取验证码前端部分">注册页面获取验证码前端部分</span></h2><p><img src="/2021/12/07/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B2/image-20211209174045597.png" alt="image-20211209174045597"></p>
-<pre><code class="vue">// 倒计时
-    timeDown() &#123;
-      this.codeText = this.second
-
-      // 定义计时器
-      const timer = setInterval(() =&gt; &#123;
-        this.codeText--
-        if (this.codeText &lt; 1) &#123;
-          clearInterval(timer)
-          this.codeText = &#39;获取验证码&#39;
-          this.sending = false
-          this.second = 60
-        &#125;
-        // console.log(new Date())
-      &#125;, 1000)
-    &#125;,
-</code></pre>
-<h2><span id="用户身份认证">用户身份认证</span></h2><ul>
-<li>传统方式为单一服务器模式。</li>
-</ul>
-<ul>
-<li>单点登录（sso）：在多个应用系统中，只需要登录一次，就可以访问其他相互信任的应用系统。</li>
-</ul>
-<p><img src="/2021/12/07/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B2/346672f4-9c52-42bf-8fa3-464bf34a8873.jpg" alt="img"></p>
-<p>使用redis和认证中心</p>
-<p><strong>优点 ：</strong>  </p>
-<p>用户身份信息独立管理，更好的分布式管理。可以自己扩展安全策略</p>
-<p><strong>缺点：</strong></p>
-<p>认证服务器访问压力较大，session的可用性和一致性为矛盾性质，服务器也有性能瓶颈</p>
-<ul>
-<li>token模式   sso模式的一种演变</li>
-</ul>
-<p><img src="/2021/12/07/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B2/0.9709434306629741.png" alt="img"></p>
-<p><strong>优点：</strong></p>
-<ul>
-<li>无状态： token是无状态，session是有状态的</li>
-<li>基于标准化：你的API可以采用标准化的 JSON Web Token (JWT)</li>
-</ul>
-<p><strong>缺点：</strong></p>
-<ul>
-<li>占用带宽</li>
-<li>无法在服务器端销毁</li>
-</ul>
-<p><img src="/2021/12/07/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B2/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM3MTI2MTc1,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-<p>token详细学习</p>
-<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/24825a2683e6">什么是token - 简书 (jianshu.com)</a></p>
-<h2><span id="jwt">JWT</span></h2><p><strong>JWT头部</strong>分是一个描述JWT元数据的JSON对象</p>
-<pre><code class="json">&#123;
-  &quot;alg&quot;: &quot;HS256&quot;,
-  &quot;typ&quot;: &quot;JWT&quot;
-&#125;
-</code></pre>
-<p><strong>有效载荷部分</strong>，是JWT的主体内容部分，也是一个JSON对象，包含需要传递的数据。 JWT指定七个默认字段供选择。</p>
-<pre><code class="json">iss: jwt签发者
-sub: 主题
-aud: 接收jwt的一方
-exp: jwt的过期时间，这个过期时间必须要大于签发时间
-nbf: 定义在什么时间之前，该jwt都是不可用的.
-iat: jwt的签发时间
-jti: jwt的唯一身份标识，主要用来作为一次性token,从而回避重放攻击。
-</code></pre>
-<p>不要在这一部分放隐私数据</p>
-<p><strong>签名哈希</strong>部分是对上面两部分数据签名，通过指定的算法生成哈希，以确保数据不会被篡改。</p>
-<pre><code class="json">HMACSHA256(base64UrlEncode(header) + &quot;.&quot; + base64UrlEncode(claims), secret)
-</code></pre>
-<p><strong>Base64URL算法</strong></p>
-<p>如前所述，JWT头和有效载荷序列化的算法都用到了Base64URL。该算法和常见Base64算法类似，稍有差别。</p>
-<p>作为令牌的JWT可以放在URL中（例如api.example/?token=xxx）。 Base64中用的三个字符是”+”，”/“和”=”，由于在URL中有特殊含义，因此Base64URL中对他们做了替换：”=”去掉，”+”用”-“替换，”/“用”_”替换，这就是Base64URL算法。</p>
-<p><strong>注意：</strong>base64编码，并不是加密，只是把明文信息变成了不可见的字符串。但是其实只要用一些工具就可以把base64编码解成明文，所以不要在JWT中放入涉及私密的信息</p>
-<h2><span id="后端生成token-根据token获取信息">后端生成token 根据token获取信息</span></h2><p>1.引入依赖</p>
-<pre><code class="xml">&lt;dependencies&gt;
-    &lt;dependency&gt;
-        &lt;groupId&gt;io.jsonwebtoken&lt;/groupId&gt;
-        &lt;artifactId&gt;jjwt&lt;/artifactId&gt;
-    &lt;/dependency&gt;
-
-    &lt;dependency&gt;
-        &lt;groupId&gt;joda-time&lt;/groupId&gt;
-        &lt;artifactId&gt;joda-time&lt;/artifactId&gt;
-    &lt;/dependency&gt;
-&lt;/dependencies&gt;
-</code></pre>
-<p>2.工具类</p>
-<pre><code class="java">/**
-     * stoken
-     * @param jwtInfo
-     * @param expire
-     * @return
-     */
-    public static String getJwtToken(JwtInfo jwtInfo, int expire)&#123;
-
-        String JwtToken = Jwts.builder()
-                .setHeaderParam(&quot;typ&quot;, &quot;JWT&quot;)
-                .setHeaderParam(&quot;alg&quot;, &quot;HS256&quot;)
-                .setSubject(&quot;guli-user&quot;)//主题
-                .setIssuedAt(new Date())//颁发时间
-                .setExpiration(DateTime.now().plusSeconds(expire).toDate())//过期时间
-                .claim(&quot;id&quot;, jwtInfo.getId())//用户id
-                .claim(&quot;nickname&quot;, jwtInfo.getNickname())//用户昵称
-                .claim(&quot;avatar&quot;, jwtInfo.getAvatar())//用户头像
-                .signWith(SignatureAlgorithm.HS256, getKeyInstance())
-                .compact();
-
-        return JwtToken;
-    &#125;
-/**
- * 根据token获取会员id
- * @param request
- * @return
- */
-public static JwtInfo getMemberIdByJwtToken(HttpServletRequest request) &#123;
-    String jwtToken = request.getHeader(&quot;token&quot;);
-    if(StringUtils.isEmpty(jwtToken)) return null;
-    Jws&lt;Claims&gt; claimsJws =  Jwts.parser().setSigningKey(getKeyInstance()).parseClaimsJws(jwtToken);
-    Claims claims = claimsJws.getBody();
-    JwtInfo jwtInfo = new JwtInfo(claims.get(&quot;id&quot;).toString(), 
-                                  claims.get(&quot;nickname&quot;).toString(), 
-                                  claims.get(&quot;avatar&quot;).toString());
-    return jwtInfo;
-&#125;
-</code></pre>
-<p>JwtInfo为根据token获取的用户信息，注意：不能放有敏感信息</p>
-<h2><span id="前端登录功能">前端登录功能</span></h2><p>token在cookie中，前端header携带cookie返回后端</p>
-<pre><code class="vue">// 登录
-submitLogin() &#123;
-// 执行远程登录接口调用
-loginApi.submitLogin(this.user).then(response =&gt; &#123;
-// 将JWT写进cookie
-cookie.set(&#39;guli_jwt_token&#39;, response.data.token, &#123; domain: &#39;localhost&#39; &#125;)
-// 跳转到网站的首页面
-window.location.href = &#39;/&#39;
-&#125;)
-&#125;
-</code></pre>
-<p><strong>{ domain: ‘localhost’ }</strong>  cookie的第三个参数</p>
-<p>设置可以共享cookie的父域名</p>
-<h2><span id="创建dtodata-transfer-object服务和服务之间的数据传输对象">创建DTO（Data Transfer Object）：服务和服务之间的数据传输对象</span></h2><p>LEFT JOIN 关键字会从左表 (table_name1) 那里返回所有的行，即使在右表 (table_name2) 中没有匹配的行。</p>
-<h3><span id="left-join-关键字语法">LEFT JOIN 关键字语法</span></h3><pre><code class="sql">SELECT column_name(s)
-FROM table_name1
-LEFT JOIN table_name2 
-ON table_name1.column_name=table_name2.column_name
-</code></pre>
-<p>serviceimpl层中 this.remove和baseMapper.delete所达成的效果是一样的</p>
-<p><img src="/2021/12/07/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B2/image-20211214115329754-16394540114113.png" alt="image-20211214115329754"></p>
-<p><img src="/2021/12/07/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B2/image-20211214115259908-16394539816312.png" alt="image-20211214115259908"></p>
-<p>只是this调用删除方法返回布尔值</p>
-<h2><span id="微信支付">微信支付</span></h2><p><img src="/2021/12/07/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B2/image-20211215113757450.png" alt="image-20211215113757450"></p>
-<h3><span id="内网穿透">内网穿透</span></h3><p>使用ngrock</p>
-<p><img src="/2021/12/07/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B2/image-20211215132549706.png" alt="image-20211215132549706"></p>
-<p><img src="/2021/12/07/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B2/image-20211215132522036.png" alt="image-20211215132522036"></p>
-<p>微信回调需要访问到local host</p>
-<p>根据微信返回的二维码url地址生成二维码  </p>
-<p>前端生成：npm install <a href="mailto:&#118;&#117;&#x65;&#x2d;&#x71;&#114;&#105;&#x6f;&#117;&#x73;&#108;&#121;&#x40;&#x31;&#x2e;&#x31;&#x2e;&#x31;">&#118;&#117;&#x65;&#x2d;&#x71;&#114;&#105;&#x6f;&#117;&#x73;&#108;&#121;&#x40;&#x31;&#x2e;&#x31;&#x2e;&#x31;</a></p>
-<p>处理一个幂等性，防止重复调用不必要的方法</p>
-<pre><code class="java">//接口调用的幂等性：无论接口被调用多少次，最后所影响的结果都是一致的
-if(order.getStatus() == 0)&#123;
-    //更新订单状态
-    orderService.updateOrderStatus(notifyMap);
-&#125;
-</code></pre>
-<h2><span id="api服务网关">API服务网关</span></h2><p>使用springcloudgateway作为网关</p>
-<pre><code class="xml">&lt;dependency&gt;
-    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
-    &lt;artifactId&gt;spring-cloud-starter-gateway&lt;/artifactId&gt;
-&lt;/dependency&gt;
-</code></pre>
-<pre><code class="yaml">spring:
-  profiles:
-    active: dev # 环境设置
-  application:
-    name: infrastructure-apigateway # 服务名
-  cloud:
-    nacos:
-      discovery:
-        server-addr: localhost:8848 # nacos服务地址
-    gateway:
-      discovery:
-        locator:
-          enabled: true # gateway可以发现nacos中的微服务
-      routes:  
-      - id: service-edu
-        uri: lb://service-edu
-        predicates:
-        - Path=/user/**, /*/edu/**
-        filters:
-        - SetStatus=250 #修改返回状态码
-</code></pre>
-<p>predicates为断言，有路径断言，时间断言，远程IP断言，cookie断言，header断言，Query请求断言，路由权重断言</p>
-<p>uri配置，如果服务器使用集群模式，自动运用负载均衡模式进行配置</p>
-<h3><span id="处理跨域问题">处理跨域问题</span></h3><pre><code class="java">@Configuration
-public class CorsConfig &#123;
-
-    @Bean
-    public CorsWebFilter corsFilter() &#123;
-
-        CorsConfiguration config = new CorsConfiguration();
-        config.addAllowedMethod(&quot;*&quot;);
-        config.addAllowedOrigin(&quot;*&quot;);
-        config.addAllowedHeader(&quot;*&quot;);
-
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource(new PathPatternParser());
-        source.registerCorsConfiguration(&quot;/**&quot;, config);
-
-        return new CorsWebFilter(source);
-    &#125;
-&#125;
-</code></pre>
-<p>有了config配置之后需把@CrossOrigin屏蔽掉</p>
-<h3><span id="自定义全局过滤器">自定义全局过滤器</span></h3><p><img src="/2021/12/07/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B2/image-20211217174019270.png" alt="image-20211217174019270"></p>
-<p>未登录状态下购买课程显示network error</p>
-<p>可优化用户体验，未登录状态下点击购买的话会直接跳转到登录页面</p>
-<h2><span id="遇到问题">遇到问题</span></h2><p><img src="/2021/12/07/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B2/image-20211220131709314.png" alt="image-20211220131709314"></p>
-<p>配置了双跨域问题</p>
-<p><strong>原因：</strong>controller类上加了@CrossOrigin 注解，在网关配置中又配置了跨域问题</p>
-<p><strong>解决方法：</strong>去掉@CrossOrigin 注解，保留网关配置</p>
-<p>问题：404</p>
-<p><img src="/2021/12/07/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B2/20190620105924821.png" alt="img"></p>
-<p><strong>原因：</strong>控制类中的mapping没有和网关配置中的path完全匹配</p>
-<p><img src="/2021/12/07/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B2/Blog\source_posts\谷粒学院项目历程2\image-20211220134104612.png" alt="image-20211220134104612"></p>
-<p><strong>解决方法：</strong>完全匹配就好</p>
-<h2><span id="配置中心-nacos-config">配置中心  nacos config</span></h2><p>导入依赖</p>
-<p>远程配置中心的配置优先生效</p>
-<p>配置动态刷新：<strong>在controller类上添加@RefershScope注解</strong></p>
-<p>多环境配置:</p>
-<p>在bootstrap.yml中配置环境</p>
-<p><img src="/2021/12/07/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B2/image-20211220143121397.png" alt="image-20211220143121397"></p>
-<p>然后在nacos配置中心新建配置文件，命名规则为  <strong>服务名-环境.yaml</strong></p>
-<p>可以用名称空间做微服务隔离，结合多环境配置使用</p>
-<p>单独配置各种服务参数</p>
-<p><img src="/2021/12/07/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B2/image-20211220144514397.png" alt="image-20211220144514397"></p>
-<p>然后在nacos配置中心新增配置文件</p>
-<h2><span id="权限配置">权限配置</span></h2><h3><span id="递归操作">递归操作</span></h3><h4><span id="eg获取全部菜单">eg：获取全部菜单</span></h4><pre><code class="java">//获取全部菜单
-    @Override
-    public List&lt;Permission&gt; queryAllMenuGuli() &#123;
-        //1 查询菜单表所有数据
-        QueryWrapper&lt;Permission&gt; wrapper = new QueryWrapper&lt;&gt;();
-        wrapper.orderByDesc(&quot;id&quot;);
-        List&lt;Permission&gt; permissionList = baseMapper.selectList(wrapper);
-        //2 把查询所有菜单list集合按照要求进行封装
-        List&lt;Permission&gt; resultList = bulidPermission(permissionList);
-        return resultList;
-    &#125;
-//把返回所有菜单list集合进行封装的方法
-    public static List&lt;Permission&gt; bulidPermission(List&lt;Permission&gt; permissionList) &#123;
-
-        //创建list集合，用于数据最终封装
-        List&lt;Permission&gt; finalNode = new ArrayList&lt;&gt;();
-        //把所有菜单list集合遍历，得到顶层菜单 pid=0菜单，设置level是1
-        for(Permission permissionNode : permissionList) &#123;
-            //得到顶层菜单 pid=0菜单
-            if(&quot;0&quot;.equals(permissionNode.getPid())) &#123;
-                //设置顶层菜单的level是1
-                permissionNode.setLevel(1);
-                //根据顶层菜单，向里面进行查询子菜单，封装到finalNode里面
-                finalNode.add(selectChildren(permissionNode,permissionList));
-            &#125;
-        &#125;
-        return finalNode;
-    &#125;
-
-    private static Permission selectChildren(Permission permissionNode, List&lt;Permission&gt; permissionList) &#123;
-        //1 因为向一层菜单里面放二层菜单，二层里面还要放三层，把对象初始化
-        permissionNode.setChildren(new ArrayList&lt;Permission&gt;());
-
-        //2 遍历所有菜单list集合，进行判断比较，比较id和pid值是否相同
-        for(Permission it : permissionList) &#123;
-            //判断 id和pid值是否相同
-            if(permissionNode.getId().equals(it.getPid())) &#123;
-                //把父菜单的level值+1
-                int level = permissionNode.getLevel()+1;
-                it.setLevel(level);
-                //如果children为空，进行初始化操作
-                if(permissionNode.getChildren() == null) &#123;
-                    permissionNode.setChildren(new ArrayList&lt;Permission&gt;());
-                &#125;
-                //把查询出来的子菜单放到父菜单里面
-                permissionNode.getChildren().add(selectChildren(it,permissionList));
-            &#125;
-        &#125;
-        return permissionNode;
-    &#125;
-</code></pre>
-
-      
-    </div>
-
-    
-    
-    
-
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/12/07/github%E6%90%9C%E7%B4%A2%E6%8A%80%E5%B7%A7/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -647,10 +266,647 @@ public class CorsConfig &#123;
   
   
 
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/11/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Gzz">
+      <meta itemprop="description" content="只要开始就不算晚">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="香饽饽">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/11/11/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B/" class="post-title-link" itemprop="url">谷粒学院项目历程</a>
+        </h2>
+
+        <div class="post-meta">
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-11-11 16:52:17" itemprop="dateCreated datePublished" datetime="2021-11-11T16:52:17+08:00">2021-11-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-02-28 21:35:23" itemprop="dateModified" datetime="2022-02-28T21:35:23+08:00">2022-02-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/" itemprop="url" rel="index"><span itemprop="name">项目实战</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+              <span>14k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+              <span>12 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1><span id="谷粒学院项目">谷粒学院项目</span></h1><h2><span id="搭建环境">搭建环境</span></h2><p>了解到非业务流程开发正好符合我之前影像系统开发的某些功能，原来是以这个名词来进行概括</p>
+<h3><span id="项目总体架构">项目总体架构</span></h3><ul>
+<li><input disabled type="checkbox"> common 模块的公共配置</li>
+<li><input disabled type="checkbox"> canal_client 数据库同步模块（统计同步数据）</li>
+<li><input disabled type="checkbox"> infrastructure：基础服务模块父节点</li>
+<li><input disabled type="checkbox"> service api接口服务父节点</li>
+<li><input disabled type="checkbox"> node.js做BFF层</li>
+</ul>
+<h2><span id="数据库">数据库</span></h2><h3><span id="分布式id">分布式ID</span></h3><p><strong>雪花算法生成</strong></p>
+<p>它能够保证不同表的主键的不重复性，以及相同表的主键的有序性</p>
+<p>整体上按照时间自增排序，并且整个分布式系统内不会产生ID碰撞，并且效率较高。</p>
+<h3><span id="自动填充">自动填充</span></h3><p>项目中经常会遇到一些数据，每次都使用相同的方式填充，例如记录的创建时间，更新时间等</p>
+<p>实现：</p>
+<p>1.<strong>数据库修改</strong></p>
+<p>在User表中添加datetime类型的新的字段 create_time、update_time</p>
+<p><strong>2、实体类修改</strong></p>
+<p>实体上增加字段并添加自动填充注解</p>
+<p><strong>3、实现元对象处理器接口</strong></p>
+<h3><span id="批量删除">批量删除</span></h3><p>batch操作</p>
+<h3><span id="逻辑删除">逻辑删除</span></h3><p>sql执行的是update操作</p>
+<p>父项目只管理依赖的版本，就做到了按需加载依赖，而且版本统一</p>
+<p><dependencymanagement>用于父项目中对子项目进行统一依赖管理</dependencymanagement></p>
+<p>遇到问题：IDEA中删除模块后，重新创建同名模块，显示已存在该模块</p>
+<p>解决：</p>
+<p><strong>1.在项目区单击右键找到load/Unload Modules…unload出问题的模块就可以</strong></p>
+<p><img src="/2021/11/11/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xleHVlaXQ=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<h3><span id="后台业务接口配置">后台业务接口配置</span></h3><h4><span id></span></h4><p><img src="/2021/11/11/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B/image-20211112190716874.png" alt="image-20211112190716874"></p>
+<h3><span id="设置统一返回结果">设置统一返回结果：</span></h3><pre><code class="java">@Data
+@ApiModel(value = &quot;全局统一返回结果&quot;)
+public class R &#123;
+
+    @ApiModelProperty(value = &quot;是否成功&quot;)
+    private Boolean success;
+
+    @ApiModelProperty(value = &quot;返回码&quot;)
+    private Integer code;
+
+    @ApiModelProperty(value = &quot;返回消息&quot;)
+    private String message;
+
+    @ApiModelProperty(value = &quot;返回数据&quot;)
+    private Map&lt;String, Object&gt; data = new HashMap&lt;String, Object&gt;();
+
+    public R()&#123;&#125;
+
+    public static R ok()&#123;
+        R r = new R();
+        r.setSuccess(ResultCodeEnum.SUCCESS.getSuccess());
+        r.setCode(ResultCodeEnum.SUCCESS.getCode());
+        r.setMessage(ResultCodeEnum.SUCCESS.getMessage());
+        return r;
+    &#125;
+
+    public static R error()&#123;
+        R r = new R();
+        r.setSuccess(ResultCodeEnum.UNKNOWN_REASON.getSuccess());
+        r.setCode(ResultCodeEnum.UNKNOWN_REASON.getCode());
+        r.setMessage(ResultCodeEnum.UNKNOWN_REASON.getMessage());
+        return r;
+    &#125;
+
+    public static R setResult(ResultCodeEnum resultCodeEnum)&#123;
+        R r = new R();
+        r.setSuccess(resultCodeEnum.getSuccess());
+        r.setCode(resultCodeEnum.getCode());
+        r.setMessage(resultCodeEnum.getMessage());
+        return r;
+    &#125;
+
+    public R success(Boolean success)&#123;
+        this.setSuccess(success);
+        return this;
+    &#125;
+
+    public R message(String message)&#123;
+        this.setMessage(message);
+        return this;
+    &#125;
+
+    public R code(Integer code)&#123;
+        this.setCode(code);
+        return this;
+    &#125;
+
+    public R data(String key, Object value)&#123;
+        this.data.put(key, value);
+        return this;
+    &#125;
+
+    public R data(Map&lt;String, Object&gt; map)&#123;
+        this.setData(map);
+        return this;
+    &#125;
+&#125;
+</code></pre>
+<h4><span id="各种状态信息返回码是由我们前端使用的vue框架决定的">各种状态信息，返回码是由我们前端使用的VUE框架决定的</span></h4><pre><code class="Java">@Getter
+@ToString
+public enum ResultCodeEnum &#123;
+
+    SUCCESS(true, 20000,&quot;成功&quot;),
+    UNKNOWN_REASON(false, 20001, &quot;未知错误&quot;),
+
+    BAD_SQL_GRAMMAR(false, 21001, &quot;sql语法错误&quot;),
+    JSON_PARSE_ERROR(false, 21002, &quot;json解析异常&quot;),
+    PARAM_ERROR(false, 21003, &quot;参数不正确&quot;),
+
+    FILE_UPLOAD_ERROR(false, 21004, &quot;文件上传错误&quot;),
+    FILE_DELETE_ERROR(false, 21005, &quot;文件刪除错误&quot;),
+    EXCEL_DATA_IMPORT_ERROR(false, 21006, &quot;Excel数据导入错误&quot;),
+
+    VIDEO_UPLOAD_ALIYUN_ERROR(false, 22001, &quot;视频上传至阿里云失败&quot;),
+    VIDEO_UPLOAD_TOMCAT_ERROR(false, 22002, &quot;视频上传至业务服务器失败&quot;),
+    VIDEO_DELETE_ALIYUN_ERROR(false, 22003, &quot;阿里云视频文件删除失败&quot;),
+    FETCH_VIDEO_UPLOADAUTH_ERROR(false, 22004, &quot;获取上传地址和凭证失败&quot;),
+    REFRESH_VIDEO_UPLOADAUTH_ERROR(false, 22005, &quot;刷新上传地址和凭证失败&quot;),
+    FETCH_PLAYAUTH_ERROR(false, 22006, &quot;获取播放凭证失败&quot;),
+
+    URL_ENCODE_ERROR(false, 23001, &quot;URL编码失败&quot;),
+    ILLEGAL_CALLBACK_REQUEST_ERROR(false, 23002, &quot;非法回调请求&quot;),
+    FETCH_ACCESSTOKEN_FAILD(false, 23003, &quot;获取accessToken失败&quot;),
+    FETCH_USERINFO_ERROR(false, 23004, &quot;获取用户信息失败&quot;),
+    LOGIN_ERROR(false, 23005, &quot;登录失败&quot;),
+
+    COMMENT_EMPTY(false, 24006, &quot;评论内容必须填写&quot;),
+
+    PAY_RUN(false, 25000, &quot;支付中&quot;),
+    PAY_UNIFIEDORDER_ERROR(false, 25001, &quot;统一下单错误&quot;),
+    PAY_ORDERQUERY_ERROR(false, 25002, &quot;查询支付结果错误&quot;),
+
+    ORDER_EXIST_ERROR(false, 25003, &quot;课程已购买&quot;),
+
+    GATEWAY_ERROR(false, 26000, &quot;服务不能访问&quot;),
+
+    CODE_ERROR(false, 28000, &quot;验证码错误&quot;),
+
+    LOGIN_PHONE_ERROR(false, 28009, &quot;手机号码不正确&quot;),
+    LOGIN_MOBILE_ERROR(false, 28001, &quot;账号不正确&quot;),
+    LOGIN_PASSWORD_ERROR(false, 28008, &quot;密码不正确&quot;),
+    LOGIN_DISABLED_ERROR(false, 28002, &quot;该用户已被禁用&quot;),
+    REGISTER_MOBLE_ERROR(false, 28003, &quot;手机号已被注册&quot;),
+    LOGIN_AUTH(false, 28004, &quot;需要登录&quot;),
+    LOGIN_ACL(false, 28005, &quot;没有权限&quot;),
+    SMS_SEND_ERROR(false, 28006, &quot;短信发送失败&quot;),
+    SMS_SEND_ERROR_BUSINESS_LIMIT_CONTROL(false, 28007, &quot;短信发送过于频繁&quot;);
+
+
+    private Boolean success;
+
+    private Integer code;
+
+    private String message;
+
+    ResultCodeEnum(Boolean success, Integer code, String message) &#123;
+        this.success = success;
+        this.code = code;
+        this.message = message;
+    &#125;
+&#125;
+</code></pre>
+<p>遇到问题：<strong>pom文件变橘红</strong>：idea没有识别，我们可以通过右键pom.xml文件选择Add as Maven Poject 来解决</p>
+<p>​                    <strong>pom文件变灰</strong>：打开setting，搜索ignored<img src="/2021/11/11/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B/image-20211112212242759.png" alt="image-20211112212242759"></p>
+<h3><span id="定义前端查询的对象">定义前端查询的对象</span></h3><p>讲师：</p>
+<pre><code class="java">public class TeacherQueryVo implements Serializable &#123;
+    private static final long serialVersionUID = 1L;
+
+    @ApiModelProperty(value = &quot;讲师姓名&quot;)
+    private String name;
+
+    @ApiModelProperty(value = &quot;讲师级别&quot;)
+    private Integer level;
+
+    @ApiModelProperty(value = &quot;开始时间&quot;)
+    private String joinDateBegin;
+
+    @ApiModelProperty(value = &quot;结束时间&quot;)
+    private String joinDateEnd;
+&#125;
+</code></pre>
+<p>关于设置自动填充类</p>
+<p>如果没有设置的话，save方法前端以json形式返回后台数据中没有创建时间和更新时间，但是数据库中两字段为必填字段，程序就会报错</p>
+<p><img src="/2021/11/11/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B/image-20211113135408082.png" alt="image-20211113135408082"></p>
+<p>所以就要设置自动配置handler类</p>
+<pre><code class="Java">@Component
+public class CommonMetaObjectHandler implements MetaObjectHandler &#123;
+
+    @Override
+    public void insertFill(MetaObject metaObject) &#123;
+        this.setFieldValByName(&quot;gmtCreate&quot;, new Date(), metaObject);
+        this.setFieldValByName(&quot;gmtModified&quot;, new Date(), metaObject);
+    &#125;
+
+    @Override
+    public void updateFill(MetaObject metaObject) &#123;
+        this.setFieldValByName(&quot;gmtModified&quot;, new Date(), metaObject);
+    &#125;
+&#125;
+</code></pre>
+<h3><span id="定义统一异常处理器">定义统一异常处理器</span></h3><p>因为要返回前台，所以要统一异常处理，并以json格式返回</p>
+<pre><code class="Java">package com.atguigu.guli.service.base.handler;
+
+import com.atguigu.guli.common.base.result.R;
+import com.atguigu.guli.common.base.result.ResultCodeEnum;
+import com.atguigu.guli.common.base.util.ExceptionUtils;
+import com.atguigu.guli.service.base.exception.GuliException;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.jdbc.BadSqlGrammarException;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+/**
+ * @author zz
+ * @since 2021/11/13
+ */
+@ControllerAdvice
+@Slf4j
+public class GlobalExceptionHandler &#123;
+
+    @ExceptionHandler(Exception.class)
+    @ResponseBody
+    public R error(Exception e) &#123;
+        log.error(ExceptionUtils.getMessage(e));
+        return R.error();
+    &#125;
+
+    @ExceptionHandler(BadSqlGrammarException.class)
+    @ResponseBody
+    public R error(BadSqlGrammarException e) &#123;
+        log.error(ExceptionUtils.getMessage(e));
+        return R.setResult(ResultCodeEnum.BAD_SQL_GRAMMAR);
+    &#125;
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    @ResponseBody
+    public R error(HttpMessageNotReadableException e) &#123;
+        log.error(ExceptionUtils.getMessage(e));
+        return R.setResult(ResultCodeEnum.JSON_PARSE_ERROR);
+    &#125;
+
+    @ExceptionHandler(GuliException.class)
+    @ResponseBody
+    public R error(GuliException e) &#123;
+        //oss的错误由这里返回前台
+        log.error(ExceptionUtils.getMessage(e));
+        return R.error().message(e.getMessage()).code(e.getCode());
+    &#125;
+&#125;
+</code></pre>
+<h2><span id="oss参数配置小技巧">OSS参数配置小技巧</span></h2><p>@Data<br>@Component<br>@ConfigurationProperties(prefix = “aliyun.oss”)</p>
+<pre><code class="java">/**
+ * @author zz
+ * @since 2021/11/20
+ * 一启动就可以从yaml文件中读取变量值
+ */
+@Data
+@Component
+@ConfigurationProperties(prefix = &quot;aliyun.oss&quot;)
+public class OssProperties &#123;
+    private String endpoint;
+    private String keyid;
+    private String keysecret;
+    private String bucketname;
+&#125;
+</code></pre>
+<pre><code class="yml">aliyun:
+  oss:
+    endpoint: oss-cn-beijing.aliyuncs.com
+    keyid: LTAI5tHQjqR36XKKGZ4e4dxt
+    keysecret: ad5M6HuxGRUX0KGVCjmHBhYSCAj2i7
+    #bucket可以在控制台创建，也可以使用java代码创建，注意先测试bucket是否已被占用
+    bucketname: guli-academy-01
+</code></pre>
+<h2><span id="前端">前端</span></h2><p>vue axios</p>
+<p>跨域问题：@crossOrigin</p>
+<p>npm</p>
+<p><strong>安装生产环境依赖</strong>：npm install –save-dev  ***</p>
+<p>或者 npm i -D ***</p>
+<p>安装全局依赖：npm install –global ***</p>
+<p>webpack进行项目打包 ，创建webpack.config.js文件：</p>
+<pre><code class="js">const path = require(&quot;path&quot;) //Node.js内置模块
+
+module.exports = &#123;
+    entry: &#39;./src/main.js&#39;, //配置入口文件
+    output: &#123;
+        path: path.resolve(__dirname, &#39;./dist&#39;), //输出路径，__dirname：当前文件所在路径
+        filename: &#39;bundle.js&#39; //输出文件
+    &#125;,
+    module: &#123;
+        rules: [  
+            &#123;  
+                test: /\.css$/,    //打包规则应用到以css结尾的文件上
+                use: [&#39;style-loader&#39;, &#39;css-loader&#39;]
+            &#125;  
+        ]  
+    &#125;
+&#125;
+</code></pre>
+<p>然后执行webpack –mode=development命令</p>
+<p><img src="/2021/11/11/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B/image-20211116160418094.png" alt="image-20211116160418094"></p>
+<p>webpack压缩</p>
+<p>执行webpack –mode=production命令</p>
+<p>之后这些命令都会集成在脚本里，直接执行脚本就可以了</p>
+<p>webpack打包css</p>
+<p>安装两个依赖</p>
+<pre><code class="js">&quot;devDependencies&quot;: &#123;
+  &quot;css-loader&quot;: &quot;^3.5.2&quot;,
+  &quot;style-loader&quot;: &quot;^1.1.3&quot;
+&#125;
+</code></pre>
+<p>然后在webpak.config.js文件中加上以下配置</p>
+<pre><code class="js">module: &#123;
+        rules: [  
+            &#123;  
+                test: /\.css$/,    //打包规则应用到以css结尾的文件上
+                use: [&#39;style-loader&#39;, &#39;css-loader&#39;]
+            &#125;  
+        ]  
+    &#125;
+</code></pre>
+<p>页面渲染流程：创建路由–创建API–创建页面组件</p>
+<p><img src="/2021/11/11/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B/image-20211118111357610.png" alt="image-20211118111357610"></p>
+<p>遇到问题：<br>回显页切到新增页表单没有更新，两个页面通用一个表单，两个页面切换没有更新，因为vue会组件复用</p>
+<p><img src="/2021/11/11/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B/image-20211118113144519.png" alt="image-20211118113144519"></p>
+<p><img src="/2021/11/11/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B/image-20211118113800410.png" alt="image-20211118113800410"></p>
+<p>需要在appmain中进行配置</p>
+<p><img src="/2021/11/11/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B/image-20211118114000851.png" alt="image-20211118114000851"></p>
+<pre><code class="vue">&lt;template&gt;
+  &lt;section class=&quot;app-main&quot;&gt;
+    &lt;transition name=&quot;fade-transform&quot; mode=&quot;out-in&quot;&gt;
+      &lt;!-- or name=&quot;fade&quot; --&gt;
+      &lt;!-- 如果为路由出口定义一个唯一key值，那么组件会被强制重新渲染 --&gt;
+      &lt;router-view :key=&quot;key&quot;/&gt;
+      &lt;!-- 如果路由指向的页面组件是同一个，那么路由出口显示的页面组件不会重新被渲染 --&gt;
+      &lt;!--      &lt;router-view/&gt;--&gt;
+    &lt;/transition&gt;
+  &lt;/section&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default &#123;
+  name: &#39;AppMain&#39;,
+
+  // 计算属性
+  computed: &#123;
+    key() &#123;
+      return this.$route.name !== undefined ? this.$route.name + +new Date() : this.$route + +new Date()
+    &#125;
+  &#125;
+&#125;
+&lt;/script&gt;
+</code></pre>
+<p>计算属性效率很高</p>
+<h2><span id="自定义异常">自定义异常</span></h2><p>更为灵活</p>
+<p>一般情况下自定义异常类型都为运行时异常，继承RuntimeException</p>
+<p><img src="/2021/11/11/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B/image-20220228200805440.png" alt="image-20220228200805440"></p>
+<p>异常处理器对异常进行捕获抛出</p>
+<h2><span id="注册中心和服务容错">注册中心和服务容错</span></h2><h3><span id="nacos">nacos</span></h3><p>使用它充当注册中心</p>
+<h2><span id="负载均衡">负载均衡</span></h2><p>OpenFeign默认集成了 Ribbon， 所以在Nacos下使用OpenFeign默认就实现了负载均衡的效果</p>
+<h2><span id="openfeign的超时控制">OpenFeign的超时控制</span></h2><p>超时后，服务消费者端默认会发起一次重试</p>
+<h3><span id="使用jmeter测试并发">使用JMeter测试并发</span></h3><p>服务之间的雪崩效应</p>
+<p><img src="/2021/11/11/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B/image-20211124224106908.png" alt="image-20211124224106908"></p>
+<h3><span id="容错方案">容错方案</span></h3><p>隔离，超时，限流，熔断，降级        经典容错组件：Spring Cloud Hystrix、Sentinel。</p>
+<h4><span id="隔离">隔离</span></h4><p>线程池隔离和信号量隔离</p>
+<h4><span id="超时">超时</span></h4><p>所有的接口调用必须设置超时时间，不设置超时时间请求有可能陷入长期等待，甚至有可能导致整个服务不可用</p>
+<h4><span id="限流"><strong>限流</strong></span></h4><p>限流即流量限制，或者高大上一点，叫做流量整形，限流的目的是在遇到流量高峰期或者流量突增（流量尖刺）时，把流量速率限制在系统所能接受的合理范围之内，不至于让系统被高流量击垮。限流可以保证系统在调用量猛增时的基本可用性，目前有几种常见的限流方式：</p>
+<p>1）通过限制单位时间段内调用量来限流</p>
+<p>2）通过限制系统的并发调用程度来限流</p>
+<p>3）使用漏桶（Leaky Bucket）算法来进行限流</p>
+<p>4）使用令牌桶（Token Bucket）算法来进行限流</p>
+<h4><span id="熔断">熔断</span></h4><p>当下游服务因访问压力过大而响应变慢或失败，上游服务为了保护系统整体可用性，可以暂时切断对下游服务的调用，这种牺牲局部，保全整体的措施就叫做熔断</p>
+<h4><span id="降级">降级</span></h4><p>为服务提供一个托底方案，一旦服务无法正常调用，就使用托底方案</p>
+<h3><span id="sentinel">sentinel</span></h3><p>新增流控规则</p>
+<img src="/2021/11/11/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B/image-20211125222458818.png" alt="image-20211125222458818" style="zoom:150%;">
+
+<p><img src="/2021/11/11/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B/image-20211125222525377.png" alt="image-20211125222525377"></p>
+<p>在swaager中快速点击try，一秒超过两次的话就会出现下面的情况</p>
+<p><img src="/2021/11/11/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B/image-20211125222651777.png" alt="image-20211125222651777"></p>
+<p><strong>流量控制</strong></p>
+<p><strong>保证自己不被上游服务压垮</strong></p>
+<p>流量控制在网络传输中是一个常用的概念，它用于调整网络包的发送数据。然而，从系统稳定性角度考虑，在处理请求的速度上，也有非常多的讲究。任意时间到来的请求往往是随机不可控的，而系统的处理能力是有限的。我们需要根据系统的处理能力对流量进行控制。Sentinel 作为一个调配器，可以根据需要把随机的请求调整成合适的形状，简单来说，就是Sentinel可以根据具体的需求来对不同的请求定义不同的控制策略。如下图所示：</p>
+<p><img src="/2021/11/11/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Nob25nYmFvemhvbmc=,size_16,color_FFFFFF,t_70#pic_center" alt="img"></p>
+<p>Sentinel 的设计理念是让您自由选择控制的角度，并进行灵活组合，从而达到想要的效果。主要的控制方向如下：</p>
+<ul>
+<li><p>资源的调用关系，例如资源的调用链路，资源和资源之间的关系；</p>
+</li>
+<li><p>运行指标，例如 QPS、线程池、系统负载等；</p>
+</li>
+<li><p>控制的效果，例如直接限流、冷启动、排队等。</p>
+</li>
+</ul>
+<p><strong>熔断降级</strong></p>
+<p><strong>保证自己不被下游服务压垮</strong></p>
+<p> 什么是熔断降级<br> 简单来说就是负载保护，不让服务器因为过多的并发而瘫痪。除了流量控制以外，降低调用链路中的不稳定资源也是 Sentinel 的使命之一。由于调用关系的复杂性，如果调用链路中的某个资源出现了不稳定，最终会导致请求发生堆积。这个问题和 Hystrix 里面描述的问题是一样的。</p>
+<p><img src="/2021/11/11/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Nob25nYmFvemhvbmc=,size_16,color_FFFFFF,t_70#pic_center-16378508600642" alt="在这里插入图片描述"></p>
+<p>Sentinel 和 Hystrix 的原则是一致的: 当调用链路中某个资源出现不稳定，例如，表现为 timeout，异常比例升高的时候，则对这个资源的调用进行限制，并让请求快速失败，避免影响到其它的资源，最终产生雪崩的效果。</p>
+<p><strong>Sentinel熔断降级设计理念</strong><br>在限制的手段上，Sentinel 和 Hystrix 采取了完全不一样的方法。<br>Hystrix 通过线程池的方式，来对依赖(在我们的概念中对应资源)进行了隔离。这样做的好处是资源和资源之间做到了最彻底的隔离。缺点是除了增加了线程切换的成本，还需要预先给各个资源做线程池大小的分配。<br>Sentinel 对这个问题采取了两种手段:</p>
+<p>1.<strong>通过并发线程数进行限制</strong><br>和资源池隔离的方法不同，Sentinel 通过限制资源并发线程的数量，来减少不稳定资源对其它资源的影响。这样不但没有线程切换的损耗，也不需要您预先分配线程池的大小。当某个资源出现不稳定的情况下，例如响应时间变长，对资源的直接影响就是会造成线程数的逐步堆积。当线程数在特定资源上堆积到一定的数量之后，对该资源的新请求就会被拒绝。堆积的线程完成任务后才开始继续接收请求。</p>
+<p>2.<strong>通过响应时间对资源进行降级</strong><br>除了对并发线程数进行控制以外，Sentinel 还可以通过响应时间来快速降级不稳定的资源。当依赖的资源出现响应时间过长后，所有对该资源的访问都会被直接拒绝，直到过了指定的时间窗口之后才重新恢复。</p>
+<p><strong>负载保护</strong><br>Sentinel 同时提供系统维度的自适应保护能力。防止雪崩，是系统防护中重要的一环。当系统负载较高的时候，如果还持续让请求进入，可能会导致系统崩溃，无法响应。在集群环境下，网络负载均衡会把本应这台机器承载的流量转发到其它的机器上去。如果这个时候其它的机器也处在一个边缘状态的时候，这个增加的流量就会导致这台机器也崩溃，最后导致整个集群不可用。<br>针对这个情况，Sentinel 提供了对应的保护机制，让系统的入口流量和系统的负载达到一个平衡，保证系统在能力范围之内处理最多的请求。</p>
+<h2><span id="遇到问题">遇到问题：</span></h2><p>项目进行打包时没有把xml文件打包进去，导致运行sql语句时报错</p>
+<p>解决方案：<br>pom.xml文件中配置</p>
+<pre><code class="xml">&lt;build&gt;
+    &lt;resources&gt;
+        &lt;resource&gt;
+            &lt;directory&gt;src/main/java&lt;/directory&gt;
+            &lt;includes&gt;
+                &lt;include&gt;**/*.xml&lt;/include&gt;
+            &lt;/includes&gt;
+            &lt;filtering&gt;false&lt;/filtering&gt;
+        &lt;/resource&gt;
+    &lt;/resources&gt;
+&lt;/build&gt;
+</code></pre>
+<p>然后再在application.yml文件中配置：</p>
+<p><img src="/2021/11/11/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B/image-20211127215103746.png" alt="image-20211127215103746"></p>
+<p><strong>com.aliyun.oss.ClientException: UnknownHost</strong></p>
+<p>没联网！！！🤐🤐🤐</p>
+<h2><span id="数据库优化课程管理">数据库优化（课程管理）</span></h2><p>纵向拆表</p>
+<p><img src="/2021/11/11/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B/image-20211128195950279.png" alt="image-20211128195950279"></p>
+<p>由于有一列长文本字段数据过多，展示课程列表时并不需要这种庞杂繁多的信息，所以拆表可优化性能。</p>
+<p>因为edu_course_description和edu_course为一对一关系，所以edu_course_description的主键生成策略应该跟随edu_course的主键生成策略。</p>
+<pre><code class="Java">@ApiModelProperty(value = &quot;讲师ID&quot;)
+@TableId(value = &quot;id&quot;, type = IdType.NONE)
+private String id;
+</code></pre>
+<pre><code class="java">private BigDecimal price;
+</code></pre>
+<p>使用bigdecimal定义价格，避免精度丢失</p>
+<p>快速赋予值</p>
+<pre><code class="Java">BeanUtils.copyProperties( 给予=&gt;courseInfoForm, 接受=&gt;course);
+</code></pre>
+<p>前段课程类别</p>
+<p><img src="/2021/11/11/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B/image-20211128212211788.png" alt="image-20211128212211788"></p>
+<p><img src="/2021/11/11/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B/image-20211128212227154.png" alt="image-20211128212227154"></p>
+<p>可以使用两种方式加载资源</p>
+<p>一次性加载（适合数据量不大）</p>
+<p>延迟加载（适合数据量大，移动端考虑到流量问题）</p>
+<h2><span id="多表联查">多表联查</span></h2><p>使用外联查询，因为不需查询出所有列</p>
+<pre><code class="xml">&lt;sql id=&quot;columns&quot;&gt;
+    c.id,
+  c.title,
+  c.lesson_num AS lessonNum,
+  CONVERT(c.price, DECIMAL(8,2)) AS price,
+  c.cover,
+  c.buy_count AS buyCount,
+  c.view_count AS viewCount,
+  c.status,
+  c.gmt_create AS gmtCreate,
+
+  t.name AS teacherName,
+
+  s1.title AS subjectParentTitle,
+  s2.title AS subjectTitle
+&lt;/sql&gt;
+&lt;sql id=&quot;tables&quot;&gt;
+    edu_course c
+    LEFT JOIN edu_teacher t ON c.teacher_id = t.id
+    LEFT JOIN edu_subject s1 ON c.subject_parent_id = s1.id
+    LEFT JOIN edu_subject s2 ON c.subject_id = s2.id
+&lt;/sql&gt;
+&lt;select id=&quot;selectPageByCourseQueryVo&quot; resultType=&quot;com.atguigu.guli.service.edu.entity.vo.CourseVo&quot;&gt;
+    SELECT &lt;include refid=&quot;columns&quot; /&gt;
+    FROM &lt;include refid=&quot;tables&quot; /&gt;
+    $&#123;ew.customSqlSegment&#125; 
+&lt;/select&gt;
+</code></pre>
+<h3><span id="难点">难点：</span></h3><p>使用MyBatis Plus的分页插件和QueryWrapper结合自定义mapper xml实现多表关联查询</p>
+<p>当我们需要把组装的querywapper传到mapper让mybatis自动查询时</p>
+<p>1.<img src="/2021/11/11/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B/image-20211129204210637.png" alt="image-20211129204210637"></p>
+<p>2.<img src="/2021/11/11/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B/image-20211129204255198.png" alt="image-20211129204255198"></p>
+<h3><span id="删除业务">删除业务：</span></h3><pre><code class="java"> 数据库中外键约束的设置：
+ 互联网分布式项目中不允许使用外键与级联更新，一切设计级联的操作不要依赖数据库层，要在业务层解决
+ &lt;p&gt;
+ 如果业务层解决级联删除功能
+ 那么先删除子表数据，再删除父表数据
+</code></pre>
+<h2><span id="章节管理部分">章节管理部分</span></h2><p>优化嵌套查询回显嵌套列表</p>
+<p>优化sql语句</p>
+<p>方案1为显示课程分类列表时使用的sql查询方法，查询效率低</p>
+<p>方案2为在业务层解决这个问题，直接sql查询两次得出全部的数据然后在进行组装 </p>
+<p><img src="/2021/11/11/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B/image-20211202142759148.png" alt="image-20211202142759148"></p>
+<h2><span id="视频上传服务">视频上传服务</span></h2><p>本地仓库导入jar包</p>
+<pre><code class="cmd">mvn install:install-file -DgroupId=com.aliyun -DartifactId=aliyun-sdk-vod-upload -Dversion=1.4.11 -Dpackaging=jar -Dfile=aliyun-java-vod-upload-1.4.11.jar
+</code></pre>
+<h2><span id="前端渲染和服务器端渲染">前端渲染和服务器端渲染</span></h2><h3><span id="1-什么是服务端渲染">1、什么是服务端渲染</span></h3><p>服务端渲染又称SSR (Server Side Render)是在服务端完成页面的内容渲染，而不是在客户端完成页面内容的渲染。</p>
+<p>SSR并不是前端特有的技术，我们学习过的JSP技术和Thymeleaf技术就是典型的SSR</p>
+<p><img src="/2021/11/11/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B/a9b7b10a8fbfe2d36ee20f807a174a75.png" alt="img"></p>
+<p>服务端渲染的特点：</p>
+<ul>
+<li>在服务端生成html网页的dom元素</li>
+<li>客户端（浏览器）只负责显示dom元素内容</li>
+</ul>
+<h3><span id="2-什么是客户端渲染">2、什么是客户端渲染</span></h3><p>客户端（浏览器） 使用AJAX向服务端发起http请 求，获取到了想要的数据，开始渲染html网页，生成dom元素，并最终将网页内容展示给用户。</p>
+<p><img src="/2021/11/11/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B/aa49e5a9caa4641002d5608cd5acd136.png" alt="img"></p>
+<p>客户端渲染的特点：</p>
+<ul>
+<li>在服务端只是给客户端响应的了数据，而不是html网页</li>
+<li>客户端（浏览器）负责获取服务端的数据生成dom元素</li>
+</ul>
+<h2><span id="3-两种方式各有什么优缺点">3、两种方式各有什么优缺点？</span></h2><p><strong>客户端渲染：</strong> </p>
+<ol>
+<li><p>缺点：不利于网站进行SEO，因为网站大量使用javascript技术，不利于搜索引擎抓取网页。 </p>
+</li>
+<li><p>优点：客户端负责渲染，用户体验性好，服务端只提供数据不用关心用户界面的内容，有利于提高服务端的开发效率。 </p>
+</li>
+<li><p>适用场景：对SEO没有要求的系统，比如后台管理类的系统，如电商后台管理，用户管理等。</p>
+</li>
+</ol>
+<p> <strong>服务端渲染：</strong> </p>
+<ol>
+<li><p>优点：有利于SEO，网站通过href的url将搜索引擎直接引到服务端，服务端提供优质的网页内容给搜索引擎。</p>
+</li>
+<li><p>缺点：服务端完成一部分客户端的工作，通常完成一个需求需要修改客户端和服务端的代码，开发效率低，不利于系统的稳定性。</p>
+</li>
+<li><p>适用场景：对SEO有要求的系统，比如：门户首页、商品详情页面等。</p>
+</li>
+</ol>
+<p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1046667">浅析前端渲染与服务端渲染 - 云+社区 - 腾讯云 (tencent.com)</a></p>
+<p>那就需要一个组件来既利于seo，又利于用户体验</p>
+<h2><span id="nuxtjs">Nuxt.js</span></h2><p>在这里指的服务器端是前端服务器</p>
+<p>Nuxt.js 是一个基于 Vue.js 的轻量级应用框架,可以用来创建服务端渲染 (SSR) 应用，也可充当静态站点引擎生成静态站点应用,具有优雅的代码结构分层和热加载等特性</p>
+<p>具体代码实例：</p>
+<pre><code class="vue">  // 服务器端渲染方案：
+  // 异步数据获取：在前端服务器端执行，爬虫直接在页面就可以爬到具体关键字信息
+  asyncData() &#123;
+    return teacherApi.getList().then(response =&gt; &#123;
+      return &#123;
+        items: response.data.items
+      &#125;
+    &#125;)
+  &#125;
+
+// 客户端渲染方案
+//   data() &#123;
+//     return &#123;
+//       items: []
+//     &#125;
+//   &#125;,
+
+//   created() &#123;
+//     teacherApi.getList().then(response =&gt; &#123;
+//       this.items = response.data.items
+//     &#125;)
+//   &#125;
+</code></pre>
+<h2><span id="前端url组装参数">前端url组装参数</span></h2><p>使用queryString组件组装</p>
+<p><img src="/2021/11/11/%E8%B0%B7%E7%B2%92%E5%AD%A6%E9%99%A2%E9%A1%B9%E7%9B%AE%E5%8E%86%E7%A8%8B/Blog\source_posts\谷粒学院项目历程\image-20211206213423909.png" alt="image-20211206213423909"></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/10/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><span class="space">&hellip;</span><a class="page-number" href="/page/26/">26</a><a class="extend next" rel="next" href="/page/12/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/10/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><span class="space">&hellip;</span><a class="page-number" href="/page/25/">25</a><a class="extend next" rel="next" href="/page/12/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -718,7 +974,7 @@ public class CorsConfig &#123;
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">51</span>
+          <span class="site-state-item-count">50</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
