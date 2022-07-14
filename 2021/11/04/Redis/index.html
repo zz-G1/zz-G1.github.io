@@ -81,6 +81,10 @@
 <meta property="og:image" content="http://example.com/2021/11/04/Redis/1656990982238.png">
 <meta property="og:image" content="http://example.com/2021/11/04/Redis/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzg3MzIyNw==,size_16,color_FFFFFF,t_70">
 <meta property="og:image" content="http://example.com/2021/11/04/Redis/20200513215247113.png">
+<meta property="og:image" content="http://example.com/2021/11/04/Redis/1657074702612.png">
+<meta property="og:image" content="http://example.com/2021/11/04/Redis/1657075584068.png">
+<meta property="og:image" content="http://example.com/2021/11/04/Redis/1657075818193.png">
+<meta property="og:image" content="http://example.com/2021/11/04/Redis/1657076033013.png">
 <meta property="og:image" content="http://example.com/2021/11/04/Redis/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzg3MzIyNw==,size_16,color_FFFFFF,t_70-16362932182646">
 <meta property="og:image" content="http://example.com/2021/11/04/Redis/image-20211108113934528.png">
 <meta property="og:image" content="http://example.com/2021/11/04/Redis/20200513215610163.png">
@@ -88,12 +92,13 @@
 <meta property="og:image" content="http://example.com/2021/11/04/Redis/image-20211108114323436.png">
 <meta property="og:image" content="http://example.com/2021/11/04/Redis/image-20211108114407873.png">
 <meta property="og:image" content="http://example.com/2021/11/04/Redis/image-20211108114911108.png">
+<meta property="og:image" content="http://example.com/2021/11/04/Redis/1657117554315.png">
 <meta property="og:image" content="http://example.com/2021/11/04/Redis/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzg3MzIyNw==,size_16,color_FFFFFF,t_70-16363526192282">
 <meta property="og:image" content="http://example.com/2021/11/04/Redis/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzg3MzIyNw==,size_16,color_FFFFFF,t_70-16363526320984">
 <meta property="og:image" content="http://example.com/2021/11/04/Redis/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzg3MzIyNw==,size_16,color_FFFFFF,t_70-16363526462886">
 <meta property="og:image" content="http://example.com/2021/11/04/Redis/1647835150674.png">
 <meta property="article:published_time" content="2021-11-04T03:37:46.000Z">
-<meta property="article:modified_time" content="2022-07-05T10:51:28.366Z">
+<meta property="article:modified_time" content="2022-07-06T14:37:05.431Z">
 <meta property="article:author" content="Gzz">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/2021/11/04/Redis/image-20211104130443874.png">
@@ -294,7 +299,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-07-05 18:51:28" itemprop="dateModified" datetime="2022-07-05T18:51:28+08:00">2022-07-05</time>
+                <time title="修改时间：2022-07-06 22:37:05" itemprop="dateModified" datetime="2022-07-06T22:37:05+08:00">2022-07-06</time>
               </span>
 
           
@@ -309,13 +314,13 @@
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
               </span>
-              <span>15k</span>
+              <span>16k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
-              <span>14 分钟</span>
+              <span>15 分钟</span>
             </span>
 
         </div>
@@ -831,9 +836,18 @@ appendfsync everysec # 每秒执行一次 sync 可能会丢失这一秒的数据
 <li>Aof运行效率要慢于rdb,每秒同步策略效率较好，不同步效率和rdb相同</li>
 </ul>
 <p>RDB消耗性能大，如果宕机可能丢失最后一次所做的修改，但是文件小，恢复快</p>
+<h3><span id="为什么rdb恢复数据集较快">为什么RDB恢复数据集较快</span></h3><p>AOF，存放的指令日志，做数据恢复的时候，其实是要回放和执行所有的指令日志，来恢复出来内存中的所有数据的；<br>RDB，就是一份数据文件，恢复的时候，直接加载到内存中即可</p>
+<p><img src="/2021/11/04/Redis/1657074702612.png" alt="1657074702612"></p>
 <h3><span id="如何选择使用哪种持久化方式">如何选择使用哪种持久化方式？</span></h3><p>一般来说， 如果想达到足以媲美 PostgreSQL 的数据安全性， 你应该同时使用两种持久化功能。</p>
 <p>如果你非常关心你的数据， 但仍然可以承受数分钟以内的数据丢失， 那么你可以只使用 RDB 持久化。</p>
 <p>有很多用户都只使用 AOF 持久化， 但并不推荐这种方式： 因为定时生成 RDB 快照（snapshot）非常便于进行数据库备份， 并且 RDB 恢复数据集的速度也要比 AOF 恢复的速度要快。</p>
+<h2><span id="常见问题">常见问题</span></h2><h3><span id="fork">fork</span></h3><p>内存越大，fork时间越长，所以设置参数maxmemory参数</p>
+<p>降低fork频率，避免不必要的全量复制</p>
+<p><img src="/2021/11/04/Redis/1657075584068.png" alt="1657075584068"></p>
+<h3><span id="aof追加阻塞">AOF追加阻塞</span></h3><p><img src="/2021/11/04/Redis/1657075818193.png" alt="1657075818193"></p>
+<p>距离上次同步超过两秒，就阻塞主线程，直到同步完成</p>
+<p>参考硬盘优化的相关策略</p>
+<p><img src="/2021/11/04/Redis/1657076033013.png" alt="1657076033013"></p>
 <h1><span id="redis发布订阅">Redis发布订阅</span></h1><blockquote>
 <p>订阅</p>
 </blockquote>
@@ -928,9 +942,11 @@ repl_backlog_histlen:0
 <p>复制原理</p>
 </blockquote>
 <p>从机成功连接到主机后会发送一个同步命令</p>
-<p>主机接到命令，启动后台存盘进程，同时收集所有的收到用于修改数据集命令，在后台进程执行完毕之后，主机将整个数据文件传送到从机，完成一次完全同步</p>
-<p><strong>全量复制</strong>：第一次连接时，获取主机的全部数据</p>
+<p>主机启动bgsave，开始生成RDB文件，同时把期间的写命令缓存在内存中，RDB文件生成后发送给slave，slave会先写入磁盘，再从磁盘加载到内存，接着master将缓存中的写命令发送到slave，slave再进行同步</p>
+<p><img src="/2021/11/04/Redis/1657117554315.png" alt="1657117554315"></p>
+<p><strong>全量复制</strong>：主机生成RDB——-》同时缓存写命令———–》发送给从机，从机清空旧数据加载rdb到内存中———》同时基于旧数据版本提供服务</p>
 <p><strong>增量复制</strong>：每次更新数据同步到从机</p>
+<p>过期key处理：主机删掉，模拟一条del指令发给slave</p>
 <h3><span id="层层链路">层层链路</span></h3><p>主机从机成链路式连接</p>
 <p>如果主机断开了连接，我们可以使用<code>SLAVEOF no one</code>让自己变成主机！其他的节点就可以手动连接到最新的主节点</p>
 <blockquote>
@@ -1061,20 +1077,31 @@ sentinel client-reconfig-script mymaster /var/redis/reconfig.sh
 </li>
 </ul>
 <h2><span id="缓存一致性">缓存一致性</span></h2><p>先更新数据库，在更新缓存，先更新缓存，再更新数据库都会有问题</p>
-<p>先更新数据库再删除缓存可以解决，因为缓存的写入要快于数据库的写入，但是会影响缓存的命中率，</p>
-<p>对于解决先删除缓存再更新数据库问题：此时就引入了延时双删：</p>
+<p>一般使用<strong>先更新数据库再删除缓存</strong>可以解决，因为缓存的写入要快于数据库的写入，但是会影响缓存的命中率，</p>
+<p>那么缓存删除失败怎么办？</p>
+<ol>
+<li><p>先删除缓存，再更新数据库</p>
+</li>
+<li><p>此时就引入了延时双删：</p>
 <pre><code>删除缓存
 更新数据库
 睡眠 需要大于第二个线程读取数据并写入缓存的时间
 删除缓存
 </code></pre>
 <p>睡眠时间难以估算，所以还是先更新数据库再删除缓存比较好</p>
-<h2><span id="淘汰策略">淘汰策略</span></h2><p>禁止淘汰</p>
-<p>从设置了过期时间的数据中淘汰将要过期的</p>
-<p>从设置了过期时间的数据中淘汰最近最久未使用的 </p>
-<p>从设置了过期时间的数据中随机淘汰数据</p>
-<p>淘汰最近最久未使用的</p>
-<p>随机淘汰数据</p>
+</li>
+</ol>
+<p>那么为什么不是更新缓存而是删除缓存呢，就是一个 lazy 计算的思想，不要每次都重新做复杂的计算，不管它会不会用到，而是让它到需要被使用的时候再重新计算</p>
+<h2><span id="redis-过期策略">Redis 过期策略</span></h2><p>定期删除+惰性删除</p>
+<p>如果还有大量的过期数据既没有被用到过，又没有被定期删除扫描到那怎么办，就引入<strong>淘汰策略</strong></p>
+<h2><span id="淘汰策略">淘汰策略</span></h2><ul>
+<li>noeviction: 当内存不足以容纳新写入数据时，新写入操作会报错，这个一般没人用吧，实在是太恶心了。</li>
+<li><strong>allkeys-lru</strong>：当内存不足以容纳新写入数据时，在<strong>键空间</strong>中，移除最近最少使用的 key（这个是<strong>最常用</strong>的）。</li>
+<li>allkeys-random：当内存不足以容纳新写入数据时，在<strong>键空间</strong>中，随机移除某个 key，这个一般没人用吧，为啥要随机，肯定是把最近最少使用的 key 给干掉啊。</li>
+<li>volatile-lru：当内存不足以容纳新写入数据时，在<strong>设置了过期时间的键空间</strong>中，移除最近最少使用的 key（这个一般不太合适）。</li>
+<li>volatile-random：当内存不足以容纳新写入数据时，在<strong>设置了过期时间的键空间</strong>中，<strong>随机移除</strong>某个 key。</li>
+<li>volatile-ttl：当内存不足以容纳新写入数据时，在<strong>设置了过期时间的键空间</strong>中，有<strong>更早过期时间</strong>的 key 优先移除。</li>
+</ul>
 
     </div>
 
@@ -1216,7 +1243,7 @@ sentinel client-reconfig-script mymaster /var/redis/reconfig.sh
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">Redis</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.1.</span> <span class="nav-text">测试性能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.2.</span> <span class="nav-text">基础概念：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.3.</span> <span class="nav-text">底层数据结构（参考</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.3.1.</span> <span class="nav-text">简单动态字符串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.3.2.</span> <span class="nav-text">链表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.3.3.</span> <span class="nav-text">字典</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.3.4.</span> <span class="nav-text">跳表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.3.5.</span> <span class="nav-text">五大数据类型的应用场景</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">五大数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">2.0.1.</span> <span class="nav-text">redis-key</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">2.0.2.</span> <span class="nav-text">String</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">2.0.3.</span> <span class="nav-text">List</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">2.0.4.</span> <span class="nav-text">set</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">2.0.5.</span> <span class="nav-text">hash</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">2.0.6.</span> <span class="nav-text">Zset（有序集合）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">三种特殊数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">3.1.</span> <span class="nav-text">Geospatial(地理位置)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">3.2.</span> <span class="nav-text">hyperloglog</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">3.3.</span> <span class="nav-text">bitmaps</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">事务</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">4.1.</span> <span class="nav-text">监控</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">4.1.0.1.</span> <span class="nav-text">乐观锁</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">6.</span> <span class="nav-text">Jedis</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">7.</span> <span class="nav-text">springboot整合</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">7.1.</span> <span class="nav-text">序列化</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">8.</span> <span class="nav-text">Redis.conf详解</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">8.0.0.1.</span> <span class="nav-text">maxmemory-policy 六种方式</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">9.</span> <span class="nav-text">Redis持久化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">9.1.</span> <span class="nav-text">什么是RDB</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">9.1.1.</span> <span class="nav-text">三种触发方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">9.1.2.</span> <span class="nav-text">工作原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">9.1.3.</span> <span class="nav-text">触发机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">9.1.4.</span> <span class="nav-text">优缺点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">9.2.</span> <span class="nav-text">AOF</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">9.2.1.</span> <span class="nav-text">三种策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">9.2.2.</span> <span class="nav-text">什么是AOF</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">9.2.3.</span> <span class="nav-text">AOF重写</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">9.3.</span> <span class="nav-text">RDB和AOP选择</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">9.3.1.</span> <span class="nav-text">RDB优势与劣势</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">9.3.1.1.</span> <span class="nav-text">优势</span></a></li><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">9.3.1.2.</span> <span class="nav-text">劣势</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">9.3.2.</span> <span class="nav-text">AOF优势&#x2F;劣势</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">9.3.2.1.</span> <span class="nav-text">优势</span></a></li><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">9.3.2.2.</span> <span class="nav-text">劣势</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">9.3.3.</span> <span class="nav-text">如何选择使用哪种持久化方式？</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">10.</span> <span class="nav-text">Redis发布订阅</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">10.0.1.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">10.0.2.</span> <span class="nav-text">缺点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">10.0.3.</span> <span class="nav-text">应用</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">11.</span> <span class="nav-text">Redis主从复制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">11.0.1.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">11.0.2.</span> <span class="nav-text">作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">11.0.3.</span> <span class="nav-text">为什么使用集群</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">11.0.4.</span> <span class="nav-text">环境配置</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link"><span class="nav-number">11.0.4.0.1.</span> <span class="nav-text">注意：window配置方法：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">11.0.5.</span> <span class="nav-text">一主二从配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">11.0.5.1.</span> <span class="nav-text">规则</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">11.0.6.</span> <span class="nav-text">层层链路</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">11.1.</span> <span class="nav-text">缓存穿透与雪崩</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">11.1.1.</span> <span class="nav-text">缓存穿透（查不到）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">11.1.2.</span> <span class="nav-text">缓存击穿（量太大，缓存过期）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">11.1.3.</span> <span class="nav-text">缓存雪崩</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">11.2.</span> <span class="nav-text">缓存一致性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">11.3.</span> <span class="nav-text">淘汰策略</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">Redis</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.1.</span> <span class="nav-text">测试性能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.2.</span> <span class="nav-text">基础概念：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.3.</span> <span class="nav-text">底层数据结构（参考</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.3.1.</span> <span class="nav-text">简单动态字符串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.3.2.</span> <span class="nav-text">链表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.3.3.</span> <span class="nav-text">字典</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.3.4.</span> <span class="nav-text">跳表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.3.5.</span> <span class="nav-text">五大数据类型的应用场景</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">五大数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">2.0.1.</span> <span class="nav-text">redis-key</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">2.0.2.</span> <span class="nav-text">String</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">2.0.3.</span> <span class="nav-text">List</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">2.0.4.</span> <span class="nav-text">set</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">2.0.5.</span> <span class="nav-text">hash</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">2.0.6.</span> <span class="nav-text">Zset（有序集合）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">三种特殊数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">3.1.</span> <span class="nav-text">Geospatial(地理位置)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">3.2.</span> <span class="nav-text">hyperloglog</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">3.3.</span> <span class="nav-text">bitmaps</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">事务</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">4.1.</span> <span class="nav-text">监控</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">4.1.0.1.</span> <span class="nav-text">乐观锁</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">6.</span> <span class="nav-text">Jedis</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">7.</span> <span class="nav-text">springboot整合</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">7.1.</span> <span class="nav-text">序列化</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">8.</span> <span class="nav-text">Redis.conf详解</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">8.0.0.1.</span> <span class="nav-text">maxmemory-policy 六种方式</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">9.</span> <span class="nav-text">Redis持久化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">9.1.</span> <span class="nav-text">什么是RDB</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">9.1.1.</span> <span class="nav-text">三种触发方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">9.1.2.</span> <span class="nav-text">工作原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">9.1.3.</span> <span class="nav-text">触发机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">9.1.4.</span> <span class="nav-text">优缺点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">9.2.</span> <span class="nav-text">AOF</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">9.2.1.</span> <span class="nav-text">三种策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">9.2.2.</span> <span class="nav-text">什么是AOF</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">9.2.3.</span> <span class="nav-text">AOF重写</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">9.3.</span> <span class="nav-text">RDB和AOP选择</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">9.3.1.</span> <span class="nav-text">RDB优势与劣势</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">9.3.1.1.</span> <span class="nav-text">优势</span></a></li><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">9.3.1.2.</span> <span class="nav-text">劣势</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">9.3.2.</span> <span class="nav-text">AOF优势&#x2F;劣势</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">9.3.2.1.</span> <span class="nav-text">优势</span></a></li><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">9.3.2.2.</span> <span class="nav-text">劣势</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">9.3.3.</span> <span class="nav-text">为什么RDB恢复数据集较快</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">9.3.4.</span> <span class="nav-text">如何选择使用哪种持久化方式？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">9.4.</span> <span class="nav-text">常见问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">9.4.1.</span> <span class="nav-text">fork</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">9.4.2.</span> <span class="nav-text">AOF追加阻塞</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">10.</span> <span class="nav-text">Redis发布订阅</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">10.0.1.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">10.0.2.</span> <span class="nav-text">缺点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">10.0.3.</span> <span class="nav-text">应用</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">11.</span> <span class="nav-text">Redis主从复制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">11.0.1.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">11.0.2.</span> <span class="nav-text">作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">11.0.3.</span> <span class="nav-text">为什么使用集群</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">11.0.4.</span> <span class="nav-text">环境配置</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link"><span class="nav-number">11.0.4.0.1.</span> <span class="nav-text">注意：window配置方法：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">11.0.5.</span> <span class="nav-text">一主二从配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">11.0.5.1.</span> <span class="nav-text">规则</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">11.0.6.</span> <span class="nav-text">层层链路</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">11.1.</span> <span class="nav-text">缓存穿透与雪崩</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">11.1.1.</span> <span class="nav-text">缓存穿透（查不到）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">11.1.2.</span> <span class="nav-text">缓存击穿（量太大，缓存过期）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">11.1.3.</span> <span class="nav-text">缓存雪崩</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">11.2.</span> <span class="nav-text">缓存一致性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">11.3.</span> <span class="nav-text">Redis 过期策略</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">11.4.</span> <span class="nav-text">淘汰策略</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -1232,7 +1259,7 @@ sentinel client-reconfig-script mymaster /var/redis/reconfig.sh
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">52</span>
+          <span class="site-state-item-count">51</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1311,18 +1338,18 @@ sentinel client-reconfig-script mymaster /var/redis/reconfig.sh
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">214k</span>
+    <span title="站点总字数">215k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">3:15</span>
+    <span title="站点阅读时长">3:16</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共87.5k字</span>
+  <span class="post-count">博客全站共88.5k字</span>
 </div>
 
     <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
